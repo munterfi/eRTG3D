@@ -4,7 +4,7 @@
 \alias{test.verification.3d}
 \title{Internally verification of the simulated track}
 \usage{
-test.verification.3d(track1, track2, alpha = 0.05, plotDensities = TRUE)
+test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
 }
 \arguments{
 \item{track1}{data.frame with x,y,z coordinates of the original track}

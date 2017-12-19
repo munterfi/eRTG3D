@@ -520,7 +520,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   setTxtProgressBar(pb, i)
   close(pb)
   message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-  return(.matrix2sf.3d(RTG))
+  return(as.data.frame(RTG))
 }
 
 

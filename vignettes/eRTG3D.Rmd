@@ -99,7 +99,7 @@ cerw <- sim.cond.3d(sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=
 If more than one simulated track is desired, the `n.sim.cond.3d()` can be used. The n.sim parameter defines the number of simulated tracks. NOTE: Due to dead ends, which are normally occurring in a proportion of 25%, the n.sim parameter should be set higher than the needed tracks.
 
 ```{r eval=FALSE}
-cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
+cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
 ```
 
 ## Wrapped function to reproduce tracks

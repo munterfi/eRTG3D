@@ -204,20 +204,10 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   # get probs for each turn-lift-distance combination
   tldProbs <- densities$tldCube$values$prob
   sCond <- sample(1:nrow(densities$tldCube$values), 1, prob=tldProbs)
-  RTG <- data.frame(x=start[1],
-                    y=start[2],
-                    z=start[3],
-                    a = a0,
-                    g = g0,
-                    t = ts[sCond],
-                    l = ls[sCond],
-                    d = ds[sCond])
-  # replicate RTG for n.locs
-  RTG <- RTG[rep(1, n.locs),]
-  # convert to matrix [name - index]:
-  # "x" "y" "z" "a" "g" "t" "l" "d"
-  # "1" "2" "3" "4" "5" "6" "7" "8"
-  RTG <- as.matrix(RTG)
+  # "x" "y" "z" "a" "g" "t" "l" "d" "p"
+  # "1" "2" "3" "4" "5" "6" "7" "8" "9"
+  RTG <- matrix(0, n.locs, 9)
+  RTG[1,] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE (uniform distributed)
   if (error) {
     tShift <- runif(n.locs, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
@@ -248,6 +238,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     t <- ts[rP] + tShift[i]
     l <- ls[rP] + lShift[i]
     d <- ds[rP] + dShift[i]
+    p <- pProbs[rP]
     # absolute spherical orientation, wrap angles around -pi-0 & 0-pi
     a <- .wrap(RTG[i-1, 4] + t)
     g <- .wrap(RTG[i-1, 5] + l)
@@ -255,11 +246,13 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     x <- (d * sin(g) * cos(a)) + RTG[i-1, 1]
     y <- (d * sin(g) * sin(a)) + RTG[i-1, 2]
     z <- (d * cos(g)) + RTG[i-1, 3]
-    RTG[i,] <- c(x, y, z, a, g, t, l, d)
+    # "x" "y" "z" "a" "g" "t" "l" "d" "p"
+    RTG[i,] <- c(x, y, z, a, g, t, l, d, p)
     # update progress bar
     if ((i %% ui) == 0) {setTxtProgressBar(pb, i)}
   }
   rownames(RTG) <- c()
+  colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
   # close progress bar
   setTxtProgressBar(pb, n.locs)
   close(pb)
@@ -393,18 +386,10 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   # for the start point, as this is needed to inform the auto-difference
   # likelihood
   sCond <- sample(1:nrow(densities$tldCube$values), 1, prob=tldProbs)
-  RTG <- data.frame(x=start[1],
-                    y=start[2],
-                    z=start[3],
-                    a = a0,
-                    g = g0,
-                    t = ts[sCond],
-                    l = ls[sCond],
-                    d = ds[sCond],
-                    p = NA)
-  # extend the data frame to the right size
-  RTG <- RTG[rep(1, n.locs),]
-  rownames(RTG) <- c()
+  # "x" "y" "z" "a" "g" "t" "l" "d" "p"
+  # "1" "2" "3" "4" "5" "6" "7" "8" "9"
+  RTG <- matrix(0, n.locs, 9)
+  RTG[1, ] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE
   if (error) {
     tShift <- runif(n.locs - 2, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
@@ -417,11 +402,11 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   for (i in 1:(n.locs - 2))
   {
     # get the auto-difference probability for turning angle
-    atProbs <- densities$autoT(RTG$t[i] - ts)
+    atProbs <- densities$autoT(RTG[i, 6]- ts)
     # get the auto-difference probability for lift angle
-    alProbs <- densities$autoL(RTG$l[i] - ls)
+    alProbs <- densities$autoL(RTG[i, 7] - ls)
     # get the auto-difference probability for step length
-    adProbs <- densities$autoD(RTG$d[i] - ds)
+    adProbs <- densities$autoD(RTG[i, 8] - ds)
     # set NAs to zero probability
     atProbs[is.na(atProbs)] <- 0
     alProbs[is.na(alProbs)] <- 0
@@ -435,13 +420,13 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     # multiplication with the two dimensional probability distribution
     P <- (tldProbs) * (atProbs * alProbs * adProbs)^(1/3)
     # calculate the azimuth
-    a <- .wrap(RTG$a[i] + ts + tShift[i])
+    a <- .wrap(RTG[i, 4] + ts + tShift[i])
     # calculate the gradient
-    g <- .wrap(RTG$g[i] + ls + lShift[i])
+    g <- .wrap(RTG[i, 5] + ls + lShift[i])
     # convert the coordinates from step length turning angle dimension
-    x1 <- ((ds + dShift[i]) * sin(g) * cos(a)) + RTG$x[i]
-    y1 <- ((ds + dShift[i]) * sin(g) * sin(a)) + RTG$y[i]
-    z1 <- ((ds + dShift[i]) * cos(g)) + RTG$z[i]
+    x1 <- ((ds + dShift[i]) * sin(g) * cos(a)) + RTG[i, 1]
+    y1 <- ((ds + dShift[i]) * sin(g) * sin(a)) + RTG[i, 2]
+    z1 <- ((ds + dShift[i]) * cos(g)) + RTG[i, 3]
     # calculate the distances of the cell centers in the spatial domain
     # to the target (last location of the empirical track)
     endD <- as.numeric(sqrt((end[1] - x1) ^ 2 + (end[2] - y1) ^ 2 + (end[3] - z1) ^ 2))
@@ -508,7 +493,6 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     # check whether the run might have ended up in a dead-end,
     # which will set the zero probability status to TRUE
     if(all(Probs==0)){
-      #RTG <- RTG[1:i, ]
       RTG <- NULL
       close(pb)
       message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
@@ -517,30 +501,26 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     }else{
       # draw a point randomly based on the probability
       rP <- sample.int(nrow(densities$tldCube$values), size = 1, prob = Probs)
-      a <- .wrap(a[rP])
-      g <- .wrap(g[rP])
-      d <- ds[rP]
-      t <- ts[rP]
-      l <- ls[rP]
-      p <- Probs[rP]
-      x <- (d * sin(g) * cos(a)) + RTG$x[i]
-      y <- (d * sin(g) * sin(a)) + RTG$y[i]
-      z <- (d * cos(g)) + RTG$z[i]
-      # add it to the table and reiterate
-      RTG[i + 1,] <- c(x, y, z, a, g, t, l, d, p)
+      # "x" "y" "z" "a" "g" "t" "l" "d" "p"
+      # "1" "2" "3" "4" "5" "6" "7" "8" "9"
+      RTG[i + 1, ] <- c(x1[rP], y1[rP], z1[rP], a[rP], g[rP], ts[rP], ls[rP], ds[rP], Probs[rP])
       # update progress bar
       if ((i %% ui) == 0) {setTxtProgressBar(pb, i)}
     }
   }
   # the track is forced to target location and the appropriate distance is added
-  RTG[n.locs,] <- data.frame(x=end[1], y=end[2], z=end[3], a=NA, g=NA, d=NA, t=NA, l=NA, p=NA)
-  RTG$d[1] <- NA
-  RTG$d[n.locs] <- sqrt(diff(tail(RTG$y,2)) ^ 2 + diff(tail(RTG$x,2)) ^ 2)
+  RTG[1, 8] <- NA
+  RTG[n.locs,] <- c(end[1], end[2], end[3], NA, NA, NA, NA, NA, NA)
+  RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 + 
+                         (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 + 
+                         (RTG[n.locs, 3] - RTG[n.locs-1, 3])^2)
+  rownames(RTG) <- c()
+  colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
   # close progress bar
   setTxtProgressBar(pb, i)
   close(pb)
   message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-  return(RTG)
+  return(.matrix2sf.3d(RTG))
 }
 
 

@@ -19,7 +19,8 @@ Imports: CircStats (>= 0.2-4),
          raster (>= 2.6-7),
          parallel (>= 3.4.2),
          plyr (>= 1.8.4),
-         plotly (>= 4.7.1)
+         plotly (>= 4.7.1),
+         sf (>= 0.5-5)
 License: GPL (>= 3)
 Encoding: UTF-8
 LazyData: true

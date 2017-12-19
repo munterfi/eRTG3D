@@ -4,3 +4,4 @@
 .Ruserdata
 .DS_Store
 eRTG3D.Rproj
+.Rbuildignore

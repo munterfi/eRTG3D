@@ -17,10 +17,8 @@
 #' get.densities.3d(track, heightDist = TRUE)
 get.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL)
 {
-  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
-  # track properties
   track <- track.properties.3d(track)
-  turningAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d3d[2:nrow(track)]
+  turningAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
   deltaTurn <- diff(turningAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
   # probability distribution cube for turning angle, lift angle and step length
   cubeTLD <- TurnLiftStepHist(turn = turningAngle, lift = liftAngle, step = stepLength)
@@ -32,7 +30,7 @@ get.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL)
   autoD <- approxfun(density.default(deltaStep))
   if (heightDistEllipsoid) {hDistEllipsoid <- approxfun(density.default(track$z))} else {hDistEllipsoid <- function(x){1}}
   if (!is.null(DEM)) {
-    if (!.check.extent(DEM = DEM, track = track)) stop("The track is not inside the area of the digital elevation model.")
+    .check.extent(DEM = DEM, track = track)
     hDistTopo <- approxfun(density.default(track$z - raster::extract(DEM, track[,1:2])))
   } else {hDistTopo <- function(x){1}}
   return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
@@ -132,6 +130,22 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   2 * IQR(x) / (length(x) ^ (1/3))
 }
 
+#' Tests if the object is of type 'data.frame' and has x, y, z coordinates without NA values
+#'
+#' @param track any object to test
+#'
+#' @return A logical: TRUE if the track is the object needed, FALSE otherwise.
+#' @export
+#'
+#' @examples
+#' .is.df.xyz(track)
+.is.df.xyz <- function(track)
+{
+  if(!class(track)=="data.frame") stop("Input not of type 'data.frame'.")
+  if(!any(colnames(track)[1:3]==c("x","y","z"))) stop("Colnames of first three cols not 'x, y, z'.")
+  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
+}
+
 #' Checks if the track lies inside the digital elevation model.
 #'
 #' @param DEM a 'RasterLayer' containing a digital elevation model
@@ -145,11 +159,9 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 .check.extent <- function(DEM, track)
 {
   if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
-  if(!class(track)=="data.frame") stop("'track' is not of type 'data.frame'")
-  if(any(is.na(track[,1:2]))) stop("Track 'data.frame' contains NA values.")
   e <- raster::extent(DEM)
-  return(min(track[,1]) >= e[1] && max(track[,1]) <= e[2] &&
-           min(track[,2]) >= e[3] && max(track[,2]) <= e[4])
+  if(!(min(track[,1]) >= e[1] && max(track[,1]) <= e[2] &&
+           min(track[,2]) >= e[3] && max(track[,2]) <= e[4])) stop("The track is not inside the area of the digital elevation model.")
 }
 
 #' Uncontidioned Empirical Random Walk (UERW) in 3D
@@ -358,12 +370,10 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 {
   start.time <- Sys.time()
   if(!is.null(DEM)) {
-    if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
-    if (!.check.extent(DEM = DEM, track = data.frame(rbind(start, end)))) stop("The track is not inside the area of the digital elevation model 'DEM'.")
+    .check.extent(DEM = DEM, track = data.frame(rbind(start, end)))
   }
   if(!is.null(BG)) {
-    if(!class(BG)=="RasterLayer") stop("'BG' is not of type 'RasterLayer'")
-    if (!.check.extent(DEM = BG, track = data.frame(rbind(start, end)))) stop("The track is not inside the area of back ground layer 'BG'.")
+    .check.extent(DEM = BG, track = data.frame(rbind(start, end)))
   }
   # progress bar and time
   message(paste("  |Simulate CERW with ", n.locs, " steps", sep = ""))
@@ -557,14 +567,10 @@ n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, de
   if (multicore) {
     # nCores <- parallel::detectCores()-1
     if(.Platform$OS.type == "unix") {
-      .n.sim.cond.3d.unix(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
-      # message(paste("  |Running on nCores = ", nCores, sep=""))
-      # message("  |...")
-      # cerwList <- parallel::mclapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs, start, end, a0, g0, densities, qProbs, error, DEM, BG)}, mc.cores = nCores)
+      cerwList <- .n.sim.cond.3d.unix(n.sim=n.sim, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
     }
     if(.Platform$OS.type == "windows") {
-      .n.sim.cond.3d.windows(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
-      #stop("Parallel version not yet supported on Windows. Please set 'multicore' to 'FALSE' or change to a unix system.")
+      cerwList <- .n.sim.cond.3d.windows(n.sim=n.sim, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
       }
   } else {
     cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)}))
@@ -636,15 +642,14 @@ sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
 #' track.properties.3d(track)
 track.properties.3d <- function(track)
 {
-  if(!is.data.frame(track)) stop("Input is not of type 'data.frame'.")
-  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
+  .is.df.xyz(track)
   # spatial coordinates
   x <- track[,1]; y <- track[,2]; z <- track[,3]
   # distance covered per axis and step
   dx <- c(NA, diff(x)); dy <- c(NA, diff(y)); dz <- c(NA, diff(z))
-  # spherical coordinates
   d2d <- .distance.2d(dx, dy)
-  d3d <- .distance.3d(dx, dy, dz)
+  # spherical coordinates
+  d <- .distance.3d(dx, dy, dz)
   a <- .get.azimut(dx, dy)
   g <- .get.polar(d2d, dz)
   # guess the initial azimut/heading & polar angle/gradient (alt: sample(a,1))
@@ -653,7 +658,7 @@ track.properties.3d <- function(track)
   # Turn angle and lift angle
   t <- c(NA, diff(a))
   l <- c(NA, diff(g))
-  return(data.frame(x, y, z, a, g, dx, dy, dz, d2d, d3d, t, l))
+  return(data.frame(x, y, z, a, g, t, l, d))
 }
 
 #' Azimut in respect to the x-axis
@@ -736,19 +741,19 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = F
 {
   message("  |*** Two-sample Kolmogorov-Smirnov test ***")
   track1 <- track.properties.3d(track1)[2:nrow(track1), ]
-  t1 <- track1$t; l1 <- track1$l; d1 <- track1$d3d;
-  diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d3d);
+  t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
+  diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
   if(is.data.frame(track2)){
     track2 <- track.properties.3d(track2)[2:nrow(track2), ]
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d3d;
-    diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d3d);
+    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
+    diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);
   } else {
     track2 <- filter.dead.ends(track2)
     track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
-    diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d3d))})
+    diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
     track2 <- do.call("rbind", track2)
     diffTrack2 <- do.call("rbind", diffTrack2)
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d3d;
+    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
     diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
   }
   # turn
@@ -829,7 +834,7 @@ filter.dead.ends <- function(cerwList)
 #' dem.track.extent(DEM, track)
 dem.track.extent <- function(DEM, track, buffer=100)
 {
-  if (!.check.extent(DEM = DEM, track = track)) stop("The track is not inside the area of the digital elevation model.")
+  .check.extent(DEM = DEM, track = track)
   return(raster::crop(dem, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
 }
 
@@ -890,9 +895,9 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
 #' reproduce.track.3d(track)
 reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL,  plot2d = FALSE, plot3d = FALSE, filterDeadEnds = TRUE)
 {
-  n.locs <- nrow(track)
   track <- track.properties.3d(track)
-  if (n.locs>1500) stop("Track is to long (>1500 steps).")
+  n.locs <- nrow(track)
+  if (n.locs>1500) stop("Track is too long (>1500 steps).")
   D <- get.densities.3d(track, heightDistEllipsoid = TRUE, DEM = DEM)
   uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
                         a0 = track$a[1], g0 = track$g[1], densities = D, error = error)

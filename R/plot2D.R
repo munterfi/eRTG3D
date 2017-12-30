@@ -95,9 +95,9 @@ plot2d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 {
   track1 <- track.properties.3d(track1)[2:nrow(track1), ]
   if(!autodifferences) {
-    t1 <- track1$t; l1 <- track1$l; d1 <- track1$d3d;
+    t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
   } else {
-    diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d3d);
+    diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
   }
   if(is.null(track2)) {
     t2 <- l2 <- d2 <- diffT2 <- diffL2 <- diffD2 <- NULL
@@ -105,20 +105,20 @@ plot2d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     if(is.data.frame(track2)){
       track2 <- track.properties.3d(track2)[2:nrow(track2), ]
       if(!autodifferences) {
-        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d3d;
+        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
       } else {
-        diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d3d);}
+        diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);}
     }
     if(!is.data.frame(track2) && is.list(track2)) {
       track2 <- filter.dead.ends(track2)
       track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
       if(autodifferences) {
-        diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d3d))})
+        diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
         diffTrack2 <- do.call("rbind", diffTrack2)
         diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
       } else {
         track2 <- do.call("rbind", track2)
-        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d3d;
+        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
       }
     }
   }

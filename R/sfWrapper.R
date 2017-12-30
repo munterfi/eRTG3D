@@ -14,29 +14,28 @@
 #' @export
 #'
 #' @examples
-#' transform.CRS.3d(track, fromCRS="+init=epsg:4326", toCRS="+init=epsg:2056")
-transform.CRS.3d <- function(track, fromCRS, toCRS)
+#' transformCRS.3d(track, fromCRS="+init=epsg:4326", toCRS="+init=epsg:2056")
+transformCRS.3d <- function(track, fromCRS, toCRS)
 {
   track <- track2sf.3d(track = track, CRS = fromCRS)
   track <- sf::st_transform(track, toCRS)
   return(sf2df.3d(track))
 }
 
-#' Test if the object is of type 'sf, data.frame'
+#' Tests if the object is a simple feature collection (class: 'sf, data.frame')
 #'
 #' @param track any object to test
 #'
-#' @return A logical: TRUE if the track is the sf object needed, FALSE otherwise.
+#' @return A logical: TRUE if is is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
 #' @export
 #'
 #' @examples
-#' is.sf(track)
-is.sf <- function(track)
+#' is.sf.3d(track)
+is.sf.3d <- function(track)
 {
   if(class(track)[1]=="sf" && class(track)[2]=="data.frame") {
     return(TRUE)
   } else {
-    warning("The input for this function has to be a simple feature collection (class: 'sf, data.frame') of the sf package. Use the output of the 'track2sf()' function")
     return(FALSE)
   }
 }

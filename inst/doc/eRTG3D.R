@@ -5,24 +5,25 @@ options(knitr.table.format = "html")
 library(eRTG3D)
 set.seed(123)
 cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE)
-cerw <- filter.dead.ends(cerwList)[[1]]
+cerw <- filter.dead.ends(cerwList)
 
 ## ---- eval = FALSE, fig.show='hold'--------------------------------------
 #  library(eRTG3D)
 #  test.eRTG.3d()
 
 ## ---- eval = FALSE, fig.show='hold'--------------------------------------
-#  test.eRTG.3d(multicore = TRUE)
-
-## ---- eval = FALSE, fig.show='hold'--------------------------------------
 #  results <- test.eRTG.3d(returnResult = TRUE, plot2d = TRUE, plot3d = TRUE)
+
+## ----eval=FALSE----------------------------------------------------------
+#  WGS84 <- "+init=epsg:4326"
+#  LV95 <- "+init=epsg:2056"
+#  track <- transformCRS.3d(track, fromCRS=WGS84, toCRS=LV95)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  niclas <- track.properties.3d(niclas)
 
 ## ----echo=FALSE, results = "asis", fig.height=5, fig.width=10------------
 niclas <- track.properties.3d(niclas)
-niclas[c("dx", "dy", "dz", "d2d")] <- NULL
 pander::pandoc.table(head(round(niclas, 2),5))
 
 ## ----eval=FALSE----------------------------------------------------------
@@ -45,7 +46,7 @@ pander::pandoc.table(head(round(niclas, 2),5))
 #  cerw <- sim.cond.3d(sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
 
 ## ----eval=FALSE----------------------------------------------------------
-#  cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
+#  cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
 
 ## ---- fig.show='hold', eval=FALSE----------------------------------------
 #  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)
@@ -83,4 +84,14 @@ g0 = niclas$g[1]
 
 ## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
 cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem, multicore=TRUE)
+
+## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
+LV95 <- "+init=epsg:2056"
+niclas <- track2sf.3d(niclas, CRS = LV95)
+is.sf.3d(niclas)
+head(niclas, 3)
+
+## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
+niclas <- sf2df.3d(niclas)
+is.sf.3d(niclas)
 

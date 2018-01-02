@@ -1,7 +1,7 @@
 #' Extract tldCube and autodifferences functions from a consistent track
 #'
 #' Get densities creates a list consisting of the 3 dimensional
-#' probability distribution cube for turning angle, lift angle and step length
+#' probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 #' as well as the uni-dimensional distributions of the differences
 #' of the turning angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
@@ -9,7 +9,8 @@
 #' @section Note:
 #' The time between the acquisition of fix points  of the track must be constant,
 #' otherwise this leads to distorted statistic distributions,
-#' which increases the probability of dead ends.
+#' which increases the probability of dead ends. In this case please check 
+#' \link[eRTG3D]{track.split.3d} and \link[eRTG3D]{get.section.densities.3d}
 #'
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
@@ -34,6 +35,68 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
   return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
                           deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
                           heightEllipsoid = heightEllipsoid, heightTopo = heightTopo))
+}
+
+#' Extract tldCube and autodifferences functions from track sections
+#'
+#' Creates a list consisting of the 3 dimensional
+#' probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
+#' as well as the uni-dimensional distributions of the differences
+#' of the turning angles, lift angles and step lengths with a lag of 1 to maintain
+#' minimal level of autocorrelation in each of the terms.
+#'
+#' @param trackSections list of track sections got by the \link[eRTG3D]{track.split.3d} function
+#' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
+#' @param DEM a raster containting a digital elevation model, covering the same extent as the track sections
+#'
+#' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
+#' @export
+#'
+#' @examples
+#' get.section.densities.3d(trackSections)
+get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, DEM = NULL)
+{
+  trackSections <- lapply(X=trackSections, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
+  deltaTurn <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$t)))
+  deltaLift <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$l)))
+  deltaStep <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$d)))
+  trackSections <- do.call(rbind, trackSections)
+  turnAngle <- trackSections$t; liftAngle <- trackSections$l; stepLength <- trackSections$d
+  if (heightDistEllipsoid) {heightEllipsoid <- trackSections$z} else {heightEllipsoid <- NULL}
+  if (!is.null(DEM)) {
+    .check.extent(DEM = DEM, track = trackSections)
+    heightTopo <- trackSections$z - raster::extract(DEM, trackSections[,1:2])
+  } else {heightTopo <- NULL}
+  return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
+                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
+                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo))
+}
+
+#' This function splits the by outliers in the time lag.
+#' 
+#' The length of timeLag must be the the track's length minus 1 and represents
+#' the time passed between the fix point acquisition
+#'
+#' @param track track data.frame with x, y and z coordinates
+#' @param timeLag a numeric vector with the time passed between the fix point acquisition
+#'
+#' @return A list containing the splitted tracks.
+#' @export
+#'
+#' @examples
+#' track.split.3d(track, timeLag)
+track.split.3d <- function(track, timeLag)
+{
+  .is.df.xyz(track)
+  if(any(is.na(timeLag))) stop("TimeLag is not allowed to contain NAs.")
+  tolerance <- 0.5 * sd(timeLag)
+  m <- mean(timeLag)
+  splitRows <- which(abs(m-timeLag) > tolerance)
+  trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+1)))
+  nSplits <- length(splitRows); nChange <- round(sum(timeLag[splitRows]/m-1));
+  message(paste("  |Mean time lag: ", round(m,2) , ", tolerance (0.5*sd): ", round(tolerance,2),
+                ", number of splits: ", nSplits, ", proposed change in steps: ", nChange, sep=""))
+  return(trackSections)
 }
 
 #' Crops the DEM to the extent of the track with a buffer

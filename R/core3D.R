@@ -1,7 +1,7 @@
 #' Extract tldCube and autodifferences functions
 #'
 #' Creates a list consisting of the 3 dimensional
-#' probability distribution cube for turning angle, lift angle and step length
+#' probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 #' as well as the uni-dimensional distributions of the differences
 #' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
@@ -140,7 +140,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' comparably long simulations.
 #' The conditional walk connecting a given start
 #' with a certain end point by a given number of
-#' steps needs an attraction term (the Q probability, see below)
+#' steps needs an attraction term (the Q probability, see \link[eRTG3D]{qProb.3d})
 #' to ensure that the target is approached and hit.
 #' In order to calculate the Q probability for each step
 #' the distribution of turns and lifts to target and
@@ -165,7 +165,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @param start vector indicating the start point c(x,y,z)
 #' @param a0 initial heading in radian
 #' @param g0 initial gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #'
 #' @return A 3 dimensional trajectory in the form of a data.frame
@@ -245,12 +245,12 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 
 #' Q probabilities for n steps
 #'
-#'  Calculates the Q probability, representing the pull to
+#' Calculates the Q probability, representing the pull to
 #' the target. The number of steps on which the Q prob will be
 #' quantified is number of total segments less than one
 #' (the last step is defined by the target itself).
 #'
-#' @param sim the result of simm.uncond.3d(), or a data frame with at least
+#' @param sim the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modelled,
 #'     the length of the desired conditioned empirical random walk
@@ -326,8 +326,8 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE)
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
 #' @param g0 initial incoming gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
-#' @param qProbs list object returned by qProb.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
+#' @param qProbs list object returned by the \link[eRTG3D]{qProb.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
@@ -508,7 +508,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' Conditioned Empirical Random Walks (CERW) in 3D
 #'
 #' Creates n conditioned empirical random walks, with a specific starting and ending point,
-#' geometrically similar to the initial trajectory
+#' geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.
 #'
 #' @param n.sim number of CERWs to simulate
 #' @param n.locs length of the trajectory in locations

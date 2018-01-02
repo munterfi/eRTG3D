@@ -15,7 +15,7 @@ sim.uncond.3d(n.locs, start = c(0, 0, 0), a0, g0, densities, error = TRUE)
 
 \item{g0}{initial gradient/polar angle in radian}
 
-\item{densities}{list object returned by get.densities.3d() function}
+\item{densities}{list object returned by the \link[eRTG3D]{get.densities.3d} function}
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 }
@@ -30,7 +30,7 @@ ditional walks or to seed the conditional walks with
 comparably long simulations.
 The conditional walk connecting a given start
 with a certain end point by a given number of
-steps needs an attraction term (the Q probability, see below)
+steps needs an attraction term (the Q probability, see \link[eRTG3D]{qProb.3d})
 to ensure that the target is approached and hit.
 In order to calculate the Q probability for each step
 the distribution of turns and lifts to target and

@@ -28,11 +28,6 @@ empirical properties (turning angle, lift angle and step length
 and the auto-differences of them. It can be used for uncon-
 ditional walks or to seed the conditional walks with
 comparably long simulations.
-Simulations connecting start and end points
-with more steps than 1/10th or more of the number of steps
-of the empirical data should rather rely on simulated
-unconditional walks with the same properties than on
-the empirical data (factor 1500).
 The conditional walk connecting a given start
 with a certain end point by a given number of
 steps needs an attraction term (the Q probability, see below)
@@ -44,9 +39,22 @@ They can be derived from the empirical data (ideally),
 or estimated from an unconditional process with the same properties.
 Creates a unconditioned empirical random walk, with a specific starting point,
 geometrically similar to the initial trajectory.
+}
+\section{Note}{
+
+Simulations connecting start and end points
+with more steps than 1/10th or more of the number of steps
+of the empirical data should rather rely on simulated
+unconditional walks with the same properties than on
+the empirical data (factor 1500).
+}
+
+\section{Random initial heading}{
+
 For a random initial heading a0 use:
   sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)
 }
+
 \examples{
 sim.uncond.3d(n.locs, start=c(0,0,0), a0, g0, densities)
 }

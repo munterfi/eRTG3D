@@ -1,0 +1,153 @@
+#' Internally verification of the simulated track
+#'
+#' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the orginal track
+#' with the characteristics of the simulated track.
+#'
+#' @param track1 data.frame with x,y,z coordinates of the original track
+#' @param track2 data.frame or list of data.frames with x,y,z coordinates of the simulated track
+#' @param alpha scalar: significance level, default alpha = 0.05
+#' @param plotDensities logical: plot the densites of turn angle, lift angle and step length of the two tracks?
+#'
+#' @return Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
+#' @export
+#'
+#' @examples
+#' test.verification.3d(track1, track2)
+test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = FALSE)
+{
+  message("  |*** Two-sample Kolmogorov-Smirnov test ***")
+  track1 <- track.properties.3d(track1)[2:nrow(track1), ]
+  t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
+  diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
+  if(is.data.frame(track2)){
+    track2 <- track.properties.3d(track2)[2:nrow(track2), ]
+    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
+    diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);
+  } else {
+    track2 <- filter.dead.ends(track2)
+    track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
+    diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
+    track2 <- do.call("rbind", track2)
+    diffTrack2 <- do.call("rbind", diffTrack2)
+    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
+    diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
+  }
+  # turn
+  turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
+  diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
+  # lift
+  liftT <- suppressWarnings(ks.test(l1, l2, alternative = "two.sided"))
+  diffLiftT <- suppressWarnings(ks.test(diffL1, diffL2, alternative = "two.sided"))
+  # step
+  stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
+  diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
+  message("  |H0: Probability distributions do not differ significantly")
+  message("  |H1: Probability distributions differ significantly")
+  message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))
+  message(paste("  |Lift angle  – ", .test2text(liftT, alpha), ", autodifferences – ", .test2text(diffLiftT, alpha), sep=""))
+  message(paste("  |Step length – ", .test2text(stepT, alpha), ", autodifferences – ", .test2text(diffStepT, alpha), sep=""))
+  if (plotDensities) {
+    suppressWarnings(plot3d.multiplot(
+      .plot3d.density(t1, t2, titleText = "Turn angle"),
+      .plot3d.density(l1, l2, titleText = "Lift angle"),
+      .plot3d.density(d1, d2, titleText = "Step length"),
+      cols = 1
+    ))
+  }
+  return(list(turnT, liftT, stepT, diffTurnT, diffLiftT, diffStepT))
+}
+
+#' Extract test results as string
+#'
+#' @param test object of type 'htest'
+#' @param alpha scalar: significance level, default alpha = 0.05
+#'
+#' @return A character describing the results.
+#' @export
+#'
+#' @examples
+#' .test2text(test, alpha)
+.test2text <- function(test, alpha)
+{
+  p <- test$p.value
+  paste("p-value: ", round(p,3) , if(p<alpha){
+    paste(" < ", alpha, ", *H1*", sep = "")
+  } else {
+    paste(" > ", alpha, ", *H0*", sep = "")
+  }, sep = "")
+}
+
+#' Test the functionality of the eRTG3D
+#'
+#' The test simulates a CRW with given parameters and reconstructs it by using the eRTG3D
+#'
+#' @param multicore logical: test with multicore?
+#' @param returnResult logical: return tracks generated?
+#' @param plot2d logical: plot tracks on 2d plane?
+#' @param plot3d logical: plot tracks in 3D?
+#'
+#' @return A list containing the original CRW and the simulated track (CERW).
+#' @export
+#'
+#' @examples
+#' test.eRTG3D.3d()
+test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = FALSE)
+{
+  message("  |*** Testing eRTG3D ***")
+  set.seed(6)
+  nStep <- 25
+  crw <- track.properties.3d(
+    sim.crw.3d(nStep = nStep, rTurn = 0.99, rLift = 0.99, meanStep = 1, start = c(0, 0, 10)))
+  turnAngle <- crw$t[2:nrow(crw)]; liftAngle <- crw$l[2:nrow(crw)]; stepLength <- crw$d[2:nrow(crw)]
+  deltaTurn <- diff(turnAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
+  heightEllipsoid <- crw$z
+  D <- get.densities.3d(liftAngle = liftAngle, turnAngle = turnAngle, stepLength = stepLength,
+                        deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
+                        heightEllipsoid = heightEllipsoid, heightTopo = NULL)
+  uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
+                        a0 = crw$a[1], g0 = crw$g[1], densities = D)
+  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05, plotDensities = FALSE)
+  Q <- qProb.3d(uerw, nStep, multicore = multicore)
+  cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
+                      a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
+  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
+  message("  |*** Test passed successfully ***")
+  if(plot2d){plot2d(crw, cerw)}
+  if(plot3d){plot3d(crw, cerw)}
+  if(returnResult){return(list(crw = crw, cerw = cerw))}
+}
+
+#' Simulation of a three dimensional Correlated Random Walk
+#'
+#' @param nStep the number of steps of the simulated trajectory
+#' @param rTurn the correlation on the turn angle
+#' @param rLift the correlation of the lift angle
+#' @param meanStep the mean step length
+#' @param start a vector of length 3 containing the coordinates of the startpoint of the trajectory
+#'
+#' @return A trajectory in the form of data.frame
+#' @export
+#'
+#' @examples
+#' sim.crw.3d(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
+sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
+{
+  # correlated angles and distance
+  t <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rTurn)
+  a <- .wrap(cumsum(c(runif(1, 0, 2 * pi), t)))
+  l <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rLift)
+  g <- .wrap(cumsum(c(runif(1, 0, pi), l)))
+  f <- abs(scale(CircStats::rwrpnorm(n = nStep - 1, mu = 0, rho = (rTurn+rLift)/2))[,1])
+  d <- rep(meanStep, nStep-1) * f
+  # deltas in all 3 directions
+  dx <- (d * sin(g) * cos(a))
+  dy <- (d * sin(g) * sin(a))
+  dz <- (d * cos(g))
+  # generate track
+  t <- data.frame(
+    x = cumsum(c(start[1], dx)),
+    y = cumsum(c(start[2], dy)),
+    z = cumsum(c(start[3], dz))
+  )
+  return(t)
+}

@@ -2,26 +2,39 @@
 % Please edit documentation in R/core3D.R
 \name{get.densities.3d}
 \alias{get.densities.3d}
-\title{Extract tldCube and autodifferences functions from a track}
+\title{Extract tldCube and autodifferences functions}
 \usage{
-get.densities.3d(track, heightDistEllipsoid = TRUE, DEM = NULL)
+get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
+  deltaStep, heightEllipsoid = NULL, heightTopo = NULL)
 }
 \arguments{
-\item{track}{a data.frame with 3 columns containing the x,y,z coordinates}
+\item{turnAngle}{turn angles of the track (t)}
 
-\item{heightDistEllipsoid}{logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?}
+\item{liftAngle}{lift angles of the track (l)}
 
-\item{DEM}{a raster containting a digital elevation model, covering the same extent as the track}
+\item{stepLength}{stepLength of the track (d)}
+
+\item{deltaLift}{auto differences of the turn angles (diff(t))}
+
+\item{deltaTurn}{auto differences of the lift angles (diff(l))}
+
+\item{deltaStep}{auto differences of the step length (diff(d))}
+
+\item{heightEllipsoid}{flight height over the ellipsoid (absolute) or NULL to exclude this distribution}
+
+\item{heightTopo}{flight height over the topography (relative) or NULL to exclude this distribution}
 }
 \value{
-A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
+A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
 }
 \description{
-Get densities creates a list consisting of the 3 dimensional
+Creates a list consisting of the 3 dimensional
 probability distribution cube for turning angle, lift angle and step length
 as well as the uni-dimensional distributions of the differences
-of the turning angles, lift angles and step lengths with a lag of 1 to maintain
+of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 minimal level of autocorrelation in each of the terms.
+Additionally also the distribution of the flight height over the ellipsoid (absolute)
+andthe distribution of flight height over the topography (relative) can be included.
 }
 \examples{
 get.densities.3d(track, heightDist = TRUE)

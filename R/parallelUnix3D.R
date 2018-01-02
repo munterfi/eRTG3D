@@ -62,7 +62,7 @@
   lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
   dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
   # Use multicore to speed the calculations up
-  cubeList <- rev(parallel::mclapply(1:nSteps, function(x) TurnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE), mc.cores = nCores))
+  cubeList <- rev(parallel::mclapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE), mc.cores = nCores))
   # complete progress bar and close
   setTxtProgressBar(pb, 18)
   close(pb)

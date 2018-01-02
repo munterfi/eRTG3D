@@ -78,7 +78,9 @@ Then the densities from the track are extracted. Although the algorithm also wor
 D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem)
 ```
 
-Now an Unconditional Empirical Random Walk (UERW) is simulated, which contains 1500 times more steps than the track to be simulated. From the resulting UERW the Q probabilities, which represent the pull towards the destination, are extracted.
+The finally desired Conditional Empirical Random Walk (CERW) connecting a given start with a certain end point by a given number of steps needs an attraction term (the Q probability) to ensure that the target is approached and hit.
+In order to calculate the Q probability for each step the distribution of turns and lifts to target and the distribution of distance to target has to be knwown. They can be derived from the empirical data (ideally),
+or estimated from an unconditional process with the same properties. In this case the Q probabilities, which represent the pull towards the destination, are extracted from a UERW simulated with `sim.uncond.3d()`. The UERW should contain 1500 `f <- 1500` times more steps than the final CERW to be simulated. Q are extracted from the UERW by the function `qProb.3d()`.
 
 ```{r eval=FALSE}
 sim.locs <- nrow(niclas)
@@ -88,15 +90,17 @@ uerw <- sim.uncond.3d(sim.locs*f, start = c(niclas$x[1], niclas$y[1], niclas$z[1
 Q <- qProb.3d(uerw, sim.locs)
 ```
 
-Set up the start conditions: azimuth (`a0`), gradient (`g0`), start and end point of the track to be simulated.
+Set up the start conditions: azimuth (`a0`), gradient (`g0`), start and end point of the CERW to be simulated.
+
 ```{r eval=FALSE}
 start=c(niclas$x[1],niclas$y[1],niclas$z[1])
-end=c(niclas$x[sim.locs],niclas$y[sim.locs],niclas$z[sim.locs])
+end=c(niclas$x[nrow(niclas)],niclas$y[nrow(niclas)],niclas$z[nrow(niclas)])
 a0 = niclas$a[1]
 g0 = niclas$g[1]
 ```
 
-Then finally a Conditional Empirical Random Walk (CERW) can be simulated.
+Then finally a CERW can be simulated.
+
 ```{r eval=FALSE}
 cerw <- sim.cond.3d(sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
 ```
@@ -112,28 +116,14 @@ cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, 
 ## Extract densities from multiple track sections
 In many cases the time between the acquisition of fix points of the GPS tracks is not constant.
 This can be caused by the time to get the fixpoint or missing data. To avoid distorted statistic distributions,
-which increases the probability of dead ends, the track has to be splitted in sections, where the acquisition time is constant. In this case the `get.track.properties.3d()` function can not be used anymore. The work flow should look something like the following.
+which increases the probability of dead ends, the track has to be splitted in sections, where the acquisition time is constant. In this case the `get.track.properties.3d()` function can not be used anymore. Then the work flow should look like the following:
 
 ```{r eval=FALSE}
-track1 <- niclas
-track2 <- niclas
-track3 <- niclas
-tracks <- list(track1, track2, track3)
-tracks <- lapply(X=tracks, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
-deltaTurn <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$t)))
-deltaLift <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$l)))
-deltaStep <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$d)))
-tracks <- do.call(rbind, tracks)
-turnAngle <- tracks$t; liftAngle <- tracks$l; stepLength <- tracks$d
-heightEllipsoid <- tracks$z
-heightTopo <- tracks$z - raster::extract(DEM, tracks[,1:2])
-get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
-                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
-                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo)
-
-splitRows <- c(4, 10, 14)
-split(track, cumsum(1:nrow(track) %in% splitRows))
+trackSections <- track.split.3d(track, timeLag)
+D <- get.section.densities.3d(trackSections, DEM = dem)
 ```
+
+**Note:** If the aim is to reproduce a track, then the length of the track should be adjusted to fitt to the densities extracted by `get.section.densities.3d()`. The message thrown by the previosly applied `track.split.3d()` proposes a value `nChange` to change the track length of the simulations.
 
 ## Wrapped function to reproduce tracks
 To reproduce an observed track, it is the simplest to just apply the `reproduce.track.3d()` function on the track and the DEM. The function automatically wraps all steps above together. To produce multiple tracks, the `n.sim` variable can be used.
@@ -143,7 +133,7 @@ cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)
 ```
 
 ## Verify results
-The obtained result should be tested statistically. The first argument of the `test.verification.3d()` function is the original track to be tested against. The second argument is either a single track
+The obtained result should be tested statistically. The first argument of the `test.verification.3d()` function is the original track to be tested against. The second argument is either a single track...
 
 ```{r eval=TRUE, fig.height=5, fig.width=7}
 tests <- test.verification.3d(niclas, cerw, plotDensities = FALSE)

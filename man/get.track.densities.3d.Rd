@@ -18,7 +18,7 @@ A list containing the tldCube and the autodifferences functions (and additionall
 }
 \description{
 Get densities creates a list consisting of the 3 dimensional
-probability distribution cube for turning angle, lift angle and step length
+probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 as well as the uni-dimensional distributions of the differences
 of the turning angles, lift angles and step lengths with a lag of 1 to maintain
 minimal level of autocorrelation in each of the terms.
@@ -27,7 +27,8 @@ minimal level of autocorrelation in each of the terms.
 
 The time between the acquisition of fix points  of the track must be constant,
 otherwise this leads to distorted statistic distributions,
-which increases the probability of dead ends.
+which increases the probability of dead ends. In this case please check 
+\link[eRTG3D]{track.split.3d} and \link[eRTG3D]{get.section.densities.3d}
 }
 
 \examples{

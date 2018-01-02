@@ -38,7 +38,7 @@ pander::pandoc.table(head(round(niclas, 2),5))
 
 ## ----eval=FALSE----------------------------------------------------------
 #  start=c(niclas$x[1],niclas$y[1],niclas$z[1])
-#  end=c(niclas$x[sim.locs],niclas$y[sim.locs],niclas$z[sim.locs])
+#  end=c(niclas$x[nrow(niclas)],niclas$y[nrow(niclas)],niclas$z[nrow(niclas)])
 #  a0 = niclas$a[1]
 #  g0 = niclas$g[1]
 
@@ -49,24 +49,8 @@ pander::pandoc.table(head(round(niclas, 2),5))
 #  cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)
 
 ## ----eval=FALSE----------------------------------------------------------
-#  track1 <- niclas
-#  track2 <- niclas
-#  track3 <- niclas
-#  tracks <- list(track1, track2, track3)
-#  tracks <- lapply(X=tracks, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
-#  deltaTurn <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$t)))
-#  deltaLift <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$l)))
-#  deltaStep <- Reduce(c, lapply(X = tracks, FUN = function(X) diff(X$d)))
-#  tracks <- do.call(rbind, tracks)
-#  turnAngle <- tracks$t; liftAngle <- tracks$l; stepLength <- tracks$d
-#  heightEllipsoid <- tracks$z
-#  heightTopo <- tracks$z - raster::extract(DEM, tracks[,1:2])
-#  get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
-#                            deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
-#                            heightEllipsoid = heightEllipsoid, heightTopo = heightTopo)
-#  
-#  splitRows <- c(4, 10, 14)
-#  split(track, cumsum(1:nrow(track) %in% splitRows))
+#  trackSections <- track.split.3d(track, timeLag)
+#  D <- get.section.densities.3d(trackSections, DEM = dem)
 
 ## ---- fig.show='hold', eval=FALSE----------------------------------------
 #  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)

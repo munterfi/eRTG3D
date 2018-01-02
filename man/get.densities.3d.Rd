@@ -29,7 +29,7 @@ A list containing the tldCube and the autodifferences functions (and additionall
 }
 \description{
 Creates a list consisting of the 3 dimensional
-probability distribution cube for turning angle, lift angle and step length
+probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 as well as the uni-dimensional distributions of the differences
 of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 minimal level of autocorrelation in each of the terms.

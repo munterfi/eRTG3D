@@ -3,7 +3,6 @@
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param surface logical: should the surface layer be plotted? If no surface raster is provided, a zero plane is created.
 #' @param DEM an object of type 'RasterLayer', needs overlapping extent with the lines
 #' @param maxHeight Maximum plot height, default 8000m
 #'
@@ -13,7 +12,7 @@
 #'
 #' @examples
 #' plot3d(track)
-plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), surface=FALSE, DEM=NULL, maxHeight=8000) {
+plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL, maxHeight=8000) {
   multipleTrack <- TRUE
   singleTrack <- FALSE
   if (is.data.frame(cerwList)){
@@ -26,20 +25,15 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), surface=F
     singleTrack <- TRUE
   }
   cerwList <- cerwList[!unlist(lapply(cerwList, is.null))]
-  if (surface) {
+  if (!is.null(DEM)) {
+    if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
     minX <- min(floor(min(origTrack$x)), min(unlist(lapply(X = cerwList, FUN = function(track){floor(min(track$x))}))))
     maxX <- max(floor(max(origTrack$x)), max(unlist(lapply(X = cerwList, FUN = function(track){floor(max(track$x))}))))+1
     minY <- min(floor(min(origTrack$y)), min(unlist(lapply(X = cerwList, FUN = function(track){floor(min(track$y))}))))
     maxY <- max(floor(max(origTrack$y)), max(unlist(lapply(X = cerwList, FUN = function(track){floor(max(track$y))}))))+1
     ratio <- (maxY-minY)/(maxX-minX)
-    if (is.null(DEM)) {
-      DEM <- raster::raster(ncol=min(1000, (maxX-minX)), nrow=min(floor(1000*ratio), (maxY-minY)), xmn=minX, xmx=maxX, ymn=minY, ymx=maxY)
-      raster::values(DEM) <- runif(raster::ncell(DEM))
-    } else {
-      if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
-      DEM <- raster::crop(DEM, raster::extent(minX, maxX, minY, maxY))
-      DEM <- raster::resample(DEM, raster::raster(ncol=min(1000, (maxX-minX)), nrow=min(floor(1000*ratio), (maxY-minY)), xmn=minX, xmx=maxX, ymn=minY, ymx=maxY))
-    }
+    DEM <- raster::crop(DEM, raster::extent(minX, maxX, minY, maxY))
+    DEM <- raster::resample(DEM, raster::raster(ncol=min(1000, (maxX-minX)), nrow=min(floor(1000*ratio), (maxY-minY)), xmn=minX, xmx=maxX, ymn=minY, ymx=maxY))
     DEM <- raster::as.matrix(DEM)
     axz <- list(
       title = 'z',
@@ -67,11 +61,11 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), surface=F
                            showlegend = FALSE)
     }
   }
-  if (surface) {
+  if (!is.null(DEM)) {
     p <- plotly::add_surface(p, x = seq(minX, maxX, length.out = ncol(DEM)), y = seq(maxY, minY, length.out = nrow(DEM)), z = DEM, type = "surface",
                 opacity=1, colorscale=list(c(0,1,2,3,4,5),terrain.colors(6)), reversescale = TRUE,
                 colorbar=list(
-                  title='Surface'
+                  title='DEM'
                 ))
     p <- plotly::layout(p, title = titleText,
            scene = list(xaxis = list(title = 'x', autoscale = FALSE),

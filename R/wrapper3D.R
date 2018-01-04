@@ -193,7 +193,7 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
                                              a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}
   if(plot2d){plot2d(origTrack = track, cerwList = cerwList, DEM = DEM)}
-  if(plot3d){plot3d(origTrack = track, cerwList = cerwList, surface = TRUE, DEM = DEM)}
+  if(plot3d){plot3d(origTrack = track, cerwList = cerwList, DEM = DEM)}
   return(cerwList)
 }
 

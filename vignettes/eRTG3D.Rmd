@@ -167,7 +167,7 @@ plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", se
 The `plot3d()` function takes either one or two arguments. The second argument can be a single track data.frame or list of track data.frames as for example the output of `n.sim.cons.3d()`. Also a DEM rasterLayer, which is plotted as a surface can be passed to the function.
 
 ```{r eval=FALSE, fig.height=5, fig.width=7}
-plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), surface=TRUE, DEM=dem)
+plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 ```
 <img src="figs/plot3d.png" alt="Drawing" style="width: 96.5%;"/>
 

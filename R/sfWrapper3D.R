@@ -19,7 +19,9 @@ transformCRS.3d <- function(track, fromCRS, toCRS)
 {
   track <- track2sf.3d(track = track, CRS = fromCRS)
   track <- sf::st_transform(track, toCRS)
-  return(sf2df.3d(track))
+  track <- sf2df.3d(track)
+  track <- track.properties.3d(track)
+  return(track)
 }
 
 #' Tests if the object is a simple feature collection (class: 'sf, data.frame')

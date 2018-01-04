@@ -4,8 +4,8 @@
 \alias{plot3d}
 \title{Plot 3D track(s) with a surface}
 \usage{
-plot3d(origTrack, cerwList = NULL, titleText = character(1),
-  surface = FALSE, DEM = NULL, maxHeight = 8000)
+plot3d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL,
+  maxHeight = 8000)
 }
 \arguments{
 \item{origTrack}{a data.frame with x,y,z coordinates}
@@ -13,8 +13,6 @@ plot3d(origTrack, cerwList = NULL, titleText = character(1),
 \item{cerwList}{a list containing a data.frame with x,y,z coordinates or a data.frame}
 
 \item{titleText}{string with title of the plot}
-
-\item{surface}{logical: should the surface layer be plotted? If no surface raster is provided, a zero plane is created.}
 
 \item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the lines}
 

@@ -1,45 +1,46 @@
-#' Extract tldCube and autodifferences functions from a track
+#' Extract tldCube and autodifferences functions
 #'
-#' Get densities creates a list consisting of the 3 dimensional
-#' probability distribution cube for turning angle, lift angle and step length
+#' Creates a list consisting of the 3 dimensional
+#' probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 #' as well as the uni-dimensional distributions of the differences
-#' of the turning angles, lift angles and step lengths with a lag of 1 to maintain
+#' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
+#' Additionally also the distribution of the flight height over the ellipsoid (absolute)
+#' andthe distribution of flight height over the topography (relative) can be included. 
 #'
-#' @param track a data.frame with 3 columns containing the x,y,z coordinates
-#' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
-#' @param DEM a raster containting a digital elevation model, covering the same extent as the track
+#' @param turnAngle turn angles of the track (t)
+#' @param liftAngle lift angles of the track (l)
+#' @param stepLength stepLength of the track (d)
+#' @param deltaLift auto differences of the turn angles (diff(t))
+#' @param deltaTurn auto differences of the lift angles (diff(l))
+#' @param deltaStep auto differences of the step length (diff(d))
+#' @param heightEllipsoid flight height over the ellipsoid (absolute) or NULL to exclude this distribution
+#' @param heightTopo flight height over the topography (relative) or NULL to exclude this distribution
 #'
-#' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
+#' @return A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
 #' @export
 #'
 #' @examples
 #' get.densities.3d(track, heightDist = TRUE)
-get.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL)
+get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, heightEllipsoid = NULL, heightTopo = NULL)
 {
-  track <- track.properties.3d(track)
-  turningAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
-  deltaTurn <- diff(turningAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
   # probability distribution cube for turning angle, lift angle and step length
-  cubeTLD <- TurnLiftStepHist(turn = turningAngle, lift = liftAngle, step = stepLength)
+  cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength)
   # approximate the distribution of the difference in turning angle with lag 1
   autoT <- approxfun(density.default(deltaTurn))
   # approximate the distribution of the difference in lift angle with lag 1
   autoL <- approxfun(density.default(deltaLift))
   # approximate the distribution of the difference in step length with lag 1
   autoD <- approxfun(density.default(deltaStep))
-  if (heightDistEllipsoid) {hDistEllipsoid <- approxfun(density.default(track$z))} else {hDistEllipsoid <- function(x){1}}
-  if (!is.null(DEM)) {
-    .check.extent(DEM = DEM, track = track)
-    hDistTopo <- approxfun(density.default(track$z - raster::extract(DEM, track[,1:2])))
-  } else {hDistTopo <- function(x){1}}
+  if (!is.null(heightEllipsoid)) {hDistEllipsoid <- approxfun(density.default(heightEllipsoid))} else {hDistEllipsoid <- function(x){1}}
+  if (!is.null(heightTopo)) {hDistTopo <- approxfun(density.default(heightTopo))} else {hDistTopo <- function(x){1}}
   return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
 }
 
 #' 3 dimensional histogram
 #'
 #' Derives a 3 dimensional distribution of a turn angle,
-#' lift angle and step length, by using the Freedman–Diaconis rule for
+#' lift angle and step length, using the Freedman–Diaconis rule for
 #' estimating the number of bins.
 #'
 #' @param turn numeric vector of turn angles
@@ -53,8 +54,8 @@ get.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL)
 #' @export
 #'
 #' @examples
-#' TurnLiftStepHist(turn, lift, step)
-TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
+#' turnLiftStepHist(turn, lift, step)
+turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
 {
   # define based on df rule the number of bins
   # minimally 12 bins for turn angle
@@ -130,40 +131,6 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   2 * IQR(x) / (length(x) ^ (1/3))
 }
 
-#' Tests if the object is of type 'data.frame' and has x, y, z coordinates without NA values
-#'
-#' @param track any object to test
-#'
-#' @return A logical: TRUE if the track is the object needed, FALSE otherwise.
-#' @export
-#'
-#' @examples
-#' .is.df.xyz(track)
-.is.df.xyz <- function(track)
-{
-  if(!class(track)=="data.frame") stop("Input not of type 'data.frame'.")
-  if(!any(colnames(track)[1:3]==c("x","y","z"))) stop("Colnames of first three cols not 'x, y, z'.")
-  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
-}
-
-#' Checks if the track lies inside the digital elevation model.
-#'
-#' @param DEM a 'RasterLayer' containing a digital elevation model
-#' @param track a data.frame with 3 columns containing the x,y,z coordinates
-#'
-#' @return A logical: TRUE if the track lies inside the DEM, FALSE otherwise.
-#' @export
-#'
-#' @examples
-#' .check.extent(DEM, track)
-.check.extent <- function(DEM, track)
-{
-  if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
-  e <- raster::extent(DEM)
-  if(!(min(track[,1]) >= e[1] && max(track[,1]) <= e[2] &&
-           min(track[,2]) >= e[3] && max(track[,2]) <= e[4])) stop("The track is not inside the area of the digital elevation model.")
-}
-
 #' Uncontidioned Empirical Random Walk (UERW) in 3D
 #'
 #' This function creates unconditional walks with prescribed
@@ -171,14 +138,9 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' and the auto-differences of them. It can be used for uncon-
 #' ditional walks or to seed the conditional walks with
 #' comparably long simulations.
-#' Simulations connecting start and end points
-#' with more steps than 1/10th or more of the number of steps
-#' of the empirical data should rather rely on simulated
-#' unconditional walks with the same properties than on
-#' the empirical data (factor 1500).
 #' The conditional walk connecting a given start
 #' with a certain end point by a given number of
-#' steps needs an attraction term (the Q probability, see below)
+#' steps needs an attraction term (the Q probability, see \link[eRTG3D]{qProb.3d})
 #' to ensure that the target is approached and hit.
 #' In order to calculate the Q probability for each step
 #' the distribution of turns and lifts to target and
@@ -187,6 +149,15 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' or estimated from an unconditional process with the same properties.
 #' Creates a unconditioned empirical random walk, with a specific starting point,
 #' geometrically similar to the initial trajectory.
+#' 
+#' @section Note:
+#' Simulations connecting start and end points
+#' with more steps than 1/10th or more of the number of steps
+#' of the empirical data should rather rely on simulated
+#' unconditional walks with the same properties than on
+#' the empirical data (factor 1500).
+#' 
+#' @section Random initial heading:
 #' For a random initial heading a0 use:
 #'   sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)
 #'
@@ -194,7 +165,7 @@ TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @param start vector indicating the start point c(x,y,z)
 #' @param a0 initial heading in radian
 #' @param g0 initial gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #'
 #' @return A 3 dimensional trajectory in the form of a data.frame
@@ -245,7 +216,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     # limit gradient (0-pi)
     gAll <- (RTG[i-1, 5] + ls + lShift[i])
     pProbs <- pProbs * as.numeric((gAll > 0 & gAll < pi))
-    # sample on TurnLiftStepHist = tldCube and add shifts
+    # sample on turnLiftStepHist = tldCube and add shifts
     rP <- sample(1:nrow(densities$tldCube$values), size = 1, prob = pProbs)
     t <- ts[rP] + tShift[i]
     l <- ls[rP] + lShift[i]
@@ -274,12 +245,12 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 
 #' Q probabilities for n steps
 #'
-#'  Calculates the Q probability, representing the pull to
+#' Calculates the Q probability, representing the pull to
 #' the target. The number of steps on which the Q prob will be
 #' quantified is number of total segments less than one
 #' (the last step is defined by the target itself).
 #'
-#' @param sim the result of simm.uncond.3d(), or a data frame with at least
+#' @param sim the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modelled,
 #'     the length of the desired conditioned empirical random walk
@@ -334,7 +305,7 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE)
     lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
     dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
     # Use multicore to speed the calculations up
-    cubeList <- rev(lapply(1:nSteps, function(x) TurnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE)))
+    cubeList <- rev(lapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE)))
     # complete progress bar and close
     setTxtProgressBar(pb, 18)
     close(pb)
@@ -355,8 +326,8 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE)
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
 #' @param g0 initial incoming gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
-#' @param qProbs list object returned by qProb.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
+#' @param qProbs list object returned by the \link[eRTG3D]{qProb.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
@@ -537,7 +508,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' Conditioned Empirical Random Walks (CERW) in 3D
 #'
 #' Creates n conditioned empirical random walks, with a specific starting and ending point,
-#' geometrically similar to the initial trajectory
+#' geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.
 #'
 #' @param n.sim number of CERWs to simulate
 #' @param n.locs length of the trajectory in locations
@@ -591,321 +562,4 @@ n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, de
 .wrap <- function(x)
 {
   (x + pi) %% (2 * pi) - pi
-}
-
-#' Simulation of a three dimensional Correlated Random Walk
-#'
-#' @param nStep the number of steps of the simulated trajectory
-#' @param rTurn the correlation on the turn angle
-#' @param rLift the correlation of the lift angle
-#' @param meanStep the mean step length
-#' @param start a vector of length 3 containing the coordinates of the startpoint of the trajectory
-#'
-#' @return A trajectory in the form of data.frame
-#' @export
-#'
-#' @examples
-#' sim.crw.3d(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
-sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
-{
-  # correlated angles and distance
-  t <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rTurn)
-  a <- .wrap(cumsum(c(runif(1, 0, 2 * pi), t)))
-  l <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rLift)
-  g <- .wrap(cumsum(c(runif(1, 0, pi), l)))
-  f <- abs(scale(CircStats::rwrpnorm(n = nStep - 1, mu = 0, rho = (rTurn+rLift)/2))[,1])
-  d <- rep(meanStep, nStep-1) * f
-  # deltas in all 3 directions
-  dx <- (d * sin(g) * cos(a))
-  dy <- (d * sin(g) * sin(a))
-  dz <- (d * cos(g))
-  # generate track
-  t <- data.frame(
-    x = cumsum(c(start[1], dx)),
-    y = cumsum(c(start[2], dy)),
-    z = cumsum(c(start[3], dz))
-  )
-  return(t)
-}
-
-#' Track properties of a 3D track
-#'
-#' Returns the properties (distances, azimut, polar angle,
-#' turn angle & lift angle) of a track in three dimensions.
-#'
-#' @param track data.frame with x,y,z coordinates
-#'
-#' @return The data.frame with track properties
-#' @export
-#'
-#' @examples
-#' track.properties.3d(track)
-track.properties.3d <- function(track)
-{
-  .is.df.xyz(track)
-  # spatial coordinates
-  x <- track[,1]; y <- track[,2]; z <- track[,3]
-  # distance covered per axis and step
-  dx <- c(NA, diff(x)); dy <- c(NA, diff(y)); dz <- c(NA, diff(z))
-  d2d <- .distance.2d(dx, dy)
-  # spherical coordinates
-  d <- .distance.3d(dx, dy, dz)
-  a <- .get.azimut(dx, dy)
-  g <- .get.polar(d2d, dz)
-  # guess the initial azimut/heading & polar angle/gradient (alt: sample(a,1))
-  a[1] <- mean(a, na.rm=TRUE)
-  g[1] <- mean(g, na.rm=TRUE)
-  # Turn angle and lift angle
-  t <- c(NA, diff(a))
-  l <- c(NA, diff(g))
-  return(data.frame(x, y, z, a, g, t, l, d))
-}
-
-#' Azimut in respect to the x-axis
-#'
-#' @param dx distance in x
-#' @param dy distance in y
-#'
-#' @return The azimut in radian
-#' @export
-#'
-#' @examples
-#' .get.azimut(dx, dy)
-.get.azimut <- function(dx, dy)
-{
-  .wrap(atan2(dy, dx))
-}
-
-#' Polar angle/gradient in respect to the z-axis
-#'
-#' @param d ground distance in xy plane
-#' @param dz distance in z
-#'
-#' @return The polar angle in radian
-#' @export
-#'
-#' @examples
-#' .get.polar(d, dz)
-.get.polar <- function(d, dz)
-{
-  .wrap(atan2(d, dz))
-}
-
-#' Ground distance covered in XY plane
-#'
-#' @param dx distance in x
-#' @param dy distance in y
-#'
-#' @return Ground distance in XY plane
-#' @export
-#'
-#' @examples
-#' .distance.2d(dx, dy)
-.distance.2d <- function(dx, dy)
-{
-  sqrt(dx*dx+dy*dy)
-}
-
-#' Distance covered in 3 dimensions, radius
-#'
-#' @param dx distance in x
-#' @param dy distamce in y
-#' @param dz distance in z
-#'
-#' @return The radius
-#' @export
-#'
-#' @examples
-#' .distance.3d(dx, dy, dz)
-.distance.3d <- function(dx, dy, dz)
-{
-  sqrt(dx*dx+dy*dy+dz*dz)
-}
-
-#' Internally verification of the simulated track
-#'
-#' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the orginal track
-#' with the characteristics of the simulated track.
-#'
-#' @param track1 data.frame with x,y,z coordinates of the original track
-#' @param track2 data.frame or list of data.frames with x,y,z coordinates of the simulated track
-#' @param alpha scalar: significance level, default alpha = 0.05
-#' @param plotDensities logical: plot the densites of turn angle, lift angle and step length of the two tracks?
-#'
-#' @return Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
-#' @export
-#'
-#' @examples
-#' test.verification.3d(track1, track2)
-test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = FALSE)
-{
-  message("  |*** Two-sample Kolmogorov-Smirnov test ***")
-  track1 <- track.properties.3d(track1)[2:nrow(track1), ]
-  t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
-  diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
-  if(is.data.frame(track2)){
-    track2 <- track.properties.3d(track2)[2:nrow(track2), ]
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-    diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);
-  } else {
-    track2 <- filter.dead.ends(track2)
-    track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
-    diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
-    track2 <- do.call("rbind", track2)
-    diffTrack2 <- do.call("rbind", diffTrack2)
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-    diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
-  }
-  # turn
-  turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
-  diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
-  # lift
-  liftT <- suppressWarnings(ks.test(l1, l2, alternative = "two.sided"))
-  diffLiftT <- suppressWarnings(ks.test(diffL1, diffL2, alternative = "two.sided"))
-  # step
-  stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
-  diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
-  message("  |H0: Probability distributions do not differ significantly")
-  message("  |H1: Probability distributions differ significantly")
-  message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))
-  message(paste("  |Lift angle  – ", .test2text(liftT, alpha), ", autodifferences – ", .test2text(diffLiftT, alpha), sep=""))
-  message(paste("  |Step length – ", .test2text(stepT, alpha), ", autodifferences – ", .test2text(diffStepT, alpha), sep=""))
-  if (plotDensities) {
-    suppressWarnings(plot2d.multiplot(
-      .plot2d.density(t1, t2, titleText = "Turn angle"),
-      .plot2d.density(l1, l2, titleText = "Lift angle"),
-      .plot2d.density(d1, d2, titleText = "Step length"),
-      cols = 1
-    ))
-  }
-  return(list(turnT, liftT, stepT, diffTurnT, diffLiftT, diffStepT))
-}
-
-#' Extract test results as string
-#'
-#' @param test object of type 'htest'
-#' @param alpha scalar: significance level, default alpha = 0.05
-#'
-#' @return A character describing the results.
-#' @export
-#'
-#' @examples
-#' .test2text(test, alpha)
-.test2text <- function(test, alpha)
-{
-  p <- test$p.value
-  paste("p-value: ", round(p,3) , if(p<alpha){
-    paste(" < ", alpha, ", *H1*", sep = "")
-  } else {
-    paste(" > ", alpha, ", *H0*", sep = "")
-  }, sep = "")
-}
-
-#' Function to filter out tracks that have found a dead end (=NULL)
-#'
-#' @param cerwList list of data.frames and NULL entries
-#'
-#' @return A list that is only containing valid tracks.
-#' @export
-#'
-#' @examples
-#' filter.dead.ends(cerwList)
-filter.dead.ends <- function(cerwList)
-{
-  if(is.null(cerwList)) {warning("No track made it to the end point."); return(NULL)}
-  l1 <- length(cerwList)
-  cerwList <- cerwList[!unlist(lapply(cerwList, is.null))]
-  l2 <- length(cerwList)
-  if (l2 == 0) {warning("No track made it to the end point."); return(NULL)}
-  if (l1!=l2) {message(paste("  |Dead end tracks removed (n = ", (l1-l2), ", proportion: ", 1-round(l2/l1, 2), ")", sep=""))}
-  return(cerwList)
-}
-
-#' Crops the DEM to the extent of the track with a buffer
-#'
-#' @param DEM a raster containing a digital elevation model, covering the extent as the track
-#' @param track data.frame with x,y,z coordinates of the original track
-#' @param buffer bufferwith, by default set to 100
-#'
-#' @return A the cropped digital elevation model as a raster layer.
-#' @export
-#'
-#' @examples
-#' dem.track.extent(DEM, track)
-dem.track.extent <- function(DEM, track, buffer=100)
-{
-  .check.extent(DEM = DEM, track = track)
-  return(raster::crop(dem, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
-}
-
-#' Test the functionality of the eRTG3D
-#'
-#' The test simulates a CRW with given parameters and reconstructs it by using the eRTG3D
-#'
-#' @param multicore logical: test with multicore?
-#' @param returnResult logical: return tracks generated?
-#' @param plot2d logical: plot tracks on 2d plane?
-#' @param plot3d logical: plot tracks in 3D?
-#'
-#' @return A list containing the original CRW and the simulated track (CERW).
-#' @export
-#'
-#' @examples
-#' test.eRTG3D.3d()
-test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = FALSE)
-{
-  message("  |*** Testing eRTG3D ***")
-  set.seed(123)
-  nStep <- 25
-  crw <- track.properties.3d(
-    sim.crw.3d(nStep = nStep, rTurn = 0.99, rLift = 0.99, meanStep = 1, start = c(0, 0, 10)))
-  D <- get.densities.3d(crw, heightDistEllipsoid = FALSE)
-  uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
-                        a0 = crw$a[1], g0 = crw$g[1], densities = D)
-  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05, plotDensities = FALSE)
-  Q <- qProb.3d(uerw, nStep, multicore = multicore)
-  cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
-                      a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
-  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
-  message("  |*** Test passed successfully ***")
-  if(plot2d){plot2d(crw, cerw)}
-  if(plot3d){plot3d(crw, cerw)}
-  if(returnResult){return(list(crw = crw, cerw = cerw))}
-}
-
-#' Reproduce a track with the eRTG3D
-#'
-#' Simulates n tracks with the geometrical properties of the original track,
-#' between the same start and end point.
-#'
-#' @param track data.frame with x,y,z coordinates of the original track
-#' @param n.sim number of simulations that should be done
-#' @param error logical: add error term to movement in simulation?
-#' @param DEM a raster containing a digital elevation model, covering the same extent as the track
-#' @param BG a raster influencing the probabilities.
-#' @param multicore logical: run calculations on multiple cores?
-#' @param filterDeadEnds: logical: remove tracks (='NULL') that ended in a dead end?
-#' @param plot2d logical: plot tracks on 2d plane?
-#' @param plot3d logical: plot tracks in 3D?
-#'
-#' @return A list or data.frame containing the simulated track(s) (CERW).
-#' @export
-#'
-#' @examples
-#' reproduce.track.3d(track)
-reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL,  plot2d = FALSE, plot3d = FALSE, filterDeadEnds = TRUE)
-{
-  track <- track.properties.3d(track)
-  n.locs <- nrow(track)
-  if (n.locs>1500) stop("Track is too long (>1500 steps).")
-  D <- get.densities.3d(track, heightDistEllipsoid = TRUE, DEM = DEM)
-  uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
-                        a0 = track$a[1], g0 = track$g[1], densities = D, error = error)
-  Q <- qProb.3d(uerw, n.locs, multicore = multicore)
-  cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
-                                             a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
-  if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}
-  if(plot2d){plot2d(origTrack = track, cerwList = cerwList, DEM = DEM)}
-  if(plot3d){plot3d(origTrack = track, cerwList = cerwList, surface = TRUE, DEM = DEM)}
-  return(cerwList)
 }

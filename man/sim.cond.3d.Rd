@@ -18,9 +18,9 @@ sim.cond.3d(n.locs, start = c(0, 0, 0), end = start, a0, g0, densities,
 
 \item{g0}{initial incoming gradient/polar angle in radian}
 
-\item{densities}{list object returned by get.densities.3d() function}
+\item{densities}{list object returned by the \link[eRTG3D]{get.densities.3d} function}
 
-\item{qProbs}{list object returned by qProb.3d() function}
+\item{qProbs}{list object returned by the \link[eRTG3D]{qProb.3d} function}
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 

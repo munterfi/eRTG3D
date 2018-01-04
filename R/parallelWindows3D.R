@@ -27,7 +27,7 @@
   # define variables and functions needed later to pass them to the cluster
   sim <- sim
   wrap <- function(x) {(x + pi) %% (2 * pi) - pi}
-  TurnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
+  turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
   {
     nx <- min(max(floor(2 * pi / fd.bw(turn)), 12), maxBin)
     ny <- min(max(floor(2 * pi / fd.bw(lift)), 12), maxBin)
@@ -99,7 +99,7 @@
   lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
   dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
   # Use multicore to speed the calculations up
-  cubeList <- rev(plyr::llply(1:nSteps, function(x) TurnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], rm.zeros = TRUE),
+  cubeList <- rev(plyr::llply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], rm.zeros = TRUE),
                               .parallel = TRUE,  .paropts = list(.options.snow=opts)))
   # stop cluster
   parallel::stopCluster(cl)

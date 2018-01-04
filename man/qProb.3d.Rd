@@ -7,7 +7,7 @@
 qProb.3d(sim, n.locs, multicore = FALSE)
 }
 \arguments{
-\item{sim}{the result of simm.uncond.3d(), or a data frame with at least
+\item{sim}{the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 x,y,z-coordinates, the arrival azimuth and the arrival gradient.}
 
 \item{n.locs}{number of total segments to be modelled,

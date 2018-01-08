@@ -16,16 +16,17 @@
 #' @param deltaStep auto differences of the step length (diff(d))
 #' @param heightEllipsoid flight height over the ellipsoid (absolute) or NULL to exclude this distribution
 #' @param heightTopo flight height over the topography (relative) or NULL to exclude this distribution
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
 #' @export
 #'
 #' @examples
 #' get.densities.3d(track, heightDist = TRUE)
-get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, heightEllipsoid = NULL, heightTopo = NULL)
+get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
 {
   # probability distribution cube for turning angle, lift angle and step length
-  cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength)
+  cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength, maxBin = maxBin)
   # approximate the distribution of the difference in turning angle with lag 1
   autoT <- approxfun(density.default(deltaTurn))
   # approximate the distribution of the difference in lift angle with lag 1
@@ -48,7 +49,7 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @param step numeric vector of step lengths
 #' @param printDims logical: Should dimensions of tld-Cube be messaged?
 #' @param rm.zeros logical: should combinations with zero probability be removed?
-#' @param maxBin numeric scalar
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube.
 #'
 #' @return A 3 dimensional histogram as data.frame
 #' @export

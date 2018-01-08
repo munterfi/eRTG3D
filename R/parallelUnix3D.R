@@ -9,23 +9,18 @@
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modelled,
 #'     the length of the desired conditioned empirical random walk
-#' @param multicore logical: run computations in parallel (n-1 cores)?
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the Q - tldCubes for every step
 #' @export
 #'
 #' @examples
 #' .qProb.3d.unix(sim, n.locs)
-.qProb.3d.unix <- function(sim, n.locs, multicore = FALSE)
+.qProb.3d.unix <- function(sim, n.locs, maxBin = 25)
 {
   start.time <- Sys.time()
-  if(multicore){
-    nCores <- parallel::detectCores()-1
-    message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
-  } else {
-    nCores <- 1
-    message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
-  }
+  nCores <- parallel::detectCores()-1
+  message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
   # progress bar
   pb <- txtProgressBar(min = 0, max = 18, style = 3)
   # steps minus 2
@@ -62,7 +57,7 @@
   lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
   dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
   # Use multicore to speed the calculations up
-  cubeList <- rev(parallel::mclapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE), mc.cores = nCores))
+  cubeList <- rev(parallel::mclapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin), mc.cores = nCores))
   # complete progress bar and close
   setTxtProgressBar(pb, 18)
   close(pb)

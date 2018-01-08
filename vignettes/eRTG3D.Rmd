@@ -75,7 +75,7 @@ pander::pandoc.table(head(round(niclas, 2),5))
 Then the densities from the track are extracted. Although the algorithm also works without DEM, the DEM should be passed to the `get.track.densities.3d()` function, otherwise the flight height distribution in respect to the earth surface can not be built, which ends in less accurate results.
 
 ```{r eval=FALSE}
-D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem, maxBin = 25)
+D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem)
 ```
 
 The finally desired Conditional Empirical Random Walk (CERW) connecting a given start with a certain end point by a given number of steps needs an attraction term (the Q probability) to ensure that the target is approached and hit.

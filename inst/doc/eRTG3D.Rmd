@@ -23,7 +23,7 @@ options(knitr.table.format = "html")
 
 library(eRTG3D)
 set.seed(123)
-cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE)
+cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 50)
 cerw <- cerwList[[1]]
 ```
 

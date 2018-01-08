@@ -27,7 +27,7 @@ niclas <- track.properties.3d(niclas)
 pander::pandoc.table(head(round(niclas, 2),5))
 
 ## ----eval=FALSE----------------------------------------------------------
-#  D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem)
+#  D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem, maxBin = 25)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  sim.locs <- nrow(niclas)
@@ -68,7 +68,7 @@ plot3d.densities(niclas, cerwList)
 plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
-#  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), surface=TRUE, DEM=dem)
+#  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
 #  Q <- qProb.3d(uerw, sim.locs, multicore=TRUE)

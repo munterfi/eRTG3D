@@ -256,17 +256,18 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #' @param n.locs number of total segments to be modelled,
 #'     the length of the desired conditioned empirical random walk
 #' @param multicore logical: run computations in parallel (n-1 cores)?
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the Q - tldCubes for every step
 #' @export
 #'
 #' @examples
 #' qProb.3d(sim, n.locs)
-qProb.3d <- function(sim, n.locs, multicore = FALSE)
+qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
 {
   if (multicore) {
-    if(.Platform$OS.type == "unix") {return(.qProb.3d.unix(sim, n.locs,  multicore = TRUE))}
-    if(.Platform$OS.type == "windows") {return(suppressWarnings(.qProb.3d.windows(sim, n.locs)))}
+    if(.Platform$OS.type == "unix") {return(.qProb.3d.unix(sim, n.locs, maxBin = maxBin))}
+    if(.Platform$OS.type == "windows") {return(suppressWarnings(.qProb.3d.windows(sim, n.locs, maxBin = maxBin)))}
   } else {
     start.time <- Sys.time()
     message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
@@ -306,7 +307,7 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE)
     lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
     dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
     # Use multicore to speed the calculations up
-    cubeList <- rev(lapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE)))
+    cubeList <- rev(lapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin)))
     # complete progress bar and close
     setTxtProgressBar(pb, 18)
     close(pb)

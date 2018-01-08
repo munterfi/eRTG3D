@@ -191,7 +191,7 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
                         heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin)
   uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
                         a0 = track$a[1], g0 = track$g[1], densities = D, error = error)
-  Q <- qProb.3d(uerw, n.locs, multicore = multicore)
+  Q <- qProb.3d(uerw, n.locs, multicore = multicore, maxBin = maxBin)
   cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
                                              a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}

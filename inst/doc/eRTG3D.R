@@ -27,7 +27,7 @@ niclas <- track.properties.3d(niclas)
 pander::pandoc.table(head(round(niclas, 2),5))
 
 ## ----eval=FALSE----------------------------------------------------------
-#  D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem, maxBin = 25)
+#  D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  sim.locs <- nrow(niclas)

@@ -9,13 +9,14 @@
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modelled,
 #'     the length of the desired conditioned empirical random walk
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the Q - tldCubes for every step
 #' @export
 #'
 #' @examples
 #' qProb.3d.windows(sim, n.locs)
-.qProb.3d.windows <- function(sim, n.locs)
+.qProb.3d.windows <- function(sim, n.locs, maxBin = 25)
 {
   start.time <- Sys.time()
   # set up cluster (parallel, doParallel and later plyr)
@@ -99,7 +100,7 @@
   lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
   dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
   # Use multicore to speed the calculations up
-  cubeList <- rev(plyr::llply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], rm.zeros = TRUE),
+  cubeList <- rev(plyr::llply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], rm.zeros = TRUE, maxBin = maxBin),
                               .parallel = TRUE,  .paropts = list(.options.snow=opts)))
   # stop cluster
   parallel::stopCluster(cl)

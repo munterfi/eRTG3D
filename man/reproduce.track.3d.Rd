@@ -5,8 +5,8 @@
 \title{Reproduce a track with the eRTG3D}
 \usage{
 reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
-  DEM = NULL, BG = NULL, plot2d = FALSE, plot3d = FALSE,
-  filterDeadEnds = TRUE)
+  DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE,
+  plot3d = FALSE, maxBin = 25)
 }
 \arguments{
 \item{track}{data.frame with x,y,z coordinates of the original track}
@@ -24,6 +24,8 @@ reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
 \item{plot2d}{logical: plot tracks on 2d plane?}
 
 \item{plot3d}{logical: plot tracks in 3D?}
+
+\item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 
 \item{filterDeadEnds:}{logical: remove tracks (='NULL') that ended in a dead end?}
 }

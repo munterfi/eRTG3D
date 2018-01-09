@@ -5,7 +5,7 @@
 \title{Extract tldCube and autodifferences functions}
 \usage{
 get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
-  deltaStep, heightEllipsoid = NULL, heightTopo = NULL)
+  deltaStep, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
 }
 \arguments{
 \item{turnAngle}{turn angles of the track (t)}
@@ -23,6 +23,8 @@ get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
 \item{heightEllipsoid}{flight height over the ellipsoid (absolute) or NULL to exclude this distribution}
 
 \item{heightTopo}{flight height over the topography (relative) or NULL to exclude this distribution}
+
+\item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 }
 \value{
 A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)

@@ -23,7 +23,7 @@ options(knitr.table.format = "html")
 
 library(eRTG3D)
 set.seed(123)
-cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE)
+cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 50)
 cerw <- cerwList[[1]]
 ```
 
@@ -43,9 +43,9 @@ results <- test.eRTG.3d(returnResult = TRUE, plot2d = TRUE, plot3d = TRUE)
 ```
 
 ## Coordinate reference system transformations
-The eRTG3D only supports calculations in *Cartesian* coordinate systems. In case of latitude / longitude coordinates (e.g.: WGS84), these must be converted into a *Cartesian* coordinate system, as for example the Universal Transverse Mercator (UTM).
+The eRTG3D only supports calculations in *Cartesian* coordinate systems. In case of latitude / longitude data (e.g.: WGS84), these must be converted into a *Cartesian* coordinate system, as for example the Universal Transverse Mercator (UTM).
 
-To carry out a CRS transformation, please use `transformCRS.3d()`, which is based on the `st_transform()` from the `sf` package. Therefore is supports CRS transdormations in 3D.
+To carry out a CRS transformation, please use `transformCRS.3d()`, which is based on the `st_transform()` from the `sf` package. Therefore is supports CRS transformations in 3D.
 
 ```{r eval=FALSE}
 WGS84 <- "+init=epsg:4326"
@@ -79,7 +79,7 @@ D <- get.track.densities.3d(niclas, heightDistEllipsoid = TRUE, DEM = dem)
 ```
 
 The finally desired Conditional Empirical Random Walk (CERW) connecting a given start with a certain end point by a given number of steps needs an attraction term (the Q probability) to ensure that the target is approached and hit.
-In order to calculate the Q probability for each step the distribution of turns and lifts to target and the distribution of distance to target has to be knwown. They can be derived from the empirical data (ideally),
+In order to calculate the Q probability for each step the distribution of turns and lifts to target and the distribution of distance to target has to be known. They can be derived from the empirical data (ideally),
 or estimated from an unconditional process with the same properties. In this case the Q probabilities, which represent the pull towards the destination, are extracted from a UERW simulated with `sim.uncond.3d()`. The UERW should contain 1500 `f <- 1500` times more steps than the final CERW to be simulated. Q are extracted from the UERW by the function `qProb.3d()`.
 
 ```{r eval=FALSE}
@@ -115,7 +115,7 @@ cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, 
 
 ## Extract densities from multiple track sections
 In many cases the time between the acquisition of fix points of the GPS tracks is not constant.
-This can be caused by the time to get the fixpoint or missing data. To avoid distorted statistic distributions,
+This can be caused by the time to get the fix point or missing data. To avoid distorted statistic distributions,
 which increases the probability of dead ends, the track has to be splitted in sections, where the acquisition time is constant. In this case the `get.track.properties.3d()` function can not be used anymore. Then the work flow should look like the following:
 
 ```{r eval=FALSE}
@@ -123,7 +123,7 @@ trackSections <- track.split.3d(track, timeLag)
 D <- get.section.densities.3d(trackSections, DEM = dem)
 ```
 
-**Note:** If the aim is to reproduce a track, then the length of the track should be adjusted to fitt to the densities extracted by `get.section.densities.3d()`. The message thrown by the previosly applied `track.split.3d()` proposes a value `nChange` to change the track length of the simulations.
+**Note:** If the aim is to reproduce a track, then the length of the track should be adjusted to fit to the densities extracted by `get.section.densities.3d()`. The message thrown by the previously applied `track.split.3d()` proposes a value `nChange` to change the track length of the simulations.
 
 ## Wrapped function to reproduce tracks
 To reproduce an observed track, it is the simplest to just apply the `reproduce.track.3d()` function on the track and the DEM. The function automatically wraps all steps above together. To produce multiple tracks, the `n.sim` variable can be used.
@@ -172,7 +172,7 @@ plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", se
 <img src="figs/plot3d.png" alt="Drawing" style="width: 96.5%;"/>
 
 ## Parallel computing
-The computationally most intense functions `qProb.3d()`, `n.sim.uncond.3d()` and `reproduce.track.3d()` of the package are also implemented in a parallel version. On Unix systems this is done with the `parallel` package. On Windows systems, a combination of the packages `doParallel`, `parallel` and `plyr` ones is used. These versions can be acessed by setting the paramater `multicore=TRUE`.
+The computationally most intense functions `qProb.3d()`, `n.sim.uncond.3d()` and `reproduce.track.3d()` of the package are also implemented in a parallel version. On Unix systems this is done with the `parallel` package. On Windows systems, a combination of the packages `doParallel`, `parallel` and `plyr` ones is used. These versions can be accessed by setting the parameter `multicore=TRUE`.
 
 ```{r eval=FALSE, fig.height=5, fig.width=7}
 Q <- qProb.3d(uerw, sim.locs, multicore=TRUE)
@@ -198,7 +198,7 @@ And a running example:
 cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem, multicore=TRUE)
 ```
 
-**Note:** If only a few tracks are simulated and the track length is short `sim.locs < 30`, then it is faster in many cases to stay with the singlecore version of the function, especially on Windows systems, where setting up clusters takes some time.
+**Note:** If only a few tracks are simulated and the track length is short `sim.locs < 30`, then it is faster in many cases to stay with the single core version of the function, especially on Windows systems, where setting up clusters takes some time.
 
 ## Linkage to the 'sf' package
 The `sf` package delivers a standardized way to encode spatial vector data, the so called Simple Features (SF). It binds to GDAL for reading and writing data, to GEOS for geometrical operations, and to Proj.4 for projection conversions and datum transformations. Therefore the `eRTG3D` package comes with some wrapper functions to convert the generated tracks to simple features. The resulting `sf, data.frame` objects enable access to the functionality of the sf package, which also includes an easy ways to access spatial databases (PostGIS).

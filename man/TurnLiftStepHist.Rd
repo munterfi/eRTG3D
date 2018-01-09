@@ -18,7 +18,7 @@ turnLiftStepHist(turn, lift, step, printDims = TRUE, rm.zeros = TRUE,
 
 \item{rm.zeros}{logical: should combinations with zero probability be removed?}
 
-\item{maxBin}{numeric scalar}
+\item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube.}
 }
 \value{
 A 3 dimensional histogram as data.frame

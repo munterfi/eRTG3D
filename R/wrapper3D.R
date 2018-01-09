@@ -15,13 +15,14 @@
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
 #' @param DEM a raster containting a digital elevation model, covering the same extent as the track
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
 #' @export
 #'
 #' @examples
 #' get.track.densities.3d(track, heightDist = TRUE)
-get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL)
+get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   .is.df.xyz(track)
   track <- track.properties.3d(track)
@@ -34,7 +35,7 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
   } else {heightTopo <- NULL}
   return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
                           deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
-                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo))
+                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin))
 }
 
 #' Extract tldCube and autodifferences functions from track sections
@@ -48,13 +49,14 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
 #' @param trackSections list of track sections got by the \link[eRTG3D]{track.split.3d} function
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
 #' @param DEM a raster containting a digital elevation model, covering the same extent as the track sections
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
 #' @export
 #'
 #' @examples
 #' get.section.densities.3d(trackSections)
-get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, DEM = NULL)
+get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   trackSections <- lapply(X=trackSections, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
   deltaTurn <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$t)))
@@ -69,7 +71,7 @@ get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, 
   } else {heightTopo <- NULL}
   return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
                           deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
-                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo))
+                          heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin))
 }
 
 #' This function splits the by outliers in the time lag.
@@ -165,13 +167,14 @@ dem2track.extent <- function(DEM, track, buffer=100)
 #' @param filterDeadEnds: logical: remove tracks (='NULL') that ended in a dead end?
 #' @param plot2d logical: plot tracks on 2d plane?
 #' @param plot3d logical: plot tracks in 3D?
+#' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list or data.frame containing the simulated track(s) (CERW).
 #' @export
 #'
 #' @examples
 #' reproduce.track.3d(track)
-reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL,  plot2d = FALSE, plot3d = FALSE, filterDeadEnds = TRUE)
+reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25)
 {
   track <- track.properties.3d(track)
   n.locs <- nrow(track)
@@ -185,10 +188,10 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
   } else {heightTopo <- NULL}
   D <- get.densities.3d(liftAngle = liftAngle, turnAngle = turnAngle, stepLength = stepLength,
                         deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
-                        heightEllipsoid = heightEllipsoid, heightTopo = heightTopo)
+                        heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin)
   uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
                         a0 = track$a[1], g0 = track$g[1], densities = D, error = error)
-  Q <- qProb.3d(uerw, n.locs, multicore = multicore)
+  Q <- qProb.3d(uerw, n.locs, multicore = multicore, maxBin = maxBin)
   cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
                                              a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}

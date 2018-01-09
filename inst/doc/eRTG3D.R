@@ -4,7 +4,7 @@ options(knitr.table.format = "html")
 
 library(eRTG3D)
 set.seed(123)
-cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE)
+cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 50)
 cerw <- cerwList[[1]]
 
 ## ---- eval = FALSE, fig.show='hold'--------------------------------------
@@ -68,7 +68,7 @@ plot3d.densities(niclas, cerwList)
 plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
-#  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), surface=TRUE, DEM=dem)
+#  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
 #  Q <- qProb.3d(uerw, sim.locs, multicore=TRUE)

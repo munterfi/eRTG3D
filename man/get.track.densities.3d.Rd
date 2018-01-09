@@ -4,7 +4,8 @@
 \alias{get.track.densities.3d}
 \title{Extract tldCube and autodifferences functions from a consistent track}
 \usage{
-get.track.densities.3d(track, heightDistEllipsoid = TRUE, DEM = NULL)
+get.track.densities.3d(track, heightDistEllipsoid = TRUE, DEM = NULL,
+  maxBin = 25)
 }
 \arguments{
 \item{track}{a data.frame with 3 columns containing the x,y,z coordinates}
@@ -12,6 +13,8 @@ get.track.densities.3d(track, heightDistEllipsoid = TRUE, DEM = NULL)
 \item{heightDistEllipsoid}{logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?}
 
 \item{DEM}{a raster containting a digital elevation model, covering the same extent as the track}
+
+\item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 }
 \value{
 A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)

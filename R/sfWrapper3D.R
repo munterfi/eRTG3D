@@ -2,7 +2,7 @@
 #'
 #' Attention: Please use this function for CRS transformations, 
 #' because it is based on the 'st_transform()' from the sf package. Therefore
-#' is supports CRS transdormations in 3D. Note: 'spTransform()' from the 'sp' 
+#' is supports CRS transformations in 3D. Note: 'spTransform()' from the 'sp' 
 #' only supports transformations in the 2D plane, which will cause distortions
 #' in the third dimension.
 #'
@@ -28,7 +28,7 @@ transformCRS.3d <- function(track, fromCRS, toCRS)
 #'
 #' @param track any object to test
 #'
-#' @return A logical: TRUE if is is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
+#' @return A logical: TRUE if is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
 #' @export
 #'
 #' @examples

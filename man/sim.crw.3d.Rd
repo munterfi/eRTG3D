@@ -15,7 +15,7 @@ sim.crw.3d(nStep, rTurn, rLift, meanStep, start = c(0, 0, 0))
 
 \item{meanStep}{the mean step length}
 
-\item{start}{a vector of length 3 containing the coordinates of the startpoint of the trajectory}
+\item{start}{a vector of length 3 containing the coordinates of the start point of the trajectory}
 }
 \value{
 A trajectory in the form of data.frame

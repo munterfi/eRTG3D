@@ -13,13 +13,13 @@ test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
 
 \item{alpha}{scalar: significance level, default alpha = 0.05}
 
-\item{plotDensities}{logical: plot the densites of turn angle, lift angle and step length of the two tracks?}
+\item{plotDensities}{logical: plot the densities of turn angle, lift angle and step length of the two tracks?}
 }
 \value{
 Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
 }
 \description{
-Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the orginal track
+Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the original track
 with the characteristics of the simulated track.
 }
 \examples{

@@ -6,7 +6,7 @@
 #' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
 #' Additionally also the distribution of the flight height over the ellipsoid (absolute)
-#' andthe distribution of flight height over the topography (relative) can be included. 
+#' and the distribution of flight height over the topography (relative) can be included. 
 #'
 #' @param turnAngle turn angles of the track (t)
 #' @param liftAngle lift angles of the track (l)
@@ -145,7 +145,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' to ensure that the target is approached and hit.
 #' In order to calculate the Q probability for each step
 #' the distribution of turns and lifts to target and
-#' the distribution of distance to target has to be knwown.
+#' the distribution of distance to target has to be known.
 #' They can be derived from the empirical data (ideally),
 #' or estimated from an unconditional process with the same properties.
 #' Creates a unconditioned empirical random walk, with a specific starting point,

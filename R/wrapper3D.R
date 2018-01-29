@@ -14,7 +14,7 @@
 #'
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
-#' @param DEM a raster containting a digital elevation model, covering the same extent as the track
+#' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
@@ -48,7 +48,7 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
 #'
 #' @param trackSections list of track sections got by the \link[eRTG3D]{track.split.3d} function
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
-#' @param DEM a raster containting a digital elevation model, covering the same extent as the track sections
+#' @param DEM a raster containing a digital elevation model, covering the same extent as the track sections
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
@@ -105,7 +105,7 @@ track.split.3d <- function(track, timeLag)
 #'
 #' @param DEM a raster containing a digital elevation model, covering the extent as the track
 #' @param track data.frame with x,y,z coordinates of the original track
-#' @param buffer bufferwith, by default set to 100
+#' @param buffer buffer with, by default set to 100
 #'
 #' @return A the cropped digital elevation model as a raster layer.
 #' @export
@@ -222,7 +222,7 @@ filter.dead.ends <- function(cerwList)
 
 #' Track properties of a 3D track
 #'
-#' Returns the properties (distances, azimut, polar angle,
+#' Returns the properties (distances, azimuth, polar angle,
 #' turn angle & lift angle) of a track in three dimensions.
 #'
 #' @param track data.frame with x,y,z coordinates

@@ -11,7 +11,7 @@ dem2track.extent(DEM, track, buffer = 100)
 
 \item{track}{data.frame with x,y,z coordinates of the original track}
 
-\item{buffer}{bufferwith, by default set to 100}
+\item{buffer}{buffer with, by default set to 100}
 }
 \value{
 A the cropped digital elevation model as a raster layer.

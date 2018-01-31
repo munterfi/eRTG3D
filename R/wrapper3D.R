@@ -81,22 +81,28 @@ get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, 
 #'
 #' @param track track data.frame with x, y and z coordinates
 #' @param timeLag a numeric vector with the time passed between the fix point acquisition
+#' @param lag NULL or a manually chosen lag
+#' @param tolerance NULL or a manually chosen tolerance
 #'
 #' @return A list containing the splitted tracks.
 #' @export
 #'
 #' @examples
 #' track.split.3d(track, timeLag)
-track.split.3d <- function(track, timeLag)
+track.split.3d <- function(track, timeLag, lag = NULL, tolerance = NULL)
 {
   .is.df.xyz(track)
-  if(any(is.na(timeLag))) stop("TimeLag is not allowed to contain NAs.")
-  tolerance <- 0.5 * sd(timeLag)
-  m <- mean(timeLag)
+  if (any(is.na(timeLag))) stop("TimeLag is not allowed to contain NAs.")
+  if (is.null(lag)) {
+    m <- mean(timeLag)
+  } else {m <- lag}
+  if (is.null(tolerance)) {
+    tolerance <- 0.5 * sd(timeLag)
+  }
   splitRows <- which(abs(m-timeLag) > tolerance)
-  trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+1)))
+  trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+2))) # + 1 if the cut should be one step before
   nSplits <- length(splitRows); nChange <- round(sum(timeLag[splitRows]/m-1));
-  message(paste("  |Mean time lag: ", round(m,2) , ", tolerance (0.5*sd): ", round(tolerance,2),
+  message(paste("  |Mean time lag: ", round(m,2) , ", tolerance: ", round(tolerance,2),
                 ", number of splits: ", nSplits, ", proposed change in steps: ", nChange, sep=""))
   return(trackSections)
 }
@@ -116,7 +122,7 @@ dem2track.extent <- function(DEM, track, buffer=100)
 {
   .is.df.xyz(track = track)
   .check.extent(DEM = DEM, track = track)
-  return(raster::crop(dem, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
+  return(raster::crop(DEM, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
 }
 
 #' Tests if the object is of type 'data.frame' and has x, y, z coordinates without NA values

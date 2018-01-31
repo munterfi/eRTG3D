@@ -6,7 +6,7 @@
 #' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
 #' Additionally also the distribution of the flight height over the ellipsoid (absolute)
-#' and the distribution of flight height over the topography (relative) can be included. 
+#' and the distribution of flight height over the topography (relative) can be included.
 #'
 #' @param turnAngle turn angles of the track (t)
 #' @param liftAngle lift angles of the track (l)

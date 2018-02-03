@@ -14,7 +14,7 @@ plot3d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL,
 
 \item{titleText}{string with title of the plot}
 
-\item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the lines}
+\item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
 
 \item{maxHeight}{Maximum plot height, default 8000m}
 }

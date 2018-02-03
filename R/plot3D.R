@@ -3,7 +3,7 @@
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the lines
+#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
 #' @param maxHeight Maximum plot height, default 8000m
 #'
 #' @return
@@ -43,7 +43,7 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL,
   }
   p <- plotly::plot_ly()
   p <- plotly::layout(p, title = titleText)
-  p <- plotly::add_trace(p, data = origTrack, x = ~x, y = ~y, z = ~z,
+  p <- plotly::add_trace(p, data = origTrack[, 1:3], x = ~x, y = ~y, z = ~z,
               mode = "lines+markers", type = "scatter3d", name = "Observed",
               line = list(color = "black", width = 3),
               marker = list(size = 2, cmin = -20, cmax = 50), opacity = 0.9, showlegend = (!singleTrack))
@@ -79,14 +79,15 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL,
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the lines
+#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
+#' @param alpha a number between 0 and 1, to specify the transparency of the cerw line(s)
 #'
 #' @return Nothing, plots a 2D ggplot2 object.
 #' @export
 #'
 #' @examples
 #' plot3d(track)
-plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL)
+plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL, alpha = 0.7)
 {
   origTrack <- cbind(origTrack[ ,1:3], group = rep(as.character(1), nrow(origTrack)))
   multipleTrack <- FALSE
@@ -139,7 +140,7 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
       ggplot2::scale_alpha(range = c(0, 0.6))
   }
   if(multipleTrack){
-    p <- p + ggplot2::geom_path(data = cerwList, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = 0.7)
+    p <- p + ggplot2::geom_path(data = cerwList, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = alpha)
   }
   p <- p + ggplot2::geom_path(data = origTrack[origTrack$group==1, ], ggplot2::aes(x = x, y = y, group = group), color="grey", size = 2) +
     ggplot2::geom_path(data = origTrack, ggplot2::aes(x = x, y = y, group = group, color = z), size = 1) +

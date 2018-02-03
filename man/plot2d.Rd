@@ -4,7 +4,8 @@
 \alias{plot2d}
 \title{Plot function to plot the 3d tracks in 2d plane}
 \usage{
-plot2d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL)
+plot2d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL,
+  alpha = 0.7)
 }
 \arguments{
 \item{origTrack}{a data.frame with x,y,z coordinates}
@@ -13,7 +14,9 @@ plot2d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL)
 
 \item{titleText}{string with title of the plot}
 
-\item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the lines}
+\item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
+
+\item{alpha}{a number between 0 and 1, to specify the transparency of the cerw line(s)}
 }
 \value{
 Nothing, plots a 2D ggplot2 object.

@@ -147,7 +147,7 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
     ggplot2::geom_point(data=origTrack[1, ], ggplot2::aes(x = x, y = y), size=3.5, shape=7, alpha = 1, color="black") +
     ggplot2::geom_point(data=origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y), size=3.5, shape=13, alpha = 1, color="black") +
     ggplot2::labs(colour="Flight height")
-  print(p)
+  return(p)
 }
 
 #' Density plots of turn angle, lift angle and step length

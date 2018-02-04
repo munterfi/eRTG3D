@@ -112,7 +112,7 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
                       a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
   tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
   message("  |*** Test passed successfully ***")
-  if(plot2d){plot2d(crw, cerw)}
+  if(plot2d){print(plot2d(crw, cerw))}
   if(plot3d){plot3d(crw, cerw)}
   if(returnResult){return(list(crw = crw, cerw = cerw))}
 }

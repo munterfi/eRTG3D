@@ -13,6 +13,7 @@
 #' @examples
 #' plot3d(track)
 plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL, maxHeight=8000) {
+  origTrack <- origTrack[, 1:3]
   multipleTrack <- TRUE
   singleTrack <- FALSE
   if (is.data.frame(cerwList)){
@@ -82,12 +83,12 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL,
 #' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
 #' @param alpha a number between 0 and 1, to specify the transparency of the cerw line(s)
 #'
-#' @return Nothing, plots a 2D ggplot2 object.
+#' @return A 2D ggplot2 object.
 #' @export
 #'
 #' @examples
 #' plot3d(track)
-plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL, alpha = 0.7)
+plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL, BG = NULL, alpha = 0.7)
 {
   origTrack <- cbind(origTrack[ ,1:3], group = rep(as.character(1), nrow(origTrack)))
   multipleTrack <- FALSE
@@ -124,6 +125,24 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
     ddf <- data.frame(raster::rasterToPoints(DEM));
     colnames(ddf) <- c("X","Y","DEM")
   }
+  if (!is.null(BG) & is.null(DEM)) {
+    if(!class(BG)=="RasterLayer") stop("'BG' is not of type 'RasterLayer'")
+    if (is.null(cerwList)){
+      cerwList <- origTrack
+    }
+    CRSsave <- raster::projection(BG)
+    minX <- min(floor(min(origTrack$x)), floor(min(cerwList$x)))
+    maxX <- max(floor(max(origTrack$x)), floor(max(cerwList$x)))+1
+    minY <- min(floor(min(origTrack$y)), floor(min(cerwList$y)))
+    maxY <- max(floor(max(origTrack$y)), floor(max(cerwList$y)))+1
+    ratio <- (maxY-minY)/(maxX-minX)
+    BG <- raster::crop(BG, raster::extent(minX, maxX, minY, maxY))
+    BG <- raster::resample(BG, raster::raster(ncol=min(750, (maxX-minX)), nrow=min(floor(750*ratio), (maxY-minY)), xmn=minX, xmx=maxX, ymn=minY, ymx=maxY))
+    raster::projection(BG) <- CRSsave
+    # convert rasters to dataframes for plotting with ggplot
+    BG <- data.frame(raster::rasterToPoints(BG));
+    colnames(BG) <- c("X","Y","BG")
+  }
   # Plot
   p <- ggplot2::ggplot() +
     ggplot2::theme_classic() +
@@ -138,6 +157,12 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
       ggplot2::guides(fill = ggplot2::guide_colorbar()) +
       ggplot2::geom_tile(data=hdf, ggplot2::aes(X,Y,alpha=Hillshade), fill = "grey20") +
       ggplot2::scale_alpha(range = c(0, 0.6))
+  }
+  if (!is.null(BG) & is.null(DEM)) {
+    p <- p +
+      ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
+      ggplot2::scale_fill_gradientn(name="Thermal Prob", colours = heat.colors(4, alpha = 1)) +
+      ggplot2::guides(fill = ggplot2::guide_colorbar())
   }
   if(multipleTrack){
     p <- p + ggplot2::geom_path(data = cerwList, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = alpha)

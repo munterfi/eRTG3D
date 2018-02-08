@@ -55,10 +55,10 @@ pander::pandoc.table(head(round(niclas, 2),5))
 ## ---- fig.show='hold', eval=FALSE----------------------------------------
 #  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)
 
-## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
+## ----eval=TRUE-----------------------------------------------------------
 tests <- test.verification.3d(niclas, cerw, plotDensities = FALSE)
 
-## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
+## ----eval=TRUE-----------------------------------------------------------
 tests <- test.verification.3d(niclas, cerwList, plotDensities = FALSE)
 
 ## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
@@ -67,7 +67,7 @@ plot3d.densities(niclas, cerwList)
 ## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
 plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
-## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
+## ----eval=FALSE----------------------------------------------------------
 #  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------

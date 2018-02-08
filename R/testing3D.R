@@ -1,12 +1,12 @@
 #' Internally verification of the simulated track
 #'
-#' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the orginal track
+#' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the original track
 #' with the characteristics of the simulated track.
 #'
 #' @param track1 data.frame with x,y,z coordinates of the original track
 #' @param track2 data.frame or list of data.frames with x,y,z coordinates of the simulated track
 #' @param alpha scalar: significance level, default alpha = 0.05
-#' @param plotDensities logical: plot the densites of turn angle, lift angle and step length of the two tracks?
+#' @param plotDensities logical: plot the densities of turn angle, lift angle and step length of the two tracks?
 #'
 #' @return Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
 #' @export
@@ -112,7 +112,7 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
                       a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
   tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
   message("  |*** Test passed successfully ***")
-  if(plot2d){plot2d(crw, cerw)}
+  if(plot2d){print(plot2d(crw, cerw))}
   if(plot3d){plot3d(crw, cerw)}
   if(returnResult){return(list(crw = crw, cerw = cerw))}
 }
@@ -123,7 +123,7 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
 #' @param rTurn the correlation on the turn angle
 #' @param rLift the correlation of the lift angle
 #' @param meanStep the mean step length
-#' @param start a vector of length 3 containing the coordinates of the startpoint of the trajectory
+#' @param start a vector of length 3 containing the coordinates of the start point of the trajectory
 #'
 #' @return A trajectory in the form of data.frame
 #' @export

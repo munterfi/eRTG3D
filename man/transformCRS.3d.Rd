@@ -19,7 +19,7 @@ A data.frame containing x,y,z and variables.
 \description{
 Attention: Please use this function for CRS transformations, 
 because it is based on the 'st_transform()' from the sf package. Therefore
-is supports CRS transdormations in 3D. Note: 'spTransform()' from the 'sp' 
+is supports CRS transformations in 3D. Note: 'spTransform()' from the 'sp' 
 only supports transformations in the 2D plane, which will cause distortions
 in the third dimension.
 }

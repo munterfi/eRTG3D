@@ -4,12 +4,16 @@
 \alias{track.split.3d}
 \title{This function splits the by outliers in the time lag.}
 \usage{
-track.split.3d(track, timeLag)
+track.split.3d(track, timeLag, lag = NULL, tolerance = NULL)
 }
 \arguments{
 \item{track}{track data.frame with x, y and z coordinates}
 
 \item{timeLag}{a numeric vector with the time passed between the fix point acquisition}
+
+\item{lag}{NULL or a manually chosen lag}
+
+\item{tolerance}{NULL or a manually chosen tolerance}
 }
 \value{
 A list containing the splitted tracks.

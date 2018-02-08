@@ -3,7 +3,7 @@
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the lines
+#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
 #' @param maxHeight Maximum plot height, default 8000m
 #'
 #' @return
@@ -13,6 +13,7 @@
 #' @examples
 #' plot3d(track)
 plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL, maxHeight=8000) {
+  origTrack <- origTrack[, 1:3]
   multipleTrack <- TRUE
   singleTrack <- FALSE
   if (is.data.frame(cerwList)){
@@ -43,7 +44,7 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL,
   }
   p <- plotly::plot_ly()
   p <- plotly::layout(p, title = titleText)
-  p <- plotly::add_trace(p, data = origTrack, x = ~x, y = ~y, z = ~z,
+  p <- plotly::add_trace(p, data = origTrack[, 1:3], x = ~x, y = ~y, z = ~z,
               mode = "lines+markers", type = "scatter3d", name = "Observed",
               line = list(color = "black", width = 3),
               marker = list(size = 2, cmin = -20, cmax = 50), opacity = 0.9, showlegend = (!singleTrack))
@@ -79,14 +80,15 @@ plot3d <- function(origTrack, cerwList=NULL, titleText = character(1), DEM=NULL,
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the lines
+#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
+#' @param alpha a number between 0 and 1, to specify the transparency of the cerw line(s)
 #'
-#' @return Nothing, plots a 2D ggplot2 object.
+#' @return A 2D ggplot2 object.
 #' @export
 #'
 #' @examples
 #' plot3d(track)
-plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL)
+plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL, BG = NULL, alpha = 0.7)
 {
   origTrack <- cbind(origTrack[ ,1:3], group = rep(as.character(1), nrow(origTrack)))
   multipleTrack <- FALSE
@@ -123,6 +125,24 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
     ddf <- data.frame(raster::rasterToPoints(DEM));
     colnames(ddf) <- c("X","Y","DEM")
   }
+  if (!is.null(BG) & is.null(DEM)) {
+    if(!class(BG)=="RasterLayer") stop("'BG' is not of type 'RasterLayer'")
+    if (is.null(cerwList)){
+      cerwList <- origTrack
+    }
+    CRSsave <- raster::projection(BG)
+    minX <- min(floor(min(origTrack$x)), floor(min(cerwList$x)))
+    maxX <- max(floor(max(origTrack$x)), floor(max(cerwList$x)))+1
+    minY <- min(floor(min(origTrack$y)), floor(min(cerwList$y)))
+    maxY <- max(floor(max(origTrack$y)), floor(max(cerwList$y)))+1
+    ratio <- (maxY-minY)/(maxX-minX)
+    BG <- raster::crop(BG, raster::extent(minX, maxX, minY, maxY))
+    BG <- raster::resample(BG, raster::raster(ncol=min(750, (maxX-minX)), nrow=min(floor(750*ratio), (maxY-minY)), xmn=minX, xmx=maxX, ymn=minY, ymx=maxY))
+    raster::projection(BG) <- CRSsave
+    # convert rasters to dataframes for plotting with ggplot
+    BG <- data.frame(raster::rasterToPoints(BG));
+    colnames(BG) <- c("X","Y","BG")
+  }
   # Plot
   p <- ggplot2::ggplot() +
     ggplot2::theme_classic() +
@@ -138,15 +158,21 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
       ggplot2::geom_tile(data=hdf, ggplot2::aes(X,Y,alpha=Hillshade), fill = "grey20") +
       ggplot2::scale_alpha(range = c(0, 0.6))
   }
+  if (!is.null(BG) & is.null(DEM)) {
+    p <- p +
+      ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
+      ggplot2::scale_fill_gradientn(name="Thermal Prob", colours = heat.colors(4, alpha = 1)) +
+      ggplot2::guides(fill = ggplot2::guide_colorbar())
+  }
   if(multipleTrack){
-    p <- p + ggplot2::geom_path(data = cerwList, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = 0.7)
+    p <- p + ggplot2::geom_path(data = cerwList, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = alpha)
   }
   p <- p + ggplot2::geom_path(data = origTrack[origTrack$group==1, ], ggplot2::aes(x = x, y = y, group = group), color="grey", size = 2) +
     ggplot2::geom_path(data = origTrack, ggplot2::aes(x = x, y = y, group = group, color = z), size = 1) +
     ggplot2::geom_point(data=origTrack[1, ], ggplot2::aes(x = x, y = y), size=3.5, shape=7, alpha = 1, color="black") +
     ggplot2::geom_point(data=origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y), size=3.5, shape=13, alpha = 1, color="black") +
     ggplot2::labs(colour="Flight height")
-  print(p)
+  return(p)
 }
 
 #' Density plots of turn angle, lift angle and step length

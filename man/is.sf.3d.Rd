@@ -10,7 +10,7 @@ is.sf.3d(track)
 \item{track}{any object to test}
 }
 \value{
-A logical: TRUE if is is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
+A logical: TRUE if is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
 }
 \description{
 Tests if the object is a simple feature collection (class: 'sf, data.frame')

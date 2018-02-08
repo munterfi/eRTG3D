@@ -34,7 +34,7 @@ steps needs an attraction term (the Q probability, see \link[eRTG3D]{qProb.3d})
 to ensure that the target is approached and hit.
 In order to calculate the Q probability for each step
 the distribution of turns and lifts to target and
-the distribution of distance to target has to be knwown.
+the distribution of distance to target has to be known.
 They can be derived from the empirical data (ideally),
 or estimated from an unconditional process with the same properties.
 Creates a unconditioned empirical random walk, with a specific starting point,

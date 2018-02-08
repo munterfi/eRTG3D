@@ -12,7 +12,7 @@ get.section.densities.3d(trackSections, heightDistEllipsoid = TRUE,
 
 \item{heightDistEllipsoid}{logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?}
 
-\item{DEM}{a raster containting a digital elevation model, covering the same extent as the track sections}
+\item{DEM}{a raster containing a digital elevation model, covering the same extent as the track sections}
 
 \item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 }

@@ -14,7 +14,7 @@
 #'
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
-#' @param DEM a raster containting a digital elevation model, covering the same extent as the track
+#' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
@@ -48,7 +48,7 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
 #'
 #' @param trackSections list of track sections got by the \link[eRTG3D]{track.split.3d} function
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
-#' @param DEM a raster containting a digital elevation model, covering the same extent as the track sections
+#' @param DEM a raster containing a digital elevation model, covering the same extent as the track sections
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the height distribution function)
@@ -81,22 +81,28 @@ get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, 
 #'
 #' @param track track data.frame with x, y and z coordinates
 #' @param timeLag a numeric vector with the time passed between the fix point acquisition
+#' @param lag NULL or a manually chosen lag
+#' @param tolerance NULL or a manually chosen tolerance
 #'
 #' @return A list containing the splitted tracks.
 #' @export
 #'
 #' @examples
 #' track.split.3d(track, timeLag)
-track.split.3d <- function(track, timeLag)
+track.split.3d <- function(track, timeLag, lag = NULL, tolerance = NULL)
 {
   .is.df.xyz(track)
-  if(any(is.na(timeLag))) stop("TimeLag is not allowed to contain NAs.")
-  tolerance <- 0.5 * sd(timeLag)
-  m <- mean(timeLag)
+  if (any(is.na(timeLag))) stop("TimeLag is not allowed to contain NAs.")
+  if (is.null(lag)) {
+    m <- mean(timeLag)
+  } else {m <- lag}
+  if (is.null(tolerance)) {
+    tolerance <- 0.5 * sd(timeLag)
+  }
   splitRows <- which(abs(m-timeLag) > tolerance)
-  trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+1)))
+  trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+2))) # + 1 if the cut should be one step before
   nSplits <- length(splitRows); nChange <- round(sum(timeLag[splitRows]/m-1));
-  message(paste("  |Mean time lag: ", round(m,2) , ", tolerance (0.5*sd): ", round(tolerance,2),
+  message(paste("  |Mean time lag: ", round(m,2) , ", tolerance: ", round(tolerance,2),
                 ", number of splits: ", nSplits, ", proposed change in steps: ", nChange, sep=""))
   return(trackSections)
 }
@@ -105,7 +111,7 @@ track.split.3d <- function(track, timeLag)
 #'
 #' @param DEM a raster containing a digital elevation model, covering the extent as the track
 #' @param track data.frame with x,y,z coordinates of the original track
-#' @param buffer bufferwith, by default set to 100
+#' @param buffer buffer with, by default set to 100
 #'
 #' @return A the cropped digital elevation model as a raster layer.
 #' @export
@@ -116,7 +122,7 @@ dem2track.extent <- function(DEM, track, buffer=100)
 {
   .is.df.xyz(track = track)
   .check.extent(DEM = DEM, track = track)
-  return(raster::crop(dem, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
+  return(raster::crop(DEM, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
 }
 
 #' Tests if the object is of type 'data.frame' and has x, y, z coordinates without NA values
@@ -195,7 +201,7 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
   cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
                                              a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}
-  if(plot2d){plot2d(origTrack = track, cerwList = cerwList, DEM = DEM)}
+  if(plot2d){print(plot2d(origTrack = track, cerwList = cerwList, DEM = DEM))}
   if(plot3d){plot3d(origTrack = track, cerwList = cerwList, DEM = DEM)}
   return(cerwList)
 }
@@ -222,7 +228,7 @@ filter.dead.ends <- function(cerwList)
 
 #' Track properties of a 3D track
 #'
-#' Returns the properties (distances, azimut, polar angle,
+#' Returns the properties (distances, azimuth, polar angle,
 #' turn angle & lift angle) of a track in three dimensions.
 #'
 #' @param track data.frame with x,y,z coordinates

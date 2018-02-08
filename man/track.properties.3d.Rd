@@ -13,7 +13,7 @@ track.properties.3d(track)
 The data.frame with track properties
 }
 \description{
-Returns the properties (distances, azimut, polar angle,
+Returns the properties (distances, azimuth, polar angle,
 turn angle & lift angle) of a track in three dimensions.
 }
 \examples{

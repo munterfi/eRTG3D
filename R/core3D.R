@@ -6,7 +6,7 @@
 #' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
 #' Additionally also the distribution of the flight height over the ellipsoid (absolute)
-#' andthe distribution of flight height over the topography (relative) can be included. 
+#' and the distribution of flight height over the topography (relative) can be included.
 #'
 #' @param turnAngle turn angles of the track (t)
 #' @param liftAngle lift angles of the track (l)
@@ -145,7 +145,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' to ensure that the target is approached and hit.
 #' In order to calculate the Q probability for each step
 #' the distribution of turns and lifts to target and
-#' the distribution of distance to target has to be knwown.
+#' the distribution of distance to target has to be known.
 #' They can be derived from the empirical data (ideally),
 #' or estimated from an unconditional process with the same properties.
 #' Creates a unconditioned empirical random walk, with a specific starting point,
@@ -446,7 +446,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     # limit gradient to 0 and pi
     Probs <- Probs * as.numeric((g > 0) & (g < pi))
     # Account for probable flight height, if a DEM is provided the relative flight height is taken
-    # Otherwise only the absoulte ellipsoid height.
+    # Otherwise only the absolute ellipsoid height.
     if(!is.null(DEM))
     {
       surface <- raster::extract(DEM, cbind(x1, y1))
@@ -497,6 +497,14 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 + 
                          (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 + 
                          (RTG[n.locs, 3] - RTG[n.locs-1, 3])^2)
+  # Stop if the step length of the last step is larger than the largest possible step
+  if(RTG[n.locs, 8] > max(densities$tldCube$values$step, na.rm = TRUE)*sqrt(2)) {
+    RTG <- NULL
+    close(pb)
+    message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+    warning("Dead end encountered in last step.")
+    return(RTG)
+  }
   rownames(RTG) <- c()
   colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
   # close progress bar

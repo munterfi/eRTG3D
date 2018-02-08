@@ -135,13 +135,13 @@ cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)
 ## Verify results
 The obtained result should be tested statistically. The first argument of the `test.verification.3d()` function is the original track to be tested against. The second argument is either a single track...
 
-```{r eval=TRUE, fig.height=5, fig.width=7}
+```{r eval=TRUE}
 tests <- test.verification.3d(niclas, cerw, plotDensities = FALSE)
 ```
 
 ... or a list of multiple tracks.
 
-```{r eval=TRUE, fig.height=5, fig.width=7}
+```{r eval=TRUE}
 tests <- test.verification.3d(niclas, cerwList, plotDensities = FALSE)
 ```
 
@@ -166,7 +166,7 @@ plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", se
 
 The `plot3d()` function takes either one or two arguments. The second argument can be a single track data.frame or list of track data.frames as for example the output of `n.sim.cons.3d()`. Also a DEM rasterLayer, which is plotted as a surface can be passed to the function.
 
-```{r eval=FALSE, fig.height=5, fig.width=7}
+```{r eval=FALSE}
 plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 ```
 <img src="figs/plot3d.png" alt="Drawing" style="width: 96.5%;"/>

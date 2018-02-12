@@ -27,10 +27,11 @@ n.sim.cond.modes.3d <- function(n.sim, locsVec, start = c(0,0,0), end = start, a
 {
   start.time <- Sys.time()
   n.sim <- round(n.sim)
-  if (n.sim <= 1) {return(im.cond.modes.3d(locsVec, start = start, end = end, MODE = MODE, a0 = a0, g0 = g0,
+  if (n.sim <= 1) {return(sim.cond.modes.3d(locsVec, start = start, end = end, MODE = MODE, a0 = a0, g0 = g0,
                                            dList = dList, qList = qList, glideRatio = glideRatio, error = error, DEM = DEM, BG = BG))}
-  message(paste("  |Simulate ", n.sim ," CERWs with ", n.locs, " steps", sep = ""))
+  message(paste("  |Simulate ", n.sim ," CERWs with ca. ", max(locsVec), " steps", sep = ""))
   if (multicore) {
+    message("  |...")
     if(.Platform$OS.type == "unix") {
       nCores <- parallel::detectCores()-1
       cerwList <- parallel::mclapply(X = 1:n.sim, FUN = function(X) {
@@ -214,6 +215,7 @@ sim.cond.modes.3d <- function(locsVec, start=c(0,0,0), end=start, a0, g0, dList,
     Probs <- P * Q / endD
     # limit gradient to p/2 and pi for gliding (m=1) 0 and pi/2 for soaring (m=2)
     if(m == 1){
+      #Probs <- Probs * as.numeric((g > 0) & (g < (pi))) # gliding
       Probs <- Probs * as.numeric((g > (pi/2)) & (g < pi)) # gliding
     } else {
       Probs <- Probs * as.numeric((g > 0) & (g < (pi/2))) # soaring

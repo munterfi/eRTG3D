@@ -3,7 +3,7 @@
 #' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the original track
 #' with the characteristics of the simulated track.
 #'
-#' @param track1 data.frame with x,y,z coordinates of the original track
+#' @param track1 data.frame or list of data.frames with x,y,z coordinates of the original track
 #' @param track2 data.frame or list of data.frames with x,y,z coordinates of the simulated track
 #' @param alpha scalar: significance level, default alpha = 0.05
 #' @param plotDensities logical: plot the densities of turn angle, lift angle and step length of the two tracks?
@@ -16,22 +16,22 @@
 test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = FALSE)
 {
   message("  |*** Two-sample Kolmogorov-Smirnov test ***")
-  track1 <- track.properties.3d(track1)[2:nrow(track1), ]
+  if (!is.list(track1) || !is.list(track1)) stop("Track input has to be of type list or data.frame.")
+  if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1)}
+  if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2)}
+  track1 <- filter.dead.ends(track1); track2 <- filter.dead.ends(track2)
+  # track(s) 1
+  track1 <- lapply(track1, function(x){track.properties.3d(x)[2:nrow(x), ]})
+  difftrack1 <- as.data.frame(lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+  track1 <- do.call("rbind", track1)
   t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
-  diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
-  if(is.data.frame(track2)){
-    track2 <- track.properties.3d(track2)[2:nrow(track2), ]
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-    diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);
-  } else {
-    track2 <- filter.dead.ends(track2)
-    track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
-    diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
-    track2 <- do.call("rbind", track2)
-    diffTrack2 <- do.call("rbind", diffTrack2)
-    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-    diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
-  }
+  diffT1 <- difftrack1$diffT; diffL1 <- difftrack1$diffL; diffD1 <- difftrack1$diffD;
+  # track(s) 2
+  track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
+  diffTrack2 <- as.data.frame(lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+  track2 <- do.call("rbind", track2)
+  t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
+  diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
   # turn
   turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
   diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
@@ -41,6 +41,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = F
   # step
   stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
   diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
+  # print results
   message("  |H0: Probability distributions do not differ significantly")
   message("  |H1: Probability distributions differ significantly")
   message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))

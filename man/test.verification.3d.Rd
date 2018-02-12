@@ -7,7 +7,7 @@
 test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
 }
 \arguments{
-\item{track1}{data.frame with x,y,z coordinates of the original track}
+\item{track1}{data.frame or list of data.frames with x,y,z coordinates of the original track}
 
 \item{track2}{data.frame or list of data.frames with x,y,z coordinates of the simulated track}
 

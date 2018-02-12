@@ -226,6 +226,28 @@ filter.dead.ends <- function(cerwList)
   return(cerwList)
 }
 
+#' Applies a moving median over a vector
+#'
+#' @param data numeric vector
+#' @param window uneven number for the size of the moving window
+#'
+#' @return A numeric vector.
+#' @export
+#'
+#' @examples
+#' movingMedian(data, window = 5)
+movingMedian <- function(data, window){
+  if(!(window %% 2 == 0)) {window <- floor(window/2)} else{stop("Window must be an uneven number.")}
+  total <- length(data)
+  result <- vector(length = total)
+  for(i in (window+1):(total-window)){
+    result[i] <- median(data[(i-window):(i+window)])
+  }
+  result[1:window] <- median(data[1:window])
+  result[(total-window):total] <- median(data[(total-window):total])
+  return(result)
+}
+
 #' Track properties of a 3D track
 #'
 #' Returns the properties (distances, azimuth, polar angle,

@@ -202,9 +202,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
   track1 <- lapply(track1, function(x){track.properties.3d(x)[2:nrow(x), ]})
   track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
   if(autodifferences){
-    difftrack1 <- as.data.frame(lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+    difftrack1 <- do.call("rbind", lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
     diffT1 <- difftrack1$diffT; diffL1 <- difftrack1$diffL; diffD1 <- difftrack1$diffD;
-    diffTrack2 <- as.data.frame(lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+    diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
     diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
     suppressWarnings(plot3d.multiplot(
       .plot3d.density(diffT1, diffT2, titleText = "Turn angle – autodifferences", scaleDensity = scaleDensities),

@@ -22,13 +22,13 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = F
   track1 <- filter.dead.ends(track1); track2 <- filter.dead.ends(track2)
   # track(s) 1
   track1 <- lapply(track1, function(x){track.properties.3d(x)[2:nrow(x), ]})
-  difftrack1 <- as.data.frame(lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+  difftrack1 <- do.call("rbind", lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
   track1 <- do.call("rbind", track1)
   t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
   diffT1 <- difftrack1$diffT; diffL1 <- difftrack1$diffL; diffD1 <- difftrack1$diffD;
   # track(s) 2
   track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
-  diffTrack2 <- as.data.frame(lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+  diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
   track2 <- do.call("rbind", track2)
   t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
   diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;

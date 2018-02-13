@@ -226,7 +226,14 @@ filter.dead.ends <- function(cerwList)
   return(cerwList)
 }
 
-#' Applies a moving median over a vector
+#' Moving median in one dimension
+#' 
+#' Applies a twosided moving median window on a vector, 
+#' where the window paramter is the total size of the window.
+#' The value in the window middle is the index where the median of the window is written.
+#' Therefore the window size has to be an uneven number.
+#' The border region of the vetor is filled with a one-sided median.
+#' There might be border effects.
 #'
 #' @param data numeric vector
 #' @param window uneven number for the size of the moving window
@@ -247,6 +254,71 @@ movingMedian <- function(data, window){
   result[(total-window):total] <- median(data[(total-window):total])
   return(result)
 }
+
+#' Glide ratio
+#' 
+#' Calculates the ratio between horizontal movement and vertical movement.
+#' The value expresses the distance covered forward movement per distance movement in sinking.
+#'
+#' @param track a track data.frame containing x, y and z coordinates of a gliding section
+#'
+#' @return The ratio between horizontal and vertical movement.
+#' @export
+#'
+#' @examples
+#' get.glideRatio.3d(track)
+get.glideRatio.3d <- function(track) {
+  start <- track[2, 1:3]; end <- track[nrow(track), 1:3]
+  return(-1*(sqrt((end[1]-start[1])^2+(end[2]-start[2])^2)/as.numeric(end[3]-start[3])))
+}
+
+#' Turn angle to target
+#' 
+#' Calculates the turn angle between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the turn angles to target
+#' @export
+#'
+#' @examples
+#' turn2target.3d(track)
+turn2target.3d <- function(track) {
+  track <- track.properties.3d(track)
+  target <- Reduce(c, track[nrow(track), 1:3])
+  .wrap(atan2(target[2]-track$y, target[1] - track$x) - track$a)}
+
+#' Lift angle to target
+#' 
+#' Calculates the lift angle between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the lift angles to target
+#' @export
+#'
+#' @examples
+#' lift2target.3d(track)
+lift2target.3d <- function(track) {
+  track <- track.properties.3d(track)
+  target <- Reduce(c, track[nrow(track), 1:3])
+  .wrap(atan2(sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2),
+              (target[3]-track$z)) - track$g)}
+
+#' Distance to target
+#' 
+#' Calculates the distance between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the distances to target
+#' @export
+#'
+#' @examples
+#' dist2target.3d(track)
+dist2target.3d <- function(track) {
+  target <- Reduce(c, track[nrow(track), 1:3])
+  sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2 + (target[3]-track$z) ^ 2)}
 
 #' Track properties of a 3D track
 #'

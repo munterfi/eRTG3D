@@ -1,3 +1,20 @@
+#' Glide ratio
+#' 
+#' Calculates the ratio between horizontal movement and vertical movement.
+#' The value expresses the distance covered forward movement per distance movement in sinking.
+#'
+#' @param track a track data.frame containing x, y and z coordinates of a gliding section
+#'
+#' @return The ratio between horizontal and vertical movement.
+#' @export
+#'
+#' @examples
+#' get.glideRatio.3d(track)
+get.glideRatio.3d <- function(track) {
+  start <- track[2, 1:3]; end <- track[nrow(track), 1:3]
+  return(-1*(sqrt((end[1]-start[1])^2+(end[2]-start[2])^2)/as.numeric(end[3]-start[3])))
+}
+
 #' Multiple Conditioned Empirical Random Walks (CERW) with modes in 3D
 #'
 #' Creates n conditioned empirical random walks using different modes, with a specific starting and ending point,
@@ -29,11 +46,12 @@ n.sim.cond.modes.3d <- function(n.sim, locsVec, start = c(0,0,0), end = start, a
   n.sim <- round(n.sim)
   if (n.sim <= 1) {return(sim.cond.modes.3d(locsVec, start = start, end = end, MODE = MODE, a0 = a0, g0 = g0,
                                            dList = dList, qList = qList, glideRatio = glideRatio, error = error, DEM = DEM, BG = BG))}
-  message(paste("  |Simulate ", n.sim ," CERWs with ca. ", max(locsVec), " steps", sep = ""))
+  message(paste("  |Simulate ", n.sim ," CERWs with ca. ", round(mean(locsVec)), " steps", sep = ""))
   if (multicore) {
-    message("  |...")
     if(.Platform$OS.type == "unix") {
       nCores <- parallel::detectCores()-1
+      message(paste("  |Running on nCores = ", nCores, sep=""))
+      message("  |...")
       cerwList <- parallel::mclapply(X = 1:n.sim, FUN = function(X) {
         sim.cond.modes.3d(locsVec, start = start, end = end, MODE = MODE, a0 = a0, g0 = g0,
                           dList = dList, qList = qList, glideRatio = glideRatio, error = error, DEM = DEM, BG = BG)},
@@ -87,7 +105,7 @@ sim.cond.modes.3d <- function(locsVec, start=c(0,0,0), end=start, a0, g0, dList,
     .check.extent(DEM = BG, track = data.frame(rbind(start, end)))
   }
   # progress bar and time
-  message(paste("  |Simulate CERW with ", n.locs, " steps", sep = ""))
+  message(paste("  |Simulate CERW with ca. ", round(mean(locsVec)) , " steps", sep = ""))
   pb <- txtProgressBar(min = 0, max = n.locs-2, style = 3)
   ui <- floor(n.locs/20)+1
   # replace the probability distribution for step length 1 by the one from
@@ -136,7 +154,7 @@ sim.cond.modes.3d <- function(locsVec, start=c(0,0,0), end=start, a0, g0, dList,
     dz <- (RTG[i, 3] - end[3])
     dxy <- sqrt((RTG[i, 1] - end[1])^2 + (RTG[i, 2] - end[2])^2)
     gr <- dxy/dz
-    if(gr < glideRatio*0.9 && gr > 0)
+    if(gr < glideRatio && gr > 0)
     {
       # Glide ratio correction
       m <- 1

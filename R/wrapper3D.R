@@ -255,23 +255,6 @@ movingMedian <- function(data, window){
   return(result)
 }
 
-#' Glide ratio
-#' 
-#' Calculates the ratio between horizontal movement and vertical movement.
-#' The value expresses the distance covered forward movement per distance movement in sinking.
-#'
-#' @param track a track data.frame containing x, y and z coordinates of a gliding section
-#'
-#' @return The ratio between horizontal and vertical movement.
-#' @export
-#'
-#' @examples
-#' get.glideRatio.3d(track)
-get.glideRatio.3d <- function(track) {
-  start <- track[2, 1:3]; end <- track[nrow(track), 1:3]
-  return(-1*(sqrt((end[1]-start[1])^2+(end[2]-start[2])^2)/as.numeric(end[3]-start[3])))
-}
-
 #' Turn angle to target
 #' 
 #' Calculates the turn angle between every point in the track and the last point (target).

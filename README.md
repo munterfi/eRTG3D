@@ -26,18 +26,6 @@ install.packages("raster")
 install.packages("sf")
 ```
 
-### Test if eRTG3D is running properly
-
-Singlecore:
-```
-test.eRTG3D(multicore = FALSE, returnResult = FALSE)
-```
-
-And multicore
-```
-test.eRTG3D(multicore = TRUE, returnResult = FALSE)
-```
-
 ## Authors
 
 * **Merlin Unterfinger** - *3-D version* - [munterfinger](https://github.com/munterfinger)

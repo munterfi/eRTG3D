@@ -8,7 +8,7 @@ plot3d.densities(track1, track2 = NULL, autodifferences = FALSE,
   scaleDensities = FALSE)
 }
 \arguments{
-\item{track1}{a data.frame with x,y,z coordinates}
+\item{track1}{a list containing a data.frame with x,y,z coordinates or a data.frame}
 
 \item{track2}{a list containing a data.frame with x,y,z coordinates or a data.frame}
 

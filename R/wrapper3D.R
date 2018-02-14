@@ -226,6 +226,83 @@ filter.dead.ends <- function(cerwList)
   return(cerwList)
 }
 
+#' Moving median in one dimension
+#' 
+#' Applies a twosided moving median window on a vector, 
+#' where the window paramter is the total size of the window.
+#' The value in the window middle is the index where the median of the window is written.
+#' Therefore the window size has to be an uneven number.
+#' The border region of the vetor is filled with a one-sided median.
+#' There might be border effects.
+#'
+#' @param data numeric vector
+#' @param window uneven number for the size of the moving window
+#'
+#' @return A numeric vector.
+#' @export
+#'
+#' @examples
+#' movingMedian(data, window = 5)
+movingMedian <- function(data, window){
+  if(!(window %% 2 == 0)) {window <- floor(window/2)} else{stop("Window must be an uneven number.")}
+  total <- length(data)
+  result <- vector(length = total)
+  for(i in (window+1):(total-window)){
+    result[i] <- median(data[(i-window):(i+window)])
+  }
+  result[1:window] <- median(data[1:window])
+  result[(total-window):total] <- median(data[(total-window):total])
+  return(result)
+}
+
+#' Turn angle to target
+#' 
+#' Calculates the turn angle between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the turn angles to target
+#' @export
+#'
+#' @examples
+#' turn2target.3d(track)
+turn2target.3d <- function(track) {
+  track <- track.properties.3d(track)
+  target <- Reduce(c, track[nrow(track), 1:3])
+  .wrap(atan2(target[2]-track$y, target[1] - track$x) - track$a)}
+
+#' Lift angle to target
+#' 
+#' Calculates the lift angle between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the lift angles to target
+#' @export
+#'
+#' @examples
+#' lift2target.3d(track)
+lift2target.3d <- function(track) {
+  track <- track.properties.3d(track)
+  target <- Reduce(c, track[nrow(track), 1:3])
+  .wrap(atan2(sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2),
+              (target[3]-track$z)) - track$g)}
+
+#' Distance to target
+#' 
+#' Calculates the distance between every point in the track and the last point (target).
+#'
+#' @param track a track data.frame containing x, y and z coordinates
+#'
+#' @return A numeric vector with the distances to target
+#' @export
+#'
+#' @examples
+#' dist2target.3d(track)
+dist2target.3d <- function(track) {
+  target <- Reduce(c, track[nrow(track), 1:3])
+  sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2 + (target[3]-track$z) ^ 2)}
+
 #' Track properties of a 3D track
 #'
 #' Returns the properties (distances, azimuth, polar angle,

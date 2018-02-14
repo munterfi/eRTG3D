@@ -183,7 +183,7 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
 #' Additionally the autodifferences parameter can be set to true, then the densities of the autodifferences
 #' in turn angle, lift angle and step length are visualized.
 #'
-#' @param track1 a data.frame with x,y,z coordinates
+#' @param track1 a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param track2 a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param autodifferences logical: Should the densities of the autodifferences in turn angle, lift angle and step length are visualized.
 #' @param scaleDensities logical: Should densities be scaled between 0 and 1, then sum of the area under the curve is not 1 anymore!
@@ -195,42 +195,27 @@ plot2d <- function(origTrack, cerwList = NULL, titleText = character(1), DEM = N
 #' plot3d.densities(track)
 plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, scaleDensities = FALSE)
 {
-  track1 <- track.properties.3d(track1)[2:nrow(track1), ]
-  if(!autodifferences) {
-    t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
-  } else {
-    diffT1 <- diff(track1$t); diffL1 <- diff(track1$l); diffD1 <- diff(track1$d);
-  }
-  if(is.null(track2)) {
-    t2 <- l2 <- d2 <- diffT2 <- diffL2 <- diffD2 <- NULL
-  } else {
-    if(is.data.frame(track2)){
-      track2 <- track.properties.3d(track2)[2:nrow(track2), ]
-      if(!autodifferences) {
-        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-      } else {
-        diffT2 <- diff(track2$t); diffL2 <- diff(track2$l); diffD2 <- diff(track2$d);}
-    }
-    if(!is.data.frame(track2) && is.list(track2)) {
-      track2 <- filter.dead.ends(track2)
-      track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
-      if(autodifferences) {
-        diffTrack2 <- lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))})
-        diffTrack2 <- do.call("rbind", diffTrack2)
-        diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
-      } else {
-        track2 <- do.call("rbind", track2)
-        t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
-      }
-    }
-  }
+  if (!is.list(track1) || !is.list(track1)) stop("Track input has to be of type list or data.frame.")
+  if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1)}
+  if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2)}
+  track1 <- filter.dead.ends(track1); track2 <- filter.dead.ends(track2)
+  track1 <- lapply(track1, function(x){track.properties.3d(x)[2:nrow(x), ]})
+  track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
   if(autodifferences){
+    difftrack1 <- do.call("rbind", lapply(track1, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+    diffT1 <- difftrack1$diffT; diffL1 <- difftrack1$diffL; diffD1 <- difftrack1$diffD;
+    diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
+    diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
     suppressWarnings(plot3d.multiplot(
       .plot3d.density(diffT1, diffT2, titleText = "Turn angle – autodifferences", scaleDensity = scaleDensities),
       .plot3d.density(diffL1, diffL2, titleText = "Lift angle – autodifferences", scaleDensity = scaleDensities),
       .plot3d.density(diffD1, diffD2, titleText = "Step length – autodifferences", scaleDensity = scaleDensities),
       cols = 1))
   } else {
+    track1 <- do.call("rbind", track1)
+    t1 <- track1$t; l1 <- track1$l; d1 <- track1$d;
+    track2 <- do.call("rbind", track2)
+    t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
     suppressWarnings(plot3d.multiplot(
       .plot3d.density(t1, t2, titleText = "Turn angle", scaleDensity = scaleDensities),
       .plot3d.density(l1, l2, titleText = "Lift angle", scaleDensity = scaleDensities),

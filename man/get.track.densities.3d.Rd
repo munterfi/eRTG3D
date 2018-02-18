@@ -4,11 +4,13 @@
 \alias{get.track.densities.3d}
 \title{Extract tldCube and autodifferences functions from a consistent track}
 \usage{
-get.track.densities.3d(track, heightDistEllipsoid = TRUE, DEM = NULL,
-  maxBin = 25)
+get.track.densities.3d(track, gradientDensity = FALSE,
+  heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 }
 \arguments{
 \item{track}{a data.frame with 3 columns containing the x,y,z coordinates}
+
+\item{gradientDensity}{logical: Should a distribution of the gradient angle be extracted and later used in the simulations?}
 
 \item{heightDistEllipsoid}{logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?}
 

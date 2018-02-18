@@ -13,6 +13,7 @@
 #' \link[eRTG3D]{track.split.3d} and \link[eRTG3D]{get.section.densities.3d}
 #'
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
+#' @param gradientDensity logical: Should a distribution of the gradient angle be extracted and later used in the simulations?
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
 #' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -22,19 +23,20 @@
 #'
 #' @examples
 #' get.track.densities.3d(track, heightDist = TRUE)
-get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.track.densities.3d <- function(track, gradientDensity = FALSE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   .is.df.xyz(track)
   track <- track.properties.3d(track)
   turnAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
   deltaTurn <- diff(turnAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
+  if (gradientDensity) {gradientAngle <- track$g} else {gradientAngle <- NULL}
   if (heightDistEllipsoid) {heightEllipsoid <- track$z} else {heightEllipsoid <- NULL}
   if (!is.null(DEM)) {
     .check.extent(DEM = DEM, track = track)
     heightTopo <- track$z - raster::extract(DEM, track[,1:2])
   } else {heightTopo <- NULL}
   return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
-                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
+                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep, gradientAngle = gradientAngle,
                           heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin))
 }
 
@@ -47,6 +49,7 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
 #' minimal level of autocorrelation in each of the terms.
 #'
 #' @param trackSections list of track sections got by the \link[eRTG3D]{track.split.3d} function
+#' @param gradientDensity logical: Should a distribution of the gradient angle be extracted and later used in the simulations?
 #' @param heightDistEllipsoid logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?
 #' @param DEM a raster containing a digital elevation model, covering the same extent as the track sections
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -56,7 +59,7 @@ get.track.densities.3d <- function(track, heightDistEllipsoid = TRUE, DEM = NULL
 #'
 #' @examples
 #' get.section.densities.3d(trackSections)
-get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.section.densities.3d <- function(trackSections, gradientDensity = FALSE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   trackSections <- lapply(X=trackSections, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
   deltaTurn <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$t)))
@@ -64,13 +67,14 @@ get.section.densities.3d <- function(trackSections, heightDistEllipsoid = TRUE, 
   deltaStep <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$d)))
   trackSections <- do.call(rbind, trackSections)
   turnAngle <- trackSections$t; liftAngle <- trackSections$l; stepLength <- trackSections$d
+  if (gradientDensity) {gradientAngle <- track$g} else {gradientAngle <- NULL}
   if (heightDistEllipsoid) {heightEllipsoid <- trackSections$z} else {heightEllipsoid <- NULL}
   if (!is.null(DEM)) {
     .check.extent(DEM = DEM, track = trackSections)
     heightTopo <- trackSections$z - raster::extract(DEM, trackSections[,1:2])
   } else {heightTopo <- NULL}
   return(get.densities.3d(turnAngle = turnAngle, liftAngle = liftAngle, stepLength = stepLength,
-                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
+                          deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep, gradientAngle = gradientAngle,
                           heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin))
 }
 
@@ -174,13 +178,14 @@ dem2track.extent <- function(DEM, track, buffer=100)
 #' @param plot2d logical: plot tracks on 2d plane?
 #' @param plot3d logical: plot tracks in 3D?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
+#' @param gradientDensity logical: Should a distribution of the gradient angle be extracted and used in the simulations (\link[eRTG3D]{get.densities.3d})?
 #'
 #' @return A list or data.frame containing the simulated track(s) (CERW).
 #' @export
 #'
 #' @examples
 #' reproduce.track.3d(track)
-reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25)
+reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = FALSE)
 {
   track <- track.properties.3d(track)
   n.locs <- nrow(track)
@@ -188,12 +193,13 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
   turnAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
   deltaTurn <- diff(turnAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
   heightEllipsoid <- track$z
+  if (gradientDensity) {gradientAngle <- track$g} else {gradientAngle <- NULL}
   if (!is.null(DEM)) {
     .check.extent(DEM = DEM, track = track)
     heightTopo <- track$z - raster::extract(DEM, track[,1:2])
   } else {heightTopo <- NULL}
   D <- get.densities.3d(liftAngle = liftAngle, turnAngle = turnAngle, stepLength = stepLength,
-                        deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep,
+                        deltaLift = deltaLift, deltaTurn = deltaTurn, deltaStep = deltaStep, gradientAngle = gradientAngle,
                         heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin)
   uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
                         a0 = track$a[1], g0 = track$g[1], densities = D, error = error)

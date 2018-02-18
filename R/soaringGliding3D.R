@@ -231,13 +231,20 @@ sim.cond.modes.3d <- function(locsVec, start=c(0,0,0), end=start, a0, g0, dList,
     # are increasing with distance to target, which needs to be accounted
     # for prior to sampling based on overall probability
     Probs <- P * Q / endD
-    # limit gradient to p/2 and pi for gliding (m=1) 0 and pi/2 for soaring (m=2)
-    if(m == 1){
-      #Probs <- Probs * as.numeric((g > 0) & (g < (pi))) # gliding
-      Probs <- Probs * as.numeric((g > (pi/2)) & (g < pi)) # gliding
-    } else {
-      Probs <- Probs * as.numeric((g > 0) & (g < (pi/2))) # soaring
-    }
+    
+    # Apply gradient distribution or if gradientDensity is set to FALSE in get.densities.3d(), limit gradient to 0-pi.
+    gProbs <- densities$gDens(g)
+    gProbs[is.na(gProbs)] <- 0
+    gProbs <- gProbs / sum(gProbs)
+    Probs <- Probs * gProbs
+    
+    # # limit gradient to p/2 and pi for gliding (m=1) 0 and pi/2 for soaring (m=2)
+    # if(m == 1){
+    #   #Probs <- Probs * as.numeric((g > 0) & (g < (pi))) # gliding
+    #   Probs <- Probs * as.numeric((g > (pi/2)) & (g < pi)) # gliding
+    # } else {
+    #   Probs <- Probs * as.numeric((g > 0) & (g < (pi/2))) # soaring
+    # }
     
     # Account for probable flight height, if a DEM is provided the relative flight height is taken
     # Otherwise only the absolute ellipsoid height.

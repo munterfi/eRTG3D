@@ -14,6 +14,7 @@
 #' @param deltaLift auto differences of the turn angles (diff(t))
 #' @param deltaTurn auto differences of the lift angles (diff(l))
 #' @param deltaStep auto differences of the step length (diff(d))
+#' @param gradientAngle NULL or the gardient angles of the track
 #' @param heightEllipsoid flight height over the ellipsoid (absolute) or NULL to exclude this distribution
 #' @param heightTopo flight height over the topography (relative) or NULL to exclude this distribution
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -23,7 +24,7 @@
 #'
 #' @examples
 #' get.densities.3d(track, heightDist = TRUE)
-get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
+get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
 {
   # probability distribution cube for turning angle, lift angle and step length
   cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength, maxBin = maxBin)
@@ -33,9 +34,10 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
   autoL <- approxfun(density.default(deltaLift))
   # approximate the distribution of the difference in step length with lag 1
   autoD <- approxfun(density.default(deltaStep))
+  if (!is.null(gradientAngle)) {gDens <- approxfun(density.default(gradientAngle[gradientAngle > 0 & gradientAngle < pi]))} else {gDens <- function(x){return(as.numeric(x > 0 & x < pi))}}
   if (!is.null(heightEllipsoid)) {hDistEllipsoid <- approxfun(density.default(heightEllipsoid))} else {hDistEllipsoid <- function(x){1}}
   if (!is.null(heightTopo)) {hDistTopo <- approxfun(density.default(heightTopo))} else {hDistTopo <- function(x){1}}
-  return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
+  return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, gDens = gDens, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
 }
 
 #' 3 dimensional histogram
@@ -214,9 +216,12 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     adProbs <- adProbs / sum(adProbs)
     # multiply and take the third squareroot
     pProbs <- tldProbs * (atProbs * alProbs * adProbs)^(1/3)
-    # limit gradient (0-pi)
+    # Apply gradient distribution or if gradientDensity is set to FALSE in get.densities.3d(), limit gradient to 0-pi.
     gAll <- (RTG[i-1, 5] + ls + lShift[i])
-    pProbs <- pProbs * as.numeric((gAll > 0 & gAll < pi))
+    gProbs <- densities$gDens(gAll)
+    gProbs[is.na(gProbs)] <- 0
+    gProbs <- gProbs / sum(gProbs)
+    pProbs <- pProbs * gProbs
     # sample on turnLiftStepHist = tldCube and add shifts
     rP <- sample(1:nrow(densities$tldCube$values), size = 1, prob = pProbs)
     t <- ts[rP] + tShift[i]
@@ -443,8 +448,11 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     # are increasing with distance to target, which needs to be accounted
     # for prior to sampling based on overall probability
     Probs <- P * Q / endD
-    # limit gradient to 0 and pi
-    Probs <- Probs * as.numeric((g > 0) & (g < pi))
+    # Apply gradient distribution or if gradientDensity is set to FALSE in get.densities.3d(), limit gradient to 0-pi.
+    gProbs <- densities$gDens(g)
+    gProbs[is.na(gProbs)] <- 0
+    gProbs <- gProbs / sum(gProbs)
+    Probs <- Probs * gProbs
     # Account for probable flight height, if a DEM is provided the relative flight height is taken
     # Otherwise only the absolute ellipsoid height.
     if(!is.null(DEM))

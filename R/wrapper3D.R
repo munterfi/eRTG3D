@@ -67,7 +67,7 @@ get.section.densities.3d <- function(trackSections, gradientDensity = FALSE, hei
   deltaStep <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$d)))
   trackSections <- do.call(rbind, trackSections)
   turnAngle <- trackSections$t; liftAngle <- trackSections$l; stepLength <- trackSections$d
-  if (gradientDensity) {gradientAngle <- track$g} else {gradientAngle <- NULL}
+  if (gradientDensity) {gradientAngle <- trackSections$g} else {gradientAngle <- NULL}
   if (heightDistEllipsoid) {heightEllipsoid <- trackSections$z} else {heightEllipsoid <- NULL}
   if (!is.null(DEM)) {
     .check.extent(DEM = DEM, track = trackSections)

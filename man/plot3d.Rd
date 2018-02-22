@@ -2,27 +2,29 @@
 % Please edit documentation in R/plot3D.R
 \name{plot3d}
 \alias{plot3d}
-\title{Plot 3D track(s) with a surface}
+\title{Plot track(s) with a surface of a digital elevation model in three dimensions}
 \usage{
-plot3d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL,
-  maxHeight = 8000)
+plot3d(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL,
+  padding = 0.1, timesHeight = 10)
 }
 \arguments{
-\item{origTrack}{a data.frame with x,y,z coordinates}
+\item{origTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}
 
-\item{cerwList}{a list containing a data.frame with x,y,z coordinates or a data.frame}
+\item{simTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}
 
 \item{titleText}{string with title of the plot}
 
 \item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
 
-\item{maxHeight}{Maximum plot height, default 8000m}
+\item{padding}{adds a pad to the 2-D space in percentage (by default set to 0.1)}
+
+\item{timesHeight}{multiply the height scale by a scalar (by default set to 10)}
 }
 \value{
-Plots a 2D ggplot2 object
+Plots a plotly object
 }
 \description{
-Plot 3D track(s) with a surface
+Plot track(s) with a surface of a digital elevation model in three dimensions
 }
 \examples{
 plot3d(track)

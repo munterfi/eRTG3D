@@ -1,5 +1,91 @@
 #' Plot 3D track(s) with a surface
 #'
+#' @param origTrack a list containing data.frames with x,y,z coordinates or a data.frame
+#' @param simTrack a list containing data.frames with x,y,z coordinates or a data.frame
+#' @param titleText string with title of the plot
+#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
+#' @param padding adds a pad to the 2-D space in percentage (by default set to 0.05)
+#' @param distanceHeightRatio ratio of the height in respect to the ground distance (by default ratio is 10)
+#'
+#' @return
+#' Plots a 3D plotly object
+#' @export
+#'
+#' @examples
+#' plot3d(track)
+plot3d.new <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL, padding = 0.05, distanceHeightRatio = 10) {
+  if (!is.list(origTrack) || (!is.list(simTrack) && !is.null(simTrack))) stop("Track input has to be of type list or data.frame.")
+  if (is.list(origTrack) && is.data.frame(origTrack)) {origTrack <- list(origTrack)}
+  if (is.list(simTrack) && is.data.frame(simTrack)) {simTrack <-list(simTrack)}
+  if (padding > 1 && padding < 0) stop("The variable 'padding' must be a value between 0 and 1.")
+  extents <- do.call("rbind", lapply(X = append(origTrack, simTrack), FUN = function(track){
+    c(floor(min(track$x)), floor(max(track$x))+1, floor(min(track$y)), floor(max(track$y))+1)
+  }))
+  minX <- min(extents[,1]); maxX <- max(extents[,2]); minY <- min(extents[,3]); maxY <- max(extents[,4]);
+  dx <- maxX-minX; dy <- maxY-minY
+  # pad extent
+  minX <- minX - round(dx*padding); maxX <- maxX + round(dx*padding);
+  minY <- minY - round(dy*padding); maxY <- maxY + round(dy*padding);
+  dx <- maxX-minX; dy <- maxY-minY
+  ratio <- dy/dx
+  # Create minimum square
+  if(dy<dx){
+    middle <- (minY+maxY)/2
+    rMinY <- middle - dx/2; rMaxY <- middle + dx/2
+    rMinX <- minX; rMaxX <- maxX
+  } else {
+    middle <- (minX+maxX)/2
+    rMinX <- middle - dy/2; rMaxX <- middle + dy/2
+    rMinY <- minY; rMaxY <- maxY
+  }
+  # Define z axis
+  axz <- list(title = 'z', autoscale = TRUE)
+  # extend plot area to minimum square
+  extentTrack <- as.data.frame(cbind(c(rMinX, rMaxX),c(rMinY, rMaxY),c(0,0)))
+  colnames(extentTrack) <- c("x","y","z")
+  # add to plotly
+  p <- plotly::plot_ly()
+  p <- plotly::add_trace(p, data = extentTrack, x = ~x, y = ~y, z = ~z,
+                         mode = "lines", type = "scatter3d", opacity = 0, showlegend = FALSE)
+  
+  for (i in 1:length(origTrack)){
+    p <- plotly::add_trace(p, data = origTrack[[i]][1:3], x = ~x, y = ~y, z = ~z,
+                           mode = "lines+markers", type = "scatter3d", name = "Original",
+                           line = list(color = "black", width = 3),
+                           marker = list(size = 2, cmin = -20, cmax = 50),
+                           opacity = 0.9, showlegend = (i==1))
+  }
+  if(!is.null(simTrack)){
+    for (i in 1:length(simTrack)){
+      p <- plotly::add_trace(p, data = simTrack[[i]][1:3], x = ~x, y = ~y, z = ~z,
+                             mode = "lines+markers", type = "scatter3d", name = "Simulation",
+                             line = list(color = "rgb(176,196,222)", width = 3),
+                             marker = list(size = 2, cmin = -20, cmax = 50),
+                             opacity = if(i==1){0.9}else{0.7}, showlegend = (i==1))
+    }
+  }
+  if (!is.null(DEM)) {
+    if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
+    DEM <- raster::crop(DEM, raster::extent(minX, maxX, minY, maxY))
+    DEM <- raster::resample(DEM, raster::raster(ncol=min(1000, (maxX-minX)), nrow=min(floor(1000*ratio), (maxY-minY)),
+                                                xmn=minX, xmx=maxX, ymn=minY, ymx=maxY))
+    DEM <- raster::as.matrix(DEM)
+    p <- plotly::add_surface(p,
+                             x = seq(minX, maxX, length.out = ncol(DEM)), y = seq(maxY, minY, length.out = nrow(DEM)),
+                             z = DEM, type = "surface", opacity=1, colorscale=list(c(0,1,2,3,4,5),terrain.colors(6)),
+                             reversescale = TRUE, colorbar=list(title='DEM'))
+    minDEM <- min(DEM, na.rm = TRUE)
+    axz <- list(title = 'z', autoscale = TRUE, range = c(minDEM, ((max(dx,dy)/distanceHeightRatio)+minDEM)))
+  }
+  p <- plotly::layout(p, title = titleText,
+                      scene = list(xaxis = list(title = 'x', autoscale = TRUE),
+                                   yaxis = list(title = 'y', autoscale = TRUE),
+                                   zaxis = axz))
+  print(p)
+}
+
+#' Plot 3D track(s) with a surface
+#'
 #' @param origTrack a data.frame with x,y,z coordinates
 #' @param cerwList a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot

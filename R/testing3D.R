@@ -16,7 +16,7 @@
 test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = FALSE)
 {
   message("  |*** Two-sample Kolmogorov-Smirnov test ***")
-  if (!is.list(track1) || !is.list(track1)) stop("Track input has to be of type list or data.frame.")
+  if (!is.list(track1) || !is.list(track2)) stop("Track input has to be of type list or data.frame.")
   if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1)}
   if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2)}
   track1 <- filter.dead.ends(track1); track2 <- filter.dead.ends(track2)

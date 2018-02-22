@@ -2,27 +2,33 @@
 % Please edit documentation in R/plot3D.R
 \name{plot2d}
 \alias{plot2d}
-\title{Plot function to plot the 3d tracks in 2d plane}
+\title{Plot function to plot the 3-D tracks in 2-D plane}
 \usage{
-plot2d(origTrack, cerwList = NULL, titleText = character(1), DEM = NULL,
-  BG = NULL, alpha = 0.7)
+plot2d(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL,
+  BG = NULL, padding = 0.1, alpha = 0.7, resolution = 500)
 }
 \arguments{
-\item{origTrack}{a data.frame with x,y,z coordinates}
+\item{origTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}
 
-\item{cerwList}{a list containing a data.frame with x,y,z coordinates or a data.frame}
+\item{simTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}
 
 \item{titleText}{string with title of the plot}
 
 \item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
 
-\item{alpha}{a number between 0 and 1, to specify the transparency of the cerw line(s)}
+\item{BG}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
+
+\item{padding}{adds a pad to the 2-D space in percentage (by default set to 0.1)}
+
+\item{alpha}{a number between 0 and 1, to specify the transparency of the simulated line(s)}
+
+\item{resolution}{number of pixels the rasters are downsampled to (by default set to 500 pixels)}
 }
 \value{
-A 2D ggplot2 object.
+A ggplot2 object.
 }
 \description{
-Plot function to plot the 3d tracks in 2d plane
+Plot function to plot the 3-D tracks in 2-D plane
 }
 \examples{
 plot3d(track)

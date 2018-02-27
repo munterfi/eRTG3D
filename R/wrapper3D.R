@@ -129,6 +129,32 @@ dem2track.extent <- function(DEM, track, buffer=100)
   return(raster::crop(DEM, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
 }
 
+#' Extent of track(s)
+#'
+#' @param track a list containing data.frames with x,y,z coordinates or a data.frame
+#' @param zAxis logical: return also the extent of the Z axis?
+#'
+#' @return
+#' Returns an extent object of the raster package in the 2–D case and a vector in the 3–D case.
+#' @export
+#'
+#' @examples
+#' track.extent(track, zAxis = TRUE)
+track.extent <- function(track, zAxis = FALSE){
+  if (!is.list(track) || !is.list(track)) stop("Track input has to be of type list or data.frame.")
+  if (is.list(track) && is.data.frame(track)) {track <- list(track)}
+  extents <- do.call("rbind", lapply(X = track, FUN = function(track){
+    c(floor(min(track$x)), floor(max(track$x))+1,
+      floor(min(track$y)), floor(max(track$y))+1,
+      floor(min(track$z)), floor(max(track$z))+1)
+  }))
+  minX <- min(extents[,1]); maxX <- max(extents[,2]);
+  minY <- min(extents[,3]); maxY <- max(extents[,4]);
+  minZ <- min(extents[,5]); maxZ <- max(extents[,6]);
+  if (zAxis) {return(rbind(xmin=minX, xmax=maxX, ymin=minY, ymax=maxY, zmin=minZ, zmax=maxZ))}
+  return(raster::extent(minX, maxX, minY, maxY))
+}
+
 #' Tests if the object is of type 'data.frame' and has x, y, z coordinates without NA values
 #'
 #' @param track any object to test

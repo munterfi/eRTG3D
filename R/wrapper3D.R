@@ -213,6 +213,7 @@ track.extent <- function(track, zAxis = FALSE){
 #' reproduce.track.3d(track)
 reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = FALSE)
 {
+  .is.df.xyz(track = track)
   track <- track.properties.3d(track)
   n.locs <- nrow(track)
   if (n.locs>1500) stop("Track is too long (>1500 steps).")
@@ -299,6 +300,7 @@ movingMedian <- function(data, window){
 #' @examples
 #' turn2target.3d(track)
 turn2target.3d <- function(track) {
+  .is.df.xyz(track = track)
   track <- track.properties.3d(track)
   target <- Reduce(c, track[nrow(track), 1:3])
   .wrap(atan2(target[2]-track$y, target[1] - track$x) - track$a)}
@@ -315,6 +317,7 @@ turn2target.3d <- function(track) {
 #' @examples
 #' lift2target.3d(track)
 lift2target.3d <- function(track) {
+  .is.df.xyz(track = track)
   track <- track.properties.3d(track)
   target <- Reduce(c, track[nrow(track), 1:3])
   .wrap(atan2(sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2),
@@ -332,8 +335,29 @@ lift2target.3d <- function(track) {
 #' @examples
 #' dist2target.3d(track)
 dist2target.3d <- function(track) {
+  .is.df.xyz(track = track)
   target <- Reduce(c, track[nrow(track), 1:3])
   sqrt((target[1]-track$x) ^ 2 + (target[2]-track$y) ^ 2 + (target[3]-track$z) ^ 2)}
+
+#' Distance of each track point to a given point
+#'
+#' @param track a list containing data.frames with x,y,z coordinates or a data.frame
+#' @param point a vector with x, y or x, y, z coordinates
+#' @param groundDistance logical: calculate only ground distance in x-y plane?
+#'
+#' @return Returns the distance of each track point to the point.
+#' @export
+#'
+#' @examples
+#' dist3point.3d(track, point)
+dist2point.3d <- function(track, point, groundDistance = FALSE) {
+  .is.df.xyz(track = track)
+  if (groundDistance | length(point)==2) {
+    sqrt((point[1]-track[,1])^2 + (point[2]-track[,2])^2)
+  } else {
+    sqrt((point[1]-track[,1])^2 + (point[2]-track[,2])^2 + (point[3]-track[,3])^2)
+  }
+}
 
 #' Track properties of a 3D track
 #'

@@ -18,37 +18,33 @@
 #' .qProb.3d.unix(sim, n.locs)
 .qProb.3d.unix <- function(sim, n.locs, maxBin = 25)
 {
-  if (multicore) {
-    if(.Platform$OS.type == "unix") {return(.qProb.3d.unix(sim, n.locs, maxBin = maxBin))}
-    if(.Platform$OS.type == "windows") {return(suppressWarnings(.qProb.3d.windows(sim, n.locs, maxBin = maxBin)))}
-  } else {
-    start.time <- Sys.time()
-    message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
-    # steps minus 2
-    nSteps <- n.locs - 2
-    # lift angles to target as a function of number of steps
-    cubeList <- pbmcapply::pbmclapply(1:nSteps, function(x) {
-      # turn angle, lift angles and distance to target as a function of number of steps
-      t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
-      l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                       diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
-      d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
-      # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
-      # of the turning angle to target, the lift angle to target and the distance to target
-      # for the relevant number of steps. This is mainly to reduce redundancy mainly
-      # introduced by the sliding window approach adopted in estimating the relationships
-      k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
-      t <- t[seq(1, length(t), by = k)]
-      l <- l[seq(1, length(l), by = k)]
-      d <- d[seq(1, length(d), by = k)]
-      # get stepTurnLiftHistograms
-      return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
-    }, mc.cores = parallel::detectCores()-1, mc.style = "txt")
-    message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-    return(rev(cubeList))
-  }
+  start.time <- Sys.time()
+  nCores <- parallel::detectCores()-1
+  message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
+  # steps minus 2
+  nSteps <- n.locs - 2
+  # lift angles to target as a function of number of steps
+  cubeList <- pbmcapply::pbmclapply(1:nSteps, function(x) {
+    # turn angle, lift angles and distance to target as a function of number of steps
+    t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
+    l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
+                     diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
+    d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+    # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
+    # of the turning angle to target, the lift angle to target and the distance to target
+    # for the relevant number of steps. This is mainly to reduce redundancy mainly
+    # introduced by the sliding window approach adopted in estimating the relationships
+    k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+    t <- t[seq(1, length(t), by = k)]
+    l <- l[seq(1, length(l), by = k)]
+    d <- d[seq(1, length(d), by = k)]
+    # get stepTurnLiftHistograms
+    return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+  }, mc.cores = nCores, mc.style = "txt")
+  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+  return(rev(cubeList))
 }
 
 #' Parallel computation of n Conditioned Empirical Random Walks (CERW) in 3D on Unix

@@ -74,6 +74,5 @@
 {
   nCores <- parallel::detectCores()-1
   message(paste("  |Running on nCores = ", nCores, sep=""))
-  message("  |...")
-  return(parallel::mclapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs, start, end, a0, g0, densities, qProbs, error, DEM, BG)}, mc.cores = nCores))
+  return(pbmcapply::pbmclapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs, start, end, a0, g0, densities, qProbs, error, DEM, BG)}, mc.cores = nCores, mc.style = "txt"))
 }

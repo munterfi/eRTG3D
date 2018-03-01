@@ -423,14 +423,13 @@ n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding
     if(.Platform$OS.type == "unix") {
       nCores <- parallel::detectCores()-1
       message(paste("  |Running on nCores = ", nCores, sep=""))
-      message("  |...")
-      cerwList <- parallel::mclapply(X = 1:n.sim, FUN = function(X) {
+      cerwList <- pbmcapply::pbmclapply(X = 1:n.sim, FUN = function(X) {
         sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
                               error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG)},
-        mc.cores = nCores)
+        mc.cores = nCores, mc.style = "txt")
     }
     if(.Platform$OS.type == "windows") {
-      stop("Multicore not yet implemented on Windows system, please use use a unix based system.")
+      stop("Multicore not yet implemented on Windows system, please use a unix based system.")
     }
   } else {
     cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(X) {

@@ -18,53 +18,37 @@
 #' .qProb.3d.unix(sim, n.locs)
 .qProb.3d.unix <- function(sim, n.locs, maxBin = 25)
 {
-  start.time <- Sys.time()
-  # nCores <- parallel::detectCores()-1
-  if (n.locs<=300) {nCores <- parallel::detectCores()-1} else {nCores <- round(parallel::detectCores()/2)}
-  message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
-  # progress bar
-  pb <- txtProgressBar(min = 0, max = 18, style = 3)
-  # steps minus 2
-  nSteps <- n.locs - 2
-  # turning angles to target as a function of number of steps
-  tList <- parallel::mclapply(1:nSteps, function(x) .wrap(atan2(diff(sim$y, lag = x),
-                                                                diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)]), mc.cores = nCores)
-  setTxtProgressBar(pb, 3)
-  # lift angles to target as a function of number of steps
-  lList <- parallel::mclapply(1:nSteps, function(x) .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                                                                diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)]), mc.cores = nCores)
-  setTxtProgressBar(pb, 6)
-  # calculate distance to target as a function of number of steps
-  dList <- parallel::mclapply(1:nSteps, function(x) sqrt(diff(sim$x, lag = x) ^ 2
-                                                         + diff(sim$y, lag = x) ^ 2
-                                                         + diff(sim$z, lag = x) ^ 2), mc.cores = nCores)
-  setTxtProgressBar(pb, 9)
-  # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
-  # of the turning angle to target, the lift angle to target and the distance to target
-  # for the relevant number of steps. This is mainly to reduce redundancy mainly
-  # introduced by the sliding window approach adopted in estimating the relationships
-  k <- suppressWarnings(cbind(unlist(lapply(lapply(lapply(lapply(parallel::mclapply(tList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                 '[[', 'acf'), '<', .05),
-                                                   which), head, 1, mc.cores = nCores)) - 1,
-                              unlist(lapply(lapply(lapply(lapply(parallel::mclapply(lList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                 '[[', 'acf'), '<', .05),
-                                                   which), head, 1, mc.cores = nCores)) - 1,
-                              unlist(lapply(lapply(lapply(lapply(parallel::mclapply(dList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                 '[[', 'acf'), '<', .05),
-                                                   which), head, 1, mc.cores = nCores)) - 1))
-  kk <- apply(k,1,max)
-  setTxtProgressBar(pb, 14)
-  tList <-mapply('[',tList,mapply(seq, 1, lapply(tList, length), by = kk))
-  lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
-  dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
-  # Use multicore to speed the calculations up
-  cubeList <- rev(parallel::mclapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin), mc.cores = nCores))
-  # complete progress bar and close
-  setTxtProgressBar(pb, 18)
-  close(pb)
-  message("  |Minimum number of independent estimates: ", min(unlist(lapply(dList, length))), " for step ", which.min(unlist(lapply(dList, length))), ".")
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-  return(cubeList)
+  if (multicore) {
+    if(.Platform$OS.type == "unix") {return(.qProb.3d.unix(sim, n.locs, maxBin = maxBin))}
+    if(.Platform$OS.type == "windows") {return(suppressWarnings(.qProb.3d.windows(sim, n.locs, maxBin = maxBin)))}
+  } else {
+    start.time <- Sys.time()
+    message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
+    # steps minus 2
+    nSteps <- n.locs - 2
+    # lift angles to target as a function of number of steps
+    cubeList <- pbmcapply::pbmclapply(1:nSteps, function(x) {
+      # turn angle, lift angles and distance to target as a function of number of steps
+      t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
+      l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
+                       diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
+      d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+      # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
+      # of the turning angle to target, the lift angle to target and the distance to target
+      # for the relevant number of steps. This is mainly to reduce redundancy mainly
+      # introduced by the sliding window approach adopted in estimating the relationships
+      k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+      t <- t[seq(1, length(t), by = k)]
+      l <- l[seq(1, length(l), by = k)]
+      d <- d[seq(1, length(d), by = k)]
+      # get stepTurnLiftHistograms
+      return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+    }, mc.cores = parallel::detectCores()-1, mc.style = "txt")
+    message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+    return(rev(cubeList))
+  }
 }
 
 #' Parallel computation of n Conditioned Empirical Random Walks (CERW) in 3D on Unix

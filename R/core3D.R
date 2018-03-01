@@ -276,49 +276,36 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
   } else {
     start.time <- Sys.time()
     message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
-    # progress bar
-    pb <- txtProgressBar(min = 0, max = 18, style = 3)
     # steps minus 2
     nSteps <- n.locs - 2
-    # turning angles to target as a function of number of steps
-    tList <- lapply(1:nSteps, function(x) .wrap(atan2(diff(sim$y, lag = x),
-                                                                  diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)]))
-    setTxtProgressBar(pb, 3)
+    # progress bar
+    pb <- txtProgressBar(min = 0, max = nSteps, style = 3)
     # lift angles to target as a function of number of steps
-    lList <- lapply(1:nSteps, function(x) .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                                                                  diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)]))
-    setTxtProgressBar(pb, 6)
-    # calculate distance to target as a function of number of steps
-    dList <- lapply(1:nSteps, function(x) sqrt(diff(sim$x, lag = x) ^ 2
-                                                           + diff(sim$y, lag = x) ^ 2
-                                                           + diff(sim$z, lag = x) ^ 2))
-    setTxtProgressBar(pb, 9)
-    # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
-    # of the turning angle to target, the lift angle to target and the distance to target
-    # for the relevant number of steps. This is mainly to reduce redundancy mainly
-    # introduced by the sliding window approach adopted in estimating the relationships
-    k <- suppressWarnings(cbind(unlist(lapply(lapply(lapply(lapply(lapply(tList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1,
-                                unlist(lapply(lapply(lapply(lapply(lapply(lList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1,
-                                unlist(lapply(lapply(lapply(lapply(lapply(dList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1))
-    kk <- apply(k,1,max)
-    setTxtProgressBar(pb, 14)
-    tList <-mapply('[',tList,mapply(seq, 1, lapply(tList, length), by = kk))
-    lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
-    dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
-    # Use multicore to speed the calculations up
-    cubeList <- rev(lapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin)))
-    # complete progress bar and close
-    setTxtProgressBar(pb, 18)
+    cubeList <- lapply(1:nSteps, function(x) {
+      # Update progressbar
+      setTxtProgressBar(pb, x)
+      # turn angle, lift angles and distance to target as a function of number of steps
+      t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
+      l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
+                       diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
+      d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+      # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
+      # of the turning angle to target, the lift angle to target and the distance to target
+      # for the relevant number of steps. This is mainly to reduce redundancy mainly
+      # introduced by the sliding window approach adopted in estimating the relationships
+      k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+      t <- t[seq(1, length(t), by = k)]
+      l <- l[seq(1, length(l), by = k)]
+      d <- d[seq(1, length(d), by = k)]
+      # get stepTurnLiftHistograms
+      return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+    })
+    setTxtProgressBar(pb, nSteps)
     close(pb)
-    message("  |Minimum number of independent estimates: ", min(unlist(lapply(dList, length))), " for step ", which.min(unlist(lapply(dList, length))), ".")
     message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-    return(cubeList)
+    return(rev(cubeList))
   }
 }
 

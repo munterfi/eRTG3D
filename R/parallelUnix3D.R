@@ -19,7 +19,8 @@
 .qProb.3d.unix <- function(sim, n.locs, maxBin = 25)
 {
   start.time <- Sys.time()
-  nCores <- parallel::detectCores()-1
+  # nCores <- parallel::detectCores()-1
+  if (n.locs<=300) {nCores <- parallel::detectCores()-1} else {nCores <- round(parallel::detectCores()/2)}
   message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
   # progress bar
   pb <- txtProgressBar(min = 0, max = 18, style = 3)

@@ -1,20 +1,3 @@
-#' Glide ratio
-#' 
-#' Calculates the ratio between horizontal movement and vertical movement.
-#' The value expresses the distance covered forward movement per distance movement in sinking.
-#'
-#' @param track a track data.frame containing x, y and z coordinates of a gliding section
-#'
-#' @return The ratio between horizontal and vertical movement.
-#' @export
-#'
-#' @examples
-#' get.glideRatio.3d(track)
-get.glideRatio.3d <- function(track) {
-  start <- track[2, 1:3]; end <- track[nrow(track), 1:3]
-  return(-1*(sqrt((end[1]-start[1])^2+(end[2]-start[2])^2)/as.numeric(end[3]-start[3])))
-}
-
 #' Multiple Conditioned Empirical Random Walks (CERW) with modes in 3D
 #'
 #' Creates n conditioned empirical random walks using different modes, with a specific starting and ending point,
@@ -231,13 +214,20 @@ sim.cond.modes.3d <- function(locsVec, start=c(0,0,0), end=start, a0, g0, dList,
     # are increasing with distance to target, which needs to be accounted
     # for prior to sampling based on overall probability
     Probs <- P * Q / endD
-    # limit gradient to p/2 and pi for gliding (m=1) 0 and pi/2 for soaring (m=2)
-    if(m == 1){
-      #Probs <- Probs * as.numeric((g > 0) & (g < (pi))) # gliding
-      Probs <- Probs * as.numeric((g > (pi/2)) & (g < pi)) # gliding
-    } else {
-      Probs <- Probs * as.numeric((g > 0) & (g < (pi/2))) # soaring
-    }
+    
+    # Apply gradient distribution or if gradientDensity is set to FALSE in get.densities.3d(), limit gradient to 0-pi.
+    gProbs <- densities$gDens(g)
+    gProbs[is.na(gProbs)] <- 0
+    gProbs <- gProbs / sum(gProbs)
+    Probs <- Probs * gProbs
+    
+    # # limit gradient to p/2 and pi for gliding (m=1) 0 and pi/2 for soaring (m=2)
+    # if(m == 1){
+    #   #Probs <- Probs * as.numeric((g > 0) & (g < (pi))) # gliding
+    #   Probs <- Probs * as.numeric((g > (pi/2)) & (g < pi)) # gliding
+    # } else {
+    #   Probs <- Probs * as.numeric((g > 0) & (g < (pi/2))) # soaring
+    # }
     
     # Account for probable flight height, if a DEM is provided the relative flight height is taken
     # Otherwise only the absolute ellipsoid height.

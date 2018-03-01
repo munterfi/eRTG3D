@@ -4,11 +4,13 @@
 \alias{get.section.densities.3d}
 \title{Extract tldCube and autodifferences functions from track sections}
 \usage{
-get.section.densities.3d(trackSections, heightDistEllipsoid = TRUE,
-  DEM = NULL, maxBin = 25)
+get.section.densities.3d(trackSections, gradientDensity = FALSE,
+  heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 }
 \arguments{
 \item{trackSections}{list of track sections got by the \link[eRTG3D]{track.split.3d} function}
+
+\item{gradientDensity}{logical: Should a distribution of the gradient angle be extracted and later used in the simulations?}
 
 \item{heightDistEllipsoid}{logical: Should a distribution of the flight height over ellipsoid be extracted and later used in the sim.cond.3d()?}
 

@@ -5,7 +5,8 @@
 \title{Extract tldCube and autodifferences functions}
 \usage{
 get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
-  deltaStep, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
+  deltaStep, gradientAngle = NULL, heightEllipsoid = NULL,
+  heightTopo = NULL, maxBin = 25)
 }
 \arguments{
 \item{turnAngle}{turn angles of the track (t)}
@@ -19,6 +20,8 @@ get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
 \item{deltaTurn}{auto differences of the lift angles (diff(l))}
 
 \item{deltaStep}{auto differences of the step length (diff(d))}
+
+\item{gradientAngle}{NULL or the gardient angles of the track}
 
 \item{heightEllipsoid}{flight height over the ellipsoid (absolute) or NULL to exclude this distribution}
 

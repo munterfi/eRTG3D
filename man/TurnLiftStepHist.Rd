@@ -14,7 +14,7 @@ turnLiftStepHist(turn, lift, step, printDims = TRUE, rm.zeros = TRUE,
 
 \item{step}{numeric vector of step lengths}
 
-\item{printDims}{logical: Should dimensions of tld-Cube be messaged?}
+\item{printDims}{logical: should dimensions of tld-Cube be messaged?}
 
 \item{rm.zeros}{logical: should combinations with zero probability be removed?}
 

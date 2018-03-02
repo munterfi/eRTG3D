@@ -7,7 +7,7 @@
 sf2df.3d(track)
 }
 \arguments{
-\item{track}{An object of type 'sf, data.frame'}
+\item{track}{An object of type \code{'sf, data.frame'}}
 }
 \value{
 A data.frame.

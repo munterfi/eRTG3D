@@ -14,9 +14,9 @@
 #' @param deltaLift auto differences of the turn angles (diff(t))
 #' @param deltaTurn auto differences of the lift angles (diff(l))
 #' @param deltaStep auto differences of the step length (diff(d))
-#' @param gradientAngle NULL or the gardient angles of the track
-#' @param heightEllipsoid flight height over the ellipsoid (absolute) or NULL to exclude this distribution
-#' @param heightTopo flight height over the topography (relative) or NULL to exclude this distribution
+#' @param gradientAngle \code{NULL} or the gardient angles of the track
+#' @param heightEllipsoid flight height over the ellipsoid (absolute) or \code{NULL} to exclude this distribution
+#' @param heightTopo flight height over the topography (relative) or \code{NULL} to exclude this distribution
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
@@ -49,7 +49,7 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @param turn numeric vector of turn angles
 #' @param lift numeric vector of lift angles
 #' @param step numeric vector of step lengths
-#' @param printDims logical: Should dimensions of tld-Cube be messaged?
+#' @param printDims logical: should dimensions of tld-Cube be messaged?
 #' @param rm.zeros logical: should combinations with zero probability be removed?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube.
 #'
@@ -91,7 +91,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' Find corresponding midpoints of breaks
 #'
 #' Assigns each element of a input vector the mid point of the corresponding interval.
-#' Adjusted the original cut() function from the base package.
+#' Adjusted the original \code{cut()} function from the base package.
 #' The midpoints are turned to a factor which facilitates the further histogram creation.
 #'
 #' @param x a numeric vector
@@ -158,14 +158,14 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' with more steps than 1/10th or more of the number of steps
 #' of the empirical data should rather rely on simulated
 #' unconditional walks with the same properties than on
-#' the empirical data (factor 1500).
+#' the empirical data (\code{factor = 1500}).
 #' 
 #' @section Random initial heading:
 #' For a random initial heading a0 use:
-#'   sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)
+#'   \code{sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)}
 #'
 #' @param n.locs the number of locations for the simulated track
-#' @param start vector indicating the start point c(x,y,z)
+#' @param start vector indicating the start point \code{c(x,y,z)}
 #' @param a0 initial heading in radian
 #' @param g0 initial gradient/polar angle in radian
 #' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
@@ -258,7 +258,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #'
 #' @param sim the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
-#' @param n.locs number of total segments to be modelled,
+#' @param n.locs number of total segments to be modeled,
 #'     the length of the desired conditioned empirical random walk
 #' @param multicore logical: run computations in parallel (n-1 cores)?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -521,15 +521,15 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
 #' @param g0 initial incoming gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
-#' @param qProbs list object returned by qProb.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
+#' @param qProbs list object returned by the \link[eRTG3D]{qProb.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #' @param multicore logical: run computations in parallel (n-1 cores)?
 #'
 #' @return
-#' A list containing the CERWs or NULLs if dead ends have been encountered.
+#' A list containing the CERWs or \code{NULL}s if dead ends have been encountered.
 #' @export
 #'
 #' @examples

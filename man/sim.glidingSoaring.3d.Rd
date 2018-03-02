@@ -15,7 +15,7 @@ sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0, 0),
 
 \item{dSoaring}{density object returned by the \link[eRTG3D]{get.densities.3d} function for soaring mode}
 
-\item{qGliding}{the Q probabilites for the steps in gliding mode}
+\item{qGliding}{the Q probabilites for the steps in gliding mode (\link[eRTG3D]{qProb.3d})}
 
 \item{start}{numeric vector of length 3 with the coordinates of the start point}
 
@@ -45,7 +45,7 @@ It is important to extract for every mode in the MODE raster layer a correspondi
 and pass them to the function.
 }
 \note{
-The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. NA's are not allowed in the raster.
+The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 }
 \examples{
 sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)

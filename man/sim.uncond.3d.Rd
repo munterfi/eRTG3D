@@ -9,7 +9,7 @@ sim.uncond.3d(n.locs, start = c(0, 0, 0), a0, g0, densities, error = TRUE)
 \arguments{
 \item{n.locs}{the number of locations for the simulated track}
 
-\item{start}{vector indicating the start point c(x,y,z)}
+\item{start}{vector indicating the start point \code{c(x,y,z)}}
 
 \item{a0}{initial heading in radian}
 
@@ -46,13 +46,13 @@ Simulations connecting start and end points
 with more steps than 1/10th or more of the number of steps
 of the empirical data should rather rely on simulated
 unconditional walks with the same properties than on
-the empirical data (factor 1500).
+the empirical data (\code{factor = 1500}).
 }
 
 \section{Random initial heading}{
 
 For a random initial heading a0 use:
-  sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)
+  \code{sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)}
 }
 
 \examples{

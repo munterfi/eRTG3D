@@ -2,7 +2,7 @@
 % Please edit documentation in R/sfWrapper3D.R
 \name{is.sf.3d}
 \alias{is.sf.3d}
-\title{Tests if the object is a simple feature collection (class: 'sf, data.frame')}
+\title{Tests if the object is a simple feature collection (class: \code{'sf, data.frame'})}
 \usage{
 is.sf.3d(track)
 }
@@ -10,10 +10,10 @@ is.sf.3d(track)
 \item{track}{any object to test}
 }
 \value{
-A logical: TRUE if is a simple feature collection (class: 'sf, data.frame') of the sf package, FALSE otherwise.
+A logical: \code{TRUE} if is a simple feature collection (class: \code{'sf, data.frame'}) of the sf package, \code{FALSE} otherwise.
 }
 \description{
-Tests if the object is a simple feature collection (class: 'sf, data.frame')
+Tests if the object is a simple feature collection (class: \code{'sf, data.frame'})
 }
 \examples{
 is.sf.3d(track)

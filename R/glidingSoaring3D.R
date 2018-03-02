@@ -27,7 +27,7 @@ get.glideRatio.3d <- function(track) {
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
 #' @param dGliding density object returned by the \link[eRTG3D]{get.densities.3d} function for gliding mode
 #' @param dSoaring density object returned by the \link[eRTG3D]{get.densities.3d} function for soaring mode
-#' @param qGliding the Q probabilites for the steps in gliding mode
+#' @param qGliding the Q probabilites for the steps in gliding mode (\link[eRTG3D]{qProb.3d})
 #' @param start numeric vector of length 3 with the coordinates of the start point
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
@@ -40,7 +40,7 @@ get.glideRatio.3d <- function(track) {
 #' @return A 'soaring-gliding' trajectory in the form of data.frame
 #' @export
 #'
-#' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. NA's are not allowed in the raster.
+#' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
 #' sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
@@ -393,7 +393,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
 #' @param dGliding density object returned by the \link[eRTG3D]{get.densities.3d} function for gliding mode
 #' @param dSoaring density object returned by the \link[eRTG3D]{get.densities.3d} function for soaring mode
-#' @param qGliding the Q probabilites for the steps in gliding mode
+#' @param qGliding the Q probabilites for the steps in gliding mode (\link[eRTG3D]{qProb.3d})
 #' @param start numeric vector of length 3 with the coordinates of the start point
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
@@ -403,10 +403,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #'
-#' @return A 'soaring-gliding' trajectory in the form of data.frame
+#' @return A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
 #' @export
 #'
-#' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. NA's are not allowed in the raster.
+#' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)

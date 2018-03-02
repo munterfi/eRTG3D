@@ -13,13 +13,13 @@ plot3d.multiplot(..., plotlist = NULL, cols = 1, layout = NULL)
 
 \item{cols}{number of columns in layout}
 
-\item{layout}{a matrix specifying the layout. If present, 'cols' is ignored.}
+\item{layout}{a matrix specifying the layout. If present, \code{cols} is ignored.}
 }
 \value{
 Nothing, plots the ggplot2 objects.
 }
 \description{
-If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+If the layout is something like \code{matrix(c(1,2,3,3), nrow=2, byrow=TRUE)},
 then plot 1 will go in the upper left, 2 will go in the upper right, and
 3 will go all the way across the bottom.
 }

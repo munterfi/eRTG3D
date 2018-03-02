@@ -1,7 +1,7 @@
 #' Example digital elevation model (DEM)
 #'
 #' This is data to be included in the package and can be used to test its functionality.
-#' The 'dem' data is a rasterLayer and has a resolution of 90 meters. It is the topography
+#' The \code{dem} data is a \code{RasterLayer} and has a resolution of 90 meters. It is the topography
 #' of the Swiss midlands. The complete dataset can be downloaded directly from www.cgiar-csi.org.
 #
 #'
@@ -15,7 +15,7 @@ NULL
 #'
 #' This is data to be included in the package and can be used to test its functionality.
 #' The track consists of x, y and z coordinates and represents the movement of a stork
-#' called 'niclas' in the Swiss midlands.
+#' called \code{niclas} in the Swiss midlands.
 #'
 #' @name niclas
 #' @docType data

@@ -4,7 +4,8 @@
 \alias{test.verification.3d}
 \title{Internally verification of the simulated track}
 \usage{
-test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
+test.verification.3d(track1, track2, alpha = 0.05, plot = FALSE,
+  test = "ks")
 }
 \arguments{
 \item{track1}{data.frame or list of data.frames with x,y,z coordinates of the original track}
@@ -13,7 +14,7 @@ test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
 
 \item{alpha}{scalar: significance level, default alpha = 0.05}
 
-\item{plotDensities}{logical: plot the densities of turn angle, lift angle and step length of the two tracks?}
+\item{plot}{logical: plot the densities or differences of turn angle, lift angle and step length of the two tracks?}
 }
 \value{
 Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.

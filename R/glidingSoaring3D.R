@@ -378,6 +378,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
     }
   }
   warning("Dead end encountered.")
+  # RTG <- as.data.frame(RTG[1:i-1,])
+  # colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
+  # return(as.data.frame(RTG[1:i-1,]))
   return(RTG <- NULL)
 }
 

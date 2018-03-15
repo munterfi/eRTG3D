@@ -6,7 +6,7 @@
 \usage{
 reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
   DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE,
-  plot3d = FALSE, maxBin = 25, gradientDensity = FALSE)
+  plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 }
 \arguments{
 \item{track}{data.frame with x,y,z coordinates of the original track}

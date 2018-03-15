@@ -4,7 +4,7 @@
 \alias{get.section.densities.3d}
 \title{Extract tldCube and autodifferences functions from track sections}
 \usage{
-get.section.densities.3d(trackSections, gradientDensity = FALSE,
+get.section.densities.3d(trackSections, gradientDensity = TRUE,
   heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 }
 \arguments{

@@ -23,7 +23,7 @@
 #'
 #' @examples
 #' get.track.densities.3d(track, heightDist = TRUE)
-get.track.densities.3d <- function(track, gradientDensity = FALSE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.track.densities.3d <- function(track, gradientDensity = TRUE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   .is.df.xyz(track)
   track <- track.properties.3d(track)
@@ -59,7 +59,7 @@ get.track.densities.3d <- function(track, gradientDensity = FALSE, heightDistEll
 #'
 #' @examples
 #' get.section.densities.3d(trackSections)
-get.section.densities.3d <- function(trackSections, gradientDensity = FALSE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.section.densities.3d <- function(trackSections, gradientDensity = TRUE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   trackSections <- lapply(X=trackSections, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
   deltaTurn <- Reduce(c, lapply(X = trackSections, FUN = function(X) diff(X$t)))
@@ -211,7 +211,7 @@ track.extent <- function(track, zAxis = FALSE){
 #'
 #' @examples
 #' reproduce.track.3d(track)
-reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = FALSE)
+reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 {
   .is.df.xyz(track = track)
   track <- track.properties.3d(track)

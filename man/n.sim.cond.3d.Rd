@@ -21,9 +21,9 @@ n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
 
 \item{g0}{initial incoming gradient/polar angle in radian}
 
-\item{densities}{list object returned by get.densities.3d() function}
+\item{densities}{list object returned by the \link[eRTG3D]{get.densities.3d} function}
 
-\item{qProbs}{list object returned by qProb.3d() function}
+\item{qProbs}{list object returned by the \link[eRTG3D]{qProb.3d} function}
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 
@@ -34,7 +34,7 @@ n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
 \item{BG}{a background raster layer that can be used to inform the choice of steps}
 }
 \value{
-A list containing the CERWs or NULLs if dead ends have been encountered.
+A list containing the CERWs or \code{NULL}s if dead ends have been encountered.
 }
 \description{
 Creates n conditioned empirical random walks, with a specific starting and ending point,

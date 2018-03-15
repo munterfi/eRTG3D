@@ -2,25 +2,38 @@
 % Please edit documentation in R/testing3D.R
 \name{test.verification.3d}
 \alias{test.verification.3d}
-\title{Internally verification of the simulated track}
+\title{Statistical Verification of the simulated track}
 \usage{
-test.verification.3d(track1, track2, alpha = 0.05, plotDensities = FALSE)
+test.verification.3d(track1, track2, alpha = 0.05, plot = FALSE,
+  test = "ks")
 }
 \arguments{
 \item{track1}{data.frame or list of data.frames with x,y,z coordinates of the original track}
 
 \item{track2}{data.frame or list of data.frames with x,y,z coordinates of the simulated track}
 
-\item{alpha}{scalar: significance level, default alpha = 0.05}
+\item{alpha}{scalar: significance level, default \code{alpha = 0.05}}
 
-\item{plotDensities}{logical: plot the densities of turn angle, lift angle and step length of the two tracks?}
+\item{plot}{logical: plot the densities or differences of turn angle, lift angle and step length of the two tracks?}
+
+\item{test}{character: either \code{"ks"} or \code{"ttest"} to choose the kind of test procedure.}
 }
 \value{
 Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
 }
 \description{
-Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the original track
+Uses two-sample Kolmogorov-Smirnov test or the one-sample t-test to compare the geometric characteristics of the original track
 with the characteristics of the simulated track.
+}
+\note{
+By choosing \code{test = "ttest"} a random sample, without replacement is taken from the longer track,
+to shorten it to the length of the longer track. The order of the shorter track is also sampled randomly.
+Then the two randomly ordered vectors of turn angles, lift angles and step lengths are substracted from each other.
+If the both tracks stem from the same distributions the the mean deviatio should tend to towards zero, therefore the 
+difference is testet two-sided against \code{mu = 0} with a one-sample t-test.
+
+By setting \code{test = "ks"} a two-sample Kolmogorov-Smirnov test is carried out on the distributions of turn angles,
+lift angles and step lengths of the two tracks.
 }
 \examples{
 test.verification.3d(track1, track2)

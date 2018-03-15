@@ -7,7 +7,7 @@
 \description{
 This is data to be included in the package and can be used to test its functionality.
 The track consists of x, y and z coordinates and represents the movement of a stork
-called 'niclas' in the Swiss midlands.
+called \code{niclas} in the Swiss midlands.
 }
 \references{
 \url{https://www.movebank.org}

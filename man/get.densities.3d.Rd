@@ -21,11 +21,11 @@ get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
 
 \item{deltaStep}{auto differences of the step length (diff(d))}
 
-\item{gradientAngle}{NULL or the gardient angles of the track}
+\item{gradientAngle}{\code{NULL} or the gardient angles of the track}
 
-\item{heightEllipsoid}{flight height over the ellipsoid (absolute) or NULL to exclude this distribution}
+\item{heightEllipsoid}{flight height over the ellipsoid (absolute) or \code{NULL} to exclude this distribution}
 
-\item{heightTopo}{flight height over the topography (relative) or NULL to exclude this distribution}
+\item{heightTopo}{flight height over the topography (relative) or \code{NULL} to exclude this distribution}
 
 \item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 }

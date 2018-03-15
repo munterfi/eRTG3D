@@ -14,9 +14,9 @@ plot2d(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL,
 
 \item{titleText}{string with title of the plot}
 
-\item{DEM}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
+\item{DEM}{an object of type \code{RasterLayer}, needs overlapping extent with the line(s)}
 
-\item{BG}{an object of type 'RasterLayer', needs overlapping extent with the line(s)}
+\item{BG}{an object of type \code{RasterLayer}, needs overlapping extent with the line(s)}
 
 \item{padding}{adds a pad to the 2-D space in percentage (by default set to 0.1)}
 

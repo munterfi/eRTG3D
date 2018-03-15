@@ -14,9 +14,9 @@
 #' @param deltaLift auto differences of the turn angles (diff(t))
 #' @param deltaTurn auto differences of the lift angles (diff(l))
 #' @param deltaStep auto differences of the step length (diff(d))
-#' @param gradientAngle NULL or the gardient angles of the track
-#' @param heightEllipsoid flight height over the ellipsoid (absolute) or NULL to exclude this distribution
-#' @param heightTopo flight height over the topography (relative) or NULL to exclude this distribution
+#' @param gradientAngle \code{NULL} or the gardient angles of the track
+#' @param heightEllipsoid flight height over the ellipsoid (absolute) or \code{NULL} to exclude this distribution
+#' @param heightTopo flight height over the topography (relative) or \code{NULL} to exclude this distribution
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
@@ -49,7 +49,7 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @param turn numeric vector of turn angles
 #' @param lift numeric vector of lift angles
 #' @param step numeric vector of step lengths
-#' @param printDims logical: Should dimensions of tld-Cube be messaged?
+#' @param printDims logical: should dimensions of tld-Cube be messaged?
 #' @param rm.zeros logical: should combinations with zero probability be removed?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube.
 #'
@@ -91,7 +91,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' Find corresponding midpoints of breaks
 #'
 #' Assigns each element of a input vector the mid point of the corresponding interval.
-#' Adjusted the original cut() function from the base package.
+#' Adjusted the original \code{cut()} function from the base package.
 #' The midpoints are turned to a factor which facilitates the further histogram creation.
 #'
 #' @param x a numeric vector
@@ -158,14 +158,14 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' with more steps than 1/10th or more of the number of steps
 #' of the empirical data should rather rely on simulated
 #' unconditional walks with the same properties than on
-#' the empirical data (factor 1500).
+#' the empirical data (\code{factor = 1500}).
 #' 
 #' @section Random initial heading:
 #' For a random initial heading a0 use:
-#'   sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)
+#'   \code{sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)}
 #'
 #' @param n.locs the number of locations for the simulated track
-#' @param start vector indicating the start point c(x,y,z)
+#' @param start vector indicating the start point \code{c(x,y,z)}
 #' @param a0 initial heading in radian
 #' @param g0 initial gradient/polar angle in radian
 #' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
@@ -258,7 +258,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #'
 #' @param sim the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
-#' @param n.locs number of total segments to be modelled,
+#' @param n.locs number of total segments to be modeled,
 #'     the length of the desired conditioned empirical random walk
 #' @param multicore logical: run computations in parallel (n-1 cores)?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -276,49 +276,36 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
   } else {
     start.time <- Sys.time()
     message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
-    # progress bar
-    pb <- txtProgressBar(min = 0, max = 18, style = 3)
     # steps minus 2
     nSteps <- n.locs - 2
-    # turning angles to target as a function of number of steps
-    tList <- lapply(1:nSteps, function(x) .wrap(atan2(diff(sim$y, lag = x),
-                                                                  diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)]))
-    setTxtProgressBar(pb, 3)
+    # progress bar
+    pb <- txtProgressBar(min = 0, max = nSteps, style = 3)
     # lift angles to target as a function of number of steps
-    lList <- lapply(1:nSteps, function(x) .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                                                                  diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)]))
-    setTxtProgressBar(pb, 6)
-    # calculate distance to target as a function of number of steps
-    dList <- lapply(1:nSteps, function(x) sqrt(diff(sim$x, lag = x) ^ 2
-                                                           + diff(sim$y, lag = x) ^ 2
-                                                           + diff(sim$z, lag = x) ^ 2))
-    setTxtProgressBar(pb, 9)
-    # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
-    # of the turning angle to target, the lift angle to target and the distance to target
-    # for the relevant number of steps. This is mainly to reduce redundancy mainly
-    # introduced by the sliding window approach adopted in estimating the relationships
-    k <- suppressWarnings(cbind(unlist(lapply(lapply(lapply(lapply(lapply(tList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1,
-                                unlist(lapply(lapply(lapply(lapply(lapply(lList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1,
-                                unlist(lapply(lapply(lapply(lapply(lapply(dList, acf, lag.max=nSteps, plot = FALSE, mc.cores = nCores),
-                                                                   '[[', 'acf'), '<', .05),
-                                                     which), head, 1)) - 1))
-    kk <- apply(k,1,max)
-    setTxtProgressBar(pb, 14)
-    tList <-mapply('[',tList,mapply(seq, 1, lapply(tList, length), by = kk))
-    lList <-mapply('[',lList,mapply(seq, 1, lapply(lList, length), by = kk))
-    dList <-mapply('[',dList,mapply(seq, 1, lapply(dList, length), by = kk))
-    # Use multicore to speed the calculations up
-    cubeList <- rev(lapply(1:nSteps, function(x) turnLiftStepHist(turn=tList[[x]], lift=lList[[x]], step=dList[[x]], printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin)))
-    # complete progress bar and close
-    setTxtProgressBar(pb, 18)
+    cubeList <- lapply(1:nSteps, function(x) {
+      # Update progressbar
+      setTxtProgressBar(pb, x)
+      # turn angle, lift angles and distance to target as a function of number of steps
+      t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
+      l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
+                       diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
+      d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+      # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
+      # of the turning angle to target, the lift angle to target and the distance to target
+      # for the relevant number of steps. This is mainly to reduce redundancy mainly
+      # introduced by the sliding window approach adopted in estimating the relationships
+      k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+      t <- t[seq(1, length(t), by = k)]
+      l <- l[seq(1, length(l), by = k)]
+      d <- d[seq(1, length(d), by = k)]
+      # get stepTurnLiftHistograms
+      return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+    })
+    setTxtProgressBar(pb, nSteps)
     close(pb)
-    message("  |Minimum number of independent estimates: ", min(unlist(lapply(dList, length))), " for step ", which.min(unlist(lapply(dList, length))), ".")
     message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-    return(cubeList)
+    return(rev(cubeList))
   }
 }
 
@@ -534,15 +521,15 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
 #' @param g0 initial incoming gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
-#' @param qProbs list object returned by qProb.3d() function
+#' @param densities list object returned by the \link[eRTG3D]{get.densities.3d} function
+#' @param qProbs list object returned by the \link[eRTG3D]{qProb.3d} function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #' @param multicore logical: run computations in parallel (n-1 cores)?
 #'
 #' @return
-#' A list containing the CERWs or NULLs if dead ends have been encountered.
+#' A list containing the CERWs or \code{NULL}s if dead ends have been encountered.
 #' @export
 #'
 #' @examples

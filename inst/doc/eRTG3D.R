@@ -4,7 +4,7 @@ options(knitr.table.format = "html")
 
 library(eRTG3D)
 set.seed(123)
-cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 50)
+cerwList <- reproduce.track.3d(n.sim = 100, multicore=TRUE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 50, gradientDensity = TRUE)
 cerw <- cerwList[[1]]
 
 ## ---- eval = FALSE, fig.show='hold'--------------------------------------
@@ -56,10 +56,10 @@ pander::pandoc.table(head(round(niclas, 2),5))
 #  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem)
 
 ## ----eval=TRUE-----------------------------------------------------------
-tests <- test.verification.3d(niclas, cerw, plotDensities = FALSE)
+tests <- test.verification.3d(niclas, cerw, plot = FALSE)
 
 ## ----eval=TRUE-----------------------------------------------------------
-tests <- test.verification.3d(niclas, cerwList, plotDensities = FALSE)
+tests <- test.verification.3d(niclas, cerwList, plot = FALSE)
 
 ## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
 plot3d.densities(niclas, cerwList)

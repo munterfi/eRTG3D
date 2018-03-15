@@ -6,7 +6,7 @@
 \title{Example digital elevation model (DEM)}
 \description{
 This is data to be included in the package and can be used to test its functionality.
-The 'dem' data is a rasterLayer and has a resolution of 90 meters. It is the topography
+The \code{dem} data is a \code{RasterLayer} and has a resolution of 90 meters. It is the topography
 of the Swiss midlands. The complete dataset can be downloaded directly from www.cgiar-csi.org.
 }
 \references{

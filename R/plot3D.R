@@ -3,7 +3,7 @@
 #' @param origTrack a list containing data.frames with x,y,z coordinates or a data.frame
 #' @param simTrack a list containing data.frames with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
+#' @param DEM an object of type \code{RasterLayer}, needs overlapping extent with the line(s)
 #' @param padding adds a pad to the 2-D space in percentage (by default set to 0.1)
 #' @param timesHeight multiply the height scale by a scalar (by default set to 10)
 #'
@@ -86,8 +86,8 @@ plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 #' @param origTrack a list containing data.frames with x,y,z coordinates or a data.frame
 #' @param simTrack a list containing data.frames with x,y,z coordinates or a data.frame
 #' @param titleText string with title of the plot
-#' @param DEM an object of type 'RasterLayer', needs overlapping extent with the line(s)
-#' @param BG an object of type 'RasterLayer', needs overlapping extent with the line(s)
+#' @param DEM an object of type \code{RasterLayer}, needs overlapping extent with the line(s)
+#' @param BG an object of type \code{RasterLayer}, needs overlapping extent with the line(s)
 #' @param padding adds a pad to the 2-D space in percentage (by default set to 0.1)
 #' @param alpha a number between 0 and 1, to specify the transparency of the simulated line(s)
 #' @param resolution number of pixels the rasters are downsampled to (by default set to 500 pixels)
@@ -187,15 +187,15 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 #' Density plots of turn angle, lift angle and step length
 #'
 #' The function takes either one track or two tracks.
-#' The second track can be a list of tracks (eg. the output of n.sim.cons.3d()),
+#' The second track can be a list of tracks (eg. the output of \link[eRTG3D]{n.sim.cons.3d}),
 #' Then the densities of turn angle, lift angle and step length of all the simulations is taken.
 #' Additionally the autodifferences parameter can be set to true, then the densities of the autodifferences
 #' in turn angle, lift angle and step length are visualized.
 #'
 #' @param track1 a list containing a data.frame with x,y,z coordinates or a data.frame
 #' @param track2 a list containing a data.frame with x,y,z coordinates or a data.frame
-#' @param autodifferences logical: Should the densities of the autodifferences in turn angle, lift angle and step length are visualized.
-#' @param scaleDensities logical: Should densities be scaled between 0 and 1, then sum of the area under the curve is not 1 anymore!
+#' @param autodifferences logical: should the densities of the autodifferences in turn angle, lift angle and step length are visualized.
+#' @param scaleDensities logical: should densities be scaled between 0 and 1, then sum of the area under the curve is not 1 anymore!
 #'
 #' @return A ggplot2 object.
 #' @export
@@ -236,7 +236,7 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #' Density plot of one or two variables
 #'
 #' @param values1 numeric vector
-#' @param values2 numeric vector or NULL
+#' @param values2 numeric vector or \code{NULL}
 #' @param titleText character of the title text
 #' @param scaleDensity logical: should density be scaled between 0 and 1, then sum of the area under the curve is not 1 anymore!
 #'
@@ -267,14 +267,14 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 
 #' Multiple plot function for ggplot objects
 #'
-#' If the layout is something like matrix(c(1,2,3,3), nrow=2, byrow=TRUE),
+#' If the layout is something like \code{matrix(c(1,2,3,3), nrow=2, byrow=TRUE)},
 #' then plot 1 will go in the upper left, 2 will go in the upper right, and
 #' 3 will go all the way across the bottom.
 #'
 #' @param ... ggplot objects
 #' @param plotlist a list of ggplot objects
 #' @param cols number of columns in layout
-#' @param layout a matrix specifying the layout. If present, 'cols' is ignored.
+#' @param layout a matrix specifying the layout. If present, \code{cols} is ignored.
 #'
 #' @return Nothing, plots the ggplot2 objects.
 #' @export

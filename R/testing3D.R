@@ -1,21 +1,31 @@
-#' Internally verification of the simulated track
+#' Statistical Verification of the simulated track
 #'
-#' Uses two-sample Kolmogorov-Smirnov test to compare the geometric characteristics of the original track
+#' Uses two-sample Kolmogorov-Smirnov test or the one-sample t-test to compare the geometric characteristics of the original track
 #' with the characteristics of the simulated track.
 #'
 #' @param track1 data.frame or list of data.frames with x,y,z coordinates of the original track
 #' @param track2 data.frame or list of data.frames with x,y,z coordinates of the simulated track
-#' @param alpha scalar: significance level, default alpha = 0.05
-#' @param plotDensities logical: plot the densities of turn angle, lift angle and step length of the two tracks?
+#' @param alpha scalar: significance level, default \code{alpha = 0.05}
+#' @param plot logical: plot the densities or differences of turn angle, lift angle and step length of the two tracks?
+#' @param test character: either \code{"ks"} or \code{"ttest"} to choose the kind of test procedure.
 #'
 #' @return Test objects of the 6 two-sample Kolmogorov-Smirnov test conducted.
 #' @export
+#' 
+#' @note By choosing \code{test = "ttest"} a random sample, without replacement is taken from the longer track,
+#' to shorten it to the length of the longer track. The order of the shorter track is also sampled randomly.
+#' Then the two randomly ordered vectors of turn angles, lift angles and step lengths are substracted from each other.
+#' If the both tracks stem from the same distributions the the mean deviatio should tend to towards zero, therefore the 
+#' difference is testet two-sided against \code{mu = 0} with a one-sample t-test.
+#' 
+#' By setting \code{test = "ks"} a two-sample Kolmogorov-Smirnov test is carried out on the distributions of turn angles,
+#' lift angles and step lengths of the two tracks.
 #'
 #' @examples
 #' test.verification.3d(track1, track2)
-test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = FALSE)
+test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, test = "ks")
 {
-  message("  |*** Two-sample Kolmogorov-Smirnov test ***")
+  if (!any(test == c("ks", "ttest"))) stop("The variable 'test' must either be 'ks' or 'ttest'.")
   if (!is.list(track1) || !is.list(track2)) stop("Track input has to be of type list or data.frame.")
   if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1)}
   if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2)}
@@ -32,36 +42,64 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plotDensities = F
   track2 <- do.call("rbind", track2)
   t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
   diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
-  # turn
-  turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
-  diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
-  # lift
-  liftT <- suppressWarnings(ks.test(l1, l2, alternative = "two.sided"))
-  diffLiftT <- suppressWarnings(ks.test(diffL1, diffL2, alternative = "two.sided"))
-  # step
-  stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
-  diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
-  # print results
-  message("  |H0: Probability distributions do not differ significantly")
-  message("  |H1: Probability distributions differ significantly")
-  message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))
-  message(paste("  |Lift angle  – ", .test2text(liftT, alpha), ", autodifferences – ", .test2text(diffLiftT, alpha), sep=""))
-  message(paste("  |Step length – ", .test2text(stepT, alpha), ", autodifferences – ", .test2text(diffStepT, alpha), sep=""))
-  if (plotDensities) {
-    suppressWarnings(plot3d.multiplot(
-      .plot3d.density(t1, t2, titleText = "Turn angle"),
-      .plot3d.density(l1, l2, titleText = "Lift angle"),
-      .plot3d.density(d1, d2, titleText = "Step length"),
-      cols = 1
-    ))
+  if (test == "ks"){
+    message("  |*** Two-sample Kolmogorov-Smirnov test ***")
+    message("  |H0: Probability distributions do not differ significantly")
+    message("  |H1: Probability distributions differ significantly")
+    # turn
+    turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
+    diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
+    # lift
+    liftT <- suppressWarnings(ks.test(l1, l2, alternative = "two.sided"))
+    diffLiftT <- suppressWarnings(ks.test(diffL1, diffL2, alternative = "two.sided"))
+    # step
+    stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
+    diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
+    # print results
+    message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))
+    message(paste("  |Lift angle  – ", .test2text(liftT, alpha), ", autodifferences – ", .test2text(diffLiftT, alpha), sep=""))
+    message(paste("  |Step length – ", .test2text(stepT, alpha), ", autodifferences – ", .test2text(diffStepT, alpha), sep=""))
+    if (plot) {
+      suppressWarnings(plot3d.multiplot(
+        .plot3d.density(t1, t2, titleText = "Turn angle"),
+        .plot3d.density(l1, l2, titleText = "Lift angle"),
+        .plot3d.density(d1, d2, titleText = "Step length"),
+        cols = 1
+      ))
+    }
+    return(list(turnT, liftT, stepT, diffTurnT, diffLiftT, diffStepT))
   }
-  return(list(turnT, liftT, stepT, diffTurnT, diffLiftT, diffStepT))
+  if (test == "ttest"){
+    message("  |*** One Sample t-test ***")
+    message("  |H0: Difference between tracks does not differ significantly from 0")
+    message("  |H1: Difference between tracks differs significantly from 0")
+    nSample <- min(nrow(track1), nrow(track2))
+    # turn
+    turnT <- suppressWarnings(t.test(diffT <- (sample(t1, nSample)-sample(t2, nSample)), mu = 0, alternative = "two.sided"))
+    # lift
+    liftT <- suppressWarnings(t.test(diffL <- (sample(l1, nSample)-sample(l2, nSample)), mu = 0, alternative = "two.sided"))
+    # step
+    stepT <- suppressWarnings(t.test(diffD <- (sample(d1, nSample)-sample(d2, nSample)), mu = 0, alternative = "two.sided"))
+    # print results
+    message(paste("  |Turn angle  – ", .test2text(turnT, alpha), sep=""))
+    message(paste("  |Lift angle  – ", .test2text(liftT, alpha), sep=""))
+    message(paste("  |Step length – ", .test2text(stepT, alpha), sep=""))
+    if (plot) {
+      suppressWarnings(plot3d.multiplot(
+        .plot3d.density(diffT, titleText = "Mean difference turn angle"),
+        .plot3d.density(diffL, titleText = "Mean difference Lift angle"),
+        .plot3d.density(diffD, titleText = "Mean difference Step length"),
+        cols = 1
+      ))
+    }
+    return(list(turnT, liftT, stepT))
+  }
 }
 
 #' Extract test results as string
 #'
 #' @param test object of type 'htest'
-#' @param alpha scalar: significance level, default alpha = 0.05
+#' @param alpha scalar: significance level, default \code{alpha = 0.05}
 #'
 #' @return A character describing the results.
 #' @export

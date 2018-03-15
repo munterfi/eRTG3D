@@ -10,7 +10,7 @@ qProb.3d(sim, n.locs, multicore = FALSE, maxBin = 25)
 \item{sim}{the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 x,y,z-coordinates, the arrival azimuth and the arrival gradient.}
 
-\item{n.locs}{number of total segments to be modelled,
+\item{n.locs}{number of total segments to be modeled,
 the length of the desired conditioned empirical random walk}
 
 \item{multicore}{logical: run computations in parallel (n-1 cores)?}

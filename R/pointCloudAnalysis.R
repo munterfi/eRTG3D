@@ -1,4 +1,24 @@
-voxelcount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE){
+#' Apply voxel counting on a point cloud
+#' 
+#' A \code{rasterStack} object is created, representing the 3–D voxel cube.
+#' The z axis is sliced into regular sections between the maximum and minimum value.
+#' For every height slice a raster with points per cell counts is created. Additionally
+#' the voxels can be standartized between 0 and 1.
+#'
+#' @param points a x, y, z data.frame
+#' @param extent a raster extent object of the extent to create the rasters
+#' @param xyRes resolution in the ground plane of the created rasters
+#' @param zRes resolution in the z axis (by default \code{zRes = xyRes})
+#' @param zMin minimum z value
+#' @param zMax maximum height value
+#' @param standartize logical: standartize the values?
+#'
+#' @return A \code{rasterStack} object, representing the 3–D voxel cube.
+#' @export
+#'
+#' @examples
+#' voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE)
+voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE){
   rTem <- raster::raster(extent, res=xyRes)
   rTem[] <- 0
   rStack <- raster::stack()
@@ -10,50 +30,85 @@ voxelcount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
       p <- sp::SpatialPoints(coords = cbind(p[,1], p[,2]))
       r <- raster::rasterize(p, rTem, fun='count')
       r[is.na(r[])] <- 0
-      if(standartize){
-        r <- ((r - cellStats(r, "min")) / (cellStats(r, "max") - cellStats(r, "min")))
-      }
       rStack <- raster::stack(rStack, r)
     } else {
       rStack <- raster::stack(rStack, rTem)
     }
     names(rStack)[i] <- c(paste("m", zMin+(i-1)*zRes, "-", (zMin+i*zRes), sep = ""))
   }
-  cat('\r', "  |Done.                                                             ")
+  if(standartize){
+    maxR <- max(maxValue(rStack))
+    minR <- min(minValue(rStack))
+    for(i in 1:length(rStack@layers)) {
+      rStack@layers[[i]] <- (rStack@layers[[i]] - minR) / (maxR - minR)
+    }
+  }
+  cat('\r', "  |Done.                                                             \n")
   flush.console()
   return(rStack)
 }
 
-chimaps <- function(stack1, stack2) {
+#' Chi maps of two variables
+#' 
+#' Calculates the chi maps for all the raster pairs stored in the two \code{rasterStack}s.
+#' As observed values, the first stack is used. The second stack is set to be the expected value.
+#' 
+#' @param stack1 \code{rasterStack}
+#' @param stack2 \code{rasterStack} containing the same number of \code{rasterLayer}s and has euqal extent and resolution.
+#'
+#' @return A \code{rasterStack} containing the chi maps.
+#' @export
+#'
+#' @examples
+#' chiMaps(stack1, stack2)
+chiMaps <- function(stack1, stack2) {
   if(length(stack1@layers) != length(stack2@layers)) stop("Stack need to have the same number of rasters")
   rStack <- raster::stack()
   for (i in 1:length(stack1@layers)){
-    cat('\r', paste("  |Calcuate chi-map for raster:", i, "..."))
+    cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
     flush.console()
     r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
     r2 <- stack2@layers[[i]]; r2[r2 == 0] <- NA
     rChi <- (r1 - r2) / sqrt(r2)
     rChi[is.na(rChi)] <- 0
     rStack <- raster::stack(rStack, rChi)
-    names(rStack)[i] <- c(paste("chimap",names(stack1)[i], sep = ))
+    names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
   }
-  cat('\r', "  |Done.                                                             ")
+  cat('\r', "  |Done.                                                             \n")
   flush.console()
   return(rStack)
 }
 
-plotRaster <- function(r, title = character(0)){
+#' Plots a rasterLayer or rasterStack
+#'
+#' @param r \code{rasterLayer} or \code{rasterStack}
+#' @param title title text of plot(s)
+#' @param centerColorBar logical: center colobar around 0 and use \code{RdBuTheme()}?
+#'
+#' @return Plots the rasters
+#' @export
+#'
+#' @examples
+#' plotRaster(r)
+plotRaster <- function(r, title = character(0), centerColorBar = FALSE){
+  if (centerColorBar) {
+    colTheme <- rasterVis::BuRdTheme()
+    colSeq <- seq(-1.01*max(maxValue(abs(r))), 1.01*max(maxValue(abs(r))), len=100)
+  } else {
+    colTheme <- rasterVis::YlOrRdTheme()
+    colSeq <- seq(min(minValue(r)), max(maxValue(r)), len=100)
+  }
   if (class(r)[1] == "RasterLayer"){
-    print(rasterVis::levelplot(r, par.settings=rasterVis::BuRdTheme(), interpolate = TRUE,
-                               margin=FALSE, at=seq(-1.01*maxValue(abs(r)), 1.01*maxValue(abs(r)), len=100),
+    print(rasterVis::levelplot(r, par.settings=colTheme, interpolate = TRUE,
+                               margin=FALSE, at=colSeq,
                                main=title, xlab="Easting", ylab="Northing"))
   }
   if (class(r)[1] == "RasterStack"){
     plotList <- list()
     for (i in 1:length(r@layers)){
       if(cellStats(r@layers[[i]], "sum") != 0) {
-        p <- rasterVis::levelplot(r@layers[[i]], par.settings=rasterVis::BuRdTheme(), interpolate = TRUE,
-                                  margin=FALSE, at=seq(-1.01*maxValue(abs(r@layers[[i]])), 1.01*maxValue(abs(r@layers[[i]])), len=100),
+        p <- rasterVis::levelplot(r@layers[[i]], par.settings=colTheme, interpolate = TRUE,
+                                  margin=FALSE, at=colSeq,
                                   main = names(r)[i], xlab="Easting", ylab="Northing")
         plotList <- append(plotList, list(p))
       }

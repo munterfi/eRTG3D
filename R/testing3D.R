@@ -145,11 +145,11 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
                         heightEllipsoid = heightEllipsoid, heightTopo = NULL)
   uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
                         a0 = crw$a[1], g0 = crw$g[1], densities = D)
-  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05, plotDensities = FALSE)
+  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05)
   Q <- qProb.3d(uerw, nStep, multicore = multicore)
   cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
                       a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
-  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
+  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05)
   message("  |*** Test passed successfully ***")
   if(plot2d){print(plot2d(crw, cerw))}
   if(plot3d){plot3d(crw, cerw)}

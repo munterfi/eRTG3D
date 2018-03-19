@@ -1,6 +1,6 @@
 Package: eRTG3D
 Title: Generate Empirically Informed Random Trajectories in 3-D
-Version: 0.4.5
+Version: 0.4.7
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = "aut"),
@@ -20,15 +20,15 @@ Imports: CircStats (>= 0.2-4),
          raster (>= 2.6-7),
          rasterVis (>= 0.43),
          parallel (>= 3.4.2),
-         pbmcapply (>= 1.2.4), 
+         pbmcapply (>= 1.2.4),
          plyr (>= 1.8.4),
          plotly (>= 4.7.1),
-         sf (>= 0.6-0),
-         sp (>= 0.6-0)
+         sp (>= 1.2-7)
 License: GPL (>= 1.2-7)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.0.1
 Suggests: knitr,
-    rmarkdown
+    rmarkdown,
+    sf (>= 0.6-0)
 VignetteBuilder: knitr

@@ -4,19 +4,20 @@
 \alias{chiMaps}
 \title{Chi maps of two variables}
 \usage{
-chiMaps(stack1, stack2)
+chiMaps(stack1, stack2 = NULL)
 }
 \arguments{
 \item{stack1}{\code{rasterStack}}
 
-\item{stack2}{\code{rasterStack} containing the same number of \code{rasterLayer}s and has euqal extent and resolution.}
+\item{stack2}{\code{rasterStack}  \code{NULL} or containing the same number of \code{rasterLayer}s and has euqal extent and resolution.}
 }
 \value{
 A \code{rasterStack} containing the chi maps.
 }
 \description{
-Calculates the chi maps for all the raster pairs stored in the two \code{rasterStack}s.
-As observed values, the first stack is used. The second stack is set to be the expected value.
+Calculates the chi maps for one \code{rasterStack} or all raster all the raster pairs stored in two \code{rasterStack}s.
+As observed values, the first stack is used. The expected value is either set to the mean of the first stack, or if given 
+to be the values of the second stack.
 }
 \examples{
 chiMaps(stack1, stack2)

@@ -37,8 +37,8 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
     names(rStack)[i] <- c(paste("m", zMin+(i-1)*zRes, "-", (zMin+i*zRes), sep = ""))
   }
   if(standartize){
-    maxR <- max(maxValue(rStack))
-    minR <- min(minValue(rStack))
+    maxR <- max(raster::maxValue(rStack))
+    minR <- min(raster::minValue(rStack))
     for(i in 1:length(rStack@layers)) {
       rStack@layers[[i]] <- (rStack@layers[[i]] - minR) / (maxR - minR)
     }
@@ -50,33 +50,51 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
 
 #' Chi maps of two variables
 #' 
-#' Calculates the chi maps for all the raster pairs stored in the two \code{rasterStack}s.
-#' As observed values, the first stack is used. The second stack is set to be the expected value.
+#' Calculates the chi maps for one \code{rasterStack} or all raster all the raster pairs stored in two \code{rasterStack}s.
+#' As observed values, the first stack is used. The expected value is either set to the mean of the first stack, or if given 
+#' to be the values of the second stack.
 #' 
 #' @param stack1 \code{rasterStack}
-#' @param stack2 \code{rasterStack} containing the same number of \code{rasterLayer}s and has euqal extent and resolution.
+#' @param stack2 \code{rasterStack}  \code{NULL} or containing the same number of \code{rasterLayer}s and has euqal extent and resolution.
 #'
 #' @return A \code{rasterStack} containing the chi maps.
 #' @export
 #'
 #' @examples
 #' chiMaps(stack1, stack2)
-chiMaps <- function(stack1, stack2) {
-  if(length(stack1@layers) != length(stack2@layers)) stop("Stack need to have the same number of rasters")
-  rStack <- raster::stack()
-  for (i in 1:length(stack1@layers)){
-    cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
+chiMaps <- function(stack1, stack2 = NULL) {
+  if (is.null(stack2)){
+    rStack <- raster::stack()
+    expMean <- mean(raster::values(stack1))
+    for (i in 1:length(stack1@layers)){
+      cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
+      flush.console()
+      r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
+      rChi <- (r1 - expMean) / sqrt(expMean)
+      rChi[is.na(rChi)] <- 0
+      rStack <- raster::stack(rStack, rChi)
+      names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
+    }
+    cat('\r', "  |Done.                                                             \n")
     flush.console()
-    r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
-    r2 <- stack2@layers[[i]]; r2[r2 == 0] <- NA
-    rChi <- (r1 - r2) / sqrt(r2)
-    rChi[is.na(rChi)] <- 0
-    rStack <- raster::stack(rStack, rChi)
-    names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
+    return(rStack)
+  } else {
+    if(length(stack1@layers) != length(stack2@layers)) stop("Stack need to have the same number of rasters")
+    rStack <- raster::stack()
+    for (i in 1:length(stack1@layers)){
+      cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
+      flush.console()
+      r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
+      r2 <- stack2@layers[[i]]; r2[r2 == 0] <- NA
+      rChi <- (r1 - r2) / sqrt(r2)
+      rChi[is.na(rChi)] <- 0
+      rStack <- raster::stack(rStack, rChi)
+      names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
+    }
+    cat('\r', "  |Done.                                                             \n")
+    flush.console()
+    return(rStack)
   }
-  cat('\r', "  |Done.                                                             \n")
-  flush.console()
-  return(rStack)
 }
 
 #' Plots a rasterLayer or rasterStack
@@ -93,16 +111,20 @@ chiMaps <- function(stack1, stack2) {
 plotRaster <- function(r, title = character(0), centerColorBar = FALSE){
   if (centerColorBar) {
     colTheme <- rasterVis::BuRdTheme()
-    colSeq <- seq(-1.01*max(maxValue(abs(r))), 1.01*max(maxValue(abs(r))), len=100)
+    maxVal <- max(raster::values(r)[is.finite(raster::values(r))], na.rm = TRUE)
+    colSeq <- seq(-1*maxVal, maxVal, len=100)
   } else {
     colTheme <- rasterVis::YlOrRdTheme()
-    colSeq <- seq(min(minValue(r)), max(maxValue(r)), len=100)
+    minVal <- min(raster::values(r)[is.finite(raster::values(r))], na.rm = TRUE)
+    maxVal <- max(raster::values(r)[is.finite(raster::values(r))], na.rm = TRUE)
+    colSeq <- seq(minVal, maxVal, len=100)
   }
   if (class(r)[1] == "RasterLayer"){
     print(rasterVis::levelplot(r, par.settings=colTheme, interpolate = TRUE,
                                margin=FALSE, at=colSeq,
                                main=title, xlab="Easting", ylab="Northing"))
   }
+  if (class(r)[1] == "RasterBrick"){r <- raster::stack(r)}
   if (class(r)[1] == "RasterStack"){
     plotList <- list()
     for (i in 1:length(r@layers)){

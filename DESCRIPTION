@@ -30,5 +30,5 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,
-    sf (>= 0.6-0)
+    sf (>= 0.6-1)
 VignetteBuilder: knitr

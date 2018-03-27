@@ -315,7 +315,7 @@ plot3d.multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL)
 #' Creates a three dimensional scatterplot of the possibles next steps,
 #' based on the tldCube, which was extracted from a track.
 #'
-#' @param tldCube tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist()} or \link[eRTG3D]{get.densities.3d()}
+#' @param tldCube tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist} or \link[eRTG3D]{get.densities.3d}
 #'
 #' @return Plots a plotly object
 #' @export

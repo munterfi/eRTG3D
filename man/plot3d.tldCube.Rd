@@ -7,7 +7,7 @@
 plot3d.tldCube(tldCube)
 }
 \arguments{
-\item{tldCube}{tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist()} or \link[eRTG3D]{get.densities.3d()}}
+\item{tldCube}{tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist} or \link[eRTG3D]{get.densities.3d}}
 }
 \value{
 Plots a plotly object

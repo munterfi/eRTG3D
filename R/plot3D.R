@@ -309,3 +309,55 @@ plot3d.multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL)
     }
   }
 }
+
+#' Visualize turn-lift-step histogram
+#'
+#' Creates a three dimensional scatterplot of the possibles next steps,
+#' based on the tldCube, which was extracted from a track.
+#'
+#' @param tldCube tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist()} or \link[eRTG3D]{get.densities.3d()}
+#'
+#' @return Plots a plotly object
+#' @export
+#'
+#' @examples
+#' plot3d.tldCube(D$tldCube)
+plot3d.tldCube <- function(tldCube) {
+  if(!all(names(tldCube) == c("values", "tRes", "lRes", "dRes"))) stop("Input must be a tldCube, the ouptut from 'turnLiftStepHist()' and 'get.densities.3d()'.")
+  # get coordinates of the tldCube
+  t <- tldCube$values$turn; l <- pi/2+tldCube$values$lift; d <- tldCube$values$step
+  # convert the coordinates from step length turning angle dimension
+  df <- data.frame(x = d * sin(l) * cos(t),
+                   y = d * sin(l) * sin(t),
+                   z = d * cos(l), 
+                   prob = tldCube$values$prob) # get probs for each combination
+  # intial direction
+  dist <- max(df$x)*0.1
+  dfAx <- data.frame(x = c(0, max(df$x)), y = c(0, 0), z = c(0, 0))
+  dfAy <- data.frame(x = c(0, 0), y = c(-dist, dist), z = c(0, 0))
+  dfAz <- data.frame(x = c(0, 0), y = c(0, 0), z = c(-dist, dist))
+  # 3D scatterplot
+  p <- plotly::plot_ly()
+  p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z, size = ~prob,
+                           marker = list(opacity = 0.9, 
+                                         color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  p <- plotly::add_trace(p, data = dfAx, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::add_trace(p, data = dfAy, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::add_trace(p, data = dfAz, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,2),
+                                       ", l:", round(tldCube$lRes,2),
+                                       ", d:", round(tldCube$dRes,2), sep = ""))
+  print(p)
+}

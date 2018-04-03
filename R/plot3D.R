@@ -338,26 +338,32 @@ plot3d.tldCube <- function(tldCube) {
   dfAz <- data.frame(x = c(0, 0), y = c(0, 0), z = c(-dist, dist))
   # 3D scatterplot
   p <- plotly::plot_ly()
-  p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z, size = ~prob,
-                           marker = list(opacity = 0.9, 
-                                         color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  if(length(unique(df$prob))==1){
+    p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z,
+                             marker = list(cmin = 0, cmax = unique(df$prob), opacity = 0.9, colorbar=list(title='Probability'),
+                                           color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  } else {
+    p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z, size = ~prob,
+                             marker = list(opacity = 0.9, colorbar=list(title='Probability'),
+                                           color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  }
   p <- plotly::add_trace(p, data = dfAx, x = ~x, y = ~y, z = ~z,
                          mode = "lines+markers", type = "scatter3d", name = "Direction",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         marker = list(size = 0),
                          opacity = 0.9, showlegend = FALSE)
   p <- plotly::add_trace(p, data = dfAy, x = ~x, y = ~y, z = ~z,
                          mode = "lines+markers", type = "scatter3d", name = "Direction",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         marker = list(size = 0),
                          opacity = 0.9, showlegend = FALSE)
   p <- plotly::add_trace(p, data = dfAz, x = ~x, y = ~y, z = ~z,
                          mode = "lines+markers", type = "scatter3d", name = "Direction",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0, cmin = -20, cmax = 50),
+                         marker = list(size = 0),
                          opacity = 0.9, showlegend = FALSE)
-  p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,2),
-                                       ", l:", round(tldCube$lRes,2),
-                                       ", d:", round(tldCube$dRes,2), sep = ""))
+  p <- plotly::layout(p, title = paste("Bin width – t:", round(tldCube$tRes,3),
+                                       ", l:", round(tldCube$lRes,3),
+                                       ", d:", round(tldCube$dRes,3), sep = ""))
   print(p)
 }

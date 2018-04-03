@@ -24,6 +24,8 @@ sim.cond.modes.3d(locsVec, start = c(0, 0, 0), end = start, a0, g0, dList,
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 
+\item{glideRatio}{glide ratio of the bird}
+
 \item{MODE}{raster layer containing the number/index of the mode, which should be used at each location}
 
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}

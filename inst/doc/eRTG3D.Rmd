@@ -194,7 +194,7 @@ g0 = niclas$g[1]
 
 And a running example:
 
-```{r eval=TRUE, fig.height=5, fig.width=7}
+```{r eval=FALSE, fig.height=5, fig.width=7, quiet = TRUE}
 cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem, multicore=TRUE)
 ```
 

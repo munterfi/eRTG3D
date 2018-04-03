@@ -200,11 +200,11 @@ track.extent <- function(track, zAxis = FALSE){
 #' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param BG a raster influencing the probabilities.
 #' @param multicore logical: run calculations on multiple cores?
-#' @param filterDeadEnds: logical: remove tracks (='NULL') that ended in a dead end?
 #' @param plot2d logical: plot tracks on 2d plane?
 #' @param plot3d logical: plot tracks in 3D?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #' @param gradientDensity logical: Should a distribution of the gradient angle be extracted and used in the simulations (\link[eRTG3D]{get.densities.3d})?
+#' @param filterDeadEnds logical: Remove tracks that ended in a dead end?
 #'
 #' @return A list or data.frame containing the simulated track(s) (CERW).
 #' @export

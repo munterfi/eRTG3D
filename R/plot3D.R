@@ -187,7 +187,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 #' Density plots of turn angle, lift angle and step length
 #'
 #' The function takes either one track or two tracks.
-#' The second track can be a list of tracks (eg. the output of \link[eRTG3D]{n.sim.cons.3d}),
+#' The second track can be a list of tracks (eg. the output of \link[eRTG3D]{n.sim.cond.3d}),
 #' Then the densities of turn angle, lift angle and step length of all the simulations is taken.
 #' Additionally the autodifferences parameter can be set to true, then the densities of the autodifferences
 #' in turn angle, lift angle and step length are visualized.
@@ -216,9 +216,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
     diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
     suppressWarnings(plot3d.multiplot(
-      .plot3d.density(diffT1, diffT2, titleText = "Turn angle – autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffL1, diffL2, titleText = "Lift angle – autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffD1, diffD2, titleText = "Step length – autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffT1, diffT2, titleText = "Turn angle - autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffL1, diffL2, titleText = "Lift angle - autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffD1, diffD2, titleText = "Step length - autodifferences", scaleDensity = scaleDensities),
       cols = 1))
   } else {
     track1 <- do.call("rbind", track1)
@@ -308,4 +308,62 @@ plot3d.multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL)
                                             layout.pos.col = matchidx$col))
     }
   }
+}
+
+#' Visualize turn-lift-step histogram
+#'
+#' Creates a three dimensional scatterplot of the possibles next steps,
+#' based on the tldCube, which was extracted from a track.
+#'
+#' @param tldCube tldCube; the ouptut from \link[eRTG3D]{turnLiftStepHist} or \link[eRTG3D]{get.densities.3d}
+#'
+#' @return Plots a plotly object
+#' @export
+#'
+#' @examples
+#' plot3d.tldCube(D$tldCube)
+plot3d.tldCube <- function(tldCube) {
+  if(!all(names(tldCube) == c("values", "tRes", "lRes", "dRes"))) stop("Input must be a tldCube, the ouptut from 'turnLiftStepHist()' and 'get.densities.3d()'.")
+  # get coordinates of the tldCube
+  t <- tldCube$values$turn; l <- pi/2+tldCube$values$lift; d <- tldCube$values$step
+  # convert the coordinates from step length turning angle dimension
+  df <- data.frame(x = d * sin(l) * cos(t),
+                   y = d * sin(l) * sin(t),
+                   z = d * cos(l), 
+                   prob = tldCube$values$prob) # get probs for each combination
+  # intial direction
+  dist <- max(df$x)*0.1
+  dfAx <- data.frame(x = c(0, max(df$x)), y = c(0, 0), z = c(0, 0))
+  dfAy <- data.frame(x = c(0, 0), y = c(-dist, dist), z = c(0, 0))
+  dfAz <- data.frame(x = c(0, 0), y = c(0, 0), z = c(-dist, dist))
+  # 3D scatterplot
+  p <- plotly::plot_ly()
+  if(length(unique(df$prob))==1){
+    p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z,
+                             marker = list(cmin = 0, cmax = unique(df$prob), opacity = 0.9, colorbar=list(title='Probability'),
+                                           color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  } else {
+    p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z, size = ~prob,
+                             marker = list(opacity = 0.9, colorbar=list(title='Probability'),
+                                           color = ~prob, colorscale = "Bluered", showscale = TRUE))
+  }
+  p <- plotly::add_trace(p, data = dfAx, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::add_trace(p, data = dfAy, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::add_trace(p, data = dfAz, x = ~x, y = ~y, z = ~z,
+                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         line = list(color = "black", width = 3),
+                         marker = list(size = 0),
+                         opacity = 0.9, showlegend = FALSE)
+  p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,3),
+                                       ", l:", round(tldCube$lRes,3),
+                                       ", d:", round(tldCube$dRes,3), sep = ""))
+  print(p)
 }

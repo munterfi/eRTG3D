@@ -9,12 +9,14 @@
 #' @param end numeric vector of length 3 with the coordinates of the end point
 #' @param a0 initial incoming heading in radian
 #' @param g0 initial incoming gradient/polar angle in radian
-#' @param densities list object returned by get.densities.3d() function
-#' @param qProbs list object returned by qProb.3d() function
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #' @param multicore logical: run computations in parallel (n-1 cores)?
+#' @param dList list contaitning the different densities for the modes
+#' @param qList list contaitning the different qProbs for the modes in the same order as the densities
+#' @param glideRatio glideRatio of the bird
+#' @param MODE MODE raster layer
 #'
 #' @return
 #' A list containing the CERWs or NULLs if dead ends have been encountered.
@@ -70,6 +72,7 @@ n.sim.cond.modes.3d <- function(n.sim, locsVec, start = c(0,0,0), end = start, a
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param glideRatio glide ratio of the bird
 #'
 #' @return A trajectory in the form of data.frame
 #' @export

@@ -56,9 +56,9 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
     stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
     diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
     # print results
-    message(paste("  |Turn angle  – ", .test2text(turnT, alpha), ", autodifferences – ", .test2text(diffTurnT, alpha), sep=""))
-    message(paste("  |Lift angle  – ", .test2text(liftT, alpha), ", autodifferences – ", .test2text(diffLiftT, alpha), sep=""))
-    message(paste("  |Step length – ", .test2text(stepT, alpha), ", autodifferences – ", .test2text(diffStepT, alpha), sep=""))
+    message(paste("  |Turn angle  - ", .test2text(turnT, alpha), ", autodifferences - ", .test2text(diffTurnT, alpha), sep=""))
+    message(paste("  |Lift angle  - ", .test2text(liftT, alpha), ", autodifferences - ", .test2text(diffLiftT, alpha), sep=""))
+    message(paste("  |Step length - ", .test2text(stepT, alpha), ", autodifferences - ", .test2text(diffStepT, alpha), sep=""))
     if (plot) {
       suppressWarnings(plot3d.multiplot(
         .plot3d.density(t1, t2, titleText = "Turn angle"),
@@ -81,9 +81,9 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
     # step
     stepT <- suppressWarnings(t.test(diffD <- (sample(d1, nSample)-sample(d2, nSample)), mu = 0, alternative = "two.sided"))
     # print results
-    message(paste("  |Turn angle  – ", .test2text(turnT, alpha), sep=""))
-    message(paste("  |Lift angle  – ", .test2text(liftT, alpha), sep=""))
-    message(paste("  |Step length – ", .test2text(stepT, alpha), sep=""))
+    message(paste("  |Turn angle  - ", .test2text(turnT, alpha), sep=""))
+    message(paste("  |Lift angle  - ", .test2text(liftT, alpha), sep=""))
+    message(paste("  |Step length - ", .test2text(stepT, alpha), sep=""))
     if (plot) {
       suppressWarnings(plot3d.multiplot(
         .plot3d.density(diffT, titleText = "Mean difference turn angle"),
@@ -98,7 +98,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 
 #' Extract test results as string
 #'
-#' @param test object of type 'htest'
+#' @param test object of type \code{htest}
 #' @param alpha scalar: significance level, default \code{alpha = 0.05}
 #'
 #' @return A character describing the results.
@@ -145,11 +145,11 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
                         heightEllipsoid = heightEllipsoid, heightTopo = NULL)
   uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
                         a0 = crw$a[1], g0 = crw$g[1], densities = D)
-  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05, plotDensities = FALSE)
+  tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05)
   Q <- qProb.3d(uerw, nStep, multicore = multicore)
   cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
                       a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
-  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05, plotDensities = FALSE)
+  tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05)
   message("  |*** Test passed successfully ***")
   if(plot2d){print(plot2d(crw, cerw))}
   if(plot3d){plot3d(crw, cerw)}

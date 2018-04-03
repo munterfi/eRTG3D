@@ -36,6 +36,7 @@ get.glideRatio.3d <- function(track) {
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
 #'
 #' @return A 'soaring-gliding' trajectory in the form of data.frame
 #' @export
@@ -83,15 +84,15 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
   sCond <- sample(1:nrow(dList[[m]]$tldCube$values), 1, prob=tldProbs)
   # "x" "y" "z" "a" "g" "t" "l" "d" "p"
   # "1" "2" "3" "4" "5" "6" "7" "8" "9"
-  RTG <- matrix(0, n.locs*5, 9)
+  RTG <- matrix(0, n.locs * 25, 9)
   RTG[1, ] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE
-  tShift <- lShift <- dShift <- matrix(0, n.locs * 5, 2)
+  tShift <- lShift <- dShift <- matrix(0, n.locs * 25, 2)
   if (error) {
     for (j in 1:2){
-      tShift[, m] <- runif(n.locs * 5, -dList[[m]]$tldCube$tRes / 2, dList[[m]]$tldCube$tRes / 2)
-      lShift[, m] <- runif(n.locs * 5, -dList[[m]]$tldCube$lRes / 2, dList[[m]]$tldCube$lRes / 2)
-      dShift[, m] <- runif(n.locs * 5, -dList[[m]]$tldCube$dRes / 2, dList[[m]]$tldCube$dRes / 2)
+      tShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$tRes / 2, dList[[m]]$tldCube$tRes / 2)
+      lShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$lRes / 2, dList[[m]]$tldCube$lRes / 2)
+      dShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$dRes / 2, dList[[m]]$tldCube$dRes / 2)
     }
   }
   # start creating the track step for step
@@ -405,6 +406,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
+#' @param n.sim number of simulations to produce
+#' @param multicore logical: should simulations be spread to the available number of cores?
 #'
 #' @return A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
 #' @export

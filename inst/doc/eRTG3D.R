@@ -86,8 +86,8 @@ end=c(niclas$x[sim.locs],niclas$y[sim.locs],niclas$z[sim.locs])
 a0 = niclas$a[1]
 g0 = niclas$g[1]
 
-## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
-cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem, multicore=TRUE)
+## ----eval=FALSE, fig.height=5, fig.width=7, quiet = TRUE-----------------
+#  cerw <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem, multicore=TRUE)
 
 ## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
 LV95 <- "+init=epsg:2056"

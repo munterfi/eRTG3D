@@ -61,7 +61,7 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
 #' @export
 #'
 #' @examples
-#' chiMaps(stack1, stack2)
+#' chiMaps(stack1)
 chiMaps <- function(stack1, stack2 = NULL) {
   if (is.null(stack2)){
     rStack <- raster::stack()

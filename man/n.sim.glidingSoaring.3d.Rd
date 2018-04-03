@@ -10,6 +10,10 @@ n.sim.glidingSoaring.3d(n.sim = 1, multicore = FALSE, MODE, dGliding,
   BG = NULL)
 }
 \arguments{
+\item{n.sim}{number of simulations to produce}
+
+\item{multicore}{logical: should simulations be spread to the available number of cores?}
+
 \item{MODE}{raster layer containing the number/index of the mode, which should be used at each location}
 
 \item{dGliding}{density object returned by the \link[eRTG3D]{get.densities.3d} function for gliding mode}
@@ -27,6 +31,8 @@ n.sim.glidingSoaring.3d(n.sim = 1, multicore = FALSE, MODE, dGliding,
 \item{g0}{initial incoming gradient/polar angle in radian}
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
+
+\item{smoothTransition}{logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends}
 
 \item{glideRatio}{ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement}
 

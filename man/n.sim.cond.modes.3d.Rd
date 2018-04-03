@@ -21,17 +21,21 @@ n.sim.cond.modes.3d(n.sim, locsVec, start = c(0, 0, 0), end = start, a0, g0,
 
 \item{g0}{initial incoming gradient/polar angle in radian}
 
+\item{dList}{list contaitning the different densities for the modes}
+
+\item{qList}{list contaitning the different qProbs for the modes in the same order as the densities}
+
+\item{glideRatio}{glideRatio of the bird}
+
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 
 \item{multicore}{logical: run computations in parallel (n-1 cores)?}
 
+\item{MODE}{MODE raster layer}
+
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}
 
 \item{BG}{a background raster layer that can be used to inform the choice of steps}
-
-\item{densities}{list object returned by get.densities.3d() function}
-
-\item{qProbs}{list object returned by qProb.3d() function}
 }
 \value{
 A list containing the CERWs or NULLs if dead ends have been encountered.

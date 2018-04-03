@@ -27,6 +27,8 @@ sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0, 0),
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 
+\item{smoothTransition}{logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends}
+
 \item{glideRatio}{ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement}
 
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}

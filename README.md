@@ -9,11 +9,13 @@ and thus reflects the geometrical movement characteristics of the mover.
 The **eRTG3D** package contains functions to:
 
 * calculate **properties of 3-D GPS tracking data**, turn angle, lift angle and step length
-* **extract distributions** from properties; (1) P probability - the movers behavior from its perspective, and (2) Q probability - the pull towards the target
+* **extract distributions** from properties;
+    1. **P probability** - the movers behavior from its perspective
+    2. **Q probability** - the pull towards the target
 * simulate **Unconditioned Empirical Random Walks**
 * simulate **Conditioned Empirical Random Walks**
 * simulate conditioned **gliding and soaring behavior** of birds between to given points
-* **verify the results** statistically
+* **statistically test** the simulated tracks against the original input
 * **visualize** tracks, simulations and distributions in 3-D and 2-D
 * extract **3-D Space Utilization Distributions** from observed or simulated tracking data
 * project 3-D tracking data into different **Coordinate Reference Systems**

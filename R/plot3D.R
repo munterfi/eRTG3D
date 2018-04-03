@@ -216,9 +216,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
     diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
     suppressWarnings(plot3d.multiplot(
-      .plot3d.density(diffT1, diffT2, titleText = "Turn angle – autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffL1, diffL2, titleText = "Lift angle – autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffD1, diffD2, titleText = "Step length – autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffT1, diffT2, titleText = "Turn angle - autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffL1, diffL2, titleText = "Lift angle - autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffD1, diffD2, titleText = "Step length - autodifferences", scaleDensity = scaleDensities),
       cols = 1))
   } else {
     track1 <- do.call("rbind", track1)
@@ -362,7 +362,7 @@ plot3d.tldCube <- function(tldCube) {
                          line = list(color = "black", width = 3),
                          marker = list(size = 0),
                          opacity = 0.9, showlegend = FALSE)
-  p <- plotly::layout(p, title = paste("Bin width – t:", round(tldCube$tRes,3),
+  p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,3),
                                        ", l:", round(tldCube$lRes,3),
                                        ", d:", round(tldCube$dRes,3), sep = ""))
   print(p)

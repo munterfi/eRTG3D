@@ -36,6 +36,7 @@ get.glideRatio.3d <- function(track) {
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
 #'
 #' @return A 'soaring-gliding' trajectory in the form of data.frame
 #' @export
@@ -405,6 +406,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
+#' @param n.sim number of simulations to produce
+#' @param multicore logical: should simulations be spread to the available number of cores?
 #'
 #' @return A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
 #' @export

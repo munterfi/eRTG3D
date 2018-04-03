@@ -98,7 +98,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 
 #' Extract test results as string
 #'
-#' @param test object of type 'htest'
+#' @param test object of type \code{htest}
 #' @param alpha scalar: significance level, default \code{alpha = 0.05}
 #'
 #' @return A character describing the results.

@@ -20,5 +20,5 @@ As observed values, the first stack is used. The expected value is either set to
 to be the values of the second stack.
 }
 \examples{
-chiMaps(stack1, stack2)
+chiMaps(stack1)
 }

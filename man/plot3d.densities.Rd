@@ -21,7 +21,7 @@ A ggplot2 object.
 }
 \description{
 The function takes either one track or two tracks.
-The second track can be a list of tracks (eg. the output of \link[eRTG3D]{n.sim.cons.3d}),
+The second track can be a list of tracks (eg. the output of \link[eRTG3D]{n.sim.cond.3d}),
 Then the densities of turn angle, lift angle and step length of all the simulations is taken.
 Additionally the autodifferences parameter can be set to true, then the densities of the autodifferences
 in turn angle, lift angle and step length are visualized.

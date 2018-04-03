@@ -21,6 +21,8 @@ reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
 
 \item{BG}{a raster influencing the probabilities.}
 
+\item{filterDeadEnds}{logical: Remove tracks that ended in a dead end?}
+
 \item{plot2d}{logical: plot tracks on 2d plane?}
 
 \item{plot3d}{logical: plot tracks in 3D?}
@@ -28,8 +30,6 @@ reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
 \item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 
 \item{gradientDensity}{logical: Should a distribution of the gradient angle be extracted and used in the simulations (\link[eRTG3D]{get.densities.3d})?}
-
-\item{filterDeadEnds:}{logical: remove tracks (='NULL') that ended in a dead end?}
 }
 \value{
 A list or data.frame containing the simulated track(s) (CERW).

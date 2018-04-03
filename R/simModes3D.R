@@ -72,6 +72,7 @@ n.sim.cond.modes.3d <- function(n.sim, locsVec, start = c(0,0,0), end = start, a
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param glideRatio glide ratio of the bird
 #'
 #' @return A trajectory in the form of data.frame
 #' @export

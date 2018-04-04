@@ -34,7 +34,6 @@ Install either from CRAN with:
 ```r
 install.packages("eRTG3D")
 ```
-this will install binary packages on Windows and MacOS, unless you configured R such that it tries to install source packages; in that case, see below.
 
 Install development versions from github with:
 ```r

@@ -138,3 +138,60 @@ plotRaster <- function(r, title = character(0), centerColorBar = FALSE){
     do.call(eval(parse(text="gridExtra::grid.arrange")), c(plotList, ncol = round(sqrt(length(r@layers)))))
   }
 }
+
+#' Converts a rasterStack to logarithmic scale
+#' 
+#' Avoids the problem of -Inf occuring for log(0).
+#'
+#' @param rStack rasterStack to convert to logarithmic scale
+#' @param standartize logical: standartize cube between 0 and 1
+#' @param InfVal the value that \code{Inf} and \code{-Inf} should be rpeplaced with
+#'
+#' @return A rasterStack in logarithmic scale
+#' @export
+#'
+#' @examples
+#' logRasterStack(rStack)
+logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
+{
+  rStack <- log(rStack)
+  rStack[is.infinite(rStack)] <- InfVal
+  if(standartize) {
+    naInd <- is.na(rStack)
+    rStack[naInd] <- 0
+    maxR <- max(maxValue(rStack))
+    minR <- min(minValue(rStack))
+    rStack <- raster::stack(rStack)
+    for(i in 1:length(rStack@layers)) {
+      rStack@layers[[i]] <- (rStack@layers[[i]] - minR) / (maxR - minR)
+    }
+    rStack[naInd] <- NA
+  }
+  return(raster::stack(rStack))
+}
+
+#' Export a dataCube as image slice sequence
+#' 
+#' Exports a dataCube of type \code{rasterStack} as Tiff image sequence.
+#' Image sequnces are a common structre to represent voxel data and
+#' most of the specific software to visualize voxel data is able to read it (e.g. blender)
+#'
+#' @param rStack rasterStack to be saved to Tiff image slices
+#' @param filename name of the image slices
+#' @param dir directory, where the slices should be stored
+#' @param NaVal numeric value that should represent NA values in the Tiff image, default is \code{NaVal = 0}
+#'
+#' @return Saves the Tiff image files.
+#' @export
+#'
+#' @examples
+#' saveImageSlices(rstack, filename = "image")
+saveImageSlices <- function(rStack, filename, dir = getwd(), NaVal = 0)
+{
+  rStack[is.na(rStack)] <- NaVal
+  rStack <- raster::stack(rStack)
+  for (i in 1:length(rStack@layers)) {
+    tiff::writeTIFF(raster::as.matrix(rStack[[i]]),
+                    file.path(dir, paste(sprintf("%03d", i), ".", filename, ".tif", sep = "")))
+  }
+}

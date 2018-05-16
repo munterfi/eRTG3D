@@ -157,7 +157,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     colnames(BG) <- c("X","Y","BG")
     p <- p +
       ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
-      ggplot2::scale_fill_gradientn(name="Thermal Prob", colours = heat.colors(4, alpha = 1)) +
+      ggplot2::scale_fill_gradientn(name="Uplift Prob", colours = heat.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar())
   }
   # prepare tracks and add to plot
@@ -205,9 +205,8 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, scaleDensities = FALSE)
 {
   if (!is.list(track1) || !is.list(track1)) stop("Track input has to be of type list or data.frame.")
-  if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1)}
-  if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2)}
-  track1 <- filter.dead.ends(track1); track2 <- filter.dead.ends(track2)
+  if (is.list(track1) && is.data.frame(track1)) {track1 <- list(track1); track1 <- filter.dead.ends(track1)}
+  if (is.list(track2) && is.data.frame(track2)) {track2 <-list(track2); track2 <- filter.dead.ends(track2)}
   track1 <- lapply(track1, function(x){track.properties.3d(x)[2:nrow(x), ]})
   track2 <- lapply(track2, function(x){track.properties.3d(x)[2:nrow(x), ]})
   if(autodifferences){
@@ -216,9 +215,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     diffTrack2 <- do.call("rbind", lapply(track2, function(x){data.frame(diffT = diff(x$t), diffL = diff(x$l), diffD = diff(x$d))}))
     diffT2 <- diffTrack2$diffT; diffL2 <- diffTrack2$diffL; diffD2 <- diffTrack2$diffD;
     suppressWarnings(plot3d.multiplot(
-      .plot3d.density(diffT1, diffT2, titleText = "Turn angle - autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffL1, diffL2, titleText = "Lift angle - autodifferences", scaleDensity = scaleDensities),
-      .plot3d.density(diffD1, diffD2, titleText = "Step length - autodifferences", scaleDensity = scaleDensities),
+      .plot3d.density(diffT1, diffT2, titleText = "Turn angle - autodifferences", xlab = expression(paste(Delta, "t")), ylab = expression(paste("P(", Delta, "t)")), scaleDensity = scaleDensities),
+      .plot3d.density(diffL1, diffL2, titleText = "Lift angle - autodifferences", xlab = expression(paste(Delta, "l")), ylab = expression(paste("P(", Delta, "l)")), scaleDensity = scaleDensities),
+      .plot3d.density(diffD1, diffD2, titleText = "Step length - autodifferences", xlab = expression(paste(Delta, "d")), ylab = expression(paste("P(", Delta, "d)")), scaleDensity = scaleDensities),
       cols = 1))
   } else {
     track1 <- do.call("rbind", track1)
@@ -226,9 +225,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     track2 <- do.call("rbind", track2)
     t2 <- track2$t; l2 <- track2$l; d2 <- track2$d;
     suppressWarnings(plot3d.multiplot(
-      .plot3d.density(t1, t2, titleText = "Turn angle", scaleDensity = scaleDensities),
-      .plot3d.density(l1, l2, titleText = "Lift angle", scaleDensity = scaleDensities),
-      .plot3d.density(d1, d2, titleText = "Step length", scaleDensity = scaleDensities),
+      .plot3d.density(t1, t2, titleText = "Turn angle", xlab = "t", ylab = "P(t)", scaleDensity = scaleDensities),
+      .plot3d.density(l1, l2, titleText = "Lift angle", xlab = "l", ylab = "P(l)", scaleDensity = scaleDensities),
+      .plot3d.density(d1, d2, titleText = "Step length", xlab = "d", ylab = "P(d)", scaleDensity = scaleDensities),
       cols = 1))
   }
 }
@@ -237,7 +236,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #'
 #' @param values1 numeric vector
 #' @param values2 numeric vector or \code{NULL}
-#' @param titleText character of the title text
+#' @param titleText character of the title
+#' @param xlab character of x label
+#' @param ylab character of y label
 #' @param scaleDensity logical: should density be scaled between 0 and 1, then sum of the area under the curve is not 1 anymore!
 #'
 #' @return A ggplot2 object.
@@ -245,23 +246,23 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #'
 #' @examples
 #' plot3d.density(values)
-.plot3d.density <- function(values1, values2=NULL, titleText=character(1), scaleDensity = FALSE)
+.plot3d.density <- function(values1, values2 = NULL, titleText=character(1), xlab = "x", ylab = "P(x)", scaleDensity = FALSE)
 {
   values1 <- na.omit(values1);
   if(!is.null(values2)){
     values2 <- na.omit(values2)
     dat <- data.frame(values = c(values1, values2),
-                      Track = c(rep("Observed", times = length(values1)),
+                      PDF = c(rep("Observed", times = length(values1)),
                                 rep("Simulated", times = length(values2))))
   } else {
     dat <- data.frame(values = c(values1),
-                      Track = c(rep("Track 1", times = length(values1))))
+                      PDF = c(rep("Trajectory", times = length(values1))))
   }
-  return(ggplot2::ggplot(dat, ggplot2::aes(x = values, fill = Track)) +
-           #ggplot2::theme_classic() +
-           (if(scaleDensity){ggplot2::geom_density(ggplot2::aes(x=values, y=..scaled.., fill=Track), alpha=1/2)}
+  return(ggplot2::ggplot(dat, ggplot2::aes(x = values, fill = PDF)) +
+           ggplot2::theme_classic() +
+           (if(scaleDensity){ggplot2::geom_density(ggplot2::aes(x=values, y=..scaled.., fill=PDF), alpha=1/2)}
             else{ggplot2::geom_density(alpha = 0.5)}) +
-           ggplot2::labs(x = "Values", y = "Density") +
+           ggplot2::labs(x = xlab, y = ylab) +
            ggplot2::ggtitle(titleText))
 }
 

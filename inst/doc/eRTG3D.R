@@ -37,10 +37,10 @@ pander::pandoc.table(head(round(niclas, 2),5))
 #  Q <- qProb.3d(uerw, sim.locs)
 
 ## ----eval=FALSE----------------------------------------------------------
-#  start=c(niclas$x[1],niclas$y[1],niclas$z[1])
-#  end=c(niclas$x[nrow(niclas)],niclas$y[nrow(niclas)],niclas$z[nrow(niclas)])
-#  a0 = niclas$a[1]
-#  g0 = niclas$g[1]
+#  start <- c(niclas$x[1],niclas$y[1],niclas$z[1])
+#  end <- c(niclas$x[nrow(niclas)],niclas$y[nrow(niclas)],niclas$z[nrow(niclas)])
+#  a0 <- niclas$a[1]
+#  g0 <- niclas$g[1]
 
 ## ----eval=FALSE----------------------------------------------------------
 #  cerw <- sim.cond.3d(sim.locs, start=start, end=end, a0 = a0, g0 = g0, densities=D, qProbs=Q, DEM = dem)

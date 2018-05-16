@@ -30,7 +30,7 @@ By choosing \code{test = "ttest"} a random sample, without replacement is taken 
 to shorten it to the length of the longer track. The order of the shorter track is also sampled randomly.
 Then the two randomly ordered vectors of turn angles, lift angles and step lengths are substracted from each other.
 If the both tracks stem from the same distributions the the mean deviatio should tend to towards zero, therefore the 
-difference is testet two-sided against \code{mu = 0} with a one-sample t-test.
+difference is tested two-sided against \code{mu = 0} with a one-sample t-test.
 
 By setting \code{test = "ks"} a two-sample Kolmogorov-Smirnov test is carried out on the distributions of turn angles,
 lift angles and step lengths of the two tracks.

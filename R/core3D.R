@@ -205,9 +205,9 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   for (i in 2:n.locs)
   {
     # get influence of current autodifferences
-    atProbs <- densities$autoT(RTG[i-1, 6] - ts)
-    alProbs <- densities$autoL(RTG[i-1, 7] - ls)
-    adProbs <- densities$autoD(RTG[i-1, 8] - ds)
+    atProbs <- densities$autoT(RTG[i-1, 6] - ts + tShift[i])
+    alProbs <- densities$autoL(RTG[i-1, 7] - ls + lShift[i])
+    adProbs <- densities$autoD(RTG[i-1, 8] - ds + dShift[i])
     atProbs[is.na(atProbs)] <- 0
     alProbs[is.na(alProbs)] <- 0
     adProbs[is.na(adProbs)] <- 0
@@ -377,11 +377,11 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   for (i in 1:(n.locs - 2))
   {
     # get the auto-difference probability for turning angle
-    atProbs <- densities$autoT(RTG[i, 6]- ts)
+    atProbs <- densities$autoT(RTG[i, 6] - ts + tShift[i])
     # get the auto-difference probability for lift angle
-    alProbs <- densities$autoL(RTG[i, 7] - ls)
+    alProbs <- densities$autoL(RTG[i, 7] - ls + lShift[i])
     # get the auto-difference probability for step length
-    adProbs <- densities$autoD(RTG[i, 8] - ds)
+    adProbs <- densities$autoD(RTG[i, 8] - ds + dShift[i])
     # set NAs to zero probability
     atProbs[is.na(atProbs)] <- 0
     alProbs[is.na(alProbs)] <- 0

@@ -126,7 +126,7 @@ dem2track.extent <- function(DEM, track, buffer=100)
 {
   .is.df.xyz(track = track)
   .check.extent(DEM = DEM, track = track)
-  return(raster::crop(DEM, extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
+  return(raster::crop(DEM, raster::extent(min(track$x)-buffer, max(track$x)+buffer, min(track$y)-buffer, max(track$y)+buffer)))
 }
 
 #' Extent of track(s)

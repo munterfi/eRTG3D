@@ -157,7 +157,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     colnames(BG) <- c("X","Y","BG")
     p <- p +
       ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
-      ggplot2::scale_fill_gradientn(name="Uplift Prob", colours = heat.colors(4, alpha = 1)) +
+      ggplot2::scale_fill_gradientn(name="Uplift", colours = heat.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar())
   }
   # prepare tracks and add to plot

@@ -90,9 +90,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
   tShift <- lShift <- dShift <- matrix(0, n.locs * 25, 2)
   if (error) {
     for (j in 1:2){
-      tShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$tRes / 2, dList[[m]]$tldCube$tRes / 2)
-      lShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$lRes / 2, dList[[m]]$tldCube$lRes / 2)
-      dShift[, m] <- runif(n.locs * 25, -dList[[m]]$tldCube$dRes / 2, dList[[m]]$tldCube$dRes / 2)
+      tShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$tRes / 2, dList[[j]]$tldCube$tRes / 2)
+      lShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$lRes / 2, dList[[j]]$tldCube$lRes / 2)
+      dShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$dRes / 2, dList[[j]]$tldCube$dRes / 2)
     }
   }
   # start creating the track step for step
@@ -150,11 +150,11 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
         # get probs for each combination
         tldProbs <- dList[[m]]$tldCube$values$prob
         # get the auto-difference probability for turning angle
-        atProbs <- dList[[m]]$autoT(RTG[i, 6]- ts)
+        atProbs <- dList[[m]]$autoT(RTG[i, 6] - ts + tShift[i, m])
         # get the auto-difference probability for lift angle
-        alProbs <- dList[[m]]$autoL(RTG[i, 7] - ls)
+        alProbs <- dList[[m]]$autoL(RTG[i, 7] - ls + lShift[i, m])
         # get the auto-difference probability for step length
-        adProbs <- dList[[m]]$autoD(RTG[i, 8] - ds)
+        adProbs <- dList[[m]]$autoD(RTG[i, 8] - ds + dShift[i, m])
         # set NAs to zero probability
         atProbs[is.na(atProbs)] <- 0
         alProbs[is.na(alProbs)] <- 0
@@ -239,11 +239,11 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       # get probs for each combination
       tldProbs <- dList[[m]]$tldCube$values$prob
       # get the auto-difference probability for turning angle
-      atProbs <- dList[[m]]$autoT(RTG[i, 6]- ts)
+      atProbs <- dList[[m]]$autoT(RTG[i, 6] - ts + tShift[i, m])
       # get the auto-difference probability for lift angle
-      alProbs <- dList[[m]]$autoL(RTG[i, 7] - ls)
+      alProbs <- dList[[m]]$autoL(RTG[i, 7] - ls + lShift[i, m])
       # get the auto-difference probability for step length
-      adProbs <- dList[[m]]$autoD(RTG[i, 8] - ds)
+      adProbs <- dList[[m]]$autoD(RTG[i, 8] - ds + dShift[i, m])
       # set NAs to zero probability
       atProbs[is.na(atProbs)] <- 0
       alProbs[is.na(alProbs)] <- 0

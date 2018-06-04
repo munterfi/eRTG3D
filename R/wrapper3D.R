@@ -239,7 +239,9 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
   return(cerwList)
 }
 
-#' Function to filter out tracks that have found a dead end (=NULL)
+#' Remove dead ends
+#' 
+#' Function to filter out tracks that have found a dead end
 #'
 #' @param cerwList list of data.frames and NULL entries
 #'

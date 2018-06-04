@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapper3D.R
 \name{filter.dead.ends}
 \alias{filter.dead.ends}
-\title{Function to filter out tracks that have found a dead end (=NULL)}
+\title{Remove dead ends}
 \usage{
 filter.dead.ends(cerwList)
 }
@@ -13,7 +13,7 @@ filter.dead.ends(cerwList)
 A list that is only containing valid tracks.
 }
 \description{
-Function to filter out tracks that have found a dead end (=NULL)
+Function to filter out tracks that have found a dead end
 }
 \examples{
 filter.dead.ends(cerwList)

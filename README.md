@@ -30,11 +30,6 @@ The **eRTG3D** package contains functions to:
 
 ### Package
 
-Install either from CRAN with:
-```r
-install.packages("eRTG3D")
-```
-
 Install development versions from github with:
 ```r
 library(devtools)
@@ -50,4 +45,4 @@ install_github("munterfinger/eRTG3D")
 
 ## License
 
-This R package is licensed under the GPL (>= 3) License - see the [LICENSE](LICENSE) file for details.
+This R package is licensed under the GPL (>= 1.2-7) License - see the [LICENSE](LICENSE) file for details.

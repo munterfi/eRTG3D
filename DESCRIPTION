@@ -1,6 +1,6 @@
 Package: eRTG3D
 Title: Generate Empirically Informed Random Trajectories in 3-D
-Version: 0.5.1
+Version: 0.5.2
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = "aut"),
@@ -12,15 +12,15 @@ Description: The empirically informed random trajectory generator in three dimen
              between two given fix points in space. The trajectory generation is based on
              empirical distribution functions extracted from observed trajectories (training data)
              and thus reflects the geometrical movement characteristics of the mover.
-Depends: R (>= 3.4.2)
+Depends: R (>= 3.5.0)
 Imports: CircStats (>= 0.2-4),
          doParallel (>= 1.0.11),
          ggplot2 (>= 2.2.1),
          gridExtra (>= 2.3),
          raster (>= 2.6-7),
-         rasterVis (>= 0.43),
-         parallel (>= 3.4.2),
-         pbmcapply (>= 1.2.4),
+         rasterVis (>= 0.45),
+         parallel (>= 3.5.0),
+         pbmcapply (>= 1.2.5),
          plyr (>= 1.8.4),
          plotly (>= 4.7.1),
          sp (>= 1.2-7)
@@ -30,5 +30,5 @@ LazyData: true
 RoxygenNote: 6.0.1
 Suggests: knitr,
     rmarkdown,
-    sf (>= 0.6-1)
+    sf (>= 0.6-3)
 VignetteBuilder: knitr

@@ -150,7 +150,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' the distribution of distance to target has to be known.
 #' They can be derived from the empirical data (ideally),
 #' or estimated from an unconditional process with the same properties.
-#' Creates a unconditioned empirical random walk, with a specific starting point,
+#' Creates a unconditional empirical random walk, with a specific starting point,
 #' geometrically similar to the initial trajectory.
 #' 
 #' @section Note:
@@ -259,7 +259,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #' @param sim the result of \link[eRTG3D]{sim.uncond.3d}, or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modeled,
-#'     the length of the desired conditioned empirical random walk
+#'     the length of the desired conditional empirical random walk
 #' @param multicore logical: run computations in parallel (n-1 cores)?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
@@ -309,9 +309,9 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
   }
 }
 
-#' Conditioned Empirical Random Walk (CERW) in 3D
+#' Conditional Empirical Random Walk (CERW) in 3D
 #'
-#' Creates a conditioned empirical random walk, with a specific starting and ending point,
+#' Creates a conditional empirical random walk, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory
 #' (extractMethod: raster overlay method can take "simple" or "bilinear")
 #'
@@ -510,9 +510,9 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 }
 
 
-#' Conditioned Empirical Random Walks (CERW) in 3D
+#' Conditional Empirical Random Walks (CERW) in 3D
 #'
-#' Creates n conditioned empirical random walks, with a specific starting and ending point,
+#' Creates n conditional empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.
 #'
 #' @param n.sim number of CERWs to simulate

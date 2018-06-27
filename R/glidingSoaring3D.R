@@ -17,7 +17,7 @@ get.glideRatio.3d <- function(track) {
 
 #' Simulates 'gliding & soaring' track with a given number of gliding steps
 #'
-#' Creates a conditioned empirical random walk in gliding mode, between a start and end point.
+#' Creates a conditional empirical random walk in gliding mode, between a start and end point.
 #' The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 #' The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 #' therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
@@ -387,7 +387,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 
 #' Simulates multiple 'gliding & soaring' tracks with a given number of gliding steps
 #'
-#' Creates conditioned empirical random walks in gliding mode, between a start and end point.
+#' Creates conditional empirical random walks in gliding mode, between a start and end point.
 #' The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 #' The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 #' therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.

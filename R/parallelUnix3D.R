@@ -8,7 +8,7 @@
 #' @param sim the result of simm.uncond.3d(), or a data frame with at least
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modelled,
-#'     the length of the desired conditioned empirical random walk
+#'     the length of the desired conditional empirical random walk
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the Q - tldCubes for every step
@@ -47,9 +47,9 @@
   return(rev(cubeList))
 }
 
-#' Parallel computation of n Conditioned Empirical Random Walks (CERW) in 3D on Unix
+#' Parallel computation of n Conditional Empirical Random Walks (CERW) in 3D on Unix
 #'
-#' Creates n conditioned empirical random walks, with a specific starting and ending point,
+#' Creates n conditional empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory
 #'
 #' @param n.sim number of CERWs to simulate

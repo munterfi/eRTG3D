@@ -37,7 +37,7 @@ the distribution of turns and lifts to target and
 the distribution of distance to target has to be known.
 They can be derived from the empirical data (ideally),
 or estimated from an unconditional process with the same properties.
-Creates a unconditioned empirical random walk, with a specific starting point,
+Creates a unconditional empirical random walk, with a specific starting point,
 geometrically similar to the initial trajectory.
 }
 \section{Note}{

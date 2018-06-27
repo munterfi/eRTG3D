@@ -4,7 +4,7 @@
 \alias{plotRaster}
 \title{Plots a rasterLayer or rasterStack}
 \usage{
-plotRaster(r, title = character(0), centerColorBar = FALSE)
+plotRaster(r, title = character(0), centerColorBar = FALSE, ncol = NULL)
 }
 \arguments{
 \item{r}{\code{rasterLayer} or \code{rasterStack}}
@@ -12,6 +12,8 @@ plotRaster(r, title = character(0), centerColorBar = FALSE)
 \item{title}{title text of plot(s)}
 
 \item{centerColorBar}{logical: center colobar around 0 and use \code{RdBuTheme()}?}
+
+\item{centerColorBar}{number of columns to plot a stack, by default estimated by the square root}
 }
 \value{
 Plots the rasters

@@ -11,7 +11,7 @@ qProb.3d(sim, n.locs, multicore = FALSE, maxBin = 25)
 x,y,z-coordinates, the arrival azimuth and the arrival gradient.}
 
 \item{n.locs}{number of total segments to be modeled,
-the length of the desired conditioned empirical random walk}
+the length of the desired conditional empirical random walk}
 
 \item{multicore}{logical: run computations in parallel (n-1 cores)?}
 

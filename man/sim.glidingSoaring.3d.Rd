@@ -39,7 +39,7 @@ sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0, 0),
 A 'soaring-gliding' trajectory in the form of data.frame
 }
 \description{
-Creates a conditioned empirical random walk in gliding mode, between a start and end point.
+Creates a conditional empirical random walk in gliding mode, between a start and end point.
 The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.

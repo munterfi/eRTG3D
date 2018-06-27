@@ -2,7 +2,7 @@
 % Please edit documentation in R/core3D.R
 \name{sim.cond.3d}
 \alias{sim.cond.3d}
-\title{Conditioned Empirical Random Walk (CERW) in 3D}
+\title{Conditional Empirical Random Walk (CERW) in 3D}
 \usage{
 sim.cond.3d(n.locs, start = c(0, 0, 0), end = start, a0, g0, densities,
   qProbs, error = FALSE, DEM = NULL, BG = NULL)
@@ -32,7 +32,7 @@ sim.cond.3d(n.locs, start = c(0, 0, 0), end = start, a0, g0, densities,
 A trajectory in the form of data.frame
 }
 \description{
-Creates a conditioned empirical random walk, with a specific starting and ending point,
+Creates a conditional empirical random walk, with a specific starting and ending point,
 geometrically similar to the initial trajectory
 (extractMethod: raster overlay method can take "simple" or "bilinear")
 }

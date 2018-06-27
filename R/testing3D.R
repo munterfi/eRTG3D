@@ -175,7 +175,7 @@ sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
   t <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rTurn)
   a <- .wrap(cumsum(c(runif(1, 0, 2 * pi), t)))
   l <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rLift)
-  g <- .wrap(cumsum(c(runif(1, 0, pi), l)))
+  g <- abs(.wrap(cumsum(c(runif(1, 0, pi), l))))
   f <- abs(scale(CircStats::rwrpnorm(n = nStep - 1, mu = 0, rho = (rTurn+rLift)/2))[,1])
   d <- rep(meanStep, nStep-1) * f
   # deltas in all 3 directions

@@ -2,7 +2,7 @@
 % Please edit documentation in R/wrapper3D.R
 \name{track.properties.3d}
 \alias{track.properties.3d}
-\title{Track properties of a 3D track}
+\title{Track properties of a 3-D track}
 \usage{
 track.properties.3d(track)
 }

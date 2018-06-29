@@ -134,7 +134,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   2 * IQR(x) / (length(x) ^ (1/3))
 }
 
-#' Uncontidioned Empirical Random Walk (UERW) in 3D
+#' Unconditional Empirical Random Walk (UERW) in 3-D
 #'
 #' This function creates unconditional walks with prescribed
 #' empirical properties (turning angle, lift angle and step length
@@ -309,7 +309,7 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
   }
 }
 
-#' Conditional Empirical Random Walk (CERW) in 3D
+#' Conditional Empirical Random Walk (CERW) in 3-D
 #'
 #' Creates a conditional empirical random walk, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory
@@ -510,7 +510,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 }
 
 
-#' Conditional Empirical Random Walks (CERW) in 3D
+#' Conditional Empirical Random Walks (CERW) in 3-D
 #'
 #' Creates n conditional empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.

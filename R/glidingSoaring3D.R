@@ -436,7 +436,7 @@ n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding
         mc.cores = nCores, mc.style = "txt")
     }
     if(.Platform$OS.type == "windows") {
-      stop("Multicore not yet implemented on Windows system, please use a unix based system.")
+      stop("Multicore not yet implemented on Windows systems, please set 'multicore = FALSE' or use a unix-based system.")
     }
   } else {
     cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(X) {

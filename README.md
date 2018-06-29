@@ -1,3 +1,5 @@
+[![GitHub version](https://badge.fury.io/gh/munterfinger%2FeRTG3D.svg)](https://badge.fury.io/gh/munterfinger%2FeRTG3D)
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 # Empirically Informed Random Trajectory Generation in 3-D
 
 The empirically informed random trajectory generator in three dimensions (eRTG3D)

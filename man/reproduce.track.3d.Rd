@@ -23,9 +23,9 @@ reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
 
 \item{filterDeadEnds}{logical: Remove tracks that ended in a dead end?}
 
-\item{plot2d}{logical: plot tracks on 2d plane?}
+\item{plot2d}{logical: plot tracks on 2-D plane?}
 
-\item{plot3d}{logical: plot tracks in 3D?}
+\item{plot3d}{logical: plot tracks in 3-D?}
 
 \item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})}
 

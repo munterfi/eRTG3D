@@ -2,7 +2,7 @@
 % Please edit documentation in R/core3D.R
 \name{sim.cond.3d}
 \alias{sim.cond.3d}
-\title{Conditional Empirical Random Walk (CERW) in 3D}
+\title{Conditional Empirical Random Walk (CERW) in 3-D}
 \usage{
 sim.cond.3d(n.locs, start = c(0, 0, 0), end = start, a0, g0, densities,
   qProbs, error = FALSE, DEM = NULL, BG = NULL)

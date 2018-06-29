@@ -122,18 +122,19 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #'
 #' @param multicore logical: test with multicore?
 #' @param returnResult logical: return tracks generated?
-#' @param plot2d logical: plot tracks on 2d plane?
-#' @param plot3d logical: plot tracks in 3D?
+#' @param plot2d logical: plot tracks on 2-D plane?
+#' @param plot3d logical: plot tracks in 3-D?
+#' @param plot3d logical: plot densities of turning angle, lift angle and step length?
 #'
 #' @return A list containing the original CRW and the simulated track (CERW).
 #' @export
 #'
 #' @examples
 #' test.eRTG3D.3d()
-test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = FALSE)
+test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = TRUE, plotDensities = TRUE)
 {
   message("  |*** Testing eRTG3D ***")
-  set.seed(123)
+  set.seed(1)
   nStep <- 25
   crw <- track.properties.3d(
     sim.crw.3d(nStep = nStep, rTurn = 0.99, rLift = 0.99, meanStep = 1, start = c(0, 0, 10)))
@@ -152,6 +153,7 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
   tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05)
   message("  |*** Test passed successfully ***")
   if(plot2d){print(plot2d(crw, cerw))}
+  if(plotDensities){plot3d.densities(crw, cerw)}
   if(plot3d){plot3d(crw, cerw)}
   if(returnResult){return(list(crw = crw, cerw = cerw))}
 }

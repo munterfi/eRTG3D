@@ -5,16 +5,18 @@
 \title{Test the functionality of the eRTG3D}
 \usage{
 test.eRTG.3d(multicore = FALSE, returnResult = FALSE, plot2d = FALSE,
-  plot3d = FALSE)
+  plot3d = TRUE, plotDensities = TRUE)
 }
 \arguments{
 \item{multicore}{logical: test with multicore?}
 
 \item{returnResult}{logical: return tracks generated?}
 
-\item{plot2d}{logical: plot tracks on 2d plane?}
+\item{plot2d}{logical: plot tracks on 2-D plane?}
 
-\item{plot3d}{logical: plot tracks in 3D?}
+\item{plot3d}{logical: plot tracks in 3-D?}
+
+\item{plot3d}{logical: plot densities of turning angle, lift angle and step length?}
 }
 \value{
 A list containing the original CRW and the simulated track (CERW).

@@ -18,7 +18,7 @@
 #' qProb.3d.windows(sim, n.locs)
 .qProb.3d.windows <- function(sim, n.locs, maxBin = 25)
 {
-  stop("Multicore not yet implemented on Windows system, please use a unix based system.")
+  stop("Multicore not yet implemented on Windows systems, please set 'multicore = FALSE' or use a unix-based system.")
   start.time <- Sys.time()
   # set up cluster (parallel, doParallel and later plyr)
   nCores <- parallel::detectCores()-1
@@ -113,7 +113,7 @@
   return(cubeList)
 }
 
-#' Parallel computation of n Conditioned Empirical Random Walks (CERW) in 3D on Windows
+#' Parallel computation of n Conditioned Empirical Random Walks (CERW) in 3-D on Windows
 #'
 #' Creates n conditioned empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory
@@ -138,7 +138,6 @@
 #' .n.sim.cond.3d.windows(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs)
 .n.sim.cond.3d.windows <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, DEM = NULL, BG = NULL)
 {
-  stop("Multicore not yet implemented on Windows system, please use use a unix based system.")
-  warning("Parallel version not yet supported on Windows. Please set 'multicore' to 'FALSE' or change to a unix system.")
+  stop("Multicore not yet implemented on Windows systems, please set 'multicore = FALSE' or use a unix-based system.")
   return(NULL)
 }

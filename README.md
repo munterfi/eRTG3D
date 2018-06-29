@@ -1,6 +1,6 @@
 # Empirically Informed Random Trajectory Generation in 3-D
 
-The empirically Informed Random Trajectory Generator in Three Dimensions (eRTG3D)
+The empirically informed random trajectory generator in three dimensions (eRTG3D)
 is an algorithm to generate realistic random trajectories in a 3-D space
 between two given fix points. The trajectory generation is based on
 empirical distribution functions extracted from observed trajectories (training data)
@@ -12,8 +12,8 @@ The eRTG3D algorithm was developed and implemented as an R package within the sc
 
 * calculate **movement parameters of 3-D GPS tracking data**, turning angle, lift angle and step length
 * **extract distributions** from movement parameters;
-    1. **P probability** - the mover's behavior from its perspective
-    2. **Q probability** - the pull towards the target
+    1. **P probability** -- The mover's behavior from its perspective
+    2. **Q probability** -- The pull towards the target
 * simulate **Unconditional Empirical Random Walks (UERW)**
 * simulate **Conditional Empirical Random Walks (CERW)**
 * simulate conditional **gliding and soaring behavior** of birds between two given points
@@ -27,8 +27,8 @@ The eRTG3D algorithm was developed and implemented as an R package within the sc
 ## Installing
 **Prerequisites** -- Software needed:
 
-* [R](https://www.r-project.org/) - R is a free software environment for statistical computing and graphics.
-* [RStudio](https://www.rstudio.com/) - Open source and enterprise-ready professional software for R.
+* [R](https://www.r-project.org/) -- R is a free software environment for statistical computing and graphics.
+* [RStudio](https://www.rstudio.com/) -- Open source and enterprise-ready professional software for R.
 
 **Install Package** -- Get development version from github:
 
@@ -39,10 +39,10 @@ install_github("munterfinger/eRTG3D")
 
 ## Authors
 
-* **Merlin Unterfinger** - *eRTG3D and R Package* - [munterfinger](http://www.munterfinger.ch)
-* **George Technitis** - *2-D eRTG* - [nnneogeorge](https://github.com/nnneogeorge)
-* **Dr. Kamran Safi** - *2-D eRTG* [MPIO](https://www.orn.mpg.de/person/26381/2168)
-* **Prof. Dr. Robert Weibel** - *2-D eRTG* [GIUZ](https://www.geo.uzh.ch/en/studying/spez_master/msc_spez_giscience/People/weibel.html)
+* **Merlin Unterfinger** -- *eRTG3D and R Package* -- [munterfinger](http://www.munterfinger.ch)
+* **George Technitis** -- *2-D eRTG* -- [nnneogeorge](https://github.com/nnneogeorge)
+* **Dr. Kamran Safi** -- *2-D eRTG* -- [MPIO](https://www.orn.mpg.de/person/26381/2168)
+* **Prof. Dr. Robert Weibel** -- *2-D eRTG* -- [GIUZ](https://www.geo.uzh.ch/en/studying/spez_master/msc_spez_giscience/People/weibel.html)
 
 ## License
 

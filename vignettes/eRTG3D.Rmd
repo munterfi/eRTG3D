@@ -45,7 +45,7 @@ results <- test.eRTG.3d(returnResult = TRUE, plot2d = TRUE, plot3d = TRUE)
 ## Coordinate reference system transformations
 The eRTG3D only supports calculations in *Cartesian* coordinate systems. In case of latitude / longitude data (e.g.: WGS84), these must be converted into a *Cartesian* coordinate system, as for example the Universal Transverse Mercator (UTM).
 
-To carry out a CRS transformation, please use `transformCRS.3d()`, which is based on the `st_transform()` from the `sf` package. Therefore is supports CRS transformations in 3D.
+To carry out a CRS transformation, please use `transformCRS.3d()`, which is based on the `st_transform()` from the `sf` package. Therefore is supports CRS transformations in 3-D.
 
 ```{r eval=FALSE}
 WGS84 <- "+init=epsg:4326"
@@ -146,7 +146,7 @@ tests <- test.verification.3d(niclas, cerwList, plot = FALSE)
 ```
 
 ## Visualize results
-The resulting tracks can be plotted either in 2D or in 3D, using the `ggplot2` and `plotly` libraries. Additionally the densities of the track properties can be visualized.
+The resulting tracks can be plotted either in 2-D or in 3-D, using the `ggplot2` and `plotly` libraries. Additionally the densities of the track properties can be visualized.
 
 ### Densities of turn angle, lift angle and step length of tracks
 The function takes either one or two tracks. The second track can be a list of tracks as for example the output of `n.sim.cons.3d()`. In this case the densities of turn angle, lift angle and step length of all the simulations is taken. Additionally the `autodifferences` parameter can be set to `TRUE`, then the densities of the auto differences in turn angle, lift angle and step length are visualized.

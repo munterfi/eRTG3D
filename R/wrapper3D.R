@@ -200,8 +200,8 @@ track.extent <- function(track, zAxis = FALSE){
 #' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param BG a raster influencing the probabilities.
 #' @param multicore logical: run calculations on multiple cores?
-#' @param plot2d logical: plot tracks on 2d plane?
-#' @param plot3d logical: plot tracks in 3D?
+#' @param plot2d logical: plot tracks on 2-D plane?
+#' @param plot3d logical: plot tracks in 3-D?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #' @param gradientDensity logical: Should a distribution of the gradient angle be extracted and used in the simulations (\link[eRTG3D]{get.densities.3d})?
 #' @param filterDeadEnds logical: Remove tracks that ended in a dead end?
@@ -361,7 +361,7 @@ dist2point.3d <- function(track, point, groundDistance = FALSE) {
   }
 }
 
-#' Track properties of a 3D track
+#' Track properties of a 3-D track
 #'
 #' Returns the properties (distances, azimuth, polar angle,
 #' turn angle & lift angle) of a track in three dimensions.

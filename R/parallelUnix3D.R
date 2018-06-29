@@ -47,7 +47,7 @@
   return(rev(cubeList))
 }
 
-#' Parallel computation of n Conditional Empirical Random Walks (CERW) in 3D on Unix
+#' Parallel computation of n Conditional Empirical Random Walks (CERW) in 3-D on Unix
 #'
 #' Creates n conditional empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory

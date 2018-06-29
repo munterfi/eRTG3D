@@ -337,7 +337,7 @@ plot3d.tldCube <- function(tldCube) {
   dfAx <- data.frame(x = c(0, max(df$x)), y = c(0, 0), z = c(0, 0))
   dfAy <- data.frame(x = c(0, 0), y = c(-dist, dist), z = c(0, 0))
   dfAz <- data.frame(x = c(0, 0), y = c(0, 0), z = c(-dist, dist))
-  # 3D scatterplot
+  # 3-D scatterplot
   p <- plotly::plot_ly()
   if(length(unique(df$prob))==1){
     p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z,

@@ -61,11 +61,11 @@ tests <- test.verification.3d(niclas, cerw, plot = FALSE)
 ## ----eval=TRUE-----------------------------------------------------------
 tests <- test.verification.3d(niclas, cerwList, plot = FALSE)
 
-## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
-plot3d.densities(niclas, cerwList)
+## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
+#  plot3d.densities(niclas, cerwList)
 
-## ----eval=TRUE, fig.height=5, fig.width=7--------------------------------
-plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
+## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
+#  plot2d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)
 
 ## ----eval=FALSE----------------------------------------------------------
 #  plot3d(niclas, cerwList, titleText=paste("Steps: ", nrow(niclas), ", Niclas", sep=""), DEM=dem)

@@ -23,6 +23,7 @@
   message(paste("  |Extracting Q probabilities for ", n.locs, " steps (Parallel on nCores = ", nCores, ")", sep = ""))
   # steps minus 2
   nSteps <- n.locs - 2
+  sim <- track.properties.3d(sim)
   # lift angles to target as a function of number of steps
   cubeList <- pbmcapply::pbmclapply(1:nSteps, function(x) {
     # turn angle, lift angles and distance to target as a function of number of steps

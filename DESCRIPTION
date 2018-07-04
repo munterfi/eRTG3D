@@ -1,6 +1,6 @@
 Package: eRTG3D
 Title: Generate Empirically Informed Random Trajectories in 3-D
-Version: 0.5.3
+Version: 0.5.4
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = "aut"),

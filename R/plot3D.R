@@ -180,7 +180,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     ggplot2::geom_point(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y), size=3.5, shape=13, alpha = 1, color="black") +
     ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y, label = "END", fontface = "bold"), size=3, vjust=-1.4, color="white") +
     ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y, label = "END"), size=3, vjust=-1.4, color="black") +
-    ggplot2::labs(colour="Flight height")
+    ggplot2::labs(colour="Altitude")
   return(p)
 }
 

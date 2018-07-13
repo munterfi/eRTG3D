@@ -12,7 +12,7 @@
 
 <meta name="author" content="Unterfinger Merlin" />
 
-<meta name="date" content="2018-07-04" />
+<meta name="date" content="2018-07-13" />
 
 <title>Empirically Informed Random Trajectory Generator in 3-D</title>
 
@@ -80,7 +80,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">Empirically Informed Random Trajectory Generator in 3-D</h1>
 <h4 class="author"><em>Unterfinger Merlin</em></h4>
-<h4 class="date"><em>2018-07-04</em></h4>
+<h4 class="date"><em>2018-07-13</em></h4>
 <div class="abstract">
 <p class="abstract">Abstract</p>
 The empirically informed random trajectory generator in three dimensions <strong>eRTG3D</strong> is an algorithm to generate realistic random trajectories in a 3-D space between two given fix points in space. The trajectory generation is based on empirical distribution functions extracted from observed trajectories and thus reflects the geometrical movement characteristics of the mover.
@@ -236,17 +236,17 @@ D &lt;-<span class="st"> </span><span class="kw">get.section.densities.3d</span>
 <span class="co">#&gt;   |*** Two-sample Kolmogorov-Smirnov test ***</span>
 <span class="co">#&gt;   |H0: Probability distributions do not differ significantly</span>
 <span class="co">#&gt;   |H1: Probability distributions differ significantly</span>
-<span class="co">#&gt;   |Turn angle  - p-value: 0.808 &gt; 0.05, *H0*, autodifferences - p-value: 0.951 &gt; 0.05, *H0*</span>
+<span class="co">#&gt;   |Turn angle  - p-value: 0.958 &gt; 0.05, *H0*, autodifferences - p-value: 0.791 &gt; 0.05, *H0*</span>
 <span class="co">#&gt;   |Lift angle  - p-value: 0.239 &gt; 0.05, *H0*, autodifferences - p-value: 0.013 &lt; 0.05, *H1*</span>
-<span class="co">#&gt;   |Step length - p-value: 0.808 &gt; 0.05, *H0*, autodifferences - p-value: 0.951 &gt; 0.05, *H0*</span></code></pre></div>
+<span class="co">#&gt;   |Step length - p-value: 0.239 &gt; 0.05, *H0*, autodifferences - p-value: 0.951 &gt; 0.05, *H0*</span></code></pre></div>
 <p>… or a list of multiple tracks.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">tests &lt;-<span class="st"> </span><span class="kw">test.verification.3d</span>(niclas, cerwList, <span class="dt">plot =</span> <span class="ot">FALSE</span>)
 <span class="co">#&gt;   |*** Two-sample Kolmogorov-Smirnov test ***</span>
 <span class="co">#&gt;   |H0: Probability distributions do not differ significantly</span>
 <span class="co">#&gt;   |H1: Probability distributions differ significantly</span>
-<span class="co">#&gt;   |Turn angle  - p-value: 0.587 &gt; 0.05, *H0*, autodifferences - p-value: 0.667 &gt; 0.05, *H0*</span>
-<span class="co">#&gt;   |Lift angle  - p-value: 0.165 &gt; 0.05, *H0*, autodifferences - p-value: 0.001 &lt; 0.05, *H1*</span>
-<span class="co">#&gt;   |Step length - p-value: 0.525 &gt; 0.05, *H0*, autodifferences - p-value: 0.704 &gt; 0.05, *H0*</span></code></pre></div>
+<span class="co">#&gt;   |Turn angle  - p-value: 0.621 &gt; 0.05, *H0*, autodifferences - p-value: 0.863 &gt; 0.05, *H0*</span>
+<span class="co">#&gt;   |Lift angle  - p-value: 0.147 &gt; 0.05, *H0*, autodifferences - p-value: 0.003 &lt; 0.05, *H1*</span>
+<span class="co">#&gt;   |Step length - p-value: 0.673 &gt; 0.05, *H0*, autodifferences - p-value: 0.893 &gt; 0.05, *H0*</span></code></pre></div>
 </div>
 <div id="visualize-results" class="section level2">
 <h2>Visualize results</h2>

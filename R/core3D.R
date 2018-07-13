@@ -276,6 +276,7 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
   } else {
     start.time <- Sys.time()
     message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
+    sim <- track.properties.3d(sim)
     # steps minus 2
     nSteps <- n.locs - 2
     # progress bar
@@ -348,8 +349,8 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   # the qProbs since that one relies on more samples derived from sim
   densities[[1]] <- tail(qProbs,1)[[1]]
   # get the coordinates of the step length and turning angle bin centres
-  names(start) <- c("x", "y", "z")
-  names(end) <- c("x", "y", "z")
+  start <- Reduce(c, start); names(start) <- c("x", "y", "z")
+  end <- Reduce(c, end); names(end) <- c("x", "y", "z")
   # get coordinates of the tldCube
   ts <- densities$tldCube$values$turn
   ls <- densities$tldCube$values$lift

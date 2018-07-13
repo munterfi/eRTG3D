@@ -1,6 +1,6 @@
 Package: eRTG3D
 Title: Generate Empirically Informed Random Trajectories in 3-D
-Version: 0.5.3
+Version: 0.5.4
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = "aut"),
@@ -15,7 +15,7 @@ Description: The empirically informed random trajectory generator in three dimen
 Depends: R (>= 3.5.0)
 Imports: CircStats (>= 0.2-4),
          doParallel (>= 1.0.11),
-         ggplot2 (>= 2.2.1),
+         ggplot2 (>= 3.0.0),
          gridExtra (>= 2.3),
          raster (>= 2.6-7),
          rasterVis (>= 0.45),

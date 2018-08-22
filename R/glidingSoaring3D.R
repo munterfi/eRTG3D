@@ -417,7 +417,6 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #'
 #' @examples
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
-
 n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
                                     error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL)
 {
@@ -428,15 +427,12 @@ n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding
   message(paste("  |Simulate ", n.sim ," 'gliding & soaring' with ", (length(qGliding) + 1) , " gliding steps", sep = ""))
   if (multicore) {
     if(.Platform$OS.type == "unix") {
-      nCores <- parallel::detectCores()-1
-      message(paste("  |Running on nCores = ", nCores, sep=""))
-      cerwList <- pbmcapply::pbmclapply(X = 1:n.sim, FUN = function(X) {
-        sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                              error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG)},
-        mc.cores = nCores, mc.style = "txt")
+      return(.n.sim.glidingSoaring.3d.unix(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
+                            error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))
     }
     if(.Platform$OS.type == "windows") {
-      stop("Multicore not yet implemented on Windows systems, please set 'multicore = FALSE' or use a unix-based system.")
+      return(.n.sim.glidingSoaring.3d.windows(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
+                                           error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))
     }
   } else {
     cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(X) {

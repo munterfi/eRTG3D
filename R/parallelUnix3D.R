@@ -79,3 +79,47 @@
   message(paste("  |Running on nCores = ", nCores, sep=""))
   return(pbmcapply::pbmclapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs, start, end, a0, g0, densities, qProbs, error, DEM, BG)}, mc.cores = nCores, mc.style = "txt"))
 }
+
+#' Simulates multiple 'gliding & soaring' tracks with a given number of gliding steps
+#'
+#' Creates conditional empirical random walks in gliding mode, between a start and end point.
+#' The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
+#' The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
+#' therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
+#' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
+#' and pass them to the function.
+#'
+#' @param MODE raster layer containing the number/index of the mode, which should be used at each location
+#' @param dGliding density object returned by the \link[eRTG3D]{get.densities.3d} function for gliding mode
+#' @param dSoaring density object returned by the \link[eRTG3D]{get.densities.3d} function for soaring mode
+#' @param qGliding the Q probabilites for the steps in gliding mode (\link[eRTG3D]{qProb.3d})
+#' @param start numeric vector of length 3 with the coordinates of the start point
+#' @param end numeric vector of length 3 with the coordinates of the end point
+#' @param a0 initial incoming heading in radian
+#' @param g0 initial incoming gradient/polar angle in radian
+#' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
+#' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
+#' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
+#' @param BG a background raster layer that can be used to inform the choice of steps
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
+#' @param n.sim number of simulations to produce
+#' @param multicore logical: should simulations be spread to the available number of cores?
+#'
+#' @return A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
+#' @export
+#'
+#' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
+#'
+#' @examples
+#' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
+#' @noRd
+.n.sim.glidingSoaring.3d.unix <- function(MODE, dGliding, dSoaring, qGliding, start, end=end, a0, g0,
+                                 error = TRUE, smoothTransition = TRUE, glideRatio, DEM = NULL, BG = NULL)
+{
+  nCores <- parallel::detectCores()-1
+  message(paste("  |Running on nCores = ", nCores, sep=""))
+  return(pbmcapply::pbmclapply(X = 1:n.sim, FUN = function(X) {
+    sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
+                          error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG)},
+    mc.cores = nCores, mc.style = "txt"))
+}

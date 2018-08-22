@@ -14,7 +14,7 @@ plotRaster(r, title = character(0), centerColorBar = FALSE,
 
 \item{centerColorBar}{logical: center colobar around 0 and use \code{RdBuTheme()}?}
 
-\item{centerColorBar}{number of columns to plot a stack, by default estimated by the square root}
+\item{ncol}{number of columns to plot a stack, by default estimated by the square root}
 }
 \value{
 Plots the rasters

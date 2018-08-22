@@ -102,7 +102,7 @@ chiMaps <- function(stack1, stack2 = NULL) {
 #' @param r \code{rasterLayer} or \code{rasterStack}
 #' @param title title text of plot(s)
 #' @param centerColorBar logical: center colobar around 0 and use \code{RdBuTheme()}?
-#' @param centerColorBar number of columns to plot a stack, by default estimated by the square root
+#' @param ncol number of columns to plot a stack, by default estimated by the square root
 #'
 #' @return Plots the rasters
 #' @export

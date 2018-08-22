@@ -103,6 +103,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #'
 #' @examples
 #' .cutMidpoints(x, breaks)
+#' @noRd
 .cutMidpoints <- function(x, breaks, rm.empty=TRUE) {
   nb <- as.integer(breaks + 1)
   dx <- diff(rx <- range(x, na.rm = TRUE))
@@ -117,7 +118,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   else {list(cuts = factor(midpoints[code], midpoints), res = res)}
 }
 
-#' Freedman–Diaconis rule
+#' Freedman-Diaconis rule
 #'
 #' In statistics, this rule can be used to select the size
 #' of the bins to be used in a histogram.
@@ -129,6 +130,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #'
 #' @examples
 #' .df.bw(x)
+#' @noRd
 .fd.bw <- function(x)
 {
   2 * IQR(x) / (length(x) ^ (1/3))
@@ -510,7 +512,6 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   return(as.data.frame(RTG))
 }
 
-
 #' Conditional Empirical Random Walks (CERW) in 3-D
 #'
 #' Creates n conditional empirical random walks, with a specific starting and ending point,
@@ -565,6 +566,7 @@ n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, de
 #'
 #' @examples
 #' .wrap(x)
+#' @noRd
 .wrap <- function(x)
 {
   (x + pi) %% (2 * pi) - pi

@@ -86,6 +86,7 @@ track2sf.3d <- function(track, CRS = NA)
 #'
 #' @examples
 #' .df2sf.3d(track, CRS = NA)
+#' @noRd
 .df2sf.3d <- function(track, CRS = NA)
 {
   if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
@@ -103,6 +104,7 @@ track2sf.3d <- function(track, CRS = NA)
 #'
 #' @examples
 #' .matrix2sf.3d(track, CRS = NA)
+#' @noRd
 .matrix2sf.3d <- function(track, CRS = NA)
 {
   if(any(is.na(track[,1:3]))) stop("Track 'matrix' contains NA values.")
@@ -119,6 +121,7 @@ track2sf.3d <- function(track, CRS = NA)
 #'
 #' @examples
 #' .move2sf.3d(track)
+#' @noRd
 .move2sf.3d <- function(track)
 {
   CRS <- as.character(track@proj4string)

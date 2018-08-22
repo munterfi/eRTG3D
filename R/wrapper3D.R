@@ -164,6 +164,7 @@ track.extent <- function(track, zAxis = FALSE){
 #'
 #' @examples
 #' .is.df.xyz(track)
+#' @noRd
 .is.df.xyz <- function(track)
 {
   if(!class(track)=="data.frame") stop("Input not of type 'data.frame'.")
@@ -181,6 +182,7 @@ track.extent <- function(track, zAxis = FALSE){
 #'
 #' @examples
 #' .check.extent(DEM, track)
+#' @noRd
 .check.extent <- function(DEM, track)
 {
   if(!class(DEM)=="RasterLayer") stop("'DEM' is not of type 'RasterLayer'")
@@ -404,6 +406,7 @@ track.properties.3d <- function(track)
 #'
 #' @examples
 #' .get.azimut(dx, dy)
+#' @noRd
 .get.azimut <- function(dx, dy)
 {
   .wrap(atan2(dy, dx))
@@ -419,6 +422,7 @@ track.properties.3d <- function(track)
 #'
 #' @examples
 #' .get.polar(d, dz)
+#' @noRd
 .get.polar <- function(d, dz)
 {
   .wrap(atan2(d, dz))
@@ -434,6 +438,7 @@ track.properties.3d <- function(track)
 #'
 #' @examples
 #' .distance.2d(dx, dy)
+#' @noRd
 .distance.2d <- function(dx, dy)
 {
   sqrt(dx*dx+dy*dy)
@@ -450,6 +455,7 @@ track.properties.3d <- function(track)
 #'
 #' @examples
 #' .distance.3d(dx, dy, dz)
+#' @noRd
 .distance.3d <- function(dx, dy, dz)
 {
   sqrt(dx*dx+dy*dy+dz*dz)

@@ -323,6 +323,5 @@
   }, .margins = 1, .parallel = TRUE, .paropts = list(.options.snow=opts))
   # stop cluster
   parallel::stopCluster(cl)
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
   return(simTracks)
 }

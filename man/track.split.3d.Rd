@@ -23,5 +23,5 @@ The length of timeLag must be the the track's length minus 1 and represents
 the time passed between the fix point acquisition
 }
 \examples{
-track.split.3d(track, timeLag)
+track.split.3d(niclas, timeLag=rep(1, nrow(niclas)-1) + rnorm(nrow(niclas)-1, mean = 0, sd = 0.25))
 }

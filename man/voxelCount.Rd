@@ -32,5 +32,5 @@ For every height slice a raster with points per cell counts is created. Addition
 the voxels can be standartized between 0 and 1.
 }
 \examples{
-voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE)
+voxelCount(niclas, raster::extent(dem), 100, 100, 1000, 1400, standartize = TRUE)
 }

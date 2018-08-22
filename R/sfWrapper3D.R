@@ -14,7 +14,7 @@
 #' @export
 #'
 #' @examples
-#' transformCRS.3d(track, fromCRS="+init=epsg:4326", toCRS="+init=epsg:2056")
+#' transformCRS.3d(niclas, fromCRS="+init=epsg:2056", toCRS="+init=epsg:4326")
 transformCRS.3d <- function(track, fromCRS, toCRS)
 {
   track <- track2sf.3d(track = track, CRS = fromCRS)
@@ -32,7 +32,8 @@ transformCRS.3d <- function(track, fromCRS, toCRS)
 #' @export
 #'
 #' @examples
-#' is.sf.3d(track)
+#' is.sf.3d(niclas)
+#' is.sf.3d(track2sf.3d(track = niclas, CRS = "+init=epsg:2056"))
 is.sf.3d <- function(track)
 {
   if(class(track)[1]=="sf" && class(track)[2]=="data.frame") {
@@ -50,7 +51,7 @@ is.sf.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' sf2df.3d(df)
+#' sf2df.3d(track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
 sf2df.3d <- function(track)
 {
   track <- cbind(sf::st_coordinates(track), as.data.frame(track))
@@ -68,7 +69,7 @@ sf2df.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' track2sf.3d(track, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+#' track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
 track2sf.3d <- function(track, CRS = NA)
 {
   if(is.data.frame(track)) {return(.df2sf.3d(track, CRS = CRS))}

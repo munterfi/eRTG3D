@@ -16,7 +16,7 @@ test.eRTG.3d(multicore = FALSE, returnResult = FALSE, plot2d = FALSE,
 
 \item{plot3d}{logical: plot tracks in 3-D?}
 
-\item{plot3d}{logical: plot densities of turning angle, lift angle and step length?}
+\item{plotDensities}{logical: plot densities of turning angle, lift angle and step length?}
 }
 \value{
 A list containing the original CRW and the simulated track (CERW).
@@ -25,5 +25,5 @@ A list containing the original CRW and the simulated track (CERW).
 The test simulates a CRW with given parameters and reconstructs it by using the eRTG3D
 }
 \examples{
-test.eRTG3D.3d()
+test.eRTG.3d()
 }

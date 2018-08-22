@@ -23,5 +23,5 @@ Plots the rasters
 Plots a rasterLayer or rasterStack
 }
 \examples{
-plotRaster(r)
+plotRaster(dem)
 }

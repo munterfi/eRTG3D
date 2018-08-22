@@ -16,5 +16,5 @@ A numeric vector with the lift angles to target
 Calculates the lift angle between every point in the track and the last point (target).
 }
 \examples{
-lift2target.3d(track)
+lift2target.3d(niclas)
 }

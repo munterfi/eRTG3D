@@ -12,22 +12,22 @@ Description: The empirically informed random trajectory generator in three dimen
              between two given fix points in space. The trajectory generation is based on
              empirical distribution functions extracted from observed trajectories (training data)
              and thus reflects the geometrical movement characteristics of the mover.
-Depends: R (>= 3.5.0)
-Imports: CircStats (>= 0.2-4),
+Depends: R (>= 3.5.1)
+Imports: CircStats (>= 0.2-6),
          doParallel (>= 1.0.11),
          ggplot2 (>= 3.0.0),
          gridExtra (>= 2.3),
          raster (>= 2.6-7),
          rasterVis (>= 0.45),
-         parallel (>= 3.5.0),
+         parallel (>= 3.5.1),
          pbmcapply (>= 1.2.5),
          plyr (>= 1.8.4),
-         plotly (>= 4.7.1),
+         plotly (>= 4.8.0),
          sp (>= 1.3-1)
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 6.0.1
+RoxygenNote: 6.1.0
 Suggests: knitr (>= 1.20),
     rmarkdown (>= 1.10),
     sf (>= 0.6-3)

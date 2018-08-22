@@ -6,8 +6,8 @@
 \usage{
 n.sim.glidingSoaring.3d(n.sim = 1, multicore = FALSE, MODE, dGliding,
   dSoaring, qGliding, start = c(0, 0, 0), end = start, a0, g0,
-  error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL,
-  BG = NULL)
+  error = TRUE, smoothTransition = TRUE, glideRatio = 20,
+  DEM = NULL, BG = NULL)
 }
 \arguments{
 \item{n.sim}{number of simulations to produce}

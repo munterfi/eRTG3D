@@ -48,7 +48,7 @@ plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     p <- plotly::add_trace(p, data = origTrack[[i]][1:3], x = ~x, y = ~y, z = ~z,
                            mode = "lines+markers", type = "scatter3d", name = "Original",
                            line = list(color = "black", width = 3),
-                           marker = list(size = 2, cmin = -20, cmax = 50),
+                           marker = list(color = "black", size = 2, cmin = -20, cmax = 50),
                            opacity = 0.9, showlegend = (i==1))
   }
   if(!is.null(simTrack)){
@@ -56,7 +56,7 @@ plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
       p <- plotly::add_trace(p, data = simTrack[[i]][1:3], x = ~x, y = ~y, z = ~z,
                              mode = "lines+markers", type = "scatter3d", name = "Simulation",
                              line = list(color = "rgb(176,196,222)", width = 3),
-                             marker = list(size = 2, cmin = -20, cmax = 50),
+                             marker = list(color = "rgb(176,196,222)", size = 2, cmin = -20, cmax = 50),
                              opacity = if(i==1){0.9}else{0.7}, showlegend = (i==1))
     }
   }
@@ -349,19 +349,19 @@ plot3d.tldCube <- function(tldCube) {
                                            color = ~prob, colorscale = "Bluered", showscale = TRUE))
   }
   p <- plotly::add_trace(p, data = dfAx, x = ~x, y = ~y, z = ~z,
-                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         mode = "lines+markers", type = "scatter3d", name = "DirectionX",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0),
+                         marker = list(color = "black", size = 0),
                          opacity = 0.9, showlegend = FALSE)
   p <- plotly::add_trace(p, data = dfAy, x = ~x, y = ~y, z = ~z,
-                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         mode = "lines+markers", type = "scatter3d", name = "DirectionY",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0),
+                         marker = list(color = "black", size = 0),
                          opacity = 0.9, showlegend = FALSE)
   p <- plotly::add_trace(p, data = dfAz, x = ~x, y = ~y, z = ~z,
-                         mode = "lines+markers", type = "scatter3d", name = "Direction",
+                         mode = "lines+markers", type = "scatter3d", name = "DirectionZ",
                          line = list(color = "black", width = 3),
-                         marker = list(size = 0),
+                         marker = list(color = "black", size = 0),
                          opacity = 0.9, showlegend = FALSE)
   p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,3),
                                        ", l:", round(tldCube$lRes,3),

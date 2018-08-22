@@ -12,7 +12,7 @@ Description: The empirically informed random trajectory generator in three dimen
              between two given fix points in space. The trajectory generation is based on
              empirical distribution functions extracted from observed trajectories (training data)
              and thus reflects the geometrical movement characteristics of the mover.
-Depends: R (>= 3.5.1)
+Depends: R (>= 3.5.0)
 Imports: CircStats (>= 0.2-6),
          doParallel (>= 1.0.11),
          ggplot2 (>= 3.0.0),
@@ -30,6 +30,7 @@ Encoding: UTF-8
 LazyData: true
 RoxygenNote: 6.1.0
 Suggests: knitr (>= 1.20),
+    pander (>= 0.6.2),
     rmarkdown (>= 1.10),
     sf (>= 0.6-3)
 VignetteBuilder: knitr

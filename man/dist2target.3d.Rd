@@ -16,5 +16,5 @@ A numeric vector with the distances to target
 Calculates the distance between every point in the track and the last point (target).
 }
 \examples{
-dist2target.3d(track)
+dist2target.3d(niclas)
 }

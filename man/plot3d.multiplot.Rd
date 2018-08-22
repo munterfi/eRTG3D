@@ -24,5 +24,5 @@ then plot 1 will go in the upper left, 2 will go in the upper right, and
 3 will go all the way across the bottom.
 }
 \examples{
-plot3d.multiplot(p1, p2, p3)
+plot3d.multiplot(plot2d(niclas), plot2d(niclas), plot2d(niclas))
 }

@@ -18,5 +18,5 @@ Returns an extent object of the raster package in the 2–D case and a vector in
 Extent of track(s)
 }
 \examples{
-track.extent(track, zAxis = TRUE)
+track.extent(niclas, zAxis = TRUE)
 }

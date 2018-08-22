@@ -24,5 +24,5 @@ only supports transformations in the 2D plane, which will cause distortions
 in the third dimension.
 }
 \examples{
-transformCRS.3d(track, fromCRS="+init=epsg:4326", toCRS="+init=epsg:2056")
+transformCRS.3d(niclas, fromCRS="+init=epsg:2056", toCRS="+init=epsg:4326")
 }

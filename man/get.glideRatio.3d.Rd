@@ -17,5 +17,5 @@ Calculates the ratio between horizontal movement and vertical movement.
 The value expresses the distance covered forward movement per distance movement in sinking.
 }
 \examples{
-get.glideRatio.3d(track)
+get.glideRatio.3d(niclas)
 }

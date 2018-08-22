@@ -17,5 +17,5 @@ Returns the properties (distances, azimuth, polar angle,
 turn angle & lift angle) of a track in three dimensions.
 }
 \examples{
-track.properties.3d(track)
+track.properties.3d(niclas)
 }

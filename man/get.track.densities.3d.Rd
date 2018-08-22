@@ -37,5 +37,5 @@ which increases the probability of dead ends. In this case please check
 }
 
 \examples{
-get.track.densities.3d(track, heightDist = TRUE)
+get.track.densities.3d(niclas, heightDist = TRUE)
 }

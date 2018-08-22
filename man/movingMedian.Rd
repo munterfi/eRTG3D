@@ -23,5 +23,5 @@ The border region of the vetor is filled with a one-sided median.
 There might be border effects.
 }
 \examples{
-movingMedian(data, window = 5)
+movingMedian(sequence(1:10), window = 5)
 }

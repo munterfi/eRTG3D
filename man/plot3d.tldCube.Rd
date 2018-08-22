@@ -17,5 +17,6 @@ Creates a three dimensional scatterplot of the possibles next steps,
 based on the tldCube, which was extracted from a track.
 }
 \examples{
-plot3d.tldCube(D$tldCube)
+P <- get.track.densities.3d(niclas)
+suppressWarnings(plot3d.tldCube(P$tldCube))
 }

@@ -27,5 +27,5 @@ Plots a plotly object
 Plot track(s) with a surface of a digital elevation model in three dimensions
 }
 \examples{
-plot3d(track)
+plot3d(niclas)
 }

@@ -20,5 +20,5 @@ A the cropped digital elevation model as a raster layer.
 Crops the DEM to the extent of the track with a buffer
 }
 \examples{
-dem2track.extent(DEM, track)
+dem2track.extent(dem, niclas)
 }

@@ -17,7 +17,7 @@
 #' @export
 #'
 #' @examples
-#' voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE)
+#' voxelCount(niclas, raster::extent(dem), 100, 100, 1000, 1400, standartize = TRUE)
 voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE){
   rTem <- raster::raster(extent, res=xyRes)
   rTem[] <- 0
@@ -61,7 +61,7 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
 #' @export
 #'
 #' @examples
-#' chiMaps(stack1)
+#' chiMaps(raster::stack(dem))
 chiMaps <- function(stack1, stack2 = NULL) {
   if (is.null(stack2)){
     rStack <- raster::stack()
@@ -108,7 +108,7 @@ chiMaps <- function(stack1, stack2 = NULL) {
 #' @export
 #'
 #' @examples
-#' plotRaster(r)
+#' plotRaster(dem)
 plotRaster <- function(r, title = character(0), centerColorBar = FALSE, ncol = NULL){
   if (centerColorBar) {
     colTheme <- rasterVis::BuRdTheme()
@@ -129,7 +129,7 @@ plotRaster <- function(r, title = character(0), centerColorBar = FALSE, ncol = N
   if (class(r)[1] == "RasterStack"){
     plotList <- list()
     for (i in 1:length(r@layers)){
-      if(cellStats(r@layers[[i]], "sum") != 0) {
+      if(raster::cellStats(r@layers[[i]], "sum") != 0) {
         p <- rasterVis::levelplot(r@layers[[i]], par.settings=colTheme, interpolate = TRUE,
                                   margin=FALSE, at=colSeq,
                                   main = names(r)[i], xlab="Easting", ylab="Northing")
@@ -153,7 +153,7 @@ plotRaster <- function(r, title = character(0), centerColorBar = FALSE, ncol = N
 #' @export
 #'
 #' @examples
-#' logRasterStack(rStack)
+#' logRasterStack(raster::stack(dem))
 logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
 {
   rStack <- log(rStack)
@@ -187,7 +187,9 @@ logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
 #' @export
 #'
 #' @examples
+#' \dontrun{
 #' saveImageSlices(rstack, filename = "image")
+#' }
 saveImageSlices <- function(rStack, filename, dir = getwd(), NaVal = 0)
 {
   rStack[is.na(rStack)] <- NaVal

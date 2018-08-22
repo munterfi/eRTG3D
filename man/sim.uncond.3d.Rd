@@ -57,5 +57,5 @@ For a random initial heading a0 use:
 }
 
 \examples{
-sim.uncond.3d(n.locs, start=c(0,0,0), a0, g0, densities)
+sim.uncond.3d(10, start=c(0,0,0), a0=pi/2, g0=pi/2, densities=get.track.densities.3d(niclas))
 }

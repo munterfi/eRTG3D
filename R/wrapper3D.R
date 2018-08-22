@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @examples
-#' get.track.densities.3d(track, heightDist = TRUE)
+#' get.track.densities.3d(niclas, heightDist = TRUE)
 get.track.densities.3d <- function(track, gradientDensity = TRUE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   .is.df.xyz(track)
@@ -58,7 +58,7 @@ get.track.densities.3d <- function(track, gradientDensity = TRUE, heightDistElli
 #' @export
 #'
 #' @examples
-#' get.section.densities.3d(trackSections)
+#' get.section.densities.3d(list(niclas[1:10, ], niclas[11:nrow(niclas), ]))
 get.section.densities.3d <- function(trackSections, gradientDensity = TRUE, heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
 {
   trackSections <- lapply(X=trackSections, FUN= function(X) track.properties.3d(X)[2:nrow(X), ])
@@ -92,7 +92,7 @@ get.section.densities.3d <- function(trackSections, gradientDensity = TRUE, heig
 #' @export
 #'
 #' @examples
-#' track.split.3d(track, timeLag)
+#' track.split.3d(niclas, timeLag=rep(1, nrow(niclas)-1) + rnorm(nrow(niclas)-1, mean = 0, sd = 0.25))
 track.split.3d <- function(track, timeLag, lag = NULL, tolerance = NULL)
 {
   .is.df.xyz(track)
@@ -121,7 +121,7 @@ track.split.3d <- function(track, timeLag, lag = NULL, tolerance = NULL)
 #' @export
 #'
 #' @examples
-#' dem2track.extent(DEM, track)
+#' dem2track.extent(dem, niclas)
 dem2track.extent <- function(DEM, track, buffer=100)
 {
   .is.df.xyz(track = track)
@@ -139,7 +139,7 @@ dem2track.extent <- function(DEM, track, buffer=100)
 #' @export
 #'
 #' @examples
-#' track.extent(track, zAxis = TRUE)
+#' track.extent(niclas, zAxis = TRUE)
 track.extent <- function(track, zAxis = FALSE){
   if (!is.list(track) || !is.list(track)) stop("Track input has to be of type list or data.frame.")
   if (is.list(track) && is.data.frame(track)) {track <- list(track)}
@@ -163,13 +163,13 @@ track.extent <- function(track, zAxis = FALSE){
 #' @export
 #'
 #' @examples
-#' .is.df.xyz(track)
+#' .is.df.xyz(niclas)
 #' @noRd
 .is.df.xyz <- function(track)
 {
   if(!class(track)=="data.frame") stop("Input not of type 'data.frame'.")
   if(!any(colnames(track)[1:3]==c("x","y","z"))) stop("Colnames of first three cols not 'x, y, z'.")
-  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
+  if(any(is.na(track[, 1:3]))) stop("Track 'data.frame' contains NA values.")
 }
 
 #' Checks if the track lies inside the digital elevation model.
@@ -181,7 +181,7 @@ track.extent <- function(track, zAxis = FALSE){
 #' @export
 #'
 #' @examples
-#' .check.extent(DEM, track)
+#' .check.extent(dem, niclas)
 #' @noRd
 .check.extent <- function(DEM, track)
 {
@@ -212,7 +212,7 @@ track.extent <- function(track, zAxis = FALSE){
 #' @export
 #'
 #' @examples
-#' reproduce.track.3d(track)
+#' reproduce.track.3d(niclas)
 reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 {
   .is.df.xyz(track = track)
@@ -251,7 +251,7 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
 #' @export
 #'
 #' @examples
-#' filter.dead.ends(cerwList)
+#' filter.dead.ends(list(niclas, niclas))
 filter.dead.ends <- function(cerwList)
 {
   if(is.null(cerwList)) {warning("No track made it to the end point."); return(NULL)}
@@ -279,7 +279,7 @@ filter.dead.ends <- function(cerwList)
 #' @export
 #'
 #' @examples
-#' movingMedian(data, window = 5)
+#' movingMedian(sequence(1:10), window = 5)
 movingMedian <- function(data, window){
   if(!(window %% 2 == 0)) {window <- floor(window/2)} else{stop("Window must be an uneven number.")}
   total <- length(data)
@@ -302,7 +302,7 @@ movingMedian <- function(data, window){
 #' @export
 #'
 #' @examples
-#' turn2target.3d(track)
+#' turn2target.3d(niclas)
 turn2target.3d <- function(track) {
   .is.df.xyz(track = track)
   track <- track.properties.3d(track)
@@ -319,7 +319,7 @@ turn2target.3d <- function(track) {
 #' @export
 #'
 #' @examples
-#' lift2target.3d(track)
+#' lift2target.3d(niclas)
 lift2target.3d <- function(track) {
   .is.df.xyz(track = track)
   track <- track.properties.3d(track)
@@ -337,7 +337,7 @@ lift2target.3d <- function(track) {
 #' @export
 #'
 #' @examples
-#' dist2target.3d(track)
+#' dist2target.3d(niclas)
 dist2target.3d <- function(track) {
   .is.df.xyz(track = track)
   target <- Reduce(c, track[nrow(track), 1:3])
@@ -353,7 +353,7 @@ dist2target.3d <- function(track) {
 #' @export
 #'
 #' @examples
-#' dist3point.3d(track, point)
+#' dist2point.3d(niclas, c(0,0,0))
 dist2point.3d <- function(track, point, groundDistance = FALSE) {
   .is.df.xyz(track = track)
   if (groundDistance | length(point)==2) {
@@ -374,7 +374,7 @@ dist2point.3d <- function(track, point, groundDistance = FALSE) {
 #' @export
 #'
 #' @examples
-#' track.properties.3d(track)
+#' track.properties.3d(niclas)
 track.properties.3d <- function(track)
 {
   .is.df.xyz(track)
@@ -405,7 +405,7 @@ track.properties.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' .get.azimut(dx, dy)
+#' .get.azimut(10, 30)
 #' @noRd
 .get.azimut <- function(dx, dy)
 {
@@ -421,7 +421,7 @@ track.properties.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' .get.polar(d, dz)
+#' .get.polar(10, 50)
 #' @noRd
 .get.polar <- function(d, dz)
 {
@@ -437,7 +437,7 @@ track.properties.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' .distance.2d(dx, dy)
+#' .distance.2d(10, 30)
 #' @noRd
 .distance.2d <- function(dx, dy)
 {
@@ -454,7 +454,7 @@ track.properties.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' .distance.3d(dx, dy, dz)
+#' .distance.3d(10, 10, 10)
 #' @noRd
 .distance.3d <- function(dx, dy, dz)
 {

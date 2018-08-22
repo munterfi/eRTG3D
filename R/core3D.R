@@ -512,7 +512,6 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   return(as.data.frame(RTG))
 }
 
-
 #' Conditional Empirical Random Walks (CERW) in 3-D
 #'
 #' Creates n conditional empirical random walks, with a specific starting and ending point,

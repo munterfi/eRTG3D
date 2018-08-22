@@ -106,6 +106,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #'
 #' @examples
 #' .test2text(test, alpha)
+#' @noRd
 .test2text <- function(test, alpha)
 {
   p <- test$p.value

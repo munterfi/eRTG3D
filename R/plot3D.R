@@ -246,6 +246,7 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #'
 #' @examples
 #' plot3d.density(values)
+#' @noRd
 .plot3d.density <- function(values1, values2 = NULL, titleText=character(1), xlab = "x", ylab = "P(x)", scaleDensity = FALSE)
 {
   values1 <- na.omit(values1);

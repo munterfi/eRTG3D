@@ -16,6 +16,7 @@
 #'
 #' @examples
 #' qProb.3d.windows(sim, n.locs)
+#' @noRd
 .qProb.3d.windows <- function(sim, n.locs, maxBin = 25)
 {
   start.time <- Sys.time()
@@ -127,6 +128,7 @@
 #'
 #' @examples
 #' .n.sim.cond.3d.windows(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs)
+#' @noRd
 .n.sim.cond.3d.windows <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, DEM = NULL, BG = NULL)
 {
   start.time <- Sys.time()

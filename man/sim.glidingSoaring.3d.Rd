@@ -4,8 +4,8 @@
 \alias{sim.glidingSoaring.3d}
 \title{Simulates 'gliding & soaring' track with a given number of gliding steps}
 \usage{
-sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0, 0),
-  end = start, a0, g0, error = TRUE, smoothTransition = TRUE,
+sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0,
+  0), end = start, a0, g0, error = TRUE, smoothTransition = TRUE,
   glideRatio = 15, DEM = NULL, BG = NULL)
 }
 \arguments{

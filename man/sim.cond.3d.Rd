@@ -37,5 +37,15 @@ geometrically similar to the initial trajectory
 (extractMethod: raster overlay method can take "simple" or "bilinear")
 }
 \examples{
-sim.cond.3d(n.locs, start, end=start, a0, g0, densities, qProbs)
+niclas <- track.properties.3d(niclas)
+n.locs <- 3
+P <- get.track.densities.3d(niclas)
+f <- 1500
+start <- Reduce(c, niclas[1, 1:3])
+end <- Reduce(c, niclas[n.locs, 1:3])
+a0 <- niclas$a[1]
+g0 <- niclas$g[1]
+uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+Q <- qProb.3d(uerw, n.locs)
+sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
 }

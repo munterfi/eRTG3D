@@ -16,5 +16,5 @@ A numeric vector with the turn angles to target
 Calculates the turn angle between every point in the track and the last point (target).
 }
 \examples{
-turn2target.3d(track)
+turn2target.3d(niclas)
 }

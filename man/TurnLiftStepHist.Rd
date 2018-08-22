@@ -29,5 +29,6 @@ lift angle and step length, using the Freedman–Diaconis rule for
 estimating the number of bins.
 }
 \examples{
-turnLiftStepHist(turn, lift, step)
+niclas <- track.properties.3d(niclas)[2:nrow(niclas), ]
+turnLiftStepHist(niclas$t, niclas$l, niclas$d)
 }

@@ -27,5 +27,5 @@ Additionally the autodifferences parameter can be set to true, then the densitie
 in turn angle, lift angle and step length are visualized.
 }
 \examples{
-plot3d.densities(track)
+plot3d.densities(niclas)
 }

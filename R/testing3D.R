@@ -22,7 +22,7 @@
 #' lift angles and step lengths of the two tracks.
 #'
 #' @examples
-#' test.verification.3d(track1, track2)
+#' test.verification.3d(niclas, niclas)
 test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, test = "ks")
 {
   if (!any(test == c("ks", "ttest"))) stop("The variable 'test' must either be 'ks' or 'ttest'.")
@@ -125,13 +125,13 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #' @param returnResult logical: return tracks generated?
 #' @param plot2d logical: plot tracks on 2-D plane?
 #' @param plot3d logical: plot tracks in 3-D?
-#' @param plot3d logical: plot densities of turning angle, lift angle and step length?
+#' @param plotDensities logical: plot densities of turning angle, lift angle and step length?
 #'
 #' @return A list containing the original CRW and the simulated track (CERW).
 #' @export
 #'
 #' @examples
-#' test.eRTG3D.3d()
+#' test.eRTG.3d()
 test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = TRUE, plotDensities = TRUE)
 {
   message("  |*** Testing eRTG3D ***")
@@ -171,7 +171,7 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
 #' @export
 #'
 #' @examples
-#' sim.crw.3d(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
+#' sim.crw.3d(nStep=10, rTurn=0.9, rLift=0.9, meanStep=1, start = c(0,0,0))
 sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
 {
   # correlated angles and distance

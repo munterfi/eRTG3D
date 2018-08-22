@@ -32,5 +32,5 @@ A ggplot2 object.
 Plot function to plot the 3-D tracks in 2-D plane
 }
 \examples{
-plot3d(track)
+plot2d(niclas)
 }

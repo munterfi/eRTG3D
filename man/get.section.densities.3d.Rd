@@ -29,5 +29,5 @@ of the turning angles, lift angles and step lengths with a lag of 1 to maintain
 minimal level of autocorrelation in each of the terms.
 }
 \examples{
-get.section.densities.3d(trackSections)
+get.section.densities.3d(list(niclas[1:10, ], niclas[11:nrow(niclas), ]))
 }

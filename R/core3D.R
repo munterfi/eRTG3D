@@ -23,7 +23,10 @@
 #' @export
 #'
 #' @examples
-#' get.densities.3d(track, heightDist = TRUE)
+#' niclas <- track.properties.3d(niclas)[2:nrow(niclas),]
+#' P <- get.densities.3d(turnAngle=niclas$t, liftAngle=niclas$l, stepLength=niclas$d,
+#' deltaLift=diff(niclas$t), deltaTurn=diff(niclas$l), deltaStep=diff(niclas$d),
+#' gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
 get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
 {
   # probability distribution cube for turning angle, lift angle and step length
@@ -57,7 +60,8 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @export
 #'
 #' @examples
-#' turnLiftStepHist(turn, lift, step)
+#' niclas <- track.properties.3d(niclas)[2:nrow(niclas), ]
+#' turnLiftStepHist(niclas$t, niclas$l, niclas$d)
 turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
 {
   # define based on df rule the number of bins
@@ -177,7 +181,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @export
 #'
 #' @examples
-#' sim.uncond.3d(n.locs, start=c(0,0,0), a0, g0, densities)
+#' sim.uncond.3d(10, start=c(0,0,0), a0=pi/2, g0=pi/2, densities=get.track.densities.3d(niclas))
 sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRUE)
 {
   # progress bar and time
@@ -269,7 +273,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #' @export
 #'
 #' @examples
-#' qProb.3d(sim, n.locs)
+#' qProb.3d(niclas, 3)
 qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
 {
   if (multicore) {
@@ -333,7 +337,17 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
 #' @export
 #'
 #' @examples
-#' sim.cond.3d(n.locs, start, end=start, a0, g0, densities, qProbs)
+#' niclas <- track.properties.3d(niclas)
+#' n.locs <- 3
+#' P <- get.track.densities.3d(niclas)
+#' f <- 1500
+#' start <- Reduce(c, niclas[1, 1:3])
+#' end <- Reduce(c, niclas[n.locs, 1:3])
+#' a0 <- niclas$a[1]
+#' g0 <- niclas$g[1]
+#' uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+#' Q <- qProb.3d(uerw, n.locs)
+#' sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
 sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, DEM = NULL, BG = NULL)
 {
   start.time <- Sys.time()
@@ -535,7 +549,17 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' @export
 #'
 #' @examples
-#' n.sim.cond.3d(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs)
+#' niclas <- track.properties.3d(niclas)
+#' n.locs <- 3
+#' P <- get.track.densities.3d(niclas)
+#' f <- 1500
+#' start <- Reduce(c, niclas[1, 1:3])
+#' end <- Reduce(c, niclas[n.locs, 1:3])
+#' a0 <- niclas$a[1]
+#' g0 <- niclas$g[1]
+#' uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+#' Q <- qProb.3d(uerw, n.locs)
+#' n.sim.cond.3d(n.sim=2, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
 n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, multicore = FALSE, DEM = NULL, BG = NULL)
 {
   start.time <- Sys.time()

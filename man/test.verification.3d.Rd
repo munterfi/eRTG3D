@@ -36,5 +36,5 @@ By setting \code{test = "ks"} a two-sample Kolmogorov-Smirnov test is carried ou
 lift angles and step lengths of the two tracks.
 }
 \examples{
-test.verification.3d(track1, track2)
+test.verification.3d(niclas, niclas)
 }

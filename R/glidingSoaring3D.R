@@ -9,7 +9,7 @@
 #' @export
 #'
 #' @examples
-#' get.glideRatio.3d(track)
+#' get.glideRatio.3d(niclas)
 get.glideRatio.3d <- function(track) {
   start <- track[2, 1:3]; end <- track[nrow(track), 1:3]
   return(-1*(sqrt((end[1]-start[1])^2+(end[2]-start[2])^2)/as.numeric(end[3]-start[3])))
@@ -44,7 +44,9 @@ get.glideRatio.3d <- function(track) {
 #' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
+#' \dontrun{
 #' sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
+#' }
 
 sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
                                   error = TRUE, smoothTransition = TRUE, glideRatio = 15, DEM = NULL, BG = NULL)
@@ -416,7 +418,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
+#' \dontrun{
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
+#' }
 n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
                                     error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL)
 {

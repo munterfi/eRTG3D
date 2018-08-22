@@ -16,5 +16,5 @@ A list that is only containing valid tracks.
 Function to filter out tracks that have found a dead end
 }
 \examples{
-filter.dead.ends(cerwList)
+filter.dead.ends(list(niclas, niclas))
 }

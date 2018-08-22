@@ -27,5 +27,5 @@ quantified is number of total segments less than one
 (the last step is defined by the target itself).
 }
 \examples{
-qProb.3d(sim, n.locs)
+qProb.3d(niclas, 3)
 }

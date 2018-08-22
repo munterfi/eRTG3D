@@ -12,7 +12,7 @@
 #' @export
 #'
 #' @examples
-#' plot3d(track)
+#' plot3d(niclas)
 plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL, padding = 0.1, timesHeight = 10) {
   if (!is.list(origTrack) || (!is.list(simTrack) && !is.null(simTrack))) stop("Track input has to be of type list or data.frame.")
   if (is.list(origTrack) && is.data.frame(origTrack)) {origTrack <- list(origTrack)}
@@ -68,7 +68,7 @@ plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     DEM <- raster::as.matrix(DEM)
     p <- plotly::add_surface(p,
                              x = seq(minX, maxX, length.out = ncol(DEM)), y = seq(maxY, minY, length.out = nrow(DEM)),
-                             z = DEM, type = "surface", opacity=1, colorscale=list(c(0,1,2,3,4,5),terrain.colors(6)),
+                             z = DEM, type = "surface", opacity=1, colorscale=list(c(0,1,2,3,4,5),grDevices::terrain.colors(6)),
                              reversescale = TRUE, colorbar=list(title='DEM'))
     minDEM <- min(DEM, na.rm = TRUE)
     axz <- list(title = 'z', autoscale = TRUE, range = c(minDEM, max(maxZ, ((rMaxZ-rMinZ)+minDEM))))
@@ -96,7 +96,7 @@ plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 #' @export
 #'
 #' @examples
-#' plot3d(track)
+#' plot2d(niclas)
 plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL, BG = NULL, padding = 0.1, alpha = 0.7, resolution = 500)
 {
   if (!is.list(origTrack) || (!is.list(simTrack) && !is.null(simTrack))) stop("Track input has to be of type list or data.frame.")
@@ -139,7 +139,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     colnames(ddf) <- c("X","Y","DEM")
     p <- p +
       ggplot2::geom_raster(data=ddf, ggplot2::aes(X,Y,fill=DEM), interpolate=TRUE) +
-      ggplot2::scale_fill_gradientn(name="Altitude", colours = terrain.colors(4, alpha = 1)) +
+      ggplot2::scale_fill_gradientn(name="Altitude", colours = grDevices::terrain.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar()) +
       ggplot2::geom_tile(data=hdf, ggplot2::aes(X,Y,alpha=Hillshade), fill = "grey20") +
       ggplot2::scale_alpha(range = c(0, 0.6))
@@ -157,7 +157,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     colnames(BG) <- c("X","Y","BG")
     p <- p +
       ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
-      ggplot2::scale_fill_gradientn(name="Uplift", colours = heat.colors(4, alpha = 1)) +
+      ggplot2::scale_fill_gradientn(name="Uplift", colours = grDevices::heat.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar())
   }
   # prepare tracks and add to plot
@@ -201,7 +201,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 #' @export
 #'
 #' @examples
-#' plot3d.densities(track)
+#' plot3d.densities(niclas)
 plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, scaleDensities = FALSE)
 {
   if (!is.list(track1) || !is.list(track1)) stop("Track input has to be of type list or data.frame.")
@@ -245,7 +245,7 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #' @export
 #'
 #' @examples
-#' plot3d.density(values)
+#' .plot3d.density(niclas$x)
 #' @noRd
 .plot3d.density <- function(values1, values2 = NULL, titleText=character(1), xlab = "x", ylab = "P(x)", scaleDensity = FALSE)
 {
@@ -282,7 +282,7 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #' @export
 #'
 #' @examples
-#' plot3d.multiplot(p1, p2, p3)
+#' plot3d.multiplot(plot2d(niclas), plot2d(niclas), plot2d(niclas))
 plot3d.multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL)
 {
   # make a list from the ... arguments and plotlist
@@ -323,7 +323,8 @@ plot3d.multiplot <- function(..., plotlist=NULL, cols=1, layout=NULL)
 #' @export
 #'
 #' @examples
-#' plot3d.tldCube(D$tldCube)
+#' P <- get.track.densities.3d(niclas)
+#' suppressWarnings(plot3d.tldCube(P$tldCube))
 plot3d.tldCube <- function(tldCube) {
   if(!all(names(tldCube) == c("values", "tRes", "lRes", "dRes"))) stop("Input must be a tldCube, the ouptut from 'turnLiftStepHist()' and 'get.densities.3d()'.")
   # get coordinates of the tldCube

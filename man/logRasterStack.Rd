@@ -20,5 +20,5 @@ A rasterStack in logarithmic scale
 Avoids the problem of -Inf occuring for log(0).
 }
 \examples{
-logRasterStack(rStack)
+logRasterStack(raster::stack(dem))
 }

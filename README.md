@@ -8,7 +8,7 @@ between two given fix points. The trajectory generation is based on
 empirical distribution functions extracted from observed trajectories (training data)
 and thus reflects the geometrical movement characteristics of the mover.
 
-The eRTG3D algorithm was developed and implemented as an R package within the scope of a master's thesis (Unterfinger, 2018) at the Department of Geography, University of Zurich. The development startet from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
+The eRTG3D algorithm was developed and implemented as an R package within the scope of a master's thesis (Unterfinger, [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)) at the Department of Geography, University of Zurich. The development startet from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
 
 **Functionality** - The **eRTG3D** package contains functions to:
 
@@ -21,12 +21,12 @@ The eRTG3D algorithm was developed and implemented as an R package within the sc
 * simulate conditional **gliding and soaring behavior** of birds between two given points
 * **statistically test** the simulated tracks against the original input
 * **visualize** tracks, simulations and distributions in 3-D and 2-D
-* extract **3-D Utilization Distributions (UDs)** from observed or simulated tracking data by means of voxel counting
+* conduct a basic **point cloud analysis**; extract **3-D Utilization Distributions (UDs)** from observed or simulated tracking data by means of voxel counting
 * project 3-D tracking data into different **Coordinate Reference Systems (CRSs)**
 * export data to **sf package objects**; 'sf, data.frames'
 * manipulate **extent of raster layers**
 
-## Installing
+## Installation
 **Prerequisites** - Software needed:
 
 * [R](https://www.r-project.org/) - R is a free software environment for statistical computing and graphics.

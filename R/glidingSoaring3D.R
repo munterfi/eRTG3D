@@ -65,11 +65,11 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
   n.locs <- length(qGliding) + 1
   # progress bar and time
   message(paste("  |Simulate 'gliding & soaring' with ", n.locs , " gliding steps", sep = ""))
-  pb <- txtProgressBar(min = 0, max = n.locs, style = 3)
+  pb <- utils::txtProgressBar(min = 0, max = n.locs, style = 3)
   ui <- floor(n.locs/20)+1
   # replace the probability distribution for step length 1 by the one from
   # the qProbs since that one relies on more samples derived from sim
-  dList[[1]][[1]] <- tail(qGliding,1)[[1]]
+  dList[[1]][[1]] <- utils::tail(qGliding,1)[[1]]
   # MODE: 1 = gliding, 2 = soaring, extract it.
   modeInd <- matrix(0, n.locs * 5, 2)
   m <- raster::extract(MODE, cbind(start[1], start[2]))
@@ -92,9 +92,9 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
   tShift <- lShift <- dShift <- matrix(0, n.locs * 25, 2)
   if (error) {
     for (j in 1:2){
-      tShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$tRes / 2, dList[[j]]$tldCube$tRes / 2)
-      lShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$lRes / 2, dList[[j]]$tldCube$lRes / 2)
-      dShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$dRes / 2, dList[[j]]$tldCube$dRes / 2)
+      tShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$tRes / 2, dList[[j]]$tldCube$tRes / 2)
+      lShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$lRes / 2, dList[[j]]$tldCube$lRes / 2)
+      dShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$dRes / 2, dList[[j]]$tldCube$dRes / 2)
     }
   }
   # start creating the track step for step
@@ -121,7 +121,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       rownames(RTG) <- c()
       colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
       # close progress bar
-      setTxtProgressBar(pb, sum(modeInd[ ,1])+1)
+      utils::setTxtProgressBar(pb, sum(modeInd[ ,1])+1)
       close(pb)
       message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
       return(as.data.frame(RTG))
@@ -144,7 +144,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
         modeInd[i, m] <- 1
         # write on console
         cat("\r  |Mode:", m, "\r")
-        flush.console()
+        utils::flush.console()
         # get coordinates of the tldCube
         ts <- dList[[m]]$tldCube$values$turn
         ls <- dList[[m]]$tldCube$values$lift
@@ -223,7 +223,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
           # increase counter
           i <- i + 1
           # update progress bar
-          #if ((sum(modeInd[ ,1]) %% ui) == 0) {setTxtProgressBar(pb, sum(modeInd[ ,1]))}
+          #if ((sum(modeInd[ ,1]) %% ui) == 0) {utils::setTxtProgressBar(pb, sum(modeInd[ ,1]))}
         }
       }
     }
@@ -233,7 +233,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       modeInd[i, m] <- 1
       # write on console
       cat("\r  |Mode:", m, "\r")
-      flush.console()
+      utils::flush.console()
       # get coordinates of the tldCube
       ts <- dList[[m]]$tldCube$values$turn
       ls <- dList[[m]]$tldCube$values$lift
@@ -376,7 +376,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
         # increase counter
         i <- i + 1
         # update progress bar
-        if ((sum(modeInd[ ,1]) %% ui) == 0) {setTxtProgressBar(pb, sum(modeInd[ ,1]))}
+        if ((sum(modeInd[ ,1]) %% ui) == 0) {utils::setTxtProgressBar(pb, sum(modeInd[ ,1]))}
       }
     }
   }

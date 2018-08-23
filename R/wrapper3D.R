@@ -101,7 +101,7 @@ track.split.3d <- function(track, timeLag, lag = NULL, tolerance = NULL)
     m <- mean(timeLag)
   } else {m <- lag}
   if (is.null(tolerance)) {
-    tolerance <- 0.5 * sd(timeLag)
+    tolerance <- 0.5 * stats::sd(timeLag)
   }
   splitRows <- which(abs(m-timeLag) > tolerance)
   trackSections <- split(track, cumsum(1:nrow(track) %in% (splitRows+2))) # + 1 if the cut should be one step before
@@ -212,7 +212,7 @@ track.extent <- function(track, zAxis = FALSE){
 #' @export
 #'
 #' @examples
-#' reproduce.track.3d(niclas)
+#' reproduce.track.3d(niclas[1:10, ])
 reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 {
   .is.df.xyz(track = track)
@@ -285,10 +285,10 @@ movingMedian <- function(data, window){
   total <- length(data)
   result <- vector(length = total)
   for(i in (window+1):(total-window)){
-    result[i] <- median(data[(i-window):(i+window)])
+    result[i] <- stats::median(data[(i-window):(i+window)])
   }
-  result[1:window] <- median(data[1:window])
-  result[(total-window):total] <- median(data[(total-window):total])
+  result[1:window] <- stats::median(data[1:window])
+  result[(total-window):total] <- stats::median(data[(total-window):total])
   return(result)
 }
 

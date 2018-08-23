@@ -32,14 +32,14 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
   # probability distribution cube for turning angle, lift angle and step length
   cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength, maxBin = maxBin)
   # approximate the distribution of the difference in turning angle with lag 1
-  autoT <- approxfun(density.default(deltaTurn))
+  autoT <- stats::approxfun(stats::density.default(deltaTurn))
   # approximate the distribution of the difference in lift angle with lag 1
-  autoL <- approxfun(density.default(deltaLift))
+  autoL <- stats::approxfun(stats::density.default(deltaLift))
   # approximate the distribution of the difference in step length with lag 1
-  autoD <- approxfun(density.default(deltaStep))
-  if (!is.null(gradientAngle)) {gDens <- approxfun(density.default(gradientAngle[gradientAngle > 0 & gradientAngle < pi]))} else {gDens <- function(x){return(as.numeric(x > 0 & x < pi))}}
-  if (!is.null(heightEllipsoid)) {hDistEllipsoid <- approxfun(density.default(heightEllipsoid))} else {hDistEllipsoid <- function(x){1}}
-  if (!is.null(heightTopo)) {hDistTopo <- approxfun(density.default(heightTopo))} else {hDistTopo <- function(x){1}}
+  autoD <- stats::approxfun(stats::density.default(deltaStep))
+  if (!is.null(gradientAngle)) {gDens <- stats::approxfun(stats::density.default(gradientAngle[gradientAngle > 0 & gradientAngle < pi]))} else {gDens <- function(x){return(as.numeric(x > 0 & x < pi))}}
+  if (!is.null(heightEllipsoid)) {hDistEllipsoid <- stats::approxfun(stats::density.default(heightEllipsoid))} else {hDistEllipsoid <- function(x){1}}
+  if (!is.null(heightTopo)) {hDistTopo <- stats::approxfun(stats::density.default(heightTopo))} else {hDistTopo <- function(x){1}}
   return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, gDens = gDens, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
 }
 
@@ -112,7 +112,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   nb <- as.integer(breaks + 1)
   dx <- diff(rx <- range(x, na.rm = TRUE))
   breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
-  res <- median(diff(breaks))
+  res <- stats::median(diff(breaks))
   breaks[c(1L, nb)] <- c(rx[1L] - dx/1000, rx[2L] +
                            dx/1000)
   code <- .bincode(x, breaks, right=TRUE, include.lowest=FALSE)
@@ -137,7 +137,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @noRd
 .fd.bw <- function(x)
 {
-  2 * IQR(x) / (length(x) ^ (1/3))
+  2 * stats::IQR(x) / (length(x) ^ (1/3))
 }
 
 #' Unconditional Empirical Random Walk (UERW) in 3-D
@@ -187,7 +187,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   # progress bar and time
   message(paste("  |Simulate UERW with ", n.locs, " steps", sep = ""))
   start.time <- Sys.time()
-  pb <- txtProgressBar(min = 0, max = n.locs, style = 3)
+  pb <- utils::txtProgressBar(min = 0, max = n.locs, style = 3)
   ui <- floor(n.locs/20)+1
   # get coordinates of the tldCube
   ts <- densities$tldCube$values$turn
@@ -202,9 +202,9 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   RTG[1,] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE (uniform distributed)
   if (error) {
-    tShift <- runif(n.locs, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
-    lShift <- runif(n.locs, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
-    dShift <- runif(n.locs, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
+    tShift <- stats::runif(n.locs, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
+    lShift <- stats::runif(n.locs, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
+    dShift <- stats::runif(n.locs, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
   } else {
     tShift <- lShift <- dShift <- numeric(n.locs)
   }
@@ -244,12 +244,12 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     # "x" "y" "z" "a" "g" "t" "l" "d" "p"
     RTG[i,] <- c(x, y, z, a, g, t, l, d, p)
     # update progress bar
-    if ((i %% ui) == 0) {setTxtProgressBar(pb, i)}
+    if ((i %% ui) == 0) {utils::setTxtProgressBar(pb, i)}
   }
   rownames(RTG) <- c()
   colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
   # close progress bar
-  setTxtProgressBar(pb, n.locs)
+  utils::setTxtProgressBar(pb, n.locs)
   close(pb)
   message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
   return(as.data.frame(RTG))
@@ -286,11 +286,11 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
     # steps minus 2
     nSteps <- n.locs - 2
     # progress bar
-    pb <- txtProgressBar(min = 0, max = nSteps, style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = nSteps, style = 3)
     # lift angles to target as a function of number of steps
     cubeList <- lapply(1:nSteps, function(x) {
       # Update progressbar
-      setTxtProgressBar(pb, x)
+      utils::setTxtProgressBar(pb, x)
       # turn angle, lift angles and distance to target as a function of number of steps
       t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
       l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
@@ -300,16 +300,16 @@ qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
       # of the turning angle to target, the lift angle to target and the distance to target
       # for the relevant number of steps. This is mainly to reduce redundancy mainly
       # introduced by the sliding window approach adopted in estimating the relationships
-      k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+      k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+               utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
       t <- t[seq(1, length(t), by = k)]
       l <- l[seq(1, length(l), by = k)]
       d <- d[seq(1, length(d), by = k)]
       # get stepTurnLiftHistograms
       return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
     })
-    setTxtProgressBar(pb, nSteps)
+    utils::setTxtProgressBar(pb, nSteps)
     close(pb)
     message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
     return(rev(cubeList))
@@ -359,11 +359,11 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   }
   # progress bar and time
   message(paste("  |Simulate CERW with ", n.locs, " steps", sep = ""))
-  pb <- txtProgressBar(min = 0, max = n.locs-2, style = 3)
+  pb <- utils::txtProgressBar(min = 0, max = n.locs-2, style = 3)
   ui <- floor(n.locs/20)+1
   # replace the probability distribution for step length 1 by the one from
   # the qProbs since that one relies on more samples derived from sim
-  densities[[1]] <- tail(qProbs,1)[[1]]
+  densities[[1]] <- utils::tail(qProbs,1)[[1]]
   # get the coordinates of the step length and turning angle bin centres
   start <- Reduce(c, start); names(start) <- c("x", "y", "z")
   end <- Reduce(c, end); names(end) <- c("x", "y", "z")
@@ -384,9 +384,9 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   RTG[1, ] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE
   if (error) {
-    tShift <- runif(n.locs - 2, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
-    lShift <- runif(n.locs - 2, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
-    dShift <- runif(n.locs - 2, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
+    tShift <- stats::runif(n.locs - 2, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
+    lShift <- stats::runif(n.locs - 2, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
+    dShift <- stats::runif(n.locs - 2, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
   } else {
     tShift <- lShift <- dShift <- numeric(n.locs - 2)
   }
@@ -500,7 +500,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
       # "1" "2" "3" "4" "5" "6" "7" "8" "9"
       RTG[i + 1, ] <- c(x1[rP], y1[rP], z1[rP], a[rP], g[rP], ts[rP], ls[rP], ds[rP], Probs[rP])
       # update progress bar
-      if ((i %% ui) == 0) {setTxtProgressBar(pb, i)}
+      if ((i %% ui) == 0) {utils::setTxtProgressBar(pb, i)}
     }
   }
   # the track is forced to target location and the appropriate distance is added
@@ -520,7 +520,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   rownames(RTG) <- c()
   colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
   # close progress bar
-  setTxtProgressBar(pb, i)
+  utils::setTxtProgressBar(pb, i)
   close(pb)
   message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
   return(as.data.frame(RTG))

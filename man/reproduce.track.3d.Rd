@@ -39,5 +39,5 @@ Simulates n tracks with the geometrical properties of the original track,
 between the same start and end point.
 }
 \examples{
-reproduce.track.3d(niclas)
+reproduce.track.3d(niclas[1:10, ])
 }

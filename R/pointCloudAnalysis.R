@@ -24,7 +24,7 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
   rStack <- raster::stack()
   for (i in 1:round((zMax-zMin)/zRes)) {
     cat('\r', paste("  |Counting points in Voxels for height: ", zMin+(i-1)*zRes, "m - ", (zMin+i*zRes), "m ...", sep = ""))
-    flush.console()
+    utils::flush.console()
     p <- points[points[,3] > (zMin+(i-1)*zRes) & points[,3] < (zMin+i*zRes), ]
     if (!nrow(p) == 0) {
       p <- sp::SpatialPoints(coords = cbind(p[,1], p[,2]))
@@ -44,7 +44,7 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
     }
   }
   cat('\r', "  |Done.                                                             \n")
-  flush.console()
+  utils::flush.console()
   return(rStack)
 }
 
@@ -68,7 +68,7 @@ chiMaps <- function(stack1, stack2 = NULL) {
     expMean <- mean(raster::values(stack1))
     for (i in 1:length(stack1@layers)){
       cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
-      flush.console()
+      utils::flush.console()
       r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
       rChi <- (r1 - expMean) / sqrt(expMean)
       rChi[is.na(rChi)] <- 0
@@ -76,14 +76,14 @@ chiMaps <- function(stack1, stack2 = NULL) {
       names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
     }
     cat('\r', "  |Done.                                                             \n")
-    flush.console()
+    utils::flush.console()
     return(rStack)
   } else {
     if(length(stack1@layers) != length(stack2@layers)) stop("Stack need to have the same number of rasters")
     rStack <- raster::stack()
     for (i in 1:length(stack1@layers)){
       cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
-      flush.console()
+      utils::flush.console()
       r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
       r2 <- stack2@layers[[i]]; r2[r2 == 0] <- NA
       rChi <- (r1 - r2) / sqrt(r2)
@@ -92,7 +92,7 @@ chiMaps <- function(stack1, stack2 = NULL) {
       names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
     }
     cat('\r', "  |Done.                                                             \n")
-    flush.console()
+    utils::flush.console()
     return(rStack)
   }
 }

@@ -66,7 +66,7 @@
     nb <- as.integer(breaks + 1)
     dx <- diff(rx <- range(x, na.rm = TRUE))
     breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
-    res <- median(diff(breaks))
+    res <- stats::median(diff(breaks))
     breaks[c(1L, nb)] <- c(rx[1L] - dx/1000, rx[2L] +
                              dx/1000)
     code <- .bincode(x, breaks, right=TRUE, include.lowest=FALSE)
@@ -75,7 +75,7 @@
     if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}
     else {list(cuts = factor(midpoints[code], midpoints), res = res)}
   }
-  fd.bw <- function(x){2 * IQR(x) / (length(x) ^ (1/3))}
+  fd.bw <- function(x){2 * stats::IQR(x) / (length(x) ^ (1/3))}
   # steps minus 2
   nSteps <- n.locs - 2
   sim <- track.properties.3d(sim)
@@ -90,9 +90,9 @@
     # of the turning angle to target, the lift angle to target and the distance to target
     # for the relevant number of steps. This is mainly to reduce redundancy mainly
     # introduced by the sliding window approach adopted in estimating the relationships
-    k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+    k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
     t <- t[seq(1, length(t), by = k)]
     l <- l[seq(1, length(l), by = k)]
     d <- d[seq(1, length(d), by = k)]
@@ -166,7 +166,7 @@
     ui <- floor(n.locs/20)+1
     # replace the probability distribution for step length 1 by the one from
     # the qProbs since that one relies on more samples derived from sim
-    densities[[1]] <- tail(qProbs,1)[[1]]
+    densities[[1]] <- utils::tail(qProbs,1)[[1]]
     # get the coordinates of the step length and turning angle bin centres
     start <- Reduce(c, start); names(start) <- c("x", "y", "z")
     end <- Reduce(c, end); names(end) <- c("x", "y", "z")
@@ -187,9 +187,9 @@
     RTG[1, ] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
     # Create random noise if error is TRUE
     if (error) {
-      tShift <- runif(n.locs - 2, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
-      lShift <- runif(n.locs - 2, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
-      dShift <- runif(n.locs - 2, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
+      tShift <- stats::runif(n.locs - 2, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
+      lShift <- stats::runif(n.locs - 2, -densities$tldCube$lRes / 2, densities$tldCube$lRes / 2)
+      dShift <- stats::runif(n.locs - 2, -densities$tldCube$dRes / 2, densities$tldCube$dRes / 2)
     } else {
       tShift <- lShift <- dShift <- numeric(n.locs - 2)
     }
@@ -402,11 +402,11 @@
     n.locs <- length(qGliding) + 1
     # progress bar and time
     message(paste("  |Simulate 'gliding & soaring' with ", n.locs , " gliding steps", sep = ""))
-    pb <- txtProgressBar(min = 0, max = n.locs, style = 3)
+    pb <- utils::txtProgressBar(min = 0, max = n.locs, style = 3)
     ui <- floor(n.locs/20)+1
     # replace the probability distribution for step length 1 by the one from
     # the qProbs since that one relies on more samples derived from sim
-    dList[[1]][[1]] <- tail(qGliding,1)[[1]]
+    dList[[1]][[1]] <- utils::tail(qGliding,1)[[1]]
     # MODE: 1 = gliding, 2 = soaring, extract it.
     modeInd <- matrix(0, n.locs * 5, 2)
     m <- raster::extract(MODE, cbind(start[1], start[2]))
@@ -429,9 +429,9 @@
     tShift <- lShift <- dShift <- matrix(0, n.locs * 25, 2)
     if (error) {
       for (j in 1:2){
-        tShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$tRes / 2, dList[[j]]$tldCube$tRes / 2)
-        lShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$lRes / 2, dList[[j]]$tldCube$lRes / 2)
-        dShift[, j] <- runif(n.locs * 25, -dList[[j]]$tldCube$dRes / 2, dList[[j]]$tldCube$dRes / 2)
+        tShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$tRes / 2, dList[[j]]$tldCube$tRes / 2)
+        lShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$lRes / 2, dList[[j]]$tldCube$lRes / 2)
+        dShift[, j] <- stats::runif(n.locs * 25, -dList[[j]]$tldCube$dRes / 2, dList[[j]]$tldCube$dRes / 2)
       }
     }
     # start creating the track step for step
@@ -458,7 +458,7 @@
         rownames(RTG) <- c()
         colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
         # close progress bar
-        setTxtProgressBar(pb, sum(modeInd[ ,1])+1)
+        utils::setTxtProgressBar(pb, sum(modeInd[ ,1])+1)
         close(pb)
         message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
         return(as.data.frame(RTG))
@@ -481,7 +481,7 @@
           modeInd[i, m] <- 1
           # write on console
           cat("\r  |Mode:", m, "\r")
-          flush.console()
+          utils::flush.console()
           # get coordinates of the tldCube
           ts <- dList[[m]]$tldCube$values$turn
           ls <- dList[[m]]$tldCube$values$lift
@@ -560,7 +560,7 @@
             # increase counter
             i <- i + 1
             # update progress bar
-            #if ((sum(modeInd[ ,1]) %% ui) == 0) {setTxtProgressBar(pb, sum(modeInd[ ,1]))}
+            #if ((sum(modeInd[ ,1]) %% ui) == 0) {utils::setTxtProgressBar(pb, sum(modeInd[ ,1]))}
           }
         }
       }
@@ -570,7 +570,7 @@
         modeInd[i, m] <- 1
         # write on console
         cat("\r  |Mode:", m, "\r")
-        flush.console()
+        utils::flush.console()
         # get coordinates of the tldCube
         ts <- dList[[m]]$tldCube$values$turn
         ls <- dList[[m]]$tldCube$values$lift
@@ -713,7 +713,7 @@
           # increase counter
           i <- i + 1
           # update progress bar
-          if ((sum(modeInd[ ,1]) %% ui) == 0) {setTxtProgressBar(pb, sum(modeInd[ ,1]))}
+          if ((sum(modeInd[ ,1]) %% ui) == 0) {utils::setTxtProgressBar(pb, sum(modeInd[ ,1]))}
         }
       }
     }

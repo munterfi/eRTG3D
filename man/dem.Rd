@@ -10,6 +10,6 @@ The \code{dem} data is a \code{RasterLayer} and has a resolution of 90 meters. I
 of the Swiss midlands. The complete dataset can be downloaded directly from www.cgiar-csi.org.
 }
 \references{
-\url{http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1}
+\url{http://www.cgiar-csi.org/data/}
 }
 \keyword{data}

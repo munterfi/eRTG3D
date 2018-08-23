@@ -7,7 +7,7 @@
 #'
 #' @name dem
 #' @docType data
-#' @references \url{http://www.cgiar-csi.org/data/srtm-90m-digital-elevation-database-v4-1}
+#' @references \url{http://www.cgiar-csi.org/data/}
 #' @keywords data
 NULL
 

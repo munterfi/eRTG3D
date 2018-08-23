@@ -22,8 +22,8 @@ knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 options(knitr.table.format = "html")
 
 library(eRTG3D)
-set.seed(123)
-cerwList <- reproduce.track.3d(n.sim = 100, multicore=FALSE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 25, gradientDensity = TRUE)
+set.seed(1234)
+cerwList <- reproduce.track.3d(n.sim = 15, multicore=FALSE, niclas, DEM = dem, BG = (dem<650), filterDeadEnds = TRUE, maxBin = 25, gradientDensity = TRUE)
 cerw <- cerwList[[1]]
 ```
 

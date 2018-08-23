@@ -36,9 +36,9 @@
     # of the turning angle to target, the lift angle to target and the distance to target
     # for the relevant number of steps. This is mainly to reduce redundancy mainly
     # introduced by the sliding window approach adopted in estimating the relationships
-    k <- max(head(which(acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             head(which(acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             head(which(acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+    k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
     t <- t[seq(1, length(t), by = k)]
     l <- l[seq(1, length(l), by = k)]
     d <- d[seq(1, length(d), by = k)]

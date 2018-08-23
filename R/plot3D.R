@@ -249,9 +249,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
 #' @noRd
 .plot3d.density <- function(values1, values2 = NULL, titleText=character(1), xlab = "x", ylab = "P(x)", scaleDensity = FALSE)
 {
-  values1 <- na.omit(values1);
+  values1 <- stats::na.omit(values1);
   if(!is.null(values2)){
-    values2 <- na.omit(values2)
+    values2 <- stats::na.omit(values2)
     dat <- data.frame(values = c(values1, values2),
                       PDF = c(rep("Observed", times = length(values1)),
                                 rep("Simulated", times = length(values2))))

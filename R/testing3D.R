@@ -47,14 +47,14 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
     message("  |H0: Probability distributions do not differ significantly")
     message("  |H1: Probability distributions differ significantly")
     # turn
-    turnT <- suppressWarnings(ks.test(t1, t2, alternative = "two.sided"))
-    diffTurnT <- suppressWarnings(ks.test(diffT1, diffT2, alternative = "two.sided"))
+    turnT <- suppressWarnings(stats::ks.test(t1, t2, alternative = "two.sided"))
+    diffTurnT <- suppressWarnings(stats::ks.test(diffT1, diffT2, alternative = "two.sided"))
     # lift
-    liftT <- suppressWarnings(ks.test(l1, l2, alternative = "two.sided"))
-    diffLiftT <- suppressWarnings(ks.test(diffL1, diffL2, alternative = "two.sided"))
+    liftT <- suppressWarnings(stats::ks.test(l1, l2, alternative = "two.sided"))
+    diffLiftT <- suppressWarnings(stats::ks.test(diffL1, diffL2, alternative = "two.sided"))
     # step
-    stepT <- suppressWarnings(ks.test(d1, d2, alternative = "two.sided"))
-    diffStepT <- suppressWarnings(ks.test(diffD1, diffD2, alternative = "two.sided"))
+    stepT <- suppressWarnings(stats::ks.test(d1, d2, alternative = "two.sided"))
+    diffStepT <- suppressWarnings(stats::ks.test(diffD1, diffD2, alternative = "two.sided"))
     # print results
     message(paste("  |Turn angle  - ", .test2text(turnT, alpha), ", autodifferences - ", .test2text(diffTurnT, alpha), sep=""))
     message(paste("  |Lift angle  - ", .test2text(liftT, alpha), ", autodifferences - ", .test2text(diffLiftT, alpha), sep=""))
@@ -75,11 +75,11 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
     message("  |H1: Difference between tracks differs significantly from 0")
     nSample <- min(nrow(track1), nrow(track2))
     # turn
-    turnT <- suppressWarnings(t.test(diffT <- (sample(t1, nSample)-sample(t2, nSample)), mu = 0, alternative = "two.sided"))
+    turnT <- suppressWarnings(stats::t.test(diffT <- (sample(t1, nSample)-sample(t2, nSample)), mu = 0, alternative = "two.sided"))
     # lift
-    liftT <- suppressWarnings(t.test(diffL <- (sample(l1, nSample)-sample(l2, nSample)), mu = 0, alternative = "two.sided"))
+    liftT <- suppressWarnings(stats::t.test(diffL <- (sample(l1, nSample)-sample(l2, nSample)), mu = 0, alternative = "two.sided"))
     # step
-    stepT <- suppressWarnings(t.test(diffD <- (sample(d1, nSample)-sample(d2, nSample)), mu = 0, alternative = "two.sided"))
+    stepT <- suppressWarnings(stats::t.test(diffD <- (sample(d1, nSample)-sample(d2, nSample)), mu = 0, alternative = "two.sided"))
     # print results
     message(paste("  |Turn angle  - ", .test2text(turnT, alpha), sep=""))
     message(paste("  |Lift angle  - ", .test2text(liftT, alpha), sep=""))
@@ -148,15 +148,22 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
   uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
                         a0 = crw$a[1], g0 = crw$g[1], densities = D)
   tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05)
-  Q <- qProb.3d(uerw, nStep, multicore = multicore)
-  cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
-                      a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
+  if(multicore) {
+    Q <- qProb.3d(uerw, nStep, multicore = TRUE)
+    cerw <- n.sim.cond.3d(n.sim = 100, n.locs = nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
+                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q, multicore = TRUE)
+    cerw <- filter.dead.ends(cerw)
+  } else {
+    Q <- qProb.3d(uerw, nStep, multicore = FALSE)
+    cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
+                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
+  }
   tests.cerw <- test.verification.3d(crw, cerw, alpha = 0.05)
-  message("  |*** Test passed successfully ***")
   if(plot2d){print(plot2d(crw, cerw))}
   if(plotDensities){plot3d.densities(crw, cerw)}
   if(plot3d){plot3d(crw, cerw)}
   if(returnResult){return(list(crw = crw, cerw = cerw))}
+  message("  |*** Test passed successfully ***")
 }
 
 #' Simulation of a three dimensional Correlated Random Walk
@@ -176,9 +183,9 @@ sim.crw.3d <- function(nStep, rTurn, rLift, meanStep, start = c(0,0,0))
 {
   # correlated angles and distance
   t <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rTurn)
-  a <- .wrap(cumsum(c(runif(1, 0, 2 * pi), t)))
+  a <- .wrap(cumsum(c(stats::runif(1, 0, 2 * pi), t)))
   l <- CircStats::rwrpnorm(n = nStep - 2, mu = 0, rho = rLift)
-  g <- abs(.wrap(cumsum(c(runif(1, 0, pi), l))))
+  g <- abs(.wrap(cumsum(c(stats::runif(1, 0, pi), l))))
   f <- abs(scale(CircStats::rwrpnorm(n = nStep - 1, mu = 0, rho = (rTurn+rLift)/2))[,1])
   d <- rep(meanStep, nStep-1) * f
   # deltas in all 3 directions

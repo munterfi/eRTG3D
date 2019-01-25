@@ -1,8 +1,8 @@
-#' Transform coordinates reference system of a 3-D track
+#' Transform coordinates reference system (CRS) of a 3-D track
 #'
 #' Attention: Please use this function for CRS transformations, 
-#' because it is based on the \link[sf]{st_transform} from the sf package. Therefore
-#' is supports CRS transformations in 3-D. Note: \link[sp]{spTransform} from the \link{sp} package
+#' since it is based on the \link[sf]{st_transform} from the sf package and therefore
+#' supports CRS transformations in 3-D. Note: \link[sp]{spTransform} from the \link{sp} package
 #' only supports transformations in the 2D plane, which will cause distortions
 #' in the third dimension.
 #'
@@ -97,7 +97,7 @@ track2sf.3d <- function(track, CRS = NA)
 
 #' Converts a track matrix to a sf data.frame
 #'
-#' @param track matrix with x, y and z coordinates.
+#' @param track matrix with x, y and z coordinates
 #' @param CRS string containing the proj4 code of the CRS
 #'
 #' @return A track of type \code{'sf, data.frame'}.

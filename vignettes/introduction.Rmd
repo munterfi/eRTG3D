@@ -1,10 +1,10 @@
 ---
-title: "Empirically Informed Random Trajectory Generator in 3-D"
+title: "eRTG3D: Introduction"
 author: "Unterfinger Merlin"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Empirically Informed Random Trajectory Generator in 3-D}
+  %\VignetteIndexEntry{The basic functionality of the `eRTG3D` package}
   %\VignetteEncoding{UTF-8}
   %\VignetteEngine{knitr::rmarkdown}
 abstract: "The empirically informed random trajectory generator in three dimensions **eRTG3D** is an algorithm to generate realistic random trajectories in a 3-D space between two given fix points in space. The trajectory generation is based on empirical distribution functions extracted from observed trajectories and thus reflects the geometrical movement characteristics of the mover."
@@ -27,10 +27,10 @@ cerwList <- reproduce.track.3d(n.sim = 15, multicore=FALSE, niclas, DEM = dem, B
 cerw <- cerwList[[1]]
 ```
 
-## Introduction
+## Scope
 This vignette illustrates the basic functionality of the `eRTG3D` package and some workflows, to combine the functions in a meaningful way. For a more detailed description of the individual functions and their parameters please consider the package's help.
 
-## Test functionality of the eRTG3D
+## Test functionality
 To check if the eRTG3D package is installed properly, run the following lines:
 ```{r, eval = FALSE, fig.show='hold'}
 library(eRTG3D)
@@ -123,7 +123,7 @@ trackSections <- track.split.3d(track, timeLag)
 D <- get.section.densities.3d(trackSections, DEM = dem)
 ```
 
-**Note:** If the aim is to reproduce a track, then the length of the track should be adjusted to fit to the densities extracted by `get.section.densities.3d()`. The message thrown by the previously applied `track.split.3d()` proposes a value `nChange` to change the track length of the simulations.
+**Note:** If the aim is to reproduce a track, then the length of the track should be adjusted to fit to the densities extracted by `get.section.densities.3d()`. The message thrown by the previously applied `track.split.3d()` proposes a value `nChange` to adjust the track length of the simulations.
 
 ## Wrapped function to reproduce tracks
 To reproduce an observed track, it is the simplest to just apply the `reproduce.track.3d()` function on the track and the DEM. The function automatically wraps all steps above together. To produce multiple tracks, the `n.sim` variable can be used.

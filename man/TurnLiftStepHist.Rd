@@ -2,7 +2,7 @@
 % Please edit documentation in R/core3D.R
 \name{turnLiftStepHist}
 \alias{turnLiftStepHist}
-\title{3 dimensional histogram}
+\title{Three dimensional histogram}
 \usage{
 turnLiftStepHist(turn, lift, step, printDims = TRUE, rm.zeros = TRUE,
   maxBin = 25)
@@ -21,10 +21,10 @@ turnLiftStepHist(turn, lift, step, printDims = TRUE, rm.zeros = TRUE,
 \item{maxBin}{numeric scalar, maximum number of bins per dimension of the tld-cube.}
 }
 \value{
-A 3 dimensional histogram as data.frame
+A three dimensional histogram as data.frame
 }
 \description{
-Derives a 3 dimensional distribution of a turn angle,
+Derives a three dimensional distribution of a turn angle,
 lift angle and step length, using the Freedman–Diaconis rule for
 estimating the number of bins.
 }

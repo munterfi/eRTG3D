@@ -1,4 +1,4 @@
-#' Glide ratio
+#' Calculate glide ratio
 #' 
 #' Calculates the ratio between horizontal movement and vertical movement.
 #' The value expresses the distance covered forward movement per distance movement in sinking.

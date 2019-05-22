@@ -66,11 +66,11 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 {
   # define based on df rule the number of bins
   # minimally 12 bins for turn angle
-  nx <- min(max(floor(2 * pi / .fd.bw(turn)), 12), maxBin)
+  nx <- min(max(floor(2 * pi / nclass.FD(turn)), 12), maxBin)
   # minimally 12 bins for lift angle
-  ny <- min(max(floor(2 * pi / .fd.bw(lift)), 12), maxBin)
+  ny <- min(max(floor(2 * pi / nclass.FD(lift)), 12), maxBin)
   # minimally 12 bins for step lengtht
-  nz <- min(max(floor(max(step) / .fd.bw(step)), 12), maxBin)
+  nz <- min(max(floor(max(step) / nclass.FD(step)), 12), maxBin)
   if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
   # create histogram
   tCuts <- .cutMidpoints(turn, nx); lCuts <- .cutMidpoints(lift, ny); dCuts <- .cutMidpoints(step, nz)
@@ -120,24 +120,6 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   midpoints <- sapply(1:(length(breaks)-1), function(ii) {minBreak + sum(width[1:ii-1]) + width[ii]/2})
   if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}
   else {list(cuts = factor(midpoints[code], midpoints), res = res)}
-}
-
-#' Freedman-Diaconis rule
-#'
-#' In statistics, this rule can be used to select the size
-#' of the bins to be used in a histogram.
-#'
-#' @param x numeric vector
-#'
-#' @return The bandwith
-#' @export
-#'
-#' @examples
-#' .df.bw(x)
-#' @noRd
-.fd.bw <- function(x)
-{
-  2 * stats::IQR(x) / (length(x) ^ (1/3))
 }
 
 #' Unconditional Empirical Random Walk (UERW) in 3-D

@@ -8,7 +8,7 @@ between two given fix points. The trajectory generation is based on
 empirical distribution functions extracted from observed trajectories (training data)
 and thus reflects the geometrical movement characteristics of the mover.
 
-The eRTG3D algorithm was developed and implemented as an R package within the scope of a master's thesis (Unterfinger, [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)) at the Department of Geography, University of Zurich. The development startet from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
+The eRTG3D algorithm was developed and implemented as an R package within the scope of a master's thesis (Unterfinger, [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)) at the Department of Geography, University of Zurich. The development started from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
 
 **Functionality** - The **eRTG3D** package contains functions to:
 

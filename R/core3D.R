@@ -1,6 +1,6 @@
-#' Extract tldCube and autodifferences functions
+#' Extract tldCube and autodifference approximation functions
 #'
-#' Creates a list consisting of the 3 dimensional
+#' Creates a list consisting of the three dimensional
 #' probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 #' as well as the uni-dimensional distributions of the differences
 #' of the turn angles, lift angles and step lengths with a lag of 1 to maintain
@@ -43,9 +43,9 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
   return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, gDens = gDens, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
 }
 
-#' 3 dimensional histogram
+#' Three dimensional histogram
 #'
-#' Derives a 3 dimensional distribution of a turn angle,
+#' Derives a three dimensional distribution of a turn angle,
 #' lift angle and step length, using the Freedman–Diaconis rule for
 #' estimating the number of bins.
 #'
@@ -56,7 +56,7 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @param rm.zeros logical: should combinations with zero probability be removed?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube.
 #'
-#' @return A 3 dimensional histogram as data.frame
+#' @return A three dimensional histogram as data.frame
 #' @export
 #'
 #' @examples
@@ -66,11 +66,11 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 {
   # define based on df rule the number of bins
   # minimally 12 bins for turn angle
-  nx <- min(max(floor(2 * pi / .fd.bw(turn)), 12), maxBin)
+  nx <- min(max(floor(2 * pi / nclass.FD(turn)), 12), maxBin)
   # minimally 12 bins for lift angle
-  ny <- min(max(floor(2 * pi / .fd.bw(lift)), 12), maxBin)
-  # minimally 12 bins for step lengtht
-  nz <- min(max(floor(max(step) / .fd.bw(step)), 12), maxBin)
+  ny <- min(max(floor(2 * pi / nclass.FD(lift)), 12), maxBin)
+  # minimally 12 bins for step length
+  nz <- min(max(floor(max(step) / nclass.FD(step)), 12), maxBin)
   if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
   # create histogram
   tCuts <- .cutMidpoints(turn, nx); lCuts <- .cutMidpoints(lift, ny); dCuts <- .cutMidpoints(step, nz)
@@ -120,24 +120,6 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   midpoints <- sapply(1:(length(breaks)-1), function(ii) {minBreak + sum(width[1:ii-1]) + width[ii]/2})
   if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}
   else {list(cuts = factor(midpoints[code], midpoints), res = res)}
-}
-
-#' Freedman-Diaconis rule
-#'
-#' In statistics, this rule can be used to select the size
-#' of the bins to be used in a histogram.
-#'
-#' @param x numeric vector
-#'
-#' @return The bandwith
-#' @export
-#'
-#' @examples
-#' .df.bw(x)
-#' @noRd
-.fd.bw <- function(x)
-{
-  2 * stats::IQR(x) / (length(x) ^ (1/3))
 }
 
 #' Unconditional Empirical Random Walk (UERW) in 3-D
@@ -528,7 +510,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 
 #' Conditional Empirical Random Walks (CERW) in 3-D
 #'
-#' Creates n conditional empirical random walks, with a specific starting and ending point,
+#' Creates multiple conditional empirical random walks, with a specific starting and ending point,
 #' geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.
 #'
 #' @param n.sim number of CERWs to simulate

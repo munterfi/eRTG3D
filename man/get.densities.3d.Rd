@@ -2,7 +2,7 @@
 % Please edit documentation in R/core3D.R
 \name{get.densities.3d}
 \alias{get.densities.3d}
-\title{Extract tldCube and autodifferences functions}
+\title{Extract tldCube and autodifference approximation functions}
 \usage{
 get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
   deltaStep, gradientAngle = NULL, heightEllipsoid = NULL,
@@ -33,7 +33,7 @@ get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
 A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)
 }
 \description{
-Creates a list consisting of the 3 dimensional
+Creates a list consisting of the three dimensional
 probability distribution cube for turning angle, lift angle and step length (\link[eRTG3D]{turnLiftStepHist})
 as well as the uni-dimensional distributions of the differences
 of the turn angles, lift angles and step lengths with a lag of 1 to maintain

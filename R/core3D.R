@@ -66,11 +66,11 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 {
   # define based on df rule the number of bins
   # minimally 12 bins for turn angle
-  nx <- min(max(floor(2 * pi / nclass.FD(turn)), 12), maxBin)
+  nx <- min(max(floor(2 * pi / grDevices::nclass.FD(turn)), 12), maxBin)
   # minimally 12 bins for lift angle
-  ny <- min(max(floor(2 * pi / nclass.FD(lift)), 12), maxBin)
+  ny <- min(max(floor(2 * pi / grDevices::nclass.FD(lift)), 12), maxBin)
   # minimally 12 bins for step length
-  nz <- min(max(floor(max(step) / nclass.FD(step)), 12), maxBin)
+  nz <- min(max(floor(max(step) / grDevices::nclass.FD(step)), 12), maxBin)
   if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
   # create histogram
   tCuts <- .cutMidpoints(turn, nx); lCuts <- .cutMidpoints(lift, ny); dCuts <- .cutMidpoints(step, nz)

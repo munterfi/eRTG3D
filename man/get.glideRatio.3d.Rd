@@ -2,7 +2,7 @@
 % Please edit documentation in R/glidingSoaring3D.R
 \name{get.glideRatio.3d}
 \alias{get.glideRatio.3d}
-\title{Glide ratio}
+\title{Calculate glide ratio}
 \usage{
 get.glideRatio.3d(track)
 }

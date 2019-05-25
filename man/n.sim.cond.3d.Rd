@@ -37,7 +37,7 @@ n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
 A list containing the CERWs or \code{NULL}s if dead ends have been encountered.
 }
 \description{
-Creates n conditional empirical random walks, with a specific starting and ending point,
+Creates multiple conditional empirical random walks, with a specific starting and ending point,
 geometrically similar to the initial trajectory by applying \link[eRTG3D]{sim.cond.3d} multiple times.
 }
 \examples{

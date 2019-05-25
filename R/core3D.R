@@ -69,7 +69,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   nx <- min(max(floor(2 * pi / nclass.FD(turn)), 12), maxBin)
   # minimally 12 bins for lift angle
   ny <- min(max(floor(2 * pi / nclass.FD(lift)), 12), maxBin)
-  # minimally 12 bins for step lengtht
+  # minimally 12 bins for step length
   nz <- min(max(floor(max(step) / nclass.FD(step)), 12), maxBin)
   if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
   # create histogram

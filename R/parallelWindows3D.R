@@ -34,13 +34,10 @@
   wrap <- function(x) {(x + pi) %% (2 * pi) - pi}
   turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
   {
-    # define based on df rule the number of bins
-    # minimally 12 bins for turn angle
-    nx <- min(max(floor(2 * pi / .fd.bw(turn)), 12), maxBin)
-    # minimally 12 bins for lift angle
-    ny <- min(max(floor(2 * pi / .fd.bw(lift)), 12), maxBin)
-    # minimally 12 bins for step lengtht
-    nz <- min(max(floor(max(step) / .fd.bw(step)), 12), maxBin)
+    # define number of bins based on Freedman-Diaconis
+    nx <- min(grDevices::nclass.FD(turn), maxBin)
+    ny <- min(grDevices::nclass.FD(lift), maxBin)
+    nz <- min(grDevices::nclass.FD(step), maxBin)
     if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
     # create histogram
     tCuts <- cutMidpoints(turn, nx); lCuts <- cutMidpoints(lift, ny); dCuts <- cutMidpoints(step, nz)
@@ -63,6 +60,7 @@
   }
   
   cutMidpoints <- function(x, breaks, rm.empty=TRUE) {
+    if (breaks <= 1) {return(list(cuts = factor(rep(mean(x), length(x))), res = 0))} 
     nb <- as.integer(breaks + 1)
     dx <- diff(rx <- range(x, na.rm = TRUE))
     breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
@@ -75,7 +73,6 @@
     if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}
     else {list(cuts = factor(midpoints[code], midpoints), res = res)}
   }
-  fd.bw <- function(x){2 * stats::IQR(x) / (length(x) ^ (1/3))}
   # steps minus 2
   nSteps <- n.locs - 2
   sim <- track.properties.3d(sim)
@@ -219,9 +216,9 @@
       # calculate the gradient
       g <- wrap(RTG[i, 5] + ls + lShift[i])
       # convert the coordinates from step length turning angle dimension
-      x1 <- ((ds + dShift[i]) * sin(g) * cos(a)) + RTG[i, 1]
-      y1 <- ((ds + dShift[i]) * sin(g) * sin(a)) + RTG[i, 2]
-      z1 <- ((ds + dShift[i]) * cos(g)) + RTG[i, 3]
+      x1 <- round(((ds + dShift[i]) * sin(g) * cos(a)) + RTG[i, 1], 12)
+      y1 <- round(((ds + dShift[i]) * sin(g) * sin(a)) + RTG[i, 2], 12)
+      z1 <- round(((ds + dShift[i]) * cos(g)) + RTG[i, 3], 12)
       # calculate the distances of the cell centers in the spatial domain
       # to the target (last location of the empirical track)
       endD <- as.numeric(sqrt((end[1] - x1) ^ 2 + (end[2] - y1) ^ 2 + (end[3] - z1) ^ 2))

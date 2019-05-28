@@ -64,7 +64,6 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' turnLiftStepHist(niclas$t, niclas$l, niclas$d)
 turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
 {
-  # define based on df rule the number of bins
   # define number of bins based on Freedman-Diaconis
   nx <- min(grDevices::nclass.FD(turn), maxBin)
   ny <- min(grDevices::nclass.FD(lift), maxBin)

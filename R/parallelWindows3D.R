@@ -34,7 +34,6 @@
   wrap <- function(x) {(x + pi) %% (2 * pi) - pi}
   turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
   {
-    # define based on df rule the number of bins
     # define number of bins based on Freedman-Diaconis
     nx <- min(grDevices::nclass.FD(turn), maxBin)
     ny <- min(grDevices::nclass.FD(lift), maxBin)

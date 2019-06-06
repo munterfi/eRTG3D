@@ -54,4 +54,4 @@ This R package is licensed under the GPL (>= 3) License - see the [LICENSE](LICE
 
 Technitis, G., Weibel, R., Kranstauber, B., and Safi, K. ([2016](https://doi.org/10.5167/uzh-130652)). “An algorithm for empirically informed random trajectory generation between two endpoints”. In: GIScience 2016: Ninth International Conference on Geographic Information Science. Vol. 9. s.n., online. DOI: [10.5167/uzh-130652](https://doi.org/10.5167/uzh-130652).
 
-Unterfinger, M ([2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)). “3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk”. Master's thesis. University of Zurich.
+Unterfinger, M. ([2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)). “3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk”. Master's thesis. University of Zurich.

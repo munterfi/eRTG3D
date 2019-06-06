@@ -74,7 +74,7 @@ track2sf.3d <- function(track, CRS = NA)
 {
   if(is.data.frame(track)) {return(.df2sf.3d(track, CRS = CRS))}
   if(is.matrix(track)) {return(.matrix2sf.3d(track, CRS = CRS))}
-  if(class(move)=="Move") {return(.move2sf.3d(track))}
+  if(class(track)=="Move") {return(.move2sf.3d(track))}
 }
 
 #' Converts a track data.frame to a \code{'sf, data.frame'}

@@ -138,10 +138,10 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     ddf <- data.frame(raster::rasterToPoints(DEM));
     colnames(ddf) <- c("X","Y","DEM")
     p <- p +
-      ggplot2::geom_raster(data=ddf, ggplot2::aes(X,Y,fill=DEM), interpolate=TRUE) +
+      ggplot2::geom_raster(data=ddf, ggplot2::aes_string("X","Y",fill="DEM"), interpolate=TRUE) +
       ggplot2::scale_fill_gradientn(name="Altitude", colours = grDevices::terrain.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar()) +
-      ggplot2::geom_tile(data=hdf, ggplot2::aes(X,Y,alpha=Hillshade), fill = "grey20") +
+      ggplot2::geom_tile(data=hdf, ggplot2::aes_string("X","Y",alpha="Hillshade"), fill = "grey20") +
       ggplot2::scale_alpha(range = c(0, 0.6))
   }
   # prepare and add BG to the plot
@@ -156,7 +156,7 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     BG <- data.frame(raster::rasterToPoints(BG));
     colnames(BG) <- c("X","Y","BG")
     p <- p +
-      ggplot2::geom_raster(data=BG, ggplot2::aes(X,Y,fill=BG), interpolate=TRUE) +
+      ggplot2::geom_raster(data=BG, ggplot2::aes_string("X","Y",fill="BG"), interpolate=TRUE) +
       ggplot2::scale_fill_gradientn(name="Uplift", colours = grDevices::heat.colors(4, alpha = 1)) +
       ggplot2::guides(fill = ggplot2::guide_colorbar())
   }
@@ -166,20 +166,20 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
     simTrack <- lapply(X = 1:length(simTrack), FUN = function(X){
       cbind(simTrack[[X]][, 1:3], group = rep(as.character(X), nrow(simTrack[[X]])))})
     simTrack <- do.call("rbind", simTrack)
-    p <- p + ggplot2::geom_path(data = simTrack, ggplot2::aes(x = x, y = y, color = z, group=group), size = 0.7, alpha = alpha)
+    p <- p + ggplot2::geom_path(data = simTrack, ggplot2::aes_string(x = "x", y = "y", color = "z", group="group"), size = 0.7, alpha = alpha)
   }
   origTrack <- origTrack[!unlist(lapply(origTrack, is.null))]
   origTrack <- lapply(X = 1:length(origTrack), FUN = function(X){
     cbind(origTrack[[X]][, 1:3], group = rep(as.character(X), nrow(origTrack[[X]])))})
   origTrack <- do.call("rbind", origTrack)
-  p <- p + ggplot2::geom_path(data = origTrack, ggplot2::aes(x = x, y = y, group = group), color="white", size =2.5) +
-    ggplot2::geom_path(data = origTrack, ggplot2::aes(x = x, y = y, group = group, color = z), size = 1.5) +
-    ggplot2::geom_point(data = origTrack[1, ], ggplot2::aes(x = x, y = y), size=3.5, shape=7, alpha = 1, color="black") +
-    ggplot2::geom_text(data = origTrack[1, ], ggplot2::aes(x = x, y = y, label = "START", fontface = "bold"), size=3, vjust=-1.4, color="white") +
-    ggplot2::geom_text(data = origTrack[1, ], ggplot2::aes(x = x, y = y, label = "START"), size=3, vjust=-1.4, color="black") +
-    ggplot2::geom_point(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y), size=3.5, shape=13, alpha = 1, color="black") +
-    ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y, label = "END", fontface = "bold"), size=3, vjust=-1.4, color="white") +
-    ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes(x = x, y = y, label = "END"), size=3, vjust=-1.4, color="black") +
+  p <- p + ggplot2::geom_path(data = origTrack, ggplot2::aes_string(x = "x", y = "y", group = "group"), color="white", size =2.5) +
+    ggplot2::geom_path(data = origTrack, ggplot2::aes_string(x = "x", y = "y", group = "group", color = "z"), size = 1.5) +
+    ggplot2::geom_point(data = origTrack[1, ], ggplot2::aes_string(x = "x", y = "y"), size=3.5, shape=7, alpha = 1, color="black") +
+    ggplot2::geom_text(data = origTrack[1, ], ggplot2::aes_string(x = "x", y = "y"), label = "START", fontface = "bold", size=3, vjust=-1.4, color="white") +
+    ggplot2::geom_text(data = origTrack[1, ], ggplot2::aes_string(x = "x", y = "y"), label = "START", size=3, vjust=-1.4, color="black") +
+    ggplot2::geom_point(data = origTrack[nrow(origTrack), ], ggplot2::aes_string(x = "x", y = "y"), size=3.5, shape=13, alpha = 1, color="black") +
+    ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes_string(x = "x", y = "y"), label = "END", fontface = "bold", size=3, vjust=-1.4, color="white") +
+    ggplot2::geom_text(data = origTrack[nrow(origTrack), ], ggplot2::aes_string(x = "x", y = "y"), label = "END", size=3, vjust=-1.4, color="black") +
     ggplot2::labs(colour="Height")
   return(p)
 }
@@ -259,9 +259,9 @@ plot3d.densities <- function(track1, track2 = NULL, autodifferences = FALSE, sca
     dat <- data.frame(values = c(values1),
                       PDF = c(rep("Trajectory", times = length(values1))))
   }
-  return(ggplot2::ggplot(dat, ggplot2::aes(x = values, fill = PDF)) +
+  return(ggplot2::ggplot(dat, ggplot2::aes_string(x = "values", fill = "PDF")) +
            ggplot2::theme_classic() +
-           (if(scaleDensity){ggplot2::geom_density(ggplot2::aes(x=values, y=..scaled.., fill=PDF), alpha=1/2)}
+           (if(scaleDensity){ggplot2::geom_density(ggplot2::aes_string(x="values", y="..scaled..", fill="PDF"), alpha=1/2)}
             else{ggplot2::geom_density(alpha = 0.5)}) +
            ggplot2::labs(x = xlab, y = ylab) +
            ggplot2::ggtitle(titleText))

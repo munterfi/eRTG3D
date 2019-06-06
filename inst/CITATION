@@ -1,0 +1,9 @@
+citHeader("To cite package eRTG3D in publications, please use:")
+
+citEntry(entry="MastersThesis",
+  author = "Merlin Unterfinger",
+  title = "{3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk}",
+  school = "University of Zurich",
+  year = 2018,
+  textVersion = "Unterfinger, M., 2018. 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis. University of Zurich."
+)

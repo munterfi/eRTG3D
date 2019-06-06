@@ -334,6 +334,7 @@
 #' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
 #' and pass them to the function.
 #'
+#' @param n.sim number of CERWs to simulate
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
 #' @param dGliding density object returned by the \link[eRTG3D]{get.densities.3d} function for gliding mode
 #' @param dSoaring density object returned by the \link[eRTG3D]{get.densities.3d} function for soaring mode
@@ -358,7 +359,7 @@
 #' @examples
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
 #' @noRd
-.n.sim.glidingSoaring.3d.windows <- function(MODE, dGliding, dSoaring, qGliding, start, end=end, a0, g0,
+.n.sim.glidingSoaring.3d.windows <- function(n.sim, MODE, dGliding, dSoaring, qGliding, start, end=end, a0, g0,
                                           error = TRUE, smoothTransition = TRUE, glideRatio, DEM = NULL, BG = NULL)
 {
   start.time <- Sys.time()

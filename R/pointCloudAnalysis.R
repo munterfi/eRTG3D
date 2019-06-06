@@ -161,8 +161,8 @@ logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
   if(standartize) {
     naInd <- is.na(rStack)
     rStack[naInd] <- 0
-    maxR <- max(maxValue(rStack))
-    minR <- min(minValue(rStack))
+    maxR <- max(raster::maxValue(rStack))
+    minR <- min(raster::minValue(rStack))
     rStack <- raster::stack(rStack)
     for(i in 1:length(rStack@layers)) {
       rStack@layers[[i]] <- (rStack@layers[[i]] - minR) / (maxR - minR)

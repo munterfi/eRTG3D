@@ -1,0 +1,56 @@
+---
+title: "Voxel distributions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Voxel distributions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+<style>
+body {
+text-align: justify}
+</style>
+```{r, echo = FALSE, eval=TRUE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(knitr.table.format = "html")
+
+library(eRTG3D)
+library(raster)
+library(ggplot2)
+set.seed(123)
+```
+
+## Example trajectories
+First some example trajectories are created in form of Correlated Random Walks (CRWs):
+
+```{r eval=TRUE, echo=TRUE, fig.align="center"}
+crws <- lapply(X=seq(1:100), FUN = function(X) {
+  sim.crw.3d(nStep = 100, rTurn = 0.99, rLift = 0.99, meanStep = 0.1)
+  })
+plot2d(crws)
+```
+
+## Utilization distribution
+Count points per voxel and plot counts as raster stack:
+
+```{r eval=TRUE, echo=TRUE, fig.align="center"}
+points <- do.call("rbind", crws)
+extent <- extent(c(-10, 10, -10, 10))
+ud <- voxelCount(points, extent, xyRes=5, zMin=-10, zMax=10)
+plotRaster(ud)
+```
+
+## Chi square maps
+By calculating Chi maps, the over- and underrepresentation of points in the voxel space can be interpreted statistically:
+
+```{r eval=TRUE, echo=TRUE, fig.align="center"}
+chi <- chiMaps(ud)
+plotRaster(chi, centerColorBar=TRUE)
+```
+
+## Export voxel data
+The voxel dataCube of type rasterStack can be exported as Tiff image sequence. Image sequences are a common structure to represent voxel data and most of the specific software to visualize voxel data is able to read it (e.g. blender)
+```{r eval = FALSE}
+saveImageSlices(ud, filename = "utilization-distribution", dir="folder/path")
+saveImageSlices(chi, filename = "chi-map-cube", dir="folder/path")
+```

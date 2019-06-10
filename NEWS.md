@@ -1,12 +1,17 @@
-# eRTG3D 0.6.0 (development version)
-Getting ready for CRAN.
+# eRTG3D 0.6.0
+Initial submission to CRAN. New github page created with `pkgdown`.
+Restructered and updated package documentation.
 
 ## New features
-* Package now available on CRAN: `isntall.packages("eRTG3D")`
-* New GitHub page for the package. Crafted by `pkgdown`
+* Package now available on CRAN: `install.packages("eRTG3D")`
+* GitHub page for the package. Created with `pkgdown`
+* Documentation for conducting 2-D simulations and voxel counting in order to extract utilization distributions.
+* New eRTG3D logo
+* New index/home area with interactive 3-D plots
+* Shiny app - Online eRTG3D simulator: https://mufi.shinyapps.io/ertg3d-simulator/
 
 ## R CMD Check
-0 errors ✔ | 0 warnings ✔ | 0 notes ✖
+0 errors ✔ | 0 warnings ✔ | 0 notes ✔
 
 R CMD check succeeded
 

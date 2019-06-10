@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+
+<title>Standard workflow</title>
+
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(data-line-number);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' || rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Standard workflow</h1>
+
+
+
+<style>
+body {
+text-align: justify}
+</style>
+<p>This vignette illustrates the basic functionality of the <code>eRTG3D</code> package and some workflows, to combine the functions in a meaningful way. For a more detailed description of the individual functions and their parameters please consider the package’s help.</p>
+<div id="workflow" class="section level2">
+<h2>Workflow</h2>
+<div id="movement-characteristics-p" class="section level3">
+<h3>1. Movement characteristics (P)</h3>
+<p>As first step the properties of a track with x, y and z coordinates are calculated.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">niclas &lt;-<span class="st"> </span><span class="kw">track.properties.3d</span>(niclas)</a></code></pre></div>
+<table style="width:92%;">
+<colgroup>
+<col width="13%"></col>
+<col width="13%"></col>
+<col width="9%"></col>
+<col width="11%"></col>
+<col width="9%"></col>
+<col width="11%"></col>
+<col width="11%"></col>
+<col width="11%"></col>
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">x</th>
+<th align="center">y</th>
+<th align="center">z</th>
+<th align="center">a</th>
+<th align="center">g</th>
+<th align="center">t</th>
+<th align="center">l</th>
+<th align="center">d</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">2556476</td>
+<td align="center">1188336</td>
+<td align="center">1284</td>
+<td align="center">0.39</td>
+<td align="center">1.56</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">2558565</td>
+<td align="center">1189297</td>
+<td align="center">1360</td>
+<td align="center">0.43</td>
+<td align="center">1.54</td>
+<td align="center">0.04</td>
+<td align="center">-0.02</td>
+<td align="center">2301</td>
+</tr>
+<tr class="odd">
+<td align="center">2560477</td>
+<td align="center">1189861</td>
+<td align="center">1370</td>
+<td align="center">0.29</td>
+<td align="center">1.57</td>
+<td align="center">-0.14</td>
+<td align="center">0.03</td>
+<td align="center">1993</td>
+</tr>
+<tr class="even">
+<td align="center">2562431</td>
+<td align="center">1190668</td>
+<td align="center">1392</td>
+<td align="center">0.39</td>
+<td align="center">1.56</td>
+<td align="center">0.11</td>
+<td align="center">-0.01</td>
+<td align="center">2114</td>
+</tr>
+<tr class="odd">
+<td align="center">2563809</td>
+<td align="center">1190657</td>
+<td align="center">1807</td>
+<td align="center">-0.01</td>
+<td align="center">1.28</td>
+<td align="center">-0.4</td>
+<td align="center">-0.28</td>
+<td align="center">1439</td>
+</tr>
+</tbody>
+</table>
+<p>Then the movement characteristics (P probability) are extracted from the trajectory. Although the algorithm also works without a DEM, the DEM should be passed to the <code>get.track.densities.3d()</code> function, otherwise the flight height distribution in respect to the earth surface can not be built, which ends in less accurate results.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">P &lt;-<span class="st"> </span><span class="kw">get.track.densities.3d</span>(niclas, <span class="dt">heightDistEllipsoid =</span> <span class="ot">TRUE</span>, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+</div>
+<div id="attraction-term-q" class="section level3">
+<h3>2. Attraction term (Q)</h3>
+<p>The finally desired Conditional Empirical Random Walk (CERW) connecting a given start with a certain end point by a given number of steps needs an attraction term (the Q probability) to ensure that the target is approached and hit. In order to calculate the Q probability for each step the distribution of turns and lifts to target and the distribution of distance to target has to be known. They can be derived from the empirical data (ideally), or estimated from an unconditional process with the same properties. In this case the Q probabilities, which represent the pull towards the destination, are extracted from a UERW simulated with <code>sim.uncond.3d()</code>. The UERW should contain 1500 <code>f &lt;- 1500</code> times more steps than the final CERW to be simulated. Q are extracted from the UERW by the function <code>qProb.3d()</code>.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">sim.locs &lt;-<span class="st"> </span><span class="kw">nrow</span>(niclas)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">f &lt;-<span class="st"> </span><span class="dv">1500</span></a>
+<a class="sourceLine" id="cb3-3" data-line-number="3">uerw &lt;-<span class="st"> </span><span class="kw">sim.uncond.3d</span>(sim.locs<span class="op">*</span>f, <span class="dt">start =</span> <span class="kw">c</span>(niclas<span class="op">$</span>x[<span class="dv">1</span>], niclas<span class="op">$</span>y[<span class="dv">1</span>], niclas<span class="op">$</span>z[<span class="dv">1</span>]), </a>
+<a class="sourceLine" id="cb3-4" data-line-number="4">                      <span class="dt">a0 =</span> niclas<span class="op">$</span>a[<span class="dv">1</span>], <span class="dt">g0 =</span> niclas<span class="op">$</span>g[<span class="dv">1</span>], <span class="dt">densities =</span> P)</a>
+<a class="sourceLine" id="cb3-5" data-line-number="5">Q &lt;-<span class="st"> </span><span class="kw">qProb.3d</span>(uerw, sim.locs)</a></code></pre></div>
+</div>
+<div id="boundary-conditions" class="section level3">
+<h3>3. Boundary conditions</h3>
+<p>Set up the start and end conditions: azimuth (<code>a0</code>), gradient (<code>g0</code>), start and end point of the CERW to be simulated.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">start &lt;-<span class="st"> </span><span class="kw">c</span>(niclas<span class="op">$</span>x[<span class="dv">1</span>],niclas<span class="op">$</span>y[<span class="dv">1</span>],niclas<span class="op">$</span>z[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">end &lt;-<span class="st"> </span><span class="kw">c</span>(niclas<span class="op">$</span>x[<span class="kw">nrow</span>(niclas)],niclas<span class="op">$</span>y[<span class="kw">nrow</span>(niclas)],niclas<span class="op">$</span>z[<span class="kw">nrow</span>(niclas)])</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3">a0 &lt;-<span class="st"> </span>niclas<span class="op">$</span>a[<span class="dv">1</span>]</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">g0 &lt;-<span class="st"> </span>niclas<span class="op">$</span>g[<span class="dv">1</span>]</a></code></pre></div>
+</div>
+<div id="conditional-empirical-random-walk" class="section level3">
+<h3>4. Conditional Empirical Random Walk</h3>
+<p>Then finally a CERW can be simulated.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">cerw &lt;-<span class="st"> </span><span class="kw">sim.cond.3d</span>(sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">                    <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+<p>If more than one simulated track is desired, the <code>n.sim.cond.3d()</code> can be used. The n.sim parameter defines the number of simulated tracks.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw">n.sim.cond.3d</span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                          <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+<p><strong>Note:</strong> Due to dead ends, which are normally occurring in a proportion of 25%, the n.sim parameter should be set higher than the needed tracks.</p>
+</div>
+</div>
+<div id="extract-densities-from-multiple-track-sections" class="section level2">
+<h2>Extract densities from multiple track sections</h2>
+<p>In many cases the time between the acquisition of fix points of the GPS tracks is not constant. This can be caused by the time to get the fix point or missing data. To avoid distorted statistic distributions, which increases the probability of dead ends, the track has to be splitted in sections, where the acquisition time is constant. In this case the <code>get.track.properties.3d()</code> function can not be used anymore. Then the work flow should look like the following:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1">trackSections &lt;-<span class="st"> </span><span class="kw">track.split.3d</span>(track, timeLag)</a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">P &lt;-<span class="st"> </span><span class="kw">get.section.densities.3d</span>(trackSections, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+<p><strong>Note:</strong> If the aim is to reproduce a track, then the length of the track should be adjusted to fit to the densities extracted by <code>get.section.densities.3d()</code>. The message thrown by the previously applied <code>track.split.3d()</code> proposes a value <code>nChange</code> to adjust the track length of the simulations.</p>
+</div>
+<div id="wrapper-function-to-reproduce-tracks" class="section level2">
+<h2>Wrapper function to reproduce tracks</h2>
+<p>To reproduce an observed track, it is the simplest to just apply the <code>reproduce.track.3d()</code> function on the track and the DEM. The function automatically wraps all steps above together. To produce multiple tracks, the <code>n.sim</code> variable can be used.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw">reproduce.track.3d</span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, niclas, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

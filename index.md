@@ -21,6 +21,7 @@ install.packages("eRTG3D")
 # Install development version from GitHub
 devtools::install_github("munterfinger/eRTG3D")
 ```
+<p align="center"><img width="100%" src="man/figures/eRTG3D.gif"></p>
 
 ## Features
 The **eRTG3D** package contains functions to:

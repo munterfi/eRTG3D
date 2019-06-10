@@ -1,0 +1,42 @@
+---
+title: "Verification of results"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Verification of results}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+<style>
+body {
+text-align: justify}
+</style>
+```{r, echo = FALSE, eval=TRUE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(knitr.table.format = "html")
+
+library(eRTG3D)
+set.seed(123)
+cerw <- reproduce.track.3d(niclas, DEM = dem)
+```
+
+## Reproduce a trajectory
+```{r eval=FALSE}
+cerw <- reproduce.track.3d(niclas, DEM = dem)
+```
+
+The simulated trajectories result should be tested statistically. The first argument of the `test.verification.3d()` function is the original track to be tested against. The second argument is either a single track or a list of multiple tracks.
+
+## Kolmogorov-Smirnov test
+By setting `test = "ks"` a two-sample Kolmogorov-Smirnov test is carried out on the distributions of turn angles, lift angles and step lengths of the two tracks.
+
+```{r eval=TRUE}
+tests <- test.verification.3d(niclas, cerw, test = "ks", plot = FALSE)
+```
+
+## One-sample t-test
+By choosing `test = "ttest"` a random sample, without replacement is taken from the longer track, to shorten it to the length of the longer track. The order of the shorter track is also sampled randomly. Then the two randomly ordered vectors of turn angles, lift angles and step lengths are substracted from each other. If the both tracks stem from the same distributions the the mean deviatio should tend to towards zero, therefore the difference is tested two-sided against mu = 0 with a one-sample t-test.
+
+```{r eval=TRUE}
+tests <- test.verification.3d(niclas, cerw, test = "ttest", plot = FALSE)
+```
+

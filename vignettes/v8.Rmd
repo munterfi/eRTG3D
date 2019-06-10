@@ -1,0 +1,58 @@
+---
+title: "Trajectory simulations in 2-D"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Trajectory simulations in 2-D}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+<style>
+body {
+text-align: justify}
+</style>
+```{r, echo = FALSE, eval=TRUE, include=FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+options(knitr.table.format = "html")
+
+library(eRTG3D)
+library(ggplot2)
+set.seed(123)
+```
+
+## 2-D simulations as special case of 3-D
+Since movement in 2-D is a special case of movement in 3-D, the `eRTG3D` algorithm also supports two-dimensional simulations. The underlying data structure of the algorithm remains in three-dimensional, with the third dimension (z) being constant, as for example zero. This approach guarantees a seamless transition between 2-D and 3-D simulations. Therefore, two P and Q probabilities are be extracted from 2D and 3D trajectories, then a combined simulation can take place.
+
+## Example trajectory
+```{r }
+trajectory.3D <- sim.crw.3d(nStep = 100, rTurn = 0.99, rLift = 0.99, meanStep = 0.1)
+```
+
+## Constant z-dimension
+To simulate in 2-D the third dimension of the trajectory is set to zero:
+
+```{r }
+trajectory.2D <- trajectory.3D
+trajectory.2D$z <- 0
+head(trajectory.2D)
+```
+
+If the original trajectory is already two-dimensional, a third column `z` has to be added: `trajectory.2D$z <- 0`. 
+
+## Simulations in 2-D
+Now the workflow is the same as in 3-D, described in the [standard workflow vignette](v2-standard-workflow.html):
+
+```{r, echo = FALSE, eval=TRUE, include=FALSE}
+simulation.2D <- reproduce.track.3d(trajectory.2D)
+```
+
+**Note:** Since it is not feasible to use a DEM (`DEM = demRaster`) in 2-D simualtions, the adding of a DEM in the somulations will result in dead ends. A BG layer (`BG = bgRaster`) with a binary mask or continous probabilities for the simulation area can be passed (e.g. water bodies, nutrition sources, ...).
+
+```{r eval=FALSE}
+simulation.2D <- reproduce.track.3d(trajectory.2D)
+```
+
+And plotting the results:
+
+```{r eval=TRUE, fig.align="center"}
+plot2d(trajectory.2D, simulation.2D, titleText = "2-D trajectory simulation")
+```

@@ -1,0 +1,14 @@
+pandoc: 2.3.1
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  v1: v1.html
+  v2: v2.html
+  v3: v3.html
+  v4: v4.html
+  v5: v5.html
+  v6: v6.html
+  v7: v7.html
+  v8: v8.html
+  v9: v9.html
+

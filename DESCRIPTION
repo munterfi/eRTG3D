@@ -3,9 +3,9 @@ Title: Empirically Informed Random Trajectory Generation in 3-D
 Version: 0.6.0
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
-    person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = "aut"),
-    person("George", "Technitis", email = "george.technitis@gmail.com", role = "aut"),
-    person("Robert", "Weibel", email = "robert.weibel@geo.uzh.ch", role = "aut"))
+    person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = c("ctb", "ths")),
+    person("George", "Technitis", email = "george.technitis@gmail.com", role = c("ctb", "ths")),
+    person("Robert", "Weibel", email = "robert.weibel@geo.uzh.ch", role = "ths"))
 URL: https://github.com/munterfinger/eRTG3D
 Description: The empirically informed random trajectory generator in three dimensions (eRTG3D)
              is an algorithm to generate realistic random trajectories in a 3-D space
@@ -26,8 +26,5 @@ Suggests: knitr (>= 1.23), pander (>= 0.6.3), rmarkdown (>= 1.13), sf
 VignetteBuilder: knitr
 NeedsCompilation: no
 Packaged: 2019-06-06 20:01:28 UTC; Merlin
-Author: Merlin Unterfinger [aut, cre],
-  Kamran Safi [aut],
-  George Technitis [aut],
-  Robert Weibel [aut]
 Maintainer: Merlin Unterfinger <info@munterfinger.ch>
+BugReports: https://github.com/munterfinger/eRTG3D/issues

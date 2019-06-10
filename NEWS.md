@@ -1,6 +1,6 @@
 # eRTG3D 0.6.0
 Initial submission to CRAN. New github page created with `pkgdown`.
-Restructered and updated package documentation.
+Restructured and updated package documentation.
 
 ## New features
 * Package now available on CRAN: `install.packages("eRTG3D")`

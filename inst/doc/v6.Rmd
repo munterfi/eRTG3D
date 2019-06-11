@@ -22,7 +22,7 @@ track.wgs84 <- transformCRS.3d(niclas, fromCRS=LV95, toCRS=WGS84)[ ,1:3]
 ```
 
 ## Coordinate reference system
-*A [...] coordinate reference system (CRS) is a coordinate-based local, regional or global system used to locate geographical entities. A spatial reference system defines a specific map projection, as well as transformations between different spatial reference systems. [...] spatial reference systems can be referred to using a SRID integer, including EPSG codes ...*
+*"A [...] coordinate reference system (CRS) is a coordinate-based local, regional or global system used to locate geographical entities. A spatial reference system defines a specific map projection, as well as transformations between different spatial reference systems. [...] spatial reference systems can be referred to using a SRID integer, including EPSG codes ..."* ([wikipedia.org](https://en.wikipedia.org/wiki/Spatial_reference_system), 2019).
 
 The SRIDs and corresponding EPSG codes of all CRS can be found on [spatialreference.org](https://spatialreference.org). The most common global CRS in latitude and longitude is WGS84 (used by the GPS satellite navigation system) with the following CRS string `"+init=epsg:4326"` as identifier.
 

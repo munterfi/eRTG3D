@@ -16,11 +16,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
 <script src="pkgdown.js"></script><meta property="og:title" content="Empirically Informed Random Trajectory Generation in 3-D">
-<meta property="og:description" content="The empirically informed random trajectory generator in three dimensions (eRTG3D)
-             is an algorithm to generate realistic random trajectories in a 3-D space
-             between two given fix points in space. The trajectory generation is based on
-             empirical distribution functions extracted from observed trajectories (training data)
-             and thus reflects the geometrical movement characteristics of the mover.">
+<meta property="og:description" content="Creates realistic random trajectories in a 3-D space between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth's surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.">
 <meta property="og:image" content="/logo.png">
 <meta name="twitter:card" content="summary">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
@@ -141,7 +137,7 @@
 <a href="#ertg3d" class="anchor"></a>eRTG3D <img src="reference/figures/logo.png" align="right" alt="" width="120">
 </h1></div>
 
-<p>The <strong>e</strong>mpirically informed <strong>R</strong>andom <strong>T</strong>rajectory <strong>G</strong>enerator in three dimensions (eRTG3D) is an algorithm to generate realistic random trajectories in a 3-D space between two given fix points. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover.</p>
+<p>The <strong>e</strong>mpirically informed <strong>R</strong>andom <strong>T</strong>rajectory <strong>G</strong>enerator in three dimensions (eRTG3D) is an algorithm to generate realistic random trajectories in a 3-D space between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth’s surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.</p>
 <p>The eRTG3D algorithm was developed and implemented as an R package within the scope of a master’s thesis (Unterfinger, <a href="https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf">2018</a>) at the Department of Geography, University of Zurich. The development started from a 2-D version of the eRTG algorithm by Technitis et al. (<a href="https://doi.org/10.5167/uzh-130652">2016</a>).</p>
 <div id="get-started" class="section level2">
 <h2 class="hasAnchor">
@@ -188,8 +184,8 @@
 <div id="references" class="section level2">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
-<p>Unterfinger, M. (<a href="https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf">2018</a>). “3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk”. Master’s thesis. University of Zurich.</p>
-<p>Technitis, G., Weibel, R., Kranstauber, B., and Safi, K. (<a href="https://doi.org/10.5167/uzh-130652">2016</a>). “An algorithm for empirically informed random trajectory generation between two endpoints”. In: GIScience 2016: Ninth International Conference on Geographic Information Science. Vol. 9. s.n., online. DOI: <a href="https://doi.org/10.5167/uzh-130652">10.5167/uzh-130652</a>.</p>
+<p>Unterfinger, M., <a href="https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf">2018</a>. 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master’s thesis. University of Zurich.</p>
+<p>Technitis, G., Weibel, R., Kranstauber, B., and Safi, K., <a href="https://doi.org/10.5167/uzh-130652">2016</a>. An algorithm for empirically informed random trajectory generation between two endpoints. In: GIScience 2016: Ninth International Conference on Geographic Information Science. Vol. 9. s.n., online. DOI: <a href="https://doi.org/10.5167/uzh-130652">10.5167/uzh-130652</a>.</p>
 </div>
 </div>
   </div>

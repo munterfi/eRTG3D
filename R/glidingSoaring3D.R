@@ -44,7 +44,7 @@ get.glideRatio.3d <- function(track) {
 #' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
 #' }
 
@@ -418,7 +418,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @note The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
 #' }
 n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,

@@ -187,7 +187,7 @@ logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' saveImageSlices(rstack, filename = "image")
 #' }
 saveImageSlices <- function(rStack, filename, dir = getwd(), NaVal = 0)

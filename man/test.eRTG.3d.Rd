@@ -25,7 +25,7 @@ A list containing the original CRW and the simulated track (CERW).
 The test simulates a CRW with given parameters and reconstructs it by using the eRTG3D
 }
 \examples{
-\dontrun{
+\donttest{
 test.eRTG.3d()
 }
 }

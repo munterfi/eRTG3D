@@ -7,9 +7,7 @@
 
 The **e**mpirically informed **R**andom **T**rajectory **G**enerator in three dimensions (eRTG3D)
 is an algorithm to generate realistic random trajectories in a 3-D space
-between two given fix points. The trajectory generation is based on
-empirical distribution functions extracted from observed trajectories (training data)
-and thus reflects the geometrical movement characteristics of the mover.
+between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth's surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.
 
 The eRTG3D algorithm was developed and implemented as an R package within the scope of a master's thesis (Unterfinger, [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)) at the Department of Geography, University of Zurich. The development started from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
 
@@ -42,6 +40,10 @@ The **eRTG3D** package contains functions to:
 
 ## References
 
-Unterfinger, M. ([2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)). “3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk”. Master's thesis. University of Zurich.
+Unterfinger, M., [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf). 3-D Trajectory Simulation in Movement Ecology: Conditional
+Empirical Random Walk. Master's thesis. University of Zurich.
 
-Technitis, G., Weibel, R., Kranstauber, B., and Safi, K. ([2016](https://doi.org/10.5167/uzh-130652)). “An algorithm for empirically informed random trajectory generation between two endpoints”. In: GIScience 2016: Ninth International Conference on Geographic Information Science. Vol. 9. s.n., online. DOI: [10.5167/uzh-130652](https://doi.org/10.5167/uzh-130652).
+Technitis, G., Weibel, R., Kranstauber, B., and Safi, K., [2016](https://doi.org/10.5167/uzh-130652). An algorithm for
+empirically informed random trajectory generation between two endpoints. In:
+GIScience 2016: Ninth International Conference on Geographic Information Science.
+Vol. 9. s.n., online. DOI: [10.5167/uzh-130652](https://doi.org/10.5167/uzh-130652).

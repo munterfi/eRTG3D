@@ -5,7 +5,7 @@ citEntry(entry="MastersThesis",
   title = "3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk",
   school = "University of Zurich",
   year = 2018,
-  textVersion = "Unterfinger, M., 2018. 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis. University of Zurich."
+  textVersion = "Unterfinger M (2018). 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis, University of Zurich."
 )
 
 citEntry(entry="Article",
@@ -17,5 +17,5 @@ citEntry(entry="Article",
   volume = 9,
   year = 2016,
   doi = "10.5167/uzh-130652",
-  textVersion = "Technitis, G., Weibel, R., Kranstauber, B., and Safi, K., 2016. An algorithm for empirically informed random trajectory generation between two endpoints. In: GIScience 2016: Ninth International Conference on Geographic Information Science. Vol. 9. s.n., online. DOI: 10.5167/uzh-130652."
+  textVersion = "Technitis G, Weibel R, Kranstauber B, Safi K (2016). “An algorithm for empirically informed random trajectory generation between two endpoints.” GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. doi: 10.5167/uzh-130652."
 )

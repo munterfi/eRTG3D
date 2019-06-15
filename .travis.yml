@@ -5,9 +5,6 @@ before_install:
   - R -e 'install.packages("devtools")'
   - R -e 'install.packages("covr")'
 
-r_github_packages:
-  - munterfinger/eRTG3D
-
 install:
   - R -e 'devtools::install_deps(dep = TRUE)'
 

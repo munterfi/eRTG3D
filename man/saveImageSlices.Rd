@@ -24,7 +24,7 @@ Image sequnces are a common structre to represent voxel data and
 most of the specific software to visualize voxel data is able to read it (e.g. blender)
 }
 \examples{
-\dontrun{
+\donttest{
 saveImageSlices(rstack, filename = "image")
 }
 }

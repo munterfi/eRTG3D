@@ -211,7 +211,7 @@ the time passed between the fix point acquisition</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>track.split.3d</span>(<span class='no'>niclas</span>, <span class='kw'>timeLag</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>niclas</span>)-<span class='fl'>1</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>niclas</span>)-<span class='fl'>1</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.25</span>))</div><div class='output co'>#&gt; <span class='message'>  |Mean time lag: 0.93, tolerance: 0.11, number of splits: 19, proposed change in steps: 0</span></div><div class='output co'>#&gt; $`0`
+    <pre class="examples"><div class='input'><span class='fu'>track.split.3d</span>(<span class='no'>niclas</span>, <span class='kw'>timeLag</span><span class='kw'>=</span><span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fl'>1</span>, <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>niclas</span>)-<span class='fl'>1</span>) + <span class='fu'><a href='https://www.rdocumentation.org/packages/stats/topics/Normal'>rnorm</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/nrow'>nrow</a></span>(<span class='no'>niclas</span>)-<span class='fl'>1</span>, <span class='kw'>mean</span> <span class='kw'>=</span> <span class='fl'>0</span>, <span class='kw'>sd</span> <span class='kw'>=</span> <span class='fl'>0.25</span>))</div><div class='output co'>#&gt; <span class='message'>  |Mean time lag: 0.95, tolerance: 0.15, number of splits: 19, proposed change in steps: 0</span></div><div class='output co'>#&gt; $`0`
 #&gt;         x       y        z
 #&gt; 1 2556476 1188336 1283.736
 #&gt; 2 2558565 1189297 1359.580
@@ -228,27 +228,27 @@ the time passed between the fix point acquisition</p>
 #&gt;         x       y        z
 #&gt; 5 2563809 1190657 1806.566
 #&gt; 6 2567940 1192930 1764.062
+#&gt; 7 2572877 1195780 1532.481
 #&gt; 
 #&gt; $`4`
 #&gt;         x       y        z
-#&gt; 7 2572877 1195780 1532.481
+#&gt; 8 2577051 1198311 1407.334
 #&gt; 
 #&gt; $`5`
 #&gt;         x       y        z
-#&gt; 8 2577051 1198311 1407.334
 #&gt; 9 2580338 1200499 1282.171
 #&gt; 
 #&gt; $`6`
 #&gt;          x       y        z
 #&gt; 10 2581749 1201865 1513.318
-#&gt; 11 2584181 1204396 1553.903
 #&gt; 
 #&gt; $`7`
 #&gt;          x       y        z
-#&gt; 12 2587086 1208264 1355.825
+#&gt; 11 2584181 1204396 1553.903
 #&gt; 
 #&gt; $`8`
 #&gt;          x       y        z
+#&gt; 12 2587086 1208264 1355.825
 #&gt; 13 2589942 1211928 1180.242
 #&gt; 
 #&gt; $`9`
@@ -267,39 +267,36 @@ the time passed between the fix point acquisition</p>
 #&gt; $`12`
 #&gt;          x       y        z
 #&gt; 18 2601943 1219542 1486.655
+#&gt; 19 2606612 1220197 1428.523
+#&gt; 20 2611936 1222073 1245.329
 #&gt; 
 #&gt; $`13`
 #&gt;          x       y        z
-#&gt; 19 2606612 1220197 1428.523
+#&gt; 21 2614472 1223194 1374.984
 #&gt; 
 #&gt; $`14`
 #&gt;          x       y        z
-#&gt; 20 2611936 1222073 1245.329
+#&gt; 22 2619707 1225189 1299.593
+#&gt; 23 2623038 1226295 1637.258
+#&gt; 24 2628725 1229013 1449.789
+#&gt; 25 2634173 1230518 1380.690
 #&gt; 
 #&gt; $`15`
 #&gt;          x       y        z
-#&gt; 21 2614472 1223194 1374.984
-#&gt; 22 2619707 1225189 1299.593
+#&gt; 26 2640336 1231979 1180.499
 #&gt; 
 #&gt; $`16`
 #&gt;          x       y        z
-#&gt; 23 2623038 1226295 1637.258
+#&gt; 27 2646688 1230772 1280.248
 #&gt; 
 #&gt; $`17`
 #&gt;          x       y        z
-#&gt; 24 2628725 1229013 1449.789
-#&gt; 25 2634173 1230518 1380.690
-#&gt; 26 2640336 1231979 1180.499
-#&gt; 27 2646688 1230772 1280.248
 #&gt; 28 2652460 1228745 1369.771
+#&gt; 29 2656826 1229809 1330.951
 #&gt; 
 #&gt; $`18`
-#&gt;          x       y        z
-#&gt; 29 2656826 1229809 1330.951
-#&gt; 30 2659108 1229409 1388.270
-#&gt; 
-#&gt; $`19`
 #&gt;          x       y       z
+#&gt; 30 2659108 1229409 1388.27
 #&gt; 31 2662223 1230279 1088.63
 #&gt; </div></pre>
   </div>

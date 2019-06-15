@@ -176,7 +176,7 @@ text-align: justify}
 <div id="simulations-in-2-d" class="section level2">
 <h2 class="hasAnchor">
 <a href="#simulations-in-2-d" class="anchor"></a>Simulations in 2-D</h2>
-<p>Now the workflow is the same as in 3-D, described in the <a href="v2-standard-workflow.html">standard workflow vignette</a>:</p>
+<p>Now the workflow is the same as in 3-D, described in the standard workflow vignette:</p>
 <p><strong>Note:</strong> Since it is not feasible to use a DEM (<code>DEM = demRaster</code>) in 2-D simualtions, the adding of a DEM in the somulations will result in dead ends. A BG layer (<code>BG = bgRaster</code>) with a binary mask or continous probabilities for the simulation area can be passed (e.g. water bodies, nutrition sources, …).</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">simulation<span class="fl">.2</span>D &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span>(trajectory<span class="fl">.2</span>D)</a></code></pre></div>
 <p>And plotting the results:</p>

@@ -2,8 +2,20 @@ citHeader("To cite package eRTG3D in publications, please use:")
 
 citEntry(entry="MastersThesis",
   author = "Merlin Unterfinger",
-  title = "{3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk}",
+  title = "3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk",
   school = "University of Zurich",
   year = 2018,
-  textVersion = "Unterfinger, M., 2018. 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis. University of Zurich."
+  textVersion = "Unterfinger M (2018). 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis, University of Zurich."
+)
+
+citEntry(entry="Article",
+  author = "Georgios Technitis, Robert Weibel, Bart Kranstauber, Kamran Safi",
+  title = "An algorithm for empirically informed random trajectory generation between two endpoints",
+  journal = "GIScience 2016: Ninth International Conference on Geographic Information Science",
+  pages = "online",
+  publisher = "s.n.",
+  volume = 9,
+  year = 2016,
+  doi = "10.5167/uzh-130652",
+  textVersion = "Technitis G, Weibel R, Kranstauber B, Safi K (2016). “An algorithm for empirically informed random trajectory generation between two endpoints.” GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. doi: 10.5167/uzh-130652."
 )

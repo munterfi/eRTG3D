@@ -7,3 +7,5 @@
 ^doc$
 ^.*gif$
 ^index\.md$
+^\.travis\.yml$
+^codecov\.yml$

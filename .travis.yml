@@ -6,10 +6,10 @@ before_install:
   - R -e 'install.packages("covr")'
 
 r_github_packages:
-  - r-lib/covr
+  - munterfinger/eRTG3D
 
 install:
-  - R -e 'devtools::install_deps(dep = T)'
+  - R -e 'devtools::install_deps(dep = TRUE)'
 
 script:
   - R CMD build .

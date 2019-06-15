@@ -7,9 +7,9 @@
 \description{
 This is data to be included in the package and can be used to test its functionality.
 The \code{dem} data is a \code{RasterLayer} and has a resolution of 90 meters. It is the topography
-of the Swiss midlands. The complete dataset can be downloaded directly from www.cgiar-csi.org.
+of the Swiss midlands. The complete dataset can be downloaded directly from http://srtm.csi.cgiar.org/srtmdata/.
 }
 \references{
-\url{http://www.cgiar-csi.org/data/}
+\url{http://srtm.csi.cgiar.org/srtmdata/}
 }
 \keyword{data}

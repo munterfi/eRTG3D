@@ -39,7 +39,7 @@ head(trajectory.2D)
 If the original trajectory is already two-dimensional, a third column `z` has to be added: `trajectory.2D$z <- 0`. 
 
 ## Simulations in 2-D
-Now the workflow is the same as in 3-D, described in the [standard workflow vignette](v2-standard-workflow.html):
+Now the workflow is the same as in 3-D, described in the standard workflow vignette:
 
 ```{r, echo = FALSE, eval=TRUE, include=FALSE}
 simulation.2D <- reproduce.track.3d(trajectory.2D)

@@ -131,7 +131,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' test.eRTG.3d()
 #' }
 test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = TRUE, plotDensities = TRUE)

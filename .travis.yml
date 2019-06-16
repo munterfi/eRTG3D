@@ -5,6 +5,9 @@ r:
   - devel
 sudo: required
 
+cache:
+  - packages
+  
 before_install:
 ### GDAL
   - sudo add-apt-repository -y ppa:ubuntugis/ubuntugis-unstable
@@ -25,8 +28,8 @@ before_install:
   - R -e 'install.packages("devtools")'
   - R -e 'install.packages("covr")'
 
-r_github_packages:
-  - r-lib/covr
+#r_github_packages:
+#  - r-lib/covr
 
 install:
   - R -e 'devtools::install_deps(dep = T)'

@@ -1,11 +1,14 @@
 # eRTG3D 0.6.0
 Initial submission to CRAN. New github page created with `pkgdown`.
-Restructured and updated package documentation.
+Added continuous integration by Travis CI, unit testing with `testthat` and `codecovr` for test coverage assessment. Restructured and updated package documentation. 
 
 ## New features
 * Package now available on CRAN: `install.packages("eRTG3D")`
 * GitHub page for the package. Created with `pkgdown`
 * Documentation for conducting 2-D simulations and voxel counting in order to extract utilization distributions.
+* Continuous integration by Travis CI
+* Unit testing with `testthat`
+* Test coverage assessment using `codecovr`
 * New eRTG3D logo
 * New index/home area with interactive 3-D plots
 * Shiny app - Online eRTG3D simulator: https://mufi.shinyapps.io/ertg3d-simulator/

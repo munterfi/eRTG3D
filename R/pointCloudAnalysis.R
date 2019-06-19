@@ -27,8 +27,7 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
     utils::flush.console()
     p <- points[points[,3] > (zMin+(i-1)*zRes) & points[,3] < (zMin+i*zRes), ]
     if (!nrow(p) == 0) {
-      p <- sp::SpatialPoints(coords = cbind(p[,1], p[,2]))
-      r <- raster::rasterize(p, rTem, fun='count')
+      r <- raster::rasterize(cbind(p[,1], p[,2]), rTem, fun='count')
       r[is.na(r[])] <- 0
       rStack <- raster::stack(rStack, r)
     } else {

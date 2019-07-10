@@ -4,6 +4,7 @@ test_that("get.densities.3d() returns the correct structure", {
   P <- get.densities.3d(turnAngle = test_vec, liftAngle = test_vec, stepLength = test_vec,
                    deltaLift = test_delta_vec, deltaTurn = test_delta_vec, deltaStep = test_delta_vec,
                    gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = Inf)
+  # Test P probability
   expect_equal(names(P$tldCube), c("values", "tRes", "lRes", "dRes"))
   expect_is(P$autoT, "function")
   expect_is(P$autoL, "function")

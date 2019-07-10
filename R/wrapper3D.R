@@ -236,8 +236,8 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
   cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
                                              a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}
-  if(plot2d){print(plot2d(origTrack = track, cerwList = cerwList, DEM = DEM))}
-  if(plot3d){plot3d(origTrack = track, cerwList = cerwList, DEM = DEM)}
+  if(plot2d){print(plot2d(origTrack = track, simTrack = cerwList, DEM = DEM))}
+  if(plot3d){plot3d(origTrack = track, simTrack = cerwList, DEM = DEM)}
   return(cerwList)
 }
 

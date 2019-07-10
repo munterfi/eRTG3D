@@ -71,9 +71,9 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
   # create histogram
   tCuts <- .cutMidpoints(turn, nx); lCuts <- .cutMidpoints(lift, ny); dCuts <- .cutMidpoints(step, nz)
-  h <- list(turn=tCuts[[1]],
-            lift=lCuts[[1]],
-            step=dCuts[[1]])
+  h <- list(turn = tCuts[[1]],
+            lift = lCuts[[1]],
+            step = dCuts[[1]])
   h <- do.call(data.frame, h)
   h <- as.data.frame(table(h))
   # resolutions
@@ -81,7 +81,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   # probabilities
   colnames(h)[4] <- "prob"
   # Remove zeros if desired
-  if (rm.zeros) {h <- h[!h$prob==0, ]}
+  if (rm.zeros) {h <- h[!h$prob == 0, ]}
   # normalize frequency to get probabilities
   h$prob <- h$prob/sum(h$prob)
   # convert factors to numeric
@@ -105,7 +105,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @examples
 #' .cutMidpoints(x, breaks)
 #' @noRd
-.cutMidpoints <- function(x, breaks, rm.empty=TRUE) {
+.cutMidpoints <- function(x, breaks, rm.empty = TRUE) {
   if (breaks <= 1) {return(list(cuts = factor(rep(mean(x), length(x))), res = 0))} 
   nb <- as.integer(breaks + 1)
   dx <- diff(rx <- range(x, na.rm = TRUE))
@@ -113,7 +113,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
   res <- stats::median(diff(breaks))
   breaks[c(1L, nb)] <- c(rx[1L] - dx/1000, rx[2L] +
                            dx/1000)
-  code <- .bincode(x, breaks, right=TRUE, include.lowest=FALSE)
+  code <- .bincode(x, breaks, right = TRUE, include.lowest = FALSE)
   width <- diff(breaks); minBreak <- min(breaks)
   midpoints <- sapply(1:(length(breaks)-1), function(ii) {minBreak + sum(width[1:ii-1]) + width[ii]/2})
   if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}

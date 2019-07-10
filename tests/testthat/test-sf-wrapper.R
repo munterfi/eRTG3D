@@ -13,4 +13,10 @@ test_that("sf linkage functions work", {
   expect_equal(is.sf.3d(niclas.df), FALSE)
   niclas.df.m <- sf2df.3d(niclas.sf.m)
   expect_equal(is.sf.3d(niclas.df.m), FALSE)
+  # transform CRS
+  row.names(niclas) <- NULL
+  expect_equal(niclas,
+               transformCRS.3d(
+                 transformCRS.3d(niclas, fromCRS="+init=epsg:2056", toCRS="+init=epsg:4326"),
+                 toCRS="+init=epsg:2056", fromCRS="+init=epsg:4326")[, 1:3])
 })

@@ -16,30 +16,31 @@
 plot3d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = NULL, padding = 0.1, timesHeight = 10) {
   if (!is.list(origTrack) || (!is.list(simTrack) && !is.null(simTrack))) stop("Track input has to be of type list or data.frame.")
   if (is.list(origTrack) && is.data.frame(origTrack)) {origTrack <- list(origTrack)}
-  if (is.list(simTrack) && is.data.frame(simTrack)) {simTrack <-list(simTrack)}
+  if (is.list(simTrack) && is.data.frame(simTrack)) {simTrack <- list(simTrack)}
+  if (!is.null(simTrack)) {simTrack <- simTrack[!unlist(lapply(simTrack, is.null))]}
   if (padding > 1 && padding < 0) stop("The variable 'padding' must be a value between 0 and 1.")
   extents <- do.call("rbind", lapply(X = append(origTrack, simTrack), FUN = function(track){
-    c(floor(min(track$x)), floor(max(track$x))+1,
-      floor(min(track$y)), floor(max(track$y))+1,
-      floor(min(track$z)), floor(max(track$z))+1)
+    c(floor(min(track$x)), floor(max(track$x)) + 1,
+      floor(min(track$y)), floor(max(track$y)) + 1,
+      floor(min(track$z)), floor(max(track$z)) + 1)
   }))
-  minX <- min(extents[,1]); maxX <- max(extents[,2]);
-  minY <- min(extents[,3]); maxY <- max(extents[,4]);
-  minZ <- min(extents[,5]); maxZ <- max(extents[,6]);
-  dx <- maxX-minX; dy <- maxY-minY; dz <- maxZ-minZ
+  minX <- min(extents[, 1]); maxX <- max(extents[, 2]);
+  minY <- min(extents[, 3]); maxY <- max(extents[, 4]);
+  minZ <- min(extents[, 5]); maxZ <- max(extents[, 6]);
+  dx <- maxX - minX; dy <- maxY - minY; dz <- maxZ - minZ
   # pad extent
-  minX <- minX - round(dx*padding); maxX <- maxX + round(dx*padding);
-  minY <- minY - round(dy*padding); maxY <- maxY + round(dy*padding);
-  minZ <- minZ - round(dz*padding); maxZ <- maxZ + round(dz*padding);
+  minX <- minX - round(dx * padding); maxX <- maxX + round(dx * padding);
+  minY <- minY - round(dy * padding); maxY <- maxY + round(dy * padding);
+  minZ <- minZ - round(dz * padding); maxZ <- maxZ + round(dz * padding);
   dx <- maxX-minX; dy <- maxY-minY; dz <- maxZ-minZ
   ratio <- dy/dx
   # Create minimum cube
   d <- max(c(dx, dy, dz))
-  middle <- (minX+maxX)/2
+  middle <- (minX + maxX)/2
   rMinX <- middle - d/2; rMaxX <- middle + d/2
-  middle <- (minY+maxY)/2
+  middle <- (minY + maxY)/2
   rMinY <- middle - d/2; rMaxY <- middle + d/2
-  middle <- (minZ+maxZ)/2
+  middle <- (minZ + maxZ)/2
   rMinZ <- middle - (d * 1/timesHeight)/2; rMaxZ <- middle + (d * 1/timesHeight)/2
   # Define z axis
   axz <- list(title = 'z', autoscale = TRUE, range = c(min(minZ,rMinZ), max(maxZ,rMaxZ)))
@@ -101,17 +102,18 @@ plot2d <- function(origTrack, simTrack = NULL, titleText = character(1), DEM = N
 {
   if (!is.list(origTrack) || (!is.list(simTrack) && !is.null(simTrack))) stop("Track input has to be of type list or data.frame.")
   if (is.list(origTrack) && is.data.frame(origTrack)) {origTrack <- list(origTrack)}
-  if (is.list(simTrack) && is.data.frame(simTrack)) {simTrack <-list(simTrack)}
+  if (is.list(simTrack) && is.data.frame(simTrack)) {simTrack <- list(simTrack)}
+  if (!is.null(simTrack)) {simTrack <- simTrack[!unlist(lapply(simTrack, is.null))]}
   if (padding > 1 && padding < 0) stop("The variable 'padding' must be a value between 0 and 1.")
   extents <- do.call("rbind", lapply(X = append(origTrack, simTrack), FUN = function(track){
-    c(floor(min(track$x)), floor(max(track$x))+1,
-      floor(min(track$y)), floor(max(track$y))+1)}))
-  minX <- min(extents[,1]); maxX <- max(extents[,2]);
-  minY <- min(extents[,3]); maxY <- max(extents[,4]);
-  dx <- maxX-minX; dy <- maxY-minY;
+    c(floor(min(track$x)), floor(max(track$x)) + 1,
+      floor(min(track$y)), floor(max(track$y)) + 1)}))
+  minX <- min(extents[, 1]); maxX <- max(extents[, 2]);
+  minY <- min(extents[, 3]); maxY <- max(extents[, 4]);
+  dx <- maxX - minX; dy <- maxY - minY;
   # pad extent
-  minX <- minX - round(dx*padding); maxX <- maxX + round(dx*padding);
-  minY <- minY - round(dy*padding); maxY <- maxY + round(dy*padding);
+  minX <- minX - round(dx*padding); maxX <- maxX + round(dx * padding);
+  minY <- minY - round(dy*padding); maxY <- maxY + round(dy * padding);
   # set up plot
   p <- ggplot2::ggplot() +
     ggplot2::theme_classic() +
@@ -343,11 +345,11 @@ plot3d.tldCube <- function(tldCube) {
   p <- plotly::plot_ly()
   if(length(unique(df$prob))==1){
     p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z,
-                             marker = list(cmin = 0, cmax = unique(df$prob), opacity = 0.9, colorbar=list(title='Probability'),
+                             marker = list(cmin = 0, cmax = unique(df$prob), opacity = 0.9, colorbar = list(title = 'Probability'),
                                            color = ~prob, colorscale = "Bluered", showscale = TRUE))
   } else {
     p <- plotly::add_markers(p, data = df, x = ~x, y = ~y, z = ~z, size = ~prob,
-                             marker = list(opacity = 0.9, colorbar=list(title='Probability'),
+                             marker = list(opacity = 0.9, colorbar = list(title = 'Probability'),
                                            color = ~prob, colorscale = "Bluered", showscale = TRUE))
   }
   p <- plotly::add_trace(p, data = dfAx, x = ~x, y = ~y, z = ~z,
@@ -368,5 +370,5 @@ plot3d.tldCube <- function(tldCube) {
   p <- plotly::layout(p, title = paste("Bin width - t:", round(tldCube$tRes,3),
                                        ", l:", round(tldCube$lRes,3),
                                        ", d:", round(tldCube$dRes,3), sep = ""))
-  print(p)
+  suppressWarnings(print(p))
 }

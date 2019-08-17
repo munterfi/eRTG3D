@@ -75,7 +75,7 @@ quantified is number of total segments less than one
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -186,7 +186,7 @@ quantified is number of total segments less than one
     
     </div>
 
-    <pre class="usage"><span class='fu'>qProb.3d</span>(<span class='no'>sim</span>, <span class='no'>n.locs</span>, <span class='kw'>multicore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxBin</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
+    <pre class="usage"><span class='fu'>qProb.3d</span>(<span class='no'>sim</span>, <span class='no'>n.locs</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>maxBin</span> <span class='kw'>=</span> <span class='fl'>25</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,8 +202,8 @@ x,y,z-coordinates, the arrival azimuth and the arrival gradient.</p></td>
 the length of the desired conditional empirical random walk</p></td>
     </tr>
     <tr>
-      <th>multicore</th>
-      <td><p>logical: run computations in parallel (n-1 cores)?</p></td>
+      <th>parallel</th>
+      <td><p>logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)</p></td>
     </tr>
     <tr>
       <th>maxBin</th>
@@ -217,7 +217,7 @@ the length of the desired conditional empirical random walk</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>qProb.3d</span>(<span class='no'>niclas</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>  |Extracting Q probabilities for 3 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Runtime: 0.01 secs</span></div><div class='output co'>#&gt; [[1]]
+    <pre class="examples"><div class='input'><span class='fu'>qProb.3d</span>(<span class='no'>niclas</span>, <span class='fl'>3</span>)</div><div class='output co'>#&gt; <span class='message'>  |Extracting Q probabilities for 3 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0s</span></div><div class='output co'>#&gt; [[1]]
 #&gt; [[1]]$values
 #&gt;             turn        lift     step       prob
 #&gt; 2   -0.353684014 -0.26142679 1865.097 0.03333333

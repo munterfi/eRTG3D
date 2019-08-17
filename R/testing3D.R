@@ -121,7 +121,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #'
 #' The test simulates a CRW with given parameters and reconstructs it by using the eRTG3D
 #'
-#' @param multicore logical: test with multicore?
+#' @param parallel logical: test running parallel?
 #' @param returnResult logical: return tracks generated?
 #' @param plot2d logical: plot tracks on 2-D plane?
 #' @param plot3d logical: plot tracks in 3-D?
@@ -134,7 +134,7 @@ test.verification.3d <- function(track1, track2, alpha = 0.05, plot = FALSE, tes
 #' \donttest{
 #' test.eRTG.3d()
 #' }
-test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = TRUE, plotDensities = TRUE)
+test.eRTG.3d <- function(parallel = FALSE, returnResult = FALSE, plot2d = FALSE, plot3d = TRUE, plotDensities = TRUE)
 {
   message("  |*** Testing eRTG3D ***")
   set.seed(1)
@@ -150,13 +150,13 @@ test.eRTG.3d <- function(multicore = FALSE, returnResult = FALSE, plot2d = FALSE
   uerw <- sim.uncond.3d(nStep*1500, start = c(crw$x[1],crw$y[1],crw$z[1]),
                         a0 = crw$a[1], g0 = crw$g[1], densities = D)
   tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05)
-  if(multicore) {
-    Q <- qProb.3d(uerw, nStep, multicore = TRUE)
+  if(parallel) {
+    Q <- qProb.3d(uerw, nStep, parallel = TRUE)
     cerw <- n.sim.cond.3d(n.sim = 100, n.locs = nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
-                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q, multicore = TRUE)
+                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q, parallel = TRUE)
     cerw <- filter.dead.ends(cerw)
   } else {
-    Q <- qProb.3d(uerw, nStep, multicore = FALSE)
+    Q <- qProb.3d(uerw, nStep, parallel = FALSE)
     cerw <- sim.cond.3d(nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
                         a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q)
   }

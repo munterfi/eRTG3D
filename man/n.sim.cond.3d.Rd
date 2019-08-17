@@ -5,7 +5,7 @@
 \title{Conditional Empirical Random Walks (CERW) in 3-D}
 \usage{
 n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
-  densities, qProbs, error = FALSE, multicore = FALSE, DEM = NULL,
+  densities, qProbs, error = FALSE, parallel = FALSE, DEM = NULL,
   BG = NULL)
 }
 \arguments{
@@ -27,7 +27,7 @@ n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
 
 \item{error}{logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?}
 
-\item{multicore}{logical: run computations in parallel (n-1 cores)?}
+\item{parallel}{logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)}
 
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}
 

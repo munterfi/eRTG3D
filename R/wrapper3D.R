@@ -5,11 +5,11 @@
 #' as well as the uni-dimensional distributions of the differences
 #' of the turning angles, lift angles and step lengths with a lag of 1 to maintain
 #' minimal level of autocorrelation in each of the terms.
-#' 
+#'
 #' @section Note:
 #' The time between the acquisition of fix points  of the track must be constant,
 #' otherwise this leads to distorted statistic distributions,
-#' which increases the probability of dead ends. In this case please check 
+#' which increases the probability of dead ends. In this case please check
 #' \link[eRTG3D]{track.split.3d} and \link[eRTG3D]{get.section.densities.3d}
 #'
 #' @param track a data.frame with 3 columns containing the x,y,z coordinates
@@ -79,7 +79,7 @@ get.section.densities.3d <- function(trackSections, gradientDensity = TRUE, heig
 }
 
 #' This function splits the by outliers in the time lag.
-#' 
+#'
 #' The length of timeLag must be the the track's length minus 1 and represents
 #' the time passed between the fix point acquisition
 #'
@@ -201,7 +201,7 @@ track.extent <- function(track, zAxis = FALSE){
 #' @param error logical: add error term to movement in simulation?
 #' @param DEM a raster containing a digital elevation model, covering the same extent as the track
 #' @param BG a raster influencing the probabilities.
-#' @param multicore logical: run calculations on multiple cores?
+#' @param parallel logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)
 #' @param plot2d logical: plot tracks on 2-D plane?
 #' @param plot3d logical: plot tracks in 3-D?
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
@@ -213,12 +213,12 @@ track.extent <- function(track, zAxis = FALSE){
 #'
 #' @examples
 #' reproduce.track.3d(niclas[1:10, ])
-reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
+reproduce.track.3d <- function(track, n.sim = 1, parallel = FALSE, error = TRUE, DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE, plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 {
   .is.df.xyz(track = track)
   track <- track.properties.3d(track)
   n.locs <- nrow(track)
-  if (n.locs>1500) stop("Track is too long (>1500 steps).")
+  if (n.locs > 1500) stop("Track is too long (>1500 steps).")
   turnAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
   deltaTurn <- diff(turnAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
   heightEllipsoid <- track$z
@@ -232,9 +232,9 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
                         heightEllipsoid = heightEllipsoid, heightTopo = heightTopo, maxBin = maxBin)
   uerw <- sim.uncond.3d(n.locs*1500, start = c(track$x[1],track$y[1],track$z[1]),
                         a0 = track$a[1], g0 = track$g[1], densities = D, error = error)
-  Q <- qProb.3d(uerw, n.locs, multicore = multicore, maxBin = maxBin)
+  Q <- qProb.3d(uerw, n.locs, parallel = parallel, maxBin = maxBin)
   cerwList <- suppressWarnings(n.sim.cond.3d(n.sim = n.sim, n.locs <- n.locs, start=c(track$x[1],track$y[1],track$z[1]), end=c(track$x[n.locs],track$y[n.locs],track$z[n.locs]),
-                                             a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, multicore = multicore, DEM = DEM, BG = BG))
+                                             a0 = track$a[1], g0 = track$g[1], densities=D, qProbs=Q, error = error, parallel = parallel, DEM = DEM, BG = BG))
   if(filterDeadEnds){cerwList <- filter.dead.ends(cerwList)}
   if(plot2d){print(plot2d(origTrack = track, simTrack = cerwList, DEM = DEM))}
   if(plot3d){plot3d(origTrack = track, simTrack = cerwList, DEM = DEM)}
@@ -242,7 +242,7 @@ reproduce.track.3d <- function(track, n.sim = 1, multicore = FALSE, error = TRUE
 }
 
 #' Remove dead ends
-#' 
+#'
 #' Function to filter out tracks that have found a dead end
 #'
 #' @param cerwList list of data.frames and NULL entries
@@ -264,8 +264,8 @@ filter.dead.ends <- function(cerwList)
 }
 
 #' Moving median in one dimension
-#' 
-#' Applies a twosided moving median window on a vector, 
+#'
+#' Applies a twosided moving median window on a vector,
 #' where the window paramter is the total size of the window.
 #' The value in the window middle is the index where the median of the window is written.
 #' Therefore the window size has to be an uneven number.
@@ -293,7 +293,7 @@ movingMedian <- function(data, window){
 }
 
 #' Turn angle to target
-#' 
+#'
 #' Calculates the turn angle between every point in the track and the last point (target).
 #'
 #' @param track a track data.frame containing x, y and z coordinates
@@ -310,7 +310,7 @@ turn2target.3d <- function(track) {
   .wrap(atan2(target[2]-track$y, target[1] - track$x) - track$a)}
 
 #' Lift angle to target
-#' 
+#'
 #' Calculates the lift angle between every point in the track and the last point (target).
 #'
 #' @param track a track data.frame containing x, y and z coordinates
@@ -328,7 +328,7 @@ lift2target.3d <- function(track) {
               (target[3]-track$z)) - track$g)}
 
 #' Distance to target
-#' 
+#'
 #' Calculates the distance between every point in the track and the last point (target).
 #'
 #' @param track a track data.frame containing x, y and z coordinates

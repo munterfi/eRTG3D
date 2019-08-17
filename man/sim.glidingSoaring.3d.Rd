@@ -43,7 +43,7 @@ Creates a conditional empirical random walk in gliding mode, between a start and
 The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
+It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d}
 and pass them to the function.
 }
 \note{

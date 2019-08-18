@@ -95,6 +95,9 @@ reference:
     - '`n.sim.glidingSoaring.3d`'
     - '`qProb.3d`'
     - '`reproduce.track.3d`'
+    - '`parpbapply`'
+    - '`parpblapply`'
+    - '`parpbsapply`'
   - title: Testing and verification
     contents:
     - '`test.eRTG.3d`'

@@ -113,7 +113,7 @@ parpbsapply <- function(X, FUN, packages = NULL, export = NULL, envir = environm
             MARGIN = NULL, nNodes = nNodes, envir = envir)
 }
 
-#' Parallel lapply with progressbar
+#' Parallel apply with progressbar
 #'
 #' Function detects the operating system and chooses the approximate kind of process for parallelizing the task:
 #' Windows: PSOCKCluster, Unix: Forking.

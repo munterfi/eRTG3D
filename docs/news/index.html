@@ -174,14 +174,19 @@
     <div id="ertg3d-0-6-1" class="section level1">
 <h1 class="page-header">
 <a href="#ertg3d-0-6-1" class="anchor"></a>eRTG3D 0.6.1</h1>
-<p>Third submission to CRAN. Replaced the parallel function version with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems.</p>
+<p>Third submission to CRAN. Replaced the parallel versions of the functions with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems. Number of nodes in the cluster can now be set manually.</p>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>Package now available on CRAN: <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("eRTG3D")</a></code>.</li>
-<li>New there is only one function for parallel computation on windows AND unix including a progressbar. The parameter name has changed from <code>multicore</code> to <code>parallel</code> since this notation is correct. It is now also possible to specify the number of nodes in the cluster (forkCluster or PSOCKCluster), by setting <code>parallel = nNodes</code>.</li>
+<li>
+<p>New unifying function for parallel computation on Windows AND Unix systems including a progressbar. The parameter name has changed from <code>multicore</code> to <code>parallel</code> since this notation is more correct.</p>
+<h1 id="the-number-of-nodes-in-the-cluster-forkcluster-or-psockcluster-can-be-specified-by-setting-parallel-nnodes." class="page-header">The number of nodes in the cluster (forkCluster or PSOCKCluster) can be specified, by setting <code>parallel = nNodes</code>.</h1>
+</li>
 <li>Added tests for parallel computation.</li>
+<li>URL to the master thesis and corrected DOI.</li>
+<li><p>The function <code><a href="../reference/sim.glidingSoaring.3d.html">sim.glidingSoaring.3d()</a></code> is now silent, to unmute set <code>verbose = TRUE</code>.</p></li>
 </ul>
 </div>
 <div id="r-cmd-check" class="section level2">

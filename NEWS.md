@@ -1,10 +1,13 @@
 # eRTG3D 0.6.1
-Third submission to CRAN. Replaced the parallel function version with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems.
+Third submission to CRAN. Replaced the parallel versions of the functions with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems. Number of nodes in the cluster can now be set manually.
 
 ## New features
 * Package now available on CRAN: `install.packages("eRTG3D")`.
-* New there is only one function for parallel computation on windows AND unix including a progressbar. The parameter name has changed from `multicore` to `parallel` since this notation is correct. It is now also possible to specify the number of nodes in the cluster (forkCluster or PSOCKCluster), by setting `parallel = nNodes`.
+* New unifying function for parallel computation on Windows AND Unix systems including a progressbar. The parameter name has changed from `multicore` to `parallel` since this notation is more correct.
+# The number of nodes in the cluster (forkCluster or PSOCKCluster) can be specified, by setting `parallel = nNodes`.
 * Added tests for parallel computation.
+* URL to the master thesis and corrected DOI.
+* The function `sim.glidingSoaring.3d()` is now silent, to unmute set `verbose = TRUE`.
 
 ## R CMD Check
 0 errors ✔ | 0 warnings ✔ | 0 notes ✔

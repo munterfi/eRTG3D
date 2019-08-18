@@ -2,7 +2,7 @@
 % Please edit documentation in R/parallel3D.R
 \name{parpbapply}
 \alias{parpbapply}
-\title{Parallel lapply with progressbar}
+\title{Parallel apply with progressbar}
 \usage{
 parpbapply(X, FUN, MARGIN, packages = NULL, export = NULL,
   envir = environment(), nNodes = parallel::detectCores() - 1)

@@ -6,7 +6,7 @@
 \usage{
 sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0,
   0), end = start, a0, g0, error = TRUE, smoothTransition = TRUE,
-  glideRatio = 15, DEM = NULL, BG = NULL)
+  glideRatio = 15, DEM = NULL, BG = NULL, verbose = FALSE)
 }
 \arguments{
 \item{MODE}{raster layer containing the number/index of the mode, which should be used at each location}
@@ -34,6 +34,8 @@ sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0,
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}
 
 \item{BG}{a background raster layer that can be used to inform the choice of steps}
+
+\item{verbose}{logical: print current mode used?}
 }
 \value{
 A 'soaring-gliding' trajectory in the form of data.frame

@@ -7,7 +7,7 @@
 n.sim.glidingSoaring.3d(n.sim = 1, parallel = FALSE, MODE, dGliding,
   dSoaring, qGliding, start = c(0, 0, 0), end = start, a0, g0,
   error = TRUE, smoothTransition = TRUE, glideRatio = 20,
-  DEM = NULL, BG = NULL)
+  DEM = NULL, BG = NULL, verbose = FALSE)
 }
 \arguments{
 \item{n.sim}{number of simulations to produce}
@@ -39,6 +39,8 @@ n.sim.glidingSoaring.3d(n.sim = 1, parallel = FALSE, MODE, dGliding,
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}
 
 \item{BG}{a background raster layer that can be used to inform the choice of steps}
+
+\item{verbose}{logical: print current mode used?}
 }
 \value{
 A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.

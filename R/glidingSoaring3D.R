@@ -37,6 +37,7 @@ get.glideRatio.3d <- function(track) {
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends
+#' @param verbose logical: print current mode used?
 #'
 #' @return A 'soaring-gliding' trajectory in the form of data.frame
 #' @export
@@ -49,7 +50,8 @@ get.glideRatio.3d <- function(track) {
 #' }
 
 sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
-                                  error = TRUE, smoothTransition = TRUE, glideRatio = 15, DEM = NULL, BG = NULL)
+                                  error = TRUE, smoothTransition = TRUE, glideRatio = 15, DEM = NULL, BG = NULL,
+                                  verbose = FALSE)
 {
   start.time <- Sys.time()
   # Check extent
@@ -143,8 +145,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
         # UERW in soaring
         modeInd[i, m] <- 1
         # write on console
-        cat("\r  |Mode:", m, "\r")
-        utils::flush.console()
+        if (verbose) {
+          cat("\r  |Mode:", m, "\r")
+          utils::flush.console()
+        }
         # get coordinates of the tldCube
         ts <- dList[[m]]$tldCube$values$turn
         ls <- dList[[m]]$tldCube$values$lift
@@ -232,8 +236,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       # CERW in gliding mode
       modeInd[i, m] <- 1
       # write on console
-      cat("\r  |Mode:", m, "\r")
-      utils::flush.console()
+      if (verbose) {
+        cat("\r  |Mode:", m, "\r")
+        utils::flush.console()
+      }
       # get coordinates of the tldCube
       ts <- dList[[m]]$tldCube$values$turn
       ls <- dList[[m]]$tldCube$values$lift
@@ -409,6 +415,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
 #' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends
+#' @param verbose logical: print current mode used?
 #' @param n.sim number of simulations to produce
 #' @param parallel logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)
 #'
@@ -422,21 +429,21 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
 #' }
 n.sim.glidingSoaring.3d <- function(n.sim = 1, parallel = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
-                                    error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL)
+                                    error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL, verbose = FALSE)
 {
   n.sim <- round(n.sim)
-  if (n.sim <= 1) {return(sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                                                error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))}
+  if (n.sim <= 1) {return(sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start = start, end = end, a0 = a0, g0 = g0,
+                                                error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG, verbose = verbose))}
   nNodes <- .nNodes(parallel)
   message(paste("  |Simulate ", n.sim ," 'gliding & soaring' with ", (length(qGliding) + 1) , " gliding steps", sep = ""))
   cerwList <- parpblapply(X = 1:n.sim, FUN = function(x){
     n.sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring,
-                            qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
+                            qGliding = qGliding, start = start, end = end, a0 = a0, g0 = g0,
                             error = error, smoothTransition = smoothTransition,
-                            glideRatio = glideRatio, DEM = DEM, BG = BG)},
+                            glideRatio = glideRatio, DEM = DEM, BG = BG, verbose = verbose)},
     export = c("MODE", "dGliding", "dSoaring", "qGliding",
                "start", "end", "a0", "g0", "error",
-               "smoothTransition", "glideRatio", "DEM", "BG"),
+               "smoothTransition", "glideRatio", "DEM", "BG", "verbose"),
     packages = c("eRTG3D"),
     nNodes = nNodes, envir = environment())
   return(cerwList)

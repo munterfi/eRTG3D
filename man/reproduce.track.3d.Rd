@@ -4,7 +4,7 @@
 \alias{reproduce.track.3d}
 \title{Reproduce a track with the eRTG3D}
 \usage{
-reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
+reproduce.track.3d(track, n.sim = 1, parallel = FALSE, error = TRUE,
   DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE,
   plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
 }
@@ -13,7 +13,7 @@ reproduce.track.3d(track, n.sim = 1, multicore = FALSE, error = TRUE,
 
 \item{n.sim}{number of simulations that should be done}
 
-\item{multicore}{logical: run calculations on multiple cores?}
+\item{parallel}{logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)}
 
 \item{error}{logical: add error term to movement in simulation?}
 

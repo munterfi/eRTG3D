@@ -43,7 +43,7 @@
 The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 The gliding is simulated with sim.cond.3d and soaring with sim.uncond.3d,
 therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-It is important to extract for every mode in the MODE raster layer a corresponding densities object with get.densities.3d 
+It is important to extract for every mode in the MODE raster layer a corresponding densities object with get.densities.3d
 and pass them to the function." />
 
 <meta property="og:image" content="/logo.png" />
@@ -77,7 +77,7 @@ and pass them to the function." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -185,15 +185,15 @@ and pass them to the function." />
 The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 The gliding is simulated with <a href='sim.cond.3d.html'>sim.cond.3d</a> and soaring with <a href='sim.uncond.3d.html'>sim.uncond.3d</a>,
 therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-It is important to extract for every mode in the MODE raster layer a corresponding densities object with <a href='get.densities.3d.html'>get.densities.3d</a> 
+It is important to extract for every mode in the MODE raster layer a corresponding densities object with <a href='get.densities.3d.html'>get.densities.3d</a>
 and pass them to the function.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>n.sim.glidingSoaring.3d</span>(<span class='kw'>n.sim</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>multicore</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>MODE</span>, <span class='no'>dGliding</span>,
+    <pre class="usage"><span class='fu'>n.sim.glidingSoaring.3d</span>(<span class='kw'>n.sim</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>parallel</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>MODE</span>, <span class='no'>dGliding</span>,
   <span class='no'>dSoaring</span>, <span class='no'>qGliding</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='no'>start</span>, <span class='no'>a0</span>, <span class='no'>g0</span>,
   <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>smoothTransition</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>glideRatio</span> <span class='kw'>=</span> <span class='fl'>20</span>,
-  <span class='kw'>DEM</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BG</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+  <span class='kw'>DEM</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BG</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,8 +203,8 @@ and pass them to the function.</p>
       <td><p>number of simulations to produce</p></td>
     </tr>
     <tr>
-      <th>multicore</th>
-      <td><p>logical: should simulations be spread to the available number of cores?</p></td>
+      <th>parallel</th>
+      <td><p>logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)</p></td>
     </tr>
     <tr>
       <th>MODE</th>
@@ -257,6 +257,10 @@ and pass them to the function.</p>
     <tr>
       <th>BG</th>
       <td><p>a background raster layer that can be used to inform the choice of steps</p></td>
+    </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>logical: print current mode used?</p></td>
     </tr>
     </table>
     

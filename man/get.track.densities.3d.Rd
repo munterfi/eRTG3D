@@ -32,7 +32,7 @@ minimal level of autocorrelation in each of the terms.
 
 The time between the acquisition of fix points  of the track must be constant,
 otherwise this leads to distorted statistic distributions,
-which increases the probability of dead ends. In this case please check 
+which increases the probability of dead ends. In this case please check
 \link[eRTG3D]{track.split.3d} and \link[eRTG3D]{get.section.densities.3d}
 }
 

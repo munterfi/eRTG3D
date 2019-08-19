@@ -1,5 +1,5 @@
 #' Calculate glide ratio
-#' 
+#'
 #' Calculates the ratio between horizontal movement and vertical movement.
 #' The value expresses the distance covered forward movement per distance movement in sinking.
 #'
@@ -21,7 +21,7 @@ get.glideRatio.3d <- function(track) {
 #' The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 #' The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 #' therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-#' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
+#' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d}
 #' and pass them to the function.
 #'
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
@@ -36,7 +36,8 @@ get.glideRatio.3d <- function(track) {
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
-#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends
+#' @param verbose logical: print current mode used?
 #'
 #' @return A 'soaring-gliding' trajectory in the form of data.frame
 #' @export
@@ -49,7 +50,8 @@ get.glideRatio.3d <- function(track) {
 #' }
 
 sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
-                                  error = TRUE, smoothTransition = TRUE, glideRatio = 15, DEM = NULL, BG = NULL)
+                                  error = TRUE, smoothTransition = TRUE, glideRatio = 15, DEM = NULL, BG = NULL,
+                                  verbose = FALSE)
 {
   start.time <- Sys.time()
   # Check extent
@@ -111,8 +113,8 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       # the track is forced to target location and the appropriate distance is added
       RTG[1, 8] <- NA
       RTG[n.locs,] <- c(end[1], end[2], end[3], NA, NA, NA, NA, NA, NA)
-      RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 + 
-                               (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 + 
+      RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 +
+                               (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 +
                                (RTG[n.locs, 3] - RTG[n.locs-1, 3])^2)
       # Stop if the step length of the last step is larger than the largest possible step
       if(RTG[n.locs, 8] > max(dList[[m]]$tldCube$values$step, na.rm = TRUE)*3) {
@@ -143,8 +145,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
         # UERW in soaring
         modeInd[i, m] <- 1
         # write on console
-        cat("\r  |Mode:", m, "\r")
-        utils::flush.console()
+        if (verbose) {
+          cat("\r  |Mode:", m, "\r")
+          utils::flush.console()
+        }
         # get coordinates of the tldCube
         ts <- dList[[m]]$tldCube$values$turn
         ls <- dList[[m]]$tldCube$values$lift
@@ -232,8 +236,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
       # CERW in gliding mode
       modeInd[i, m] <- 1
       # write on console
-      cat("\r  |Mode:", m, "\r")
-      utils::flush.console()
+      if (verbose) {
+        cat("\r  |Mode:", m, "\r")
+        utils::flush.console()
+      }
       # get coordinates of the tldCube
       ts <- dList[[m]]$tldCube$values$turn
       ls <- dList[[m]]$tldCube$values$lift
@@ -393,7 +399,7 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 #' The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 #' therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-#' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
+#' It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d}
 #' and pass them to the function.
 #'
 #' @param MODE raster layer containing the number/index of the mode, which should be used at each location
@@ -408,9 +414,10 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' @param glideRatio ratio between vertical and horizontal movement, by default set to 15 meters forward movement per meter vertical movement
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
-#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends 
+#' @param smoothTransition logical: should the transitions between soaring and the following gliding sections be smoothed? Recommended to avoid dead ends
+#' @param verbose logical: print current mode used?
 #' @param n.sim number of simulations to produce
-#' @param multicore logical: should simulations be spread to the available number of cores?
+#' @param parallel logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)
 #'
 #' @return A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
 #' @export
@@ -421,28 +428,23 @@ sim.glidingSoaring.3d <- function(MODE, dGliding, dSoaring, qGliding, start=c(0,
 #' \donttest{
 #' n.sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
 #' }
-n.sim.glidingSoaring.3d <- function(n.sim = 1, multicore = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
-                                    error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL)
+n.sim.glidingSoaring.3d <- function(n.sim = 1, parallel = FALSE, MODE, dGliding, dSoaring, qGliding, start=c(0,0,0), end=start, a0, g0,
+                                    error = TRUE, smoothTransition = TRUE, glideRatio = 20, DEM = NULL, BG = NULL, verbose = FALSE)
 {
-  start.time <- Sys.time()
   n.sim <- round(n.sim)
-  if (n.sim <= 1) {return(sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                                                error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))}
+  if (n.sim <= 1) {return(sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start = start, end = end, a0 = a0, g0 = g0,
+                                                error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG, verbose = verbose))}
+  nNodes <- .nNodes(parallel)
   message(paste("  |Simulate ", n.sim ," 'gliding & soaring' with ", (length(qGliding) + 1) , " gliding steps", sep = ""))
-  if (multicore) {
-    if(.Platform$OS.type == "unix") {
-      return(.n.sim.glidingSoaring.3d.unix(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                            error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))
-    }
-    if(.Platform$OS.type == "windows") {
-      return(.n.sim.glidingSoaring.3d.windows(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                                           error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG))
-    }
-  } else {
-    cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(X) {
-      sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring, qGliding = qGliding, start=start, end=end, a0=a0, g0=g0,
-                            error = error, smoothTransition = smoothTransition, glideRatio = glideRatio, DEM = DEM, BG = BG)}))
-  }
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+  cerwList <- parpblapply(X = 1:n.sim, FUN = function(x){
+    n.sim.glidingSoaring.3d(MODE = MODE, dGliding = dGliding, dSoaring = dSoaring,
+                            qGliding = qGliding, start = start, end = end, a0 = a0, g0 = g0,
+                            error = error, smoothTransition = smoothTransition,
+                            glideRatio = glideRatio, DEM = DEM, BG = BG, verbose = verbose)},
+    export = c("MODE", "dGliding", "dSoaring", "qGliding",
+               "start", "end", "a0", "g0", "error",
+               "smoothTransition", "glideRatio", "DEM", "BG", "verbose"),
+    packages = c("eRTG3D"),
+    nNodes = nNodes, envir = environment())
   return(cerwList)
 }

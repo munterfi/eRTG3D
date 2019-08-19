@@ -15,7 +15,7 @@ movingMedian(data, window)
 A numeric vector.
 }
 \description{
-Applies a twosided moving median window on a vector, 
+Applies a twosided moving median window on a vector,
 where the window paramter is the total size of the window.
 The value in the window middle is the index where the median of the window is written.
 Therefore the window size has to be an uneven number.

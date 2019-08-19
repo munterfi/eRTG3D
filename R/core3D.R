@@ -106,7 +106,7 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' .cutMidpoints(x, breaks)
 #' @noRd
 .cutMidpoints <- function(x, breaks, rm.empty = TRUE) {
-  if (breaks <= 1) {return(list(cuts = factor(rep(mean(x), length(x))), res = 0))} 
+  if (breaks <= 1) {return(list(cuts = factor(rep(mean(x), length(x))), res = 0))}
   nb <- as.integer(breaks + 1)
   dx <- diff(rx <- range(x, na.rm = TRUE))
   breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
@@ -138,14 +138,14 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' or estimated from an unconditional process with the same properties.
 #' Creates a unconditional empirical random walk, with a specific starting point,
 #' geometrically similar to the initial trajectory.
-#' 
+#'
 #' @section Note:
 #' Simulations connecting start and end points
 #' with more steps than 1/10th or more of the number of steps
 #' of the empirical data should rather rely on simulated
 #' unconditional walks with the same properties than on
 #' the empirical data (\code{factor = 1500}).
-#' 
+#'
 #' @section Random initial heading:
 #' For a random initial heading a0 use:
 #'   \code{sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)}
@@ -231,7 +231,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   # close progress bar
   utils::setTxtProgressBar(pb, n.locs)
   close(pb)
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+  message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
   return(as.data.frame(RTG))
 }
 
@@ -246,7 +246,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #'     x,y,z-coordinates, the arrival azimuth and the arrival gradient.
 #' @param n.locs number of total segments to be modeled,
 #'     the length of the desired conditional empirical random walk
-#' @param multicore logical: run computations in parallel (n-1 cores)?
+#' @param parallel logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)
 #' @param maxBin numeric scalar, maximum number of bins per dimension of the tld-cube (\link[eRTG3D]{turnLiftStepHist})
 #'
 #' @return A list containing the Q - tldCubes for every step
@@ -254,46 +254,33 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #'
 #' @examples
 #' qProb.3d(niclas, 3)
-qProb.3d <- function(sim, n.locs, multicore = FALSE, maxBin = 25)
+qProb.3d <- function(sim, n.locs, parallel = FALSE, maxBin = 25)
 {
-  if (multicore) {
-    if(.Platform$OS.type == "unix") {return(.qProb.3d.unix(sim, n.locs, maxBin = maxBin))}
-    if(.Platform$OS.type == "windows") {return(suppressWarnings(.qProb.3d.windows(sim, n.locs, maxBin = maxBin)))}
-  } else {
-    start.time <- Sys.time()
-    message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
-    sim <- track.properties.3d(sim)
-    # steps minus 2
-    nSteps <- n.locs - 2
-    # progress bar
-    pb <- utils::txtProgressBar(min = 0, max = nSteps, style = 3)
-    # lift angles to target as a function of number of steps
-    cubeList <- lapply(1:nSteps, function(x) {
-      # Update progressbar
-      utils::setTxtProgressBar(pb, x)
-      # turn angle, lift angles and distance to target as a function of number of steps
-      t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
-      l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                       diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
-      d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
-      # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
-      # of the turning angle to target, the lift angle to target and the distance to target
-      # for the relevant number of steps. This is mainly to reduce redundancy mainly
-      # introduced by the sliding window approach adopted in estimating the relationships
-      k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-               utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
-      t <- t[seq(1, length(t), by = k)]
-      l <- l[seq(1, length(l), by = k)]
-      d <- d[seq(1, length(d), by = k)]
-      # get stepTurnLiftHistograms
-      return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
-    })
-    utils::setTxtProgressBar(pb, nSteps)
-    close(pb)
-    message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
-    return(rev(cubeList))
-  }
+  nNodes <- .nNodes(parallel)
+  message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
+  sim <- track.properties.3d(sim)
+  nSteps <- n.locs - 2
+  # lift angles to target as a function of number of steps
+  cubeList <- parpblapply(1:nSteps, function(x) {
+    # turn angle, lift angles and distance to target as a function of number of steps
+    t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
+    l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
+                     diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
+    d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+    # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
+    # of the turning angle to target, the lift angle to target and the distance to target
+    # for the relevant number of steps. This is mainly to reduce redundancy mainly
+    # introduced by the sliding window approach adopted in estimating the relationships
+    k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
+             utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+    t <- t[seq(1, length(t), by = k)]
+    l <- l[seq(1, length(l), by = k)]
+    d <- d[seq(1, length(d), by = k)]
+    # get stepTurnLiftHistograms
+    return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+  }, export = c("sim", "nSteps", "maxBin"), packages = c("eRTG3D"), envir = environment(), nNodes = nNodes)
+  return(rev(cubeList))
 }
 
 #' Conditional Empirical Random Walk (CERW) in 3-D
@@ -470,7 +457,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     if(all(Probs==0)){
       RTG <- NULL
       close(pb)
-      message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+      message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
       warning("Dead end encountered.")
       return(RTG)
     }else{
@@ -486,14 +473,14 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   # the track is forced to target location and the appropriate distance is added
   RTG[1, 8] <- NA
   RTG[n.locs,] <- c(end[1], end[2], end[3], NA, NA, NA, NA, NA, NA)
-  RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 + 
-                         (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 + 
+  RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 +
+                         (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 +
                          (RTG[n.locs, 3] - RTG[n.locs-1, 3])^2)
   # Stop if the step length of the last step is larger than the largest possible step
   if(RTG[n.locs, 8] > max(densities$tldCube$values$step, na.rm = TRUE)*sqrt(2)) {
     RTG <- NULL
     close(pb)
-    message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+    message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
     warning("Dead end encountered in last step.")
     return(RTG)
   }
@@ -502,7 +489,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   # close progress bar
   utils::setTxtProgressBar(pb, i)
   close(pb)
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+  message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
   return(as.data.frame(RTG))
 }
 
@@ -522,7 +509,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' @param error logical: add random noise to the turn angle, lift angle and step length to account for errors measurements?
 #' @param DEM raster layer containing a digital elevation model, covering the area between start and end point
 #' @param BG a background raster layer that can be used to inform the choice of steps
-#' @param multicore logical: run computations in parallel (n-1 cores)?
+#' @param parallel logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)
 #'
 #' @return
 #' A list containing the CERWs or \code{NULL}s if dead ends have been encountered.
@@ -540,24 +527,14 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
 #' Q <- qProb.3d(uerw, n.locs)
 #' n.sim.cond.3d(n.sim=2, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
-n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, multicore = FALSE, DEM = NULL, BG = NULL)
+n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, parallel = FALSE, DEM = NULL, BG = NULL)
 {
-  start.time <- Sys.time()
   n.sim <- round(n.sim)
   if (n.sim <= 1) {return(sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG))}
+  nNodes <- .nNodes(parallel)
   message(paste("  |Simulate ", n.sim ," CERWs with ", n.locs, " steps", sep = ""))
-  if (multicore) {
-    # nCores <- parallel::detectCores()-1
-    if(.Platform$OS.type == "unix") {
-      cerwList <- .n.sim.cond.3d.unix(n.sim=n.sim, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
-    }
-    if(.Platform$OS.type == "windows") {
-      cerwList <- .n.sim.cond.3d.windows(n.sim=n.sim, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)
-      }
-  } else {
-    cerwList <- suppressMessages(lapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)}))
-  }
-  message(paste("  |Runtime: ", round(as.numeric(Sys.time()) - as.numeric(start.time), 2), " secs", sep = ""))
+  cerwList <- parpblapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)},
+                export = c("n.locs", "start", "end", "a0", "g0", "densities", "qProbs", "error", "DEM", "BG"), packages = c("eRTG3D"), nNodes = nNodes, envir = environment())
   return(cerwList)
 }
 

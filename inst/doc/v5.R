@@ -18,10 +18,14 @@ set.seed(123)
 #                        a0 = a0, g0 = g0, densities = P)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7-------------------------------
-#  Q <- qProb.3d(uerw, sim.locs, multicore = TRUE)
-#  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem, multicore = TRUE)
+#  Q <- qProb.3d(uerw, sim.locs, parallel = TRUE)
+#  cerwList <- reproduce.track.3d(n.sim = 100, niclas, DEM = dem, parallel = TRUE)
 
 ## ----eval=FALSE, fig.height=5, fig.width=7, quiet = TRUE-----------------
 #  cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end,a0 = a0, g0 = g0,
-#                        densities=P, qProbs=Q, DEM = dem, multicore=TRUE)
+#                        densities=P, qProbs=Q, DEM = dem, parallel = TRUE)
+
+## ----eval=FALSE, fig.height=5, fig.width=7, quiet = TRUE-----------------
+#  cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end,a0 = a0, g0 = g0,
+#                        densities=P, qProbs=Q, DEM = dem, parallel = 4)
 

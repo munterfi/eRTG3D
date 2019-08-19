@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.1</span>
       </span>
     </div>
 
@@ -147,18 +147,21 @@
 body {
 text-align: justify}
 </style>
-<p>The computationally most intense functions <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code>, <code><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d()</a></code> and <code><a href="../reference/reproduce.track.3d.html">reproduce.track.3d()</a></code> of the package are also implemented in a parallel version. On Unix systems this is done with the <code>parallel</code> package. On Windows systems, a combination of the packages <code>doParallel</code>, <code>parallel</code> and <code>plyr</code> ones is used.</p>
+<p>The computationally most intense functions <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code>, <code><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d()</a></code> and <code><a href="../reference/reproduce.track.3d.html">reproduce.track.3d()</a></code> of the package are also implemented in a parallel version. On Unix systems this is done using a fork cluster. On Windows systems PSOCK cluster is used.</p>
 <p>Definition of start conditions and parameters:</p>
 <p>Get movement characteristics (<code>P</code>) from the example trajectory and simulate a Unconditional Eprircal Random Walk (UERW) in order to extract the attraction term (<code>Q</code>):</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">P &lt;-<span class="st"> </span><span class="kw"><a href="../reference/get.track.densities.3d.html">get.track.densities.3d</a></span>(niclas, <span class="dt">heightDistEllipsoid =</span> <span class="ot">TRUE</span>, <span class="dt">DEM =</span> dem)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2">uerw &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sim.uncond.3d.html">sim.uncond.3d</a></span>(sim.locs<span class="op">*</span>f, <span class="dt">start =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(niclas<span class="op">$</span>x[<span class="dv">1</span>], niclas<span class="op">$</span>y[<span class="dv">1</span>], niclas<span class="op">$</span>z[<span class="dv">1</span>]), </a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">                      <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0, <span class="dt">densities =</span> P)</a></code></pre></div>
-<p>The parallel version of the <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code> function can be accessed by setting the parameter <code>multicore=TRUE</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qProb.3d.html">qProb.3d</a></span>(uerw, sim.locs, <span class="dt">multicore =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, niclas, <span class="dt">DEM =</span> dem, <span class="dt">multicore =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>The parallel version of the <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code> function can be accessed by setting the parameter <code>parallel = TRUE</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">Q &lt;-<span class="st"> </span><span class="kw"><a href="../reference/qProb.3d.html">qProb.3d</a></span>(uerw, sim.locs, <span class="dt">parallel =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, niclas, <span class="dt">DEM =</span> dem, <span class="dt">parallel =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>And also for <code>n.sim.uncond.3d()</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end,<span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">                      <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem, <span class="dt">multicore=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2">                      <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem, <span class="dt">parallel =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<p>Alternativly the number of nodes in the cluster can be specified by passing a number to the function: <code>parallel = 4</code>. In this case a fork or PSOCK cluster with 4 nodes will be used. The maximum number of nodes is not allowed to be larger than the number of available cores (Hyper Threading included).</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end,<span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">                      <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem, <span class="dt">parallel =</span> <span class="dv">4</span>)</a></code></pre></div>
 <p><strong>Note:</strong> If only a few tracks are simulated and the track length is short <code>sim.locs &lt; 30</code>, then it is faster in many cases to stay with the single core version of the function, especially on Windows systems, where setting up clusters takes some time.</p>
   </div>
 

@@ -4,15 +4,15 @@
 \alias{n.sim.glidingSoaring.3d}
 \title{Simulates multiple 'gliding & soaring' tracks with a given number of gliding steps}
 \usage{
-n.sim.glidingSoaring.3d(n.sim = 1, multicore = FALSE, MODE, dGliding,
+n.sim.glidingSoaring.3d(n.sim = 1, parallel = FALSE, MODE, dGliding,
   dSoaring, qGliding, start = c(0, 0, 0), end = start, a0, g0,
   error = TRUE, smoothTransition = TRUE, glideRatio = 20,
-  DEM = NULL, BG = NULL)
+  DEM = NULL, BG = NULL, verbose = FALSE)
 }
 \arguments{
 \item{n.sim}{number of simulations to produce}
 
-\item{multicore}{logical: should simulations be spread to the available number of cores?}
+\item{parallel}{logical: run computations in parallel (n-1 cores)? Or numeric: the number of nodes (maximum: n - 1 cores)}
 
 \item{MODE}{raster layer containing the number/index of the mode, which should be used at each location}
 
@@ -39,6 +39,8 @@ n.sim.glidingSoaring.3d(n.sim = 1, multicore = FALSE, MODE, dGliding,
 \item{DEM}{raster layer containing a digital elevation model, covering the area between start and end point}
 
 \item{BG}{a background raster layer that can be used to inform the choice of steps}
+
+\item{verbose}{logical: print current mode used?}
 }
 \value{
 A list containing 'soaring-gliding' trajectories or \code{NULL}s if dead ends have been encountered.
@@ -48,7 +50,7 @@ Creates conditional empirical random walks in gliding mode, between a start and 
 The walk is performed on a MODE layer and, if provided, additionally on a background and digital elevation layer.
 The gliding is simulated with \link[eRTG3D]{sim.cond.3d} and soaring with \link[eRTG3D]{sim.uncond.3d},
 therefore soaring is not restricted towards the target and can happen completly free as long as there are good thermal conditions.
-It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d} 
+It is important to extract for every mode in the MODE raster layer a corresponding densities object with \link[eRTG3D]{get.densities.3d}
 and pass them to the function.
 }
 \note{

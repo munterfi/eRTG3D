@@ -5,7 +5,7 @@
 \title{Apply voxel counting on a point cloud}
 \usage{
 voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax,
-  standartize = FALSE)
+  standartize = FALSE, verbose = FALSE)
 }
 \arguments{
 \item{points}{a x, y, z data.frame}
@@ -21,6 +21,8 @@ voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax,
 \item{zMax}{maximum height value}
 
 \item{standartize}{logical: standartize the values?}
+
+\item{verbose}{logical: print currently processed height band in raster stack?}
 }
 \value{
 A \code{rasterStack} object, representing the 3–D voxel cube.

@@ -89,7 +89,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://munterfinger.github.io/3D-eRTG/">Example</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -112,13 +112,6 @@
   <a href="https://munterfinger.ch">
     <span class="fa fa-globe fa-lg"></span>
      
-  </a>
-</li>
-<li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">
-    <span class="fa fa-cubes fa-lg"></span>
-     
-    Simulator
   </a>
 </li>
       </ul>
@@ -164,13 +157,7 @@ text-align: justify}
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">points &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/do.call">do.call</a></span>(<span class="st">"rbind"</span>, crws)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">extent &lt;-<span class="st"> </span><span class="kw">extent</span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">10</span>, <span class="dv">-10</span>, <span class="dv">10</span>))</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">ud &lt;-<span class="st"> </span><span class="kw"><a href="../reference/voxelCount.html">voxelCount</a></span>(points, extent, <span class="dt">xyRes=</span><span class="dv">5</span>, <span class="dt">zMin=</span><span class="op">-</span><span class="dv">10</span>, <span class="dt">zMax=</span><span class="dv">10</span>)</a>
-<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">   <span class="op">|</span>Counting points <span class="cf">in</span> Voxels <span class="cf">for</span> height<span class="op">:</span><span class="st"> </span><span class="op">-</span>10m <span class="op">-</span><span class="st"> </span><span class="op">-</span>5m ...</a>
-<a class="sourceLine" id="cb2-6" data-line-number="6">   <span class="op">|</span>Counting points <span class="cf">in</span> Voxels <span class="cf">for</span> height<span class="op">:</span><span class="st"> </span><span class="op">-</span>5m <span class="op">-</span><span class="st"> </span>0m ...</a>
-<a class="sourceLine" id="cb2-7" data-line-number="7">   <span class="op">|</span>Counting points <span class="cf">in</span> Voxels <span class="cf">for</span> height<span class="op">:</span><span class="st"> </span>0m <span class="op">-</span><span class="st"> </span>5m ...</a>
-<a class="sourceLine" id="cb2-8" data-line-number="8">   <span class="op">|</span>Counting points <span class="cf">in</span> Voxels <span class="cf">for</span> height<span class="op">:</span><span class="st"> </span>5m <span class="op">-</span><span class="st"> </span>10m ...</a>
-<a class="sourceLine" id="cb2-9" data-line-number="9">   <span class="op">|</span>Done.</a>
-<a class="sourceLine" id="cb2-10" data-line-number="10"><span class="kw"><a href="../reference/plotRaster.html">plotRaster</a></span>(ud)</a></code></pre></div>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="kw"><a href="../reference/plotRaster.html">plotRaster</a></span>(ud)</a></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="chi-square-maps" class="section level2">
@@ -178,13 +165,7 @@ text-align: justify}
 <a href="#chi-square-maps" class="anchor"></a>Chi square maps</h2>
 <p>By calculating Chi maps, the over- and underrepresentation of points in the voxel space can be interpreted statistically:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">chi &lt;-<span class="st"> </span><span class="kw"><a href="../reference/chiMaps.html">chiMaps</a></span>(ud)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt; </span></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">   <span class="op">|</span>Calcuate chi map <span class="cf">for</span> raster<span class="op">:</span><span class="st"> </span><span class="dv">1</span> ...</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">   <span class="op">|</span>Calcuate chi map <span class="cf">for</span> raster<span class="op">:</span><span class="st"> </span><span class="dv">2</span> ...</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">   <span class="op">|</span>Calcuate chi map <span class="cf">for</span> raster<span class="op">:</span><span class="st"> </span><span class="dv">3</span> ...</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">   <span class="op">|</span>Calcuate chi map <span class="cf">for</span> raster<span class="op">:</span><span class="st"> </span><span class="dv">4</span> ...</a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">   <span class="op">|</span>Done.</a>
-<a class="sourceLine" id="cb3-8" data-line-number="8"><span class="kw"><a href="../reference/plotRaster.html">plotRaster</a></span>(chi, <span class="dt">centerColorBar=</span><span class="ot">TRUE</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb3-2" data-line-number="2"><span class="kw"><a href="../reference/plotRaster.html">plotRaster</a></span>(chi, <span class="dt">centerColorBar=</span><span class="ot">TRUE</span>)</a></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="export-voxel-data" class="section level2">

@@ -89,7 +89,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://munterfinger.github.io/3D-eRTG/">Example</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -112,13 +112,6 @@
   <a href="https://munterfinger.ch">
     <span class="fa fa-globe fa-lg"></span>
      
-  </a>
-</li>
-<li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">
-    <span class="fa fa-cubes fa-lg"></span>
-     
-    Simulator
   </a>
 </li>
       </ul>
@@ -247,8 +240,8 @@ text-align: justify}
 <h3 class="hasAnchor">
 <a href="#boundary-conditions" class="anchor"></a>3. Boundary conditions</h3>
 <p>Set up the start and end conditions: azimuth (<code>a0</code>), gradient (<code>g0</code>), start and end point of the CERW to be simulated.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">start &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(niclas<span class="op">$</span>x[<span class="dv">1</span>],niclas<span class="op">$</span>y[<span class="dv">1</span>],niclas<span class="op">$</span>z[<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">end &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(niclas<span class="op">$</span>x[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)],niclas<span class="op">$</span>y[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)],niclas<span class="op">$</span>z[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)])</a>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">start &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(niclas<span class="op">$</span>x[<span class="dv">1</span>], niclas<span class="op">$</span>y[<span class="dv">1</span>], niclas<span class="op">$</span>z[<span class="dv">1</span>])</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">end &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(niclas<span class="op">$</span>x[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)], niclas<span class="op">$</span>y[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)], niclas<span class="op">$</span>z[<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/nrow">nrow</a></span>(niclas)])</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3">a0 &lt;-<span class="st"> </span>niclas<span class="op">$</span>a[<span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb4-4" data-line-number="4">g0 &lt;-<span class="st"> </span>niclas<span class="op">$</span>g[<span class="dv">1</span>]</a></code></pre></div>
 </div>
@@ -256,11 +249,12 @@ text-align: justify}
 <h3 class="hasAnchor">
 <a href="#conditional-empirical-random-walk" class="anchor"></a>4. Conditional Empirical Random Walk</h3>
 <p>Then finally a CERW can be simulated.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">cerw &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sim.cond.3d.html">sim.cond.3d</a></span>(sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">                    <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">cerw &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sim.cond.3d.html">sim.cond.3d</a></span>(sim.locs, <span class="dt">start =</span> start, <span class="dt">end =</span> end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
+<a class="sourceLine" id="cb5-2" data-line-number="2">                    <span class="dt">densities =</span> P, <span class="dt">qProbs =</span> Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
 <p>If more than one simulated track is desired, the <code><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d()</a></code> can be used. The n.sim parameter defines the number of simulated tracks.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, sim.locs, <span class="dt">start=</span>start, <span class="dt">end=</span>end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">                          <span class="dt">densities=</span>P, <span class="dt">qProbs=</span>Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">cerwList &lt;-<span class="st"> </span><span class="kw"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(<span class="dt">n.sim =</span> <span class="dv">100</span>, sim.locs,</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">                          <span class="dt">start =</span> start, <span class="dt">end =</span> end, <span class="dt">a0 =</span> a0, <span class="dt">g0 =</span> g0,</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">                          <span class="dt">densities =</span> P, <span class="dt">qProbs =</span> Q, <span class="dt">DEM =</span> dem)</a></code></pre></div>
 <p><strong>Note:</strong> Due to dead ends, which are normally occurring in a proportion of 25%, the n.sim parameter should be set higher than the needed tracks.</p>
 </div>
 </div>

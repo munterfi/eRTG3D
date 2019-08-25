@@ -127,7 +127,7 @@ the voxels can be standartized between 0 and 1." />
   </ul>
 </li>
 <li>
-  <a href="https://munterfinger.github.io/3D-eRTG/">Example</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -151,13 +151,6 @@ the voxels can be standartized between 0 and 1." />
   <a href="https://munterfinger.ch">
     <span class="fa fa-globe fa-lg"></span>
      
-  </a>
-</li>
-<li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">
-    <span class="fa fa-cubes fa-lg"></span>
-     
-    Simulator
   </a>
 </li>
       </ul>
@@ -187,7 +180,7 @@ the voxels can be standartized between 0 and 1.</p>
     </div>
 
     <pre class="usage"><span class='fu'>voxelCount</span>(<span class='no'>points</span>, <span class='no'>extent</span>, <span class='no'>xyRes</span>, <span class='kw'>zRes</span> <span class='kw'>=</span> <span class='no'>xyRes</span>, <span class='no'>zMin</span>, <span class='no'>zMax</span>,
-  <span class='kw'>standartize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>standartize</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,6 +213,10 @@ the voxels can be standartized between 0 and 1.</p>
       <th>standartize</th>
       <td><p>logical: standartize the values?</p></td>
     </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>logical: print currently processed height band in raster stack?</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -228,7 +225,7 @@ the voxels can be standartized between 0 and 1.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>voxelCount</span>(<span class='no'>niclas</span>, <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='no'>dem</span>), <span class='fl'>100</span>, <span class='fl'>100</span>, <span class='fl'>1000</span>, <span class='fl'>1400</span>, <span class='kw'>standartize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;    |Counting points in Voxels for height: 1000m - 1100m ...   |Counting points in Voxels for height: 1100m - 1200m ...   |Counting points in Voxels for height: 1200m - 1300m ...   |Counting points in Voxels for height: 1300m - 1400m ...   |Done.                                                             </div><div class='output co'>#&gt; class      : RasterStack 
+    <pre class="examples"><div class='input'><span class='fu'>voxelCount</span>(<span class='no'>niclas</span>, <span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/extent'>extent</a></span>(<span class='no'>dem</span>), <span class='fl'>100</span>, <span class='fl'>100</span>, <span class='fl'>1000</span>, <span class='fl'>1400</span>, <span class='kw'>standartize</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; class      : RasterStack 
 #&gt; dimensions : 649, 1259, 817091, 4  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 100, 100  (x, y)
 #&gt; extent     : 2543252, 2669152, 1177098, 1241998  (xmin, xmax, ymin, ymax)

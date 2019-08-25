@@ -56,8 +56,8 @@ Q <- qProb.3d(uerw, sim.locs)
 Set up the start and end conditions: azimuth (`a0`), gradient (`g0`), start and end point of the CERW to be simulated.
 
 ```{r eval=FALSE}
-start <- c(niclas$x[1],niclas$y[1],niclas$z[1])
-end <- c(niclas$x[nrow(niclas)],niclas$y[nrow(niclas)],niclas$z[nrow(niclas)])
+start <- c(niclas$x[1], niclas$y[1], niclas$z[1])
+end <- c(niclas$x[nrow(niclas)], niclas$y[nrow(niclas)], niclas$z[nrow(niclas)])
 a0 <- niclas$a[1]
 g0 <- niclas$g[1]
 ```
@@ -66,15 +66,16 @@ g0 <- niclas$g[1]
 Then finally a CERW can be simulated.
 
 ```{r eval=FALSE}
-cerw <- sim.cond.3d(sim.locs, start=start, end=end, a0 = a0, g0 = g0,
-                    densities=P, qProbs=Q, DEM = dem)
+cerw <- sim.cond.3d(sim.locs, start = start, end = end, a0 = a0, g0 = g0,
+                    densities = P, qProbs = Q, DEM = dem)
 ```
 
 If more than one simulated track is desired, the `n.sim.cond.3d()` can be used. The n.sim parameter defines the number of simulated tracks.
 
 ```{r eval=FALSE}
-cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs, start=start, end=end, a0 = a0, g0 = g0,
-                          densities=P, qProbs=Q, DEM = dem)
+cerwList <- n.sim.cond.3d(n.sim = 100, sim.locs,
+                          start = start, end = end, a0 = a0, g0 = g0,
+                          densities = P, qProbs = Q, DEM = dem)
 ```
 
 **Note:** Due to dead ends, which are normally occurring in a proportion of 25%, the n.sim parameter should be set higher than the needed tracks.

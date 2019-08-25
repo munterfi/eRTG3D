@@ -4,12 +4,14 @@
 \alias{chiMaps}
 \title{Chi maps of two variables}
 \usage{
-chiMaps(stack1, stack2 = NULL)
+chiMaps(stack1, stack2 = NULL, verbose = FALSE)
 }
 \arguments{
 \item{stack1}{\code{rasterStack}}
 
 \item{stack2}{\code{rasterStack}  \code{NULL} or containing the same number of \code{rasterLayer}s and has euqal extent and resolution.}
+
+\item{verbose}{logical: print currently processed height band in raster stack?}
 }
 \value{
 A \code{rasterStack} containing the chi maps.

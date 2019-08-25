@@ -126,7 +126,7 @@ to be the values of the second stack." />
   </ul>
 </li>
 <li>
-  <a href="https://munterfinger.github.io/3D-eRTG/">Example</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -150,13 +150,6 @@ to be the values of the second stack." />
   <a href="https://munterfinger.ch">
     <span class="fa fa-globe fa-lg"></span>
      
-  </a>
-</li>
-<li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">
-    <span class="fa fa-cubes fa-lg"></span>
-     
-    Simulator
   </a>
 </li>
       </ul>
@@ -184,7 +177,7 @@ to be the values of the second stack.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>chiMaps</span>(<span class='no'>stack1</span>, <span class='kw'>stack2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>chiMaps</span>(<span class='no'>stack1</span>, <span class='kw'>stack2</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,6 +190,10 @@ to be the values of the second stack.</p>
       <th>stack2</th>
       <td><p><code>rasterStack</code>  <code>NULL</code> or containing the same number of <code>rasterLayer</code>s and has euqal extent and resolution.</p></td>
     </tr>
+    <tr>
+      <th>verbose</th>
+      <td><p>logical: print currently processed height band in raster stack?</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -205,7 +202,7 @@ to be the values of the second stack.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>chiMaps</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/stack'>stack</a></span>(<span class='no'>dem</span>))</div><div class='output co'>#&gt;    |Calcuate chi map for raster: 1 ...   |Done.                                                             </div><div class='output co'>#&gt; class      : RasterStack 
+    <pre class="examples"><div class='input'><span class='fu'>chiMaps</span>(<span class='kw pkg'>raster</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/raster/topics/stack'>stack</a></span>(<span class='no'>dem</span>))</div><div class='output co'>#&gt; class      : RasterStack 
 #&gt; dimensions : 175, 501, 87675, 1  (nrow, ncol, ncell, nlayers)
 #&gt; resolution : 251.2, 370.8  (x, y)
 #&gt; extent     : 2543252, 2669103, 1177108, 1241998  (xmin, xmax, ymin, ymax)

@@ -122,7 +122,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://munterfinger.github.io/3D-eRTG/">Example</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -148,13 +148,6 @@
      
   </a>
 </li>
-<li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator/">
-    <span class="fa fa-cubes fa-lg"></span>
-     
-    Simulator
-  </a>
-</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -174,19 +167,17 @@
     <div id="ertg3d-0-6-1" class="section level1">
 <h1 class="page-header">
 <a href="#ertg3d-0-6-1" class="anchor"></a>eRTG3D 0.6.1</h1>
-<p>Third submission to CRAN. Replaced the parallel versions of the functions with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems. Number of nodes in the cluster can now be set manually.</p>
+<p>Third submission to CRAN. Replaced the parallel version of the functions with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems. The number of nodes in the cluster can be set manually, if no value is provided the number of detected cores minus one is used to set up the cluster.</p>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li>Package now available on CRAN: <code><a href="https://www.rdocumentation.org/packages/utils/topics/install.packages">install.packages("eRTG3D")</a></code>.</li>
-<li>
-<p>New unifying function for parallel computation on Windows AND Unix systems including a progressbar. The parameter name has changed from <code>multicore</code> to <code>parallel</code> since this notation is more correct.</p>
-<h1 id="the-number-of-nodes-in-the-cluster-forkcluster-or-psockcluster-can-be-specified-by-setting-parallel-nnodes." class="page-header">The number of nodes in the cluster (forkCluster or PSOCKCluster) can be specified, by setting <code>parallel = nNodes</code>.</h1>
-</li>
+<li>New unifying function for parallel computation on Windows AND Unix systems including a progressbar. The parameter name has changed from <code>multicore</code> to <code>parallel</code> since this notation is more correct.</li>
+<li>The number of nodes in the cluster (forkCluster or PSOCKCluster) can be specified, by setting <code>parallel = nNodes</code>.</li>
 <li>Added tests for parallel computation.</li>
 <li>URL to the master thesis and corrected DOI.</li>
-<li><p>The function <code><a href="../reference/sim.glidingSoaring.3d.html">sim.glidingSoaring.3d()</a></code> is now silent, to unmute set <code>verbose = TRUE</code>.</p></li>
+<li>The functions <code><a href="../reference/sim.glidingSoaring.3d.html">sim.glidingSoaring.3d()</a></code>, <code>voxelCount</code> and <code>chiMaps</code> are now silent, to unmute set <code>verbose = TRUE</code>.</li>
 </ul>
 </div>
 <div id="r-cmd-check" class="section level2">

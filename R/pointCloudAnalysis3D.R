@@ -12,19 +12,22 @@
 #' @param zMin minimum z value
 #' @param zMax maximum height value
 #' @param standartize logical: standartize the values?
+#' @param verbose logical: print currently processed height band in raster stack?
 #'
 #' @return A \code{rasterStack} object, representing the 3–D voxel cube.
 #' @export
 #'
 #' @examples
 #' voxelCount(niclas, raster::extent(dem), 100, 100, 1000, 1400, standartize = TRUE)
-voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE){
+voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standartize = FALSE, verbose = FALSE){
   rTem <- raster::raster(extent, res=xyRes)
   rTem[] <- 0
   rStack <- raster::stack()
   for (i in 1:round((zMax-zMin)/zRes)) {
-    cat('\r', paste("  |Counting points in Voxels for height: ", zMin+(i-1)*zRes, "m - ", (zMin+i*zRes), "m ...", sep = ""))
-    utils::flush.console()
+    if (verbose) {
+      cat('\r', paste("  |Counting points in Voxels for height: ", zMin+(i-1)*zRes, "m - ", (zMin+i*zRes), "m ...", sep = ""))
+      utils::flush.console()
+    }
     p <- points[points[,3] > (zMin+(i-1)*zRes) & points[,3] < (zMin+i*zRes), ]
     if (!nrow(p) == 0) {
       r <- raster::rasterize(cbind(p[,1], p[,2]), rTem, fun='count')
@@ -42,8 +45,10 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
       rStack@layers[[i]] <- (rStack@layers[[i]] - minR) / (maxR - minR)
     }
   }
-  cat('\r', "  |Done.                                                             \n")
-  utils::flush.console()
+  if (verbose) {
+    cat('\r', "  |Done.                                                             \n")
+    utils::flush.console()
+  }
   return(rStack)
 }
 
@@ -55,34 +60,41 @@ voxelCount <- function(points, extent, xyRes, zRes = xyRes, zMin, zMax, standart
 #' 
 #' @param stack1 \code{rasterStack}
 #' @param stack2 \code{rasterStack}  \code{NULL} or containing the same number of \code{rasterLayer}s and has euqal extent and resolution.
+#' @param verbose logical: print currently processed height band in raster stack?
 #'
 #' @return A \code{rasterStack} containing the chi maps.
 #' @export
 #'
 #' @examples
 #' chiMaps(raster::stack(dem))
-chiMaps <- function(stack1, stack2 = NULL) {
+chiMaps <- function(stack1, stack2 = NULL, verbose = FALSE) {
   if (is.null(stack2)){
     rStack <- raster::stack()
     expMean <- mean(raster::values(stack1))
     for (i in 1:length(stack1@layers)){
-      cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
-      utils::flush.console()
+      if (verbose) {
+        cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
+        utils::flush.console()
+      }
       r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
       rChi <- (r1 - expMean) / sqrt(expMean)
       rChi[is.na(rChi)] <- 0
       rStack <- raster::stack(rStack, rChi)
       names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
     }
-    cat('\r', "  |Done.                                                             \n")
-    utils::flush.console()
+    if (verbose) {
+      cat('\r', "  |Done.                                                             \n")
+      utils::flush.console()
+    }
     return(rStack)
   } else {
     if(length(stack1@layers) != length(stack2@layers)) stop("Stack need to have the same number of rasters")
     rStack <- raster::stack()
     for (i in 1:length(stack1@layers)){
-      cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
-      utils::flush.console()
+      if (verbose) {
+        cat('\r', paste("  |Calcuate chi map for raster:", i, "..."))
+        utils::flush.console()
+      }
       r1 <- stack1@layers[[i]]; r1[r1 == 0] <- NA
       r2 <- stack2@layers[[i]]; r2[r2 == 0] <- NA
       rChi <- (r1 - r2) / sqrt(r2)
@@ -90,8 +102,10 @@ chiMaps <- function(stack1, stack2 = NULL) {
       rStack <- raster::stack(rStack, rChi)
       names(rStack)[i] <- c(paste("chiMap",names(stack1)[i], sep = ))
     }
-    cat('\r', "  |Done.                                                             \n")
-    utils::flush.console()
+    if (verbose) {
+      cat('\r', "  |Done.                                                             \n")
+      utils::flush.console()
+    }
     return(rStack)
   }
 }

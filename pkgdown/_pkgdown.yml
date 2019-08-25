@@ -6,13 +6,12 @@ navbar:
     - reference
     - articles
     - tutorials
-    - example
+    - simulator
     - news
     right:
     - github
     - twitter
     - website
-    - simulator
   components:
     home:
       icon: fa-home fa-lg
@@ -44,19 +43,15 @@ navbar:
     news:
       text: Changelog
       href: news/index.html
-    example:
-      text: Example
-      href: https://munterfinger.github.io/3D-eRTG/
+    simulator:
+      text: Simulator
+      href: https://mufi.shinyapps.io/ertg3d-simulator/
     github:
       icon: fa-github fa-lg
       href: https://github.com/munterfinger/eRTG3D
     twitter:
       icon: fa-twitter fa-lg
       href: https://twitter.com/munterfi1
-    simulator:
-      icon: fa-cubes fa-lg
-      text: Simulator
-      href: 'https://mufi.shinyapps.io/ertg3d-simulator/'
     website:
       icon: fa-globe fa-lg
       href: https://munterfinger.ch

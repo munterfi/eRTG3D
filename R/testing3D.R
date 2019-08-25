@@ -151,9 +151,10 @@ test.eRTG.3d <- function(parallel = FALSE, returnResult = FALSE, plot2d = FALSE,
                         a0 = crw$a[1], g0 = crw$g[1], densities = D)
   tests.uerw <- test.verification.3d(crw, uerw, alpha = 0.05)
   if(parallel) {
-    Q <- qProb.3d(uerw, nStep, parallel = TRUE)
+    nNodes <- .nNodes(parallel)
+    Q <- qProb.3d(uerw, nStep, parallel = nNodes)
     cerw <- n.sim.cond.3d(n.sim = 100, n.locs = nStep, start=c(crw$x[1],crw$y[1],crw$z[1]), end=c(crw$x[nStep],crw$y[nStep],crw$z[nStep]),
-                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q, parallel = TRUE)
+                        a0 = crw$a[1], g0 = crw$g[1], densities=D, qProbs=Q, parallel = nNodes)
     cerw <- filter.dead.ends(cerw)
   } else {
     Q <- qProb.3d(uerw, nStep, parallel = FALSE)

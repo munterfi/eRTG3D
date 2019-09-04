@@ -48,10 +48,10 @@ test_that("sim.glidingSoaring.3d works", {
   glideRatio <- get.glideRatio.3d(gliding)
   invisible(capture.output(
     soaringGliding <- suppressWarnings(
-      sim.glidingSoaring.3d(MODE = MODE, dGliding = P.gliding, dSoaring = P.soaring, qGliding = Q.gliding,
-                            start = c(25, 25, 0), end = Reduce(c, c(tail(gliding, 1)[, 1:2]+25, 0)),
-                            a0 = soaring$a[1], g0 = soaring$g[1], error = TRUE, smoothTransition = TRUE,
-                            glideRatio = glideRatio, DEM = NULL, BG = NULL, verbose = TRUE))
+      n.sim.glidingSoaring.3d(n.sim =2, MODE = MODE, dGliding = P.gliding, dSoaring = P.soaring, qGliding = Q.gliding,
+                              start = c(25, 25, 0), end = Reduce(c, c(tail(gliding, 1)[, 1:2]+25, 0)),
+                              a0 = soaring$a[1], g0 = soaring$g[1], error = TRUE, smoothTransition = TRUE,
+                              glideRatio = glideRatio, DEM = NULL, BG = NULL, verbose = TRUE))
   ))
-  expect_equal(soaringGliding, NULL)
+  expect_is(soaringGliding, "list")
 })

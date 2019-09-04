@@ -1,4 +1,5 @@
 test_that("test.eRTG.3d() works", {
+  grDevices::pdf(NULL)
   invisible(capture.output(
     t <- test.eRTG.3d(plot2d = TRUE, plot3d = TRUE, plotDensities = TRUE, returnResult = TRUE)
   ))

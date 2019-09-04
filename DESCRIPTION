@@ -1,15 +1,15 @@
 Package: eRTG3D
 Title: Empirically Informed Random Trajectory Generation in 3-D
-Version: 0.6.1
+Version: 0.6.2
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = c("ctb", "ths")),
     person("George", "Technitis", email = "george.technitis@gmail.com", role = c("ctb", "ths")),
     person("Robert", "Weibel", email = "robert.weibel@geo.uzh.ch", role = "ths"))
 URL: https://munterfinger.github.io/eRTG3D/, https://github.com/munterfinger/eRTG3D
-Description: Creates realistic random trajectories in a 3-D space between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth's surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.
-    Unterfinger M (2018). 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis, University of Zurich. <https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf>.
-    Technitis G, Weibel R, Kranstauber B, Safi K (2016). An algorithm for empirically informed random trajectory generation between two endpoints. GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. <doi:10.5167/uzh-130652>.
+Description: Creates realistic random trajectories in a 3-D space between two given fix points, so-called conditional empirical random walks (CERWs). The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth's surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.
+    Unterfinger M (2018). "3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk". Master's thesis, University of Zurich. <https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf>.
+    Technitis G, Weibel R, Kranstauber B, Safi K (2016). "An algorithm for empirically informed random trajectory generation between two endpoints". GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. <doi:10.5167/uzh-130652>.
 Depends: R (>= 3.5.0)
 Imports: CircStats (>= 0.2-6), ggplot2 (>= 3.1.1), gridExtra (>= 2.3),
         pbapply (>= 1.4-1), plyr (>= 1.8.4), plotly (>= 4.9.0), raster (>= 2.9-5),

@@ -1,8 +1,8 @@
 ---
-title: "Voxel distributions"
+title: "Point cloud analysis"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Voxel distributions}
+  %\VignetteIndexEntry{Point cloud analysis}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---

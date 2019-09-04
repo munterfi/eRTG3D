@@ -1,5 +1,5 @@
 ---
-title: "Linkage sf package"
+title: "Linkage to the sf package"
 output: rmarkdown::html_vignette
 vignette: >
   %\VignetteIndexEntry{Linkage to the `sf` package}

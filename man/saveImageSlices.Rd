@@ -24,9 +24,12 @@ Image sequnces are a common structre to represent voxel data and
 most of the specific software to visualize voxel data is able to read it (e.g. blender)
 }
 \examples{
-crws <- lapply(X=seq(1:100), FUN = function(X) {sim.crw.3d(nStep = 100, rTurn = 0.99, rLift = 0.99, meanStep = 0.1)})
+crws <- lapply(X=seq(1:100), FUN = function(X) {
+  sim.crw.3d(nStep = 100, rTurn = 0.99, rLift = 0.99, meanStep = 0.1)
+})
 points <- do.call("rbind", crws)
 extent <- raster::extent(c(-10, 10, -10, 10))
-ud <- voxelCount(points, extent, xyRes=5, zMin=-10, zMax=10, standartize = TRUE)
+ud <- voxelCount(points, extent, xyRes=5,
+                 zMin=-10, zMax=10, standartize = TRUE)
 saveImageSlices(ud, filename = "saveImageSlices_test", dir = tempdir())
 }

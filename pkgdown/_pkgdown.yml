@@ -22,30 +22,30 @@ navbar:
     articles:
       text: Articles
       menu:
-      - text: 'Package example data'
-        href: articles/example-data.html
-      - text: 'Trajectory properties'
-        href: articles/trajectory-properties.html
-      - text: 'Movement probabilities'
-        href: articles/movement-probabilities.html
-      - text: 'Trajectory Simulations in 3-D and 2-D'
-        href: articles/trajectory-simulations.html
-      - text: '3-D and 2-D plotting'
-        href: articles/plotting.html
-      - text: 'Testing results'
-        href: articles/testing.html
-      - text: 'Parallel processing'
-        href: articles/parallel-processing.html
-      - text: 'Linkage sf package'
-        href: articles/sf-linkage.html
-      - text: 'Voxel distributions'
-        href: articles/voxel-distributions.html
+      - text: 'Example data'
+        href: articles/v1.html
+      - text: 'Standard workflow'
+        href: articles/v2.html
+      - text: 'Visualization of trajectories'
+        href: articles/v3.html
+      - text: 'Verification of results'
+        href: articles/v4.html
+      - text: 'Parallel computation'
+        href: articles/v5.html
+      - text: 'Coordinate reference system'
+        href: articles/v6.html
+      - text: 'Linkage to the sf package'
+        href: articles/v7.html
+      - text: 'Trajectory simulations in 2-D'
+        href: articles/v8.html
+      - text: 'Point cloud analysis'
+        href: articles/v9.html
     news:
       text: Changelog
       href: news/index.html
     simulator:
       text: Simulator
-      href: https://mufi.shinyapps.io/ertg3d-simulator/
+      href: https://mufi.shinyapps.io/ertg3d-simulator
     github:
       icon: fa-github fa-lg
       href: https://github.com/munterfinger/eRTG3D

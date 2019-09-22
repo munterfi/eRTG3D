@@ -188,7 +188,7 @@ logRasterStack <- function(rStack, standartize = FALSE, InfVal = NA)
 #' Export a dataCube as image slice sequence
 #' 
 #' Exports a dataCube of type \code{rasterStack} as Tiff image sequence.
-#' Image sequnces are a common structre to represent voxel data and
+#' Image sequences are a common structure to represent voxel data and
 #' most of the specific software to visualize voxel data is able to read it (e.g. blender)
 #'
 #' @param rStack rasterStack to be saved to Tiff image slices

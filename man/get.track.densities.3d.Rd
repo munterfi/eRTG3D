@@ -4,8 +4,13 @@
 \alias{get.track.densities.3d}
 \title{Extract tldCube and autodifferences functions from a consistent track}
 \usage{
-get.track.densities.3d(track, gradientDensity = TRUE,
-  heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.track.densities.3d(
+  track,
+  gradientDensity = TRUE,
+  heightDistEllipsoid = TRUE,
+  DEM = NULL,
+  maxBin = 25
+)
 }
 \arguments{
 \item{track}{a data.frame with 3 columns containing the x,y,z coordinates}

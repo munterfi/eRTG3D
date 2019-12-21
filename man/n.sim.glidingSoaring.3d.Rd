@@ -4,10 +4,24 @@
 \alias{n.sim.glidingSoaring.3d}
 \title{Simulates multiple 'gliding & soaring' tracks with a given number of gliding steps}
 \usage{
-n.sim.glidingSoaring.3d(n.sim = 1, parallel = FALSE, MODE, dGliding,
-  dSoaring, qGliding, start = c(0, 0, 0), end = start, a0, g0,
-  error = TRUE, smoothTransition = TRUE, glideRatio = 20,
-  DEM = NULL, BG = NULL, verbose = FALSE)
+n.sim.glidingSoaring.3d(
+  n.sim = 1,
+  parallel = FALSE,
+  MODE,
+  dGliding,
+  dSoaring,
+  qGliding,
+  start = c(0, 0, 0),
+  end = start,
+  a0,
+  g0,
+  error = TRUE,
+  smoothTransition = TRUE,
+  glideRatio = 20,
+  DEM = NULL,
+  BG = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{n.sim}{number of simulations to produce}

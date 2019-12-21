@@ -218,7 +218,7 @@ reproduce.track.3d <- function(track, n.sim = 1, parallel = FALSE, error = TRUE,
   .is.df.xyz(track = track)
   track <- track.properties.3d(track)
   n.locs <- nrow(track)
-  if (n.locs > 1500) stop("Track is too long (>1500 steps).")
+  if (n.locs > 1500) message("  |Note: The track is very long (>1500 steps), the system may run out of memory.")
   turnAngle <- track$t[2:nrow(track)]; liftAngle <- track$l[2:nrow(track)]; stepLength <- track$d[2:nrow(track)]
   deltaTurn <- diff(turnAngle); deltaLift <- diff(liftAngle); deltaStep <- diff(stepLength)
   heightEllipsoid <- track$z

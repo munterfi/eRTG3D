@@ -4,8 +4,14 @@
 \alias{turnLiftStepHist}
 \title{Three dimensional histogram}
 \usage{
-turnLiftStepHist(turn, lift, step, printDims = TRUE, rm.zeros = TRUE,
-  maxBin = 25)
+turnLiftStepHist(
+  turn,
+  lift,
+  step,
+  printDims = TRUE,
+  rm.zeros = TRUE,
+  maxBin = 25
+)
 }
 \arguments{
 \item{turn}{numeric vector of turn angles}

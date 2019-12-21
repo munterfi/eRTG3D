@@ -4,8 +4,14 @@
 \alias{plot3d}
 \title{Plot track(s) with a surface of a digital elevation model in three dimensions}
 \usage{
-plot3d(origTrack, simTrack = NULL, titleText = character(1),
-  DEM = NULL, padding = 0.1, timesHeight = 10)
+plot3d(
+  origTrack,
+  simTrack = NULL,
+  titleText = character(1),
+  DEM = NULL,
+  padding = 0.1,
+  timesHeight = 10
+)
 }
 \arguments{
 \item{origTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}

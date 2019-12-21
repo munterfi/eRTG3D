@@ -4,8 +4,7 @@
 \alias{test.verification.3d}
 \title{Statistical Verification of the simulated track}
 \usage{
-test.verification.3d(track1, track2, alpha = 0.05, plot = FALSE,
-  test = "ks")
+test.verification.3d(track1, track2, alpha = 0.05, plot = FALSE, test = "ks")
 }
 \arguments{
 \item{track1}{data.frame or list of data.frames with x,y,z coordinates of the original track}

@@ -4,9 +4,18 @@
 \alias{get.densities.3d}
 \title{Extract tldCube and autodifference approximation functions}
 \usage{
-get.densities.3d(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn,
-  deltaStep, gradientAngle = NULL, heightEllipsoid = NULL,
-  heightTopo = NULL, maxBin = 25)
+get.densities.3d(
+  turnAngle,
+  liftAngle,
+  stepLength,
+  deltaLift,
+  deltaTurn,
+  deltaStep,
+  gradientAngle = NULL,
+  heightEllipsoid = NULL,
+  heightTopo = NULL,
+  maxBin = 25
+)
 }
 \arguments{
 \item{turnAngle}{turn angles of the track (t)}

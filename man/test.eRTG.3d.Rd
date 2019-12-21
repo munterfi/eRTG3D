@@ -4,8 +4,13 @@
 \alias{test.eRTG.3d}
 \title{Test the functionality of the eRTG3D}
 \usage{
-test.eRTG.3d(parallel = FALSE, returnResult = FALSE, plot2d = FALSE,
-  plot3d = TRUE, plotDensities = TRUE)
+test.eRTG.3d(
+  parallel = FALSE,
+  returnResult = FALSE,
+  plot2d = FALSE,
+  plot3d = TRUE,
+  plotDensities = TRUE
+)
 }
 \arguments{
 \item{parallel}{logical: test running parallel?}

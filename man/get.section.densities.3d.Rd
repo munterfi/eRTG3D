@@ -4,8 +4,13 @@
 \alias{get.section.densities.3d}
 \title{Extract tldCube and autodifferences functions from track sections}
 \usage{
-get.section.densities.3d(trackSections, gradientDensity = TRUE,
-  heightDistEllipsoid = TRUE, DEM = NULL, maxBin = 25)
+get.section.densities.3d(
+  trackSections,
+  gradientDensity = TRUE,
+  heightDistEllipsoid = TRUE,
+  DEM = NULL,
+  maxBin = 25
+)
 }
 \arguments{
 \item{trackSections}{list of track sections got by the \link[eRTG3D]{track.split.3d} function}

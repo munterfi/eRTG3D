@@ -4,8 +4,12 @@
 \alias{plot3d.densities}
 \title{Density plots of turn angle, lift angle and step length}
 \usage{
-plot3d.densities(track1, track2 = NULL, autodifferences = FALSE,
-  scaleDensities = FALSE)
+plot3d.densities(
+  track1,
+  track2 = NULL,
+  autodifferences = FALSE,
+  scaleDensities = FALSE
+)
 }
 \arguments{
 \item{track1}{a list containing a data.frame with x,y,z coordinates or a data.frame}

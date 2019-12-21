@@ -4,9 +4,19 @@
 \alias{reproduce.track.3d}
 \title{Reproduce a track with the eRTG3D}
 \usage{
-reproduce.track.3d(track, n.sim = 1, parallel = FALSE, error = TRUE,
-  DEM = NULL, BG = NULL, filterDeadEnds = TRUE, plot2d = FALSE,
-  plot3d = FALSE, maxBin = 25, gradientDensity = TRUE)
+reproduce.track.3d(
+  track,
+  n.sim = 1,
+  parallel = FALSE,
+  error = TRUE,
+  DEM = NULL,
+  BG = NULL,
+  filterDeadEnds = TRUE,
+  plot2d = FALSE,
+  plot3d = FALSE,
+  maxBin = 25,
+  gradientDensity = TRUE
+)
 }
 \arguments{
 \item{track}{data.frame with x,y,z coordinates of the original track}

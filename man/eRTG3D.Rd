@@ -3,7 +3,6 @@
 \docType{package}
 \name{eRTG3D}
 \alias{eRTG3D}
-\alias{eRTG3D-package}
 \title{eRTG3D: Empirically Informed Random Trajectory Generator in 3-D}
 \description{
 The empirically informed random trajectory generator in three dimensions (eRTG3D)

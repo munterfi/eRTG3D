@@ -4,8 +4,16 @@
 \alias{voxelCount}
 \title{Apply voxel counting on a point cloud}
 \usage{
-voxelCount(points, extent, xyRes, zRes = xyRes, zMin, zMax,
-  standartize = FALSE, verbose = FALSE)
+voxelCount(
+  points,
+  extent,
+  xyRes,
+  zRes = xyRes,
+  zMin,
+  zMax,
+  standartize = FALSE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{points}{a x, y, z data.frame}

@@ -79,7 +79,7 @@ geometrically similar to the initial trajectory
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.2.9000</span>
       </span>
     </div>
 
@@ -180,8 +180,18 @@ geometrically similar to the initial trajectory
 (extractMethod: raster overlay method can take "simple" or "bilinear")</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sim.cond.3d</span>(<span class='no'>n.locs</span>, <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>end</span> <span class='kw'>=</span> <span class='no'>start</span>, <span class='no'>a0</span>, <span class='no'>g0</span>, <span class='no'>densities</span>,
-  <span class='no'>qProbs</span>, <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>DEM</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>BG</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>sim.cond.3d</span>(
+  <span class='no'>n.locs</span>,
+  <span class='kw'>start</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>end</span> <span class='kw'>=</span> <span class='no'>start</span>,
+  <span class='no'>a0</span>,
+  <span class='no'>g0</span>,
+  <span class='no'>densities</span>,
+  <span class='no'>qProbs</span>,
+  <span class='kw'>error</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>DEM</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>BG</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -267,7 +277,7 @@ geometrically similar to the initial trajectory
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
 
       </footer>

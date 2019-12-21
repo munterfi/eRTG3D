@@ -4,8 +4,7 @@
 \alias{sim.uncond.3d}
 \title{Unconditional Empirical Random Walk (UERW) in 3-D}
 \usage{
-sim.uncond.3d(n.locs, start = c(0, 0, 0), a0, g0, densities,
-  error = TRUE)
+sim.uncond.3d(n.locs, start = c(0, 0, 0), a0, g0, densities, error = TRUE)
 }
 \arguments{
 \item{n.locs}{the number of locations for the simulated track}

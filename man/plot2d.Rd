@@ -4,9 +4,16 @@
 \alias{plot2d}
 \title{Plot function to plot the 3-D tracks in 2-D plane}
 \usage{
-plot2d(origTrack, simTrack = NULL, titleText = character(1),
-  DEM = NULL, BG = NULL, padding = 0.1, alpha = 0.7,
-  resolution = 500)
+plot2d(
+  origTrack,
+  simTrack = NULL,
+  titleText = character(1),
+  DEM = NULL,
+  BG = NULL,
+  padding = 0.1,
+  alpha = 0.7,
+  resolution = 500
+)
 }
 \arguments{
 \item{origTrack}{a list containing data.frames with x,y,z coordinates or a data.frame}

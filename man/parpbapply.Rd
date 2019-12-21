@@ -4,8 +4,15 @@
 \alias{parpbapply}
 \title{Parallel apply with progressbar}
 \usage{
-parpbapply(X, FUN, MARGIN, packages = NULL, export = NULL,
-  envir = environment(), nNodes = parallel::detectCores() - 1)
+parpbapply(
+  X,
+  FUN,
+  MARGIN,
+  packages = NULL,
+  export = NULL,
+  envir = environment(),
+  nNodes = parallel::detectCores() - 1
+)
 }
 \arguments{
 \item{X}{an array, including a matrix.}

@@ -4,8 +4,14 @@
 \alias{parpbsapply}
 \title{Parallel sapply with progressbar}
 \usage{
-parpbsapply(X, FUN, packages = NULL, export = NULL,
-  envir = environment(), nNodes = parallel::detectCores() - 1)
+parpbsapply(
+  X,
+  FUN,
+  packages = NULL,
+  export = NULL,
+  envir = environment(),
+  nNodes = parallel::detectCores() - 1
+)
 }
 \arguments{
 \item{X}{a vector (atomic or list) or an expression object. Other objects (including classed objects) will be coerced by base::as.list.}

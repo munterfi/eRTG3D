@@ -4,9 +4,20 @@
 \alias{n.sim.cond.3d}
 \title{Conditional Empirical Random Walks (CERW) in 3-D}
 \usage{
-n.sim.cond.3d(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0,
-  densities, qProbs, error = FALSE, parallel = FALSE, DEM = NULL,
-  BG = NULL)
+n.sim.cond.3d(
+  n.sim,
+  n.locs,
+  start = c(0, 0, 0),
+  end = start,
+  a0,
+  g0,
+  densities,
+  qProbs,
+  error = FALSE,
+  parallel = FALSE,
+  DEM = NULL,
+  BG = NULL
+)
 }
 \arguments{
 \item{n.sim}{number of CERWs to simulate}

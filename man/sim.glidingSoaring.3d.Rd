@@ -4,9 +4,22 @@
 \alias{sim.glidingSoaring.3d}
 \title{Simulates 'gliding & soaring' track with a given number of gliding steps}
 \usage{
-sim.glidingSoaring.3d(MODE, dGliding, dSoaring, qGliding, start = c(0, 0,
-  0), end = start, a0, g0, error = TRUE, smoothTransition = TRUE,
-  glideRatio = 15, DEM = NULL, BG = NULL, verbose = FALSE)
+sim.glidingSoaring.3d(
+  MODE,
+  dGliding,
+  dSoaring,
+  qGliding,
+  start = c(0, 0, 0),
+  end = start,
+  a0,
+  g0,
+  error = TRUE,
+  smoothTransition = TRUE,
+  glideRatio = 15,
+  DEM = NULL,
+  BG = NULL,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{MODE}{raster layer containing the number/index of the mode, which should be used at each location}

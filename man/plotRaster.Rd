@@ -4,8 +4,7 @@
 \alias{plotRaster}
 \title{Plots a rasterLayer or rasterStack}
 \usage{
-plotRaster(r, title = character(0), centerColorBar = FALSE,
-  ncol = NULL)
+plotRaster(r, title = character(0), centerColorBar = FALSE, ncol = NULL)
 }
 \arguments{
 \item{r}{\code{rasterLayer} or \code{rasterStack}}

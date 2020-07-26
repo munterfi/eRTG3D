@@ -22,7 +22,7 @@ Imports:
 License: GPL (>=3)
 Encoding: UTF-8
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 Suggests: 
     knitr (>= 1.23),
     pander (>= 0.6.3),
@@ -35,6 +35,5 @@ Suggests:
     covr (>= 3.2.1)
 VignetteBuilder: knitr
 NeedsCompilation: no
-Packaged: 2019-06-06 20:01:28 UTC; Merlin
 Maintainer: Merlin Unterfinger <info@munterfinger.ch>
 BugReports: https://github.com/munterfinger/eRTG3D/issues

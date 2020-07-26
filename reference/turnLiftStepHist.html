@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Extract tldCube and autodifference approximation functions — get.densities.3d • eRTG3D</title>
+<title>Three dimensional histogram — turnLiftStepHist • eRTG3D</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -46,14 +46,10 @@
 
 
 
-<meta property="og:title" content="Extract tldCube and autodifference approximation functions — get.densities.3d" />
-<meta property="og:description" content="Creates a list consisting of the three dimensional
-probability distribution cube for turning angle, lift angle and step length (turnLiftStepHist)
-as well as the uni-dimensional distributions of the differences
-of the turn angles, lift angles and step lengths with a lag of 1 to maintain
-minimal level of autocorrelation in each of the terms.
-Additionally also the distribution of the flight height over the ellipsoid (absolute)
-and the distribution of flight height over the topography (relative) can be included." />
+<meta property="og:title" content="Three dimensional histogram — turnLiftStepHist" />
+<meta property="og:description" content="Derives a three dimensional distribution of a turn angle,
+lift angle and step length, using the Freedman–Diaconis rule for
+estimating the number of bins." />
 <meta property="og:image" content="/logo.png" />
 
 
@@ -176,31 +172,23 @@ and the distribution of flight height over the topography (relative) can be incl
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Extract tldCube and autodifference approximation functions</h1>
+    <h1>Three dimensional histogram</h1>
     <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/core3D.R'><code>R/core3D.R</code></a></small>
-    <div class="hidden name"><code>get.densities.3d.Rd</code></div>
+    <div class="hidden name"><code>turnLiftStepHist.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Creates a list consisting of the three dimensional
-probability distribution cube for turning angle, lift angle and step length (<a href='turnLiftStepHist.html'>turnLiftStepHist</a>)
-as well as the uni-dimensional distributions of the differences
-of the turn angles, lift angles and step lengths with a lag of 1 to maintain
-minimal level of autocorrelation in each of the terms.
-Additionally also the distribution of the flight height over the ellipsoid (absolute)
-and the distribution of flight height over the topography (relative) can be included.</p>
+    <p>Derives a three dimensional distribution of a turn angle,
+lift angle and step length, using the Freedman–Diaconis rule for
+estimating the number of bins.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get.densities.3d</span>(
-  <span class='kw'>turnAngle</span>,
-  <span class='kw'>liftAngle</span>,
-  <span class='kw'>stepLength</span>,
-  <span class='kw'>deltaLift</span>,
-  <span class='kw'>deltaTurn</span>,
-  <span class='kw'>deltaStep</span>,
-  gradientAngle = <span class='kw'>NULL</span>,
-  heightEllipsoid = <span class='kw'>NULL</span>,
-  heightTopo = <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>turnLiftStepHist</span>(
+  <span class='kw'>turn</span>,
+  <span class='kw'>lift</span>,
+  <span class='kw'>step</span>,
+  printDims = <span class='fl'>TRUE</span>,
+  rm.zeros = <span class='fl'>TRUE</span>,
   maxBin = <span class='fl'>25</span>
 )</pre>
 
@@ -208,56 +196,75 @@ and the distribution of flight height over the topography (relative) can be incl
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>turnAngle</th>
-      <td><p>turn angles of the track (t)</p></td>
+      <th>turn</th>
+      <td><p>numeric vector of turn angles</p></td>
     </tr>
     <tr>
-      <th>liftAngle</th>
-      <td><p>lift angles of the track (l)</p></td>
+      <th>lift</th>
+      <td><p>numeric vector of lift angles</p></td>
     </tr>
     <tr>
-      <th>stepLength</th>
-      <td><p>stepLength of the track (d)</p></td>
+      <th>step</th>
+      <td><p>numeric vector of step lengths</p></td>
     </tr>
     <tr>
-      <th>deltaLift</th>
-      <td><p>auto differences of the turn angles (diff(t))</p></td>
+      <th>printDims</th>
+      <td><p>logical: should dimensions of tld-Cube be messaged?</p></td>
     </tr>
     <tr>
-      <th>deltaTurn</th>
-      <td><p>auto differences of the lift angles (diff(l))</p></td>
-    </tr>
-    <tr>
-      <th>deltaStep</th>
-      <td><p>auto differences of the step length (diff(d))</p></td>
-    </tr>
-    <tr>
-      <th>gradientAngle</th>
-      <td><p><code>NULL</code> or the gardient angles of the track</p></td>
-    </tr>
-    <tr>
-      <th>heightEllipsoid</th>
-      <td><p>flight height over the ellipsoid (absolute) or <code>NULL</code> to exclude this distribution</p></td>
-    </tr>
-    <tr>
-      <th>heightTopo</th>
-      <td><p>flight height over the topography (relative) or <code>NULL</code> to exclude this distribution</p></td>
+      <th>rm.zeros</th>
+      <td><p>logical: should combinations with zero probability be removed?</p></td>
     </tr>
     <tr>
       <th>maxBin</th>
-      <td><p>numeric scalar, maximum number of bins per dimension of the tld-cube (<a href='turnLiftStepHist.html'>turnLiftStepHist</a>)</p></td>
+      <td><p>numeric scalar, maximum number of bins per dimension of the tld-cube.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A list containing the tldCube and the autodifferences functions (and additionally the flight height distribution functions)</p>
+    <p>A three dimensional histogram as data.frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>niclas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='track.properties.3d.html'>track.properties.3d</a></span>(<span class='kw'>niclas</span>)[<span class='fl'>2</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>niclas</span>),]
-<span class='kw'>P</span> <span class='op'>&lt;-</span> <span class='fu'>get.densities.3d</span>(turnAngle=<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>t</span>, liftAngle=<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>l</span>, stepLength=<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>d</span>,
-deltaLift=<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>t</span>), deltaTurn=<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>l</span>), deltaStep=<span class='fu'><a href='https://rdrr.io/r/base/diff.html'>diff</a></span>(<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>d</span>),
-gradientAngle = <span class='kw'>NULL</span>, heightEllipsoid = <span class='kw'>NULL</span>, heightTopo = <span class='kw'>NULL</span>, maxBin = <span class='fl'>25</span>)</div><div class='output co'>#&gt; <span class='message'>  |TLD cube dimensions: 9 x 14 x 3</span></div></pre>
+    <pre class="examples"><div class='input'><span class='kw'>niclas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='track.properties.3d.html'>track.properties.3d</a></span>(<span class='kw'>niclas</span>)[<span class='fl'>2</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>niclas</span>), ]
+<span class='fu'>turnLiftStepHist</span>(<span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>t</span>, <span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>l</span>, <span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>d</span>)</div><div class='output co'>#&gt; <span class='message'>  |TLD cube dimensions: 9 x 14 x 3</span></div><div class='output co'>#&gt; $values
+#&gt;             turn        lift     step       prob
+#&gt; 2   -0.353684014 -0.26142679 1865.097 0.03333333
+#&gt; 12   0.170112206 -0.13612579 1865.097 0.03333333
+#&gt; 17  -0.179085274 -0.09445602 1865.097 0.03333333
+#&gt; 18  -0.004486534 -0.09445602 1865.097 0.03333333
+#&gt; 23  -0.353684014 -0.05278625 1865.097 0.03333333
+#&gt; 27   0.344710946 -0.05278625 1865.097 0.03333333
+#&gt; 32  -0.004486534 -0.01111648 1865.097 0.03333333
+#&gt; 33   0.170112206 -0.01111648 1865.097 0.03333333
+#&gt; 38  -0.179085274  0.03055329 1865.097 0.03333333
+#&gt; 43  -0.878265928  0.07222306 1865.097 0.03333333
+#&gt; 81  -0.004486534 -0.09445602 3707.217 0.03333333
+#&gt; 95  -0.004486534 -0.01111648 3707.217 0.03333333
+#&gt; 105  0.520095381  0.03055329 3707.217 0.03333333
+#&gt; 116 -0.004486534  0.11389283 3707.217 0.03333333
+#&gt; 119  0.520095381  0.11389283 3707.217 0.03333333
+#&gt; 149 -0.353684014 -0.05278625 5549.338 0.03333333
+#&gt; 157 -0.179085274 -0.01111648 5549.338 0.10000000
+#&gt; 158 -0.004486534 -0.01111648 5549.338 0.06666667
+#&gt; 161  0.520095381 -0.01111648 5549.338 0.03333333
+#&gt; 164 -0.179085274  0.03055329 5549.338 0.03333333
+#&gt; 165 -0.004486534  0.03055329 5549.338 0.06666667
+#&gt; 166  0.170112206  0.03055329 5549.338 0.03333333
+#&gt; 172 -0.004486534  0.07222306 5549.338 0.03333333
+#&gt; 173  0.170112206  0.07222306 5549.338 0.03333333
+#&gt; 180  0.170112206  0.11389283 5549.338 0.03333333
+#&gt; 189  0.520095381  0.28086360 5549.338 0.03333333
+#&gt; 
+#&gt; $tRes
+#&gt; [1] 0.1745987
+#&gt; 
+#&gt; $lRes
+#&gt; [1] 0.04166977
+#&gt; 
+#&gt; $dRes
+#&gt; [1] 1839.362
+#&gt; </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

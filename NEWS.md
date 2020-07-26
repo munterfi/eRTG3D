@@ -1,4 +1,8 @@
-# version 0.6.2.9000
+# version 0.6.3
+
+* Add ORCID to author field in DESCRIPTION.
+* Switch from travis to GitHub Actions.
+* Remove `sp`, `gridExtra` and `plyr` from imports and add to suggestions.
 
 **New features**
 * Tracks longer than 1500 steps are now allowed as input for `reproduce.track.3d()`: Replaced stop statement with a message.

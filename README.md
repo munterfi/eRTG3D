@@ -1,12 +1,12 @@
 # eRTG3D <img src="man/figures/logo.png" align="right" alt="" width="120" />
 <!-- badges: start -->
-[![CRAN version](https://www.r-pkg.org/badges/version/eRTG3D)](https://CRAN.R-project.org/package=eRTG3D)
+[![CRAN status](https://www.r-pkg.org/badges/version/eRTG3D)](https://CRAN.R-project.org/package=eRTG3D)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/eRTG3D?color=brightgreen)](https://CRAN.R-project.org/package=eRTG3D)
-[![Travis build status](https://travis-ci.org/munterfinger/eRTG3D.svg?branch=master)](https://travis-ci.org/munterfinger/eRTG3D)
-[![codecov](https://codecov.io/gh/munterfinger/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfinger/eRTG3D)
-[![License: GPL v3](https://img.shields.io/badge/license-GPL%20v3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+[![R build status](https://github.com/munterfinger/eRTG3D/workflows/R-CMD-check/badge.svg)](https://github.com/munterfinger/eRTG3D/actions)
+[![pkgdown](https://github.com/munterfinger/eRTG3D/workflows/pkgdown/badge.svg)](https://github.com/munterfinger/eRTG3D/actions)
+[![Codecov test coverage](https://codecov.io/gh/munterfinger/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfinger/eRTG3D?branch=master)
 <!-- badges: end -->
-  
+
 The **e**mpirically informed **R**andom **T**rajectory **G**enerator in three dimensions (eRTG3D)
 is an algorithm to generate realistic random trajectories in a 3-D space
 between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth's surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.

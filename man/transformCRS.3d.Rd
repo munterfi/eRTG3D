@@ -17,9 +17,9 @@ transformCRS.3d(track, fromCRS, toCRS)
 A data.frame containing x,y,z and variables.
 }
 \description{
-Attention: Please use this function for CRS transformations, 
+Attention: Please use this function for CRS transformations,
 since it is based on the \link[sf]{st_transform} from the sf package and therefore
-supports CRS transformations in 3-D. Note: \link[sp]{spTransform} from the \link{sp} package
+supports CRS transformations in 3-D. Note: \code{spTransform} from the \link{sp} package
 only supports transformations in the 2D plane, which will cause distortions
 in the third dimension.
 }

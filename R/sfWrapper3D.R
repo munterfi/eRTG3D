@@ -2,7 +2,7 @@
 #'
 #' Attention: Please use this function for CRS transformations,
 #' since it is based on the \link[sf]{st_transform} from the sf package and therefore
-#' supports CRS transformations in 3-D. Note: \code{spTransform} from the \link{sp} package
+#' supports CRS transformations in 3-D. Note: \code{spTransform} from the \code{sp} package
 #' only supports transformations in the 2D plane, which will cause distortions
 #' in the third dimension.
 #'

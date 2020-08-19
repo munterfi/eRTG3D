@@ -164,9 +164,7 @@ text-align: justify}
 </pre></div>
 <p>To carry out a CRS transformation, please use <code><a href="../reference/transformCRS.3d.html">transformCRS.3d()</a></code>, which is based on the <code>st_transform()</code> from the <code>sf</code> package. Therefore is supports CRS transformations in 3-D.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">WGS84</span> <span class="op">&lt;-</span> <span class="st">"+init=epsg:4326"</span>
-<span class="kw">LV95</span> <span class="op">&lt;-</span> <span class="st">"+init=epsg:2056"</span>
-<span class="kw">track</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transformCRS.3d.html">transformCRS.3d</a></span>(<span class="kw">track.wgs84</span>, fromCRS=<span class="kw">WGS84</span>, toCRS=<span class="kw">LV95</span>)
+<span class="kw">track</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transformCRS.3d.html">transformCRS.3d</a></span>(<span class="kw">track.wgs84</span>, fromCRS=<span class="fl">4326</span>, toCRS=<span class="fl">2056</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">track</span>)
 <span class="co">#&gt;         x       y        z            a        g           t            l</span>
 <span class="co">#&gt; 1 2556476 1188336 1283.736  0.391476625 1.557032          NA           NA</span>

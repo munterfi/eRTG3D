@@ -195,7 +195,7 @@
     <p>A data.frame.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sf2df.3d</span>(<span class='fu'><a href='track2sf.3d.html'>track2sf.3d</a></span>(<span class='kw'>niclas</span>, <span class='st'>"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"</span>))</div><div class='output co'>#&gt;          x       y        z            a        g           t             l
+    <pre class="examples"><div class='input'><span class='fu'>sf2df.3d</span>(<span class='fu'><a href='track2sf.3d.html'>track2sf.3d</a></span>(<span class='kw'>niclas</span>, CRS = <span class='fl'>4326</span>))</div><div class='output co'>#&gt;          x       y        z            a        g           t             l
 #&gt; 1  2556476 1188336 1283.736  0.391476625 1.557032          NA            NA
 #&gt; 2  2558565 1189297 1359.580  0.431339520 1.537826  0.03986289 -0.0192051360
 #&gt; 3  2560477 1189861 1369.713  0.286613422 1.565712 -0.14472610  0.0278855424

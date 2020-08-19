@@ -190,7 +190,7 @@
     </tr>
     <tr>
       <th>CRS</th>
-      <td><p>string containing the proj4 code of the CRS</p></td>
+      <td><p>numeric, EPSG code of the CRS</p></td>
     </tr>
     </table>
 
@@ -199,11 +199,11 @@
     <p>A track of type <code>'sf, data.frame'</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>track2sf.3d</span>(<span class='kw'>niclas</span>, <span class='st'>"+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"</span>)</div><div class='output co'>#&gt; Simple feature collection with 31 features and 5 fields
+    <pre class="examples"><div class='input'><span class='fu'>track2sf.3d</span>(<span class='kw'>niclas</span>, <span class='fl'>4326</span>)</div><div class='output co'>#&gt; Simple feature collection with 31 features and 5 fields
 #&gt; geometry type:  POINT
 #&gt; dimension:      XYZ
 #&gt; bbox:           xmin: 2556476 ymin: 1188336 xmax: 2662223 ymax: 1231979
-#&gt; CRS:            +proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs
+#&gt; geographic CRS: WGS 84
 #&gt; First 10 features:
 #&gt;               a        g           t            l        d
 #&gt; 1   0.391476625 1.557032          NA           NA       NA

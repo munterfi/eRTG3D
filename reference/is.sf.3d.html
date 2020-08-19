@@ -195,7 +195,7 @@
     <p>A logical: <code>TRUE</code> if is a simple feature collection (class: <code>'sf, data.frame'</code>) of the sf package, <code>FALSE</code> otherwise.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>is.sf.3d</span>(<span class='kw'>niclas</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is.sf.3d</span>(<span class='fu'><a href='track2sf.3d.html'>track2sf.3d</a></span>(track = <span class='kw'>niclas</span>, CRS = <span class='st'>"+init=epsg:2056"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: GDAL Message 1: +init=epsg:XXXX syntax is deprecated. It might return a CRS with a non-EPSG compliant axis order.</span></div><div class='output co'>#&gt; [1] TRUE</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'>is.sf.3d</span>(<span class='kw'>niclas</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='fu'>is.sf.3d</span>(<span class='fu'><a href='track2sf.3d.html'>track2sf.3d</a></span>(track = <span class='kw'>niclas</span>, CRS = <span class='fl'>2056</span>))</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

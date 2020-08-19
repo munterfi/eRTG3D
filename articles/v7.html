@@ -148,10 +148,7 @@ text-align: justify}
 <a href="#convert-to-sf" class="anchor"></a>Convert to sf</h2>
 <p>To convert tracks to a an object of type <code>sf, data.frame</code> use the <code><a href="../reference/track2sf.3d.html">track2sf.3d()</a></code> function, which can take data.frames, matrices and move objects (containing one track!) as input. In case of data.frames and matrices, it is important that the coordinates are stored in the first three rows.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">LV95</span> <span class="op">&lt;-</span> <span class="st">"+init=epsg:2056"</span>
-<span class="kw">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track2sf.3d.html">track2sf.3d</a></span>(<span class="kw">niclas</span>, CRS = <span class="kw">LV95</span>)
-<span class="co">#&gt; Warning in CPL_crs_from_input(x): GDAL Message 1: +init=epsg:XXXX syntax is</span>
-<span class="co">#&gt; deprecated. It might return a CRS with a non-EPSG compliant axis order.</span>
+<span class="kw">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track2sf.3d.html">track2sf.3d</a></span>(<span class="kw">niclas</span>, CRS = <span class="fl">2056</span>)
 <span class="fu"><a href="../reference/is.sf.3d.html">is.sf.3d</a></span>(<span class="kw">niclas</span>)
 <span class="co">#&gt; [1] TRUE</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">niclas</span>, <span class="fl">3</span>)

@@ -24,8 +24,7 @@ The `sf` package delivers a standardized way to encode spatial vector data, the 
 To convert tracks to a an object of type `sf, data.frame` use the `track2sf.3d()` function, which can take data.frames, matrices and move objects (containing one track!) as input. In case of data.frames and matrices, it is important that the coordinates are stored in the first three rows.
 
 ```{r eval=TRUE, fig.height=5, fig.width=7}
-LV95 <- "+init=epsg:2056"
-niclas <- track2sf.3d(niclas, CRS = LV95)
+niclas <- track2sf.3d(niclas, CRS = 2056)
 is.sf.3d(niclas)
 head(niclas, 3)
 ```

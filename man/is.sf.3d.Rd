@@ -17,5 +17,5 @@ Tests if the object is a simple feature collection (class: \code{'sf, data.frame
 }
 \examples{
 is.sf.3d(niclas)
-is.sf.3d(track2sf.3d(track = niclas, CRS = "+init=epsg:2056"))
+is.sf.3d(track2sf.3d(track = niclas, CRS = 2056))
 }

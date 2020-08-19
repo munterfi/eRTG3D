@@ -9,7 +9,7 @@ track2sf.3d(track, CRS = NA)
 \arguments{
 \item{track}{eRTG3D track data.frame or a matrix}
 
-\item{CRS}{string containing the proj4 code of the CRS}
+\item{CRS}{numeric, EPSG code of the CRS}
 }
 \value{
 A track of type \code{'sf, data.frame'}.
@@ -18,5 +18,5 @@ A track of type \code{'sf, data.frame'}.
 Converts a track to a \code{'sf, data.frame'}
 }
 \examples{
-track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+track2sf.3d(niclas, 4326)
 }

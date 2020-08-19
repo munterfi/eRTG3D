@@ -9,9 +9,9 @@ transformCRS.3d(track, fromCRS, toCRS)
 \arguments{
 \item{track}{data.frame with x,y,z coordinates}
 
-\item{fromCRS}{string: proj4 of current CRS}
+\item{fromCRS}{numeric, EPSG code of the current CRS}
 
-\item{toCRS}{string: proj4 of CRS to be converted in}
+\item{toCRS}{numeric, EPSG code of the CRS to be converted in}
 }
 \value{
 A data.frame containing x,y,z and variables.
@@ -24,5 +24,5 @@ only supports transformations in the 2D plane, which will cause distortions
 in the third dimension.
 }
 \examples{
-transformCRS.3d(niclas, fromCRS="+init=epsg:2056", toCRS="+init=epsg:4326")
+transformCRS.3d(niclas, fromCRS = 2056, toCRS = 4326)
 }

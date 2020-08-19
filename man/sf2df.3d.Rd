@@ -16,5 +16,5 @@ A data.frame.
 Converts a sf data.frame to a normal dataframe
 }
 \examples{
-sf2df.3d(track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
+sf2df.3d(track2sf.3d(niclas, CRS = 4326))
 }

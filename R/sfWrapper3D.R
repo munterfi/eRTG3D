@@ -7,14 +7,14 @@
 #' in the third dimension.
 #'
 #' @param track data.frame with x,y,z coordinates
-#' @param fromCRS string: proj4 of current CRS
-#' @param toCRS string: proj4 of CRS to be converted in
+#' @param fromCRS numeric, EPSG code of the current CRS
+#' @param toCRS numeric, EPSG code of the CRS to be converted in
 #'
 #' @return A data.frame containing x,y,z and variables.
 #' @export
 #'
 #' @examples
-#' transformCRS.3d(niclas, fromCRS="+init=epsg:2056", toCRS="+init=epsg:4326")
+#' transformCRS.3d(niclas, fromCRS = 2056, toCRS = 4326)
 transformCRS.3d <- function(track, fromCRS, toCRS)
 {
   track <- track2sf.3d(track = track, CRS = fromCRS)
@@ -33,7 +33,7 @@ transformCRS.3d <- function(track, fromCRS, toCRS)
 #'
 #' @examples
 #' is.sf.3d(niclas)
-#' is.sf.3d(track2sf.3d(track = niclas, CRS = "+init=epsg:2056"))
+#' is.sf.3d(track2sf.3d(track = niclas, CRS = 2056))
 is.sf.3d <- function(track)
 {
   if(class(track)[1]=="sf" && class(track)[2]=="data.frame") {
@@ -51,7 +51,7 @@ is.sf.3d <- function(track)
 #' @export
 #'
 #' @examples
-#' sf2df.3d(track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs"))
+#' sf2df.3d(track2sf.3d(niclas, CRS = 4326))
 sf2df.3d <- function(track)
 {
   track <- cbind(sf::st_coordinates(track), as.data.frame(track))
@@ -63,13 +63,13 @@ sf2df.3d <- function(track)
 #' Converts a track to a \code{'sf, data.frame'}
 #'
 #' @param track eRTG3D track data.frame or a matrix
-#' @param CRS string containing the proj4 code of the CRS
+#' @param CRS numeric, EPSG code of the CRS
 #'
 #' @return A track of type \code{'sf, data.frame'}.
 #' @export
 #'
 #' @examples
-#' track2sf.3d(niclas, "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs")
+#' track2sf.3d(niclas, 4326)
 track2sf.3d <- function(track, CRS = NA)
 {
   if(is.data.frame(track)) {return(.df2sf.3d(track, CRS = CRS))}
@@ -80,7 +80,7 @@ track2sf.3d <- function(track, CRS = NA)
 #' Converts a track data.frame to a \code{'sf, data.frame'}
 #'
 #' @param track eRTG3D track data.frame
-#' @param CRS string containing the proj4 code of the CRS
+#' @param CRS numeric, EPSG code of the CRS
 #'
 #' @return A track of type \code{'sf, data.frame'}.
 #' @export
@@ -98,7 +98,7 @@ track2sf.3d <- function(track, CRS = NA)
 #' Converts a track matrix to a sf data.frame
 #'
 #' @param track matrix with x, y and z coordinates
-#' @param CRS string containing the proj4 code of the CRS
+#' @param CRS numeric, EPSG code of the CRS
 #'
 #' @return A track of type \code{'sf, data.frame'}.
 #' @export

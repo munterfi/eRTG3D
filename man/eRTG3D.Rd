@@ -16,7 +16,7 @@ representing the Earth's surface, and a background layer of probabilities
 influence the trajectories.
 }
 \details{
-See the packages site on \href{https://munterfinger.github.io/eRTG3D/}{GitHub},
+See the packages site on \href{https://munterfi.github.io/eRTG3D/}{GitHub},
 detailed information about the algorithm in this \href{https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf}{Master’s Thesis},
-or test the algoritm online in the \href{https://mufi.shinyapps.io/ertg3d-simulator}{eRTG3D Simulator}.
+or test the algorithm online in the \href{https://mufi.shinyapps.io/ertg3d-simulator}{eRTG3D Simulator}.
 }

@@ -54,6 +54,8 @@ between the same start and end point." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,15 @@ between the same start and end point." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +89,7 @@ between the same start and end point." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -141,7 +149,7 @@ between the same start and end point." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -172,7 +180,7 @@ between the same start and end point." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Reproduce a track with the eRTG3D</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
     <div class="hidden name"><code>reproduce.track.3d.Rd</code></div>
     </div>
 
@@ -181,19 +189,19 @@ between the same start and end point." />
 between the same start and end point.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>reproduce.track.3d</span>(
-  <span class='kw'>track</span>,
-  n.sim = <span class='fl'>1</span>,
-  parallel = <span class='fl'>FALSE</span>,
-  error = <span class='fl'>TRUE</span>,
-  DEM = <span class='kw'>NULL</span>,
-  BG = <span class='kw'>NULL</span>,
-  filterDeadEnds = <span class='fl'>TRUE</span>,
-  plot2d = <span class='fl'>FALSE</span>,
-  plot3d = <span class='fl'>FALSE</span>,
-  maxBin = <span class='fl'>25</span>,
-  gradientDensity = <span class='fl'>TRUE</span>
-)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>reproduce.track.3d</span><span class='op'>(</span>
+  <span class='va'>track</span>,
+  n.sim <span class='op'>=</span> <span class='fl'>1</span>,
+  parallel <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  error <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  DEM <span class='op'>=</span> <span class='cn'>NULL</span>,
+  BG <span class='op'>=</span> <span class='cn'>NULL</span>,
+  filterDeadEnds <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  plot2d <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  plot3d <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  maxBin <span class='op'>=</span> <span class='fl'>25</span>,
+  gradientDensity <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -249,28 +257,40 @@ between the same start and end point.</p>
     <p>A list or data.frame containing the simulated track(s) (CERW).</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>reproduce.track.3d</span>(<span class='kw'>niclas</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, ])</div><div class='output co'>#&gt; <span class='message'>  |TLD cube dimensions: 8 x 15 x 2</span></div><div class='output co'>#&gt; <span class='message'>  |Simulate UERW with 15000 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |===========                                                           |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |=========================                                             |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |=======================================                               |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |=====================================================                 |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |===================================================================   |  95%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0.6s</span></div><div class='output co'>#&gt; <span class='message'>  |Extracting Q probabilities for 10 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0.2s</span></div><div class='output co'>#&gt; <span class='message'>  |Simulate CERW with 10 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0.1s</span></div><div class='output co'>#&gt;          x       y        z         a        g           t           l        d
-#&gt; 1  2556476 1188336 1283.736 0.4477398 1.531790  0.03391427  0.01041637       NA
-#&gt; 2  2558107 1189033 1330.000 0.4037400 1.544719 -0.04159511  0.01041637 1837.581
-#&gt; 3  2559792 1189785 1345.066 0.4198537 1.562632  0.03391427  0.01041637 1837.581
-#&gt; 4  2561934 1190637 1354.898 0.3785199 1.566530 -0.04159511  0.01041637 2371.273
-#&gt; 5  2566452 1192503 1368.356 0.3916651 1.568043 -0.00384042  0.01041637 4772.891
-#&gt; 6  2568521 1193597 1347.717 0.4865263 1.579616  0.10942366  0.01041637 2371.273
-#&gt; 7  2570498 1194802 1334.384 0.5473249 1.576555  0.07166897 -0.01284079 2371.273
-#&gt; 8  2574264 1197085 1298.262 0.5450165 1.578998 -0.00384042  0.01041637 4506.044
-#&gt; 9  2576502 1198570 1334.761 0.5858449 1.557205  0.03391427 -0.01284079 2638.120
-#&gt; 10 2581749 1201865 1513.318        NA       NA          NA          NA 6198.513
-#&gt;               p
-#&gt; 1            NA
-#&gt; 2  7.434533e-18
-#&gt; 3  1.385153e-17
-#&gt; 4  5.801531e-18
-#&gt; 5  6.022572e-18
-#&gt; 6  4.870566e-18
-#&gt; 7  1.205326e-17
-#&gt; 8  4.654459e-17
-#&gt; 9  1.715756e-17
-#&gt; 10           NA</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>reproduce.track.3d</span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>10</span>, <span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |TLD cube dimensions: 8 x 15 x 2</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Simulate UERW with 15000 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |===========                                                           |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |=========================                                             |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |=======================================                               |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |=====================================================                 |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |===================================================================   |  95%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0.9s</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Extracting Q probabilities for 10 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0.6s</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Simulate CERW with 10 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |=========                                                             |  12%  |                                                                              |==================                                                    |  25%  |                                                                              |==========================                                            |  38%  |                                                                              |===================================                                   |  50%  |                                                                              |============================================                          |  62%  |                                                                              |====================================================                  |  75%  |                                                                              |=============================================================         |  88%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0.2s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x       y        z         a        g            t            l</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2556476 1188336 1283.736 0.4477398 1.531790  0.068692653  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2559479 1189864 1348.457 0.4708216 1.551590  0.033344333  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2561040 1190510 1350.129 0.3924452 1.569807 -0.072700625  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2563527 1191694 1400.713 0.4441973 1.552436  0.068692653 -0.014467710</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2566234 1192916 1403.110 0.4239858 1.569989 -0.037352306  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2567543 1193582 1390.251 0.4707649 1.579552  0.033344333  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2569228 1194577 1373.728 0.5331988 1.579239  0.068692653  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2573480 1196964 1322.629 0.5115090 1.581276 -0.037352306  0.008807867</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2577669 1199244 1384.103 0.4986426 1.557908 -0.002003986 -0.014467710</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2581749 1201865 1513.318        NA       NA           NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           d            p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1        NA           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  3347.312 2.346278e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  1774.123 1.914074e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2673.088 4.172904e-19</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2897.830 8.049573e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  1547.246 4.392427e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  1998.864 5.417818e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  4920.502 5.797290e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  4695.761 7.097109e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 4850.981           NA</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -282,11 +302,11 @@ between the same start and end point.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -294,6 +314,8 @@ between the same start and end point.</p>
 
   
 
+
+  
 
   </body>
 </html>

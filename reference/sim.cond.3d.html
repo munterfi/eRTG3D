@@ -55,6 +55,8 @@ geometrically similar to the initial trajectory
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@ geometrically similar to the initial trajectory
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@ geometrically similar to the initial trajectory
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -142,7 +150,7 @@ geometrically similar to the initial trajectory
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -173,7 +181,7 @@ geometrically similar to the initial trajectory
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Conditional Empirical Random Walk (CERW) in 3-D</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/core3D.R'><code>R/core3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/core3D.R'><code>R/core3D.R</code></a></small>
     <div class="hidden name"><code>sim.cond.3d.Rd</code></div>
     </div>
 
@@ -183,18 +191,18 @@ geometrically similar to the initial trajectory
 (extractMethod: raster overlay method can take "simple" or "bilinear")</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sim.cond.3d</span>(
-  <span class='kw'>n.locs</span>,
-  start = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  end = <span class='kw'>start</span>,
-  <span class='kw'>a0</span>,
-  <span class='kw'>g0</span>,
-  <span class='kw'>densities</span>,
-  <span class='kw'>qProbs</span>,
-  error = <span class='fl'>FALSE</span>,
-  DEM = <span class='kw'>NULL</span>,
-  BG = <span class='kw'>NULL</span>
-)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>sim.cond.3d</span><span class='op'>(</span>
+  <span class='va'>n.locs</span>,
+  start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  end <span class='op'>=</span> <span class='va'>start</span>,
+  <span class='va'>a0</span>,
+  <span class='va'>g0</span>,
+  <span class='va'>densities</span>,
+  <span class='va'>qProbs</span>,
+  error <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  DEM <span class='op'>=</span> <span class='cn'>NULL</span>,
+  BG <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -246,21 +254,36 @@ geometrically similar to the initial trajectory
     <p>A trajectory in the form of data.frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>niclas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='track.properties.3d.html'>track.properties.3d</a></span>(<span class='kw'>niclas</span>)
-<span class='kw'>n.locs</span> <span class='op'>&lt;-</span> <span class='fl'>3</span>
-<span class='kw'>P</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get.track.densities.3d.html'>get.track.densities.3d</a></span>(<span class='kw'>niclas</span>)</div><div class='output co'>#&gt; <span class='message'>  |TLD cube dimensions: 9 x 14 x 3</span></div><div class='input'><span class='kw'>f</span> <span class='op'>&lt;-</span> <span class='fl'>1500</span>
-<span class='kw'>start</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span>(<span class='kw'>c</span>, <span class='kw'>niclas</span>[<span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>])
-<span class='kw'>end</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span>(<span class='kw'>c</span>, <span class='kw'>niclas</span>[<span class='kw'>n.locs</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span>])
-<span class='kw'>a0</span> <span class='op'>&lt;-</span> <span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>a</span>[<span class='fl'>1</span>]
-<span class='kw'>g0</span> <span class='op'>&lt;-</span> <span class='kw'>niclas</span><span class='op'>$</span><span class='kw'>g</span>[<span class='fl'>1</span>]
-<span class='kw'>uerw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim.uncond.3d.html'>sim.uncond.3d</a></span>(<span class='kw'>n.locs</span><span class='op'>*</span><span class='kw'>f</span>, start=<span class='kw'>start</span>, a0=<span class='kw'>a0</span>, g0=<span class='kw'>g0</span>, densities=<span class='kw'>P</span>)</div><div class='output co'>#&gt; <span class='message'>  |Simulate UERW with 4500 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |===========                                                           |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |=========================                                             |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |=======================================                               |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |=====================================================                 |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |===================================================================   |  95%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0.2s</span></div><div class='input'><span class='kw'>Q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qProb.3d.html'>qProb.3d</a></span>(<span class='kw'>uerw</span>, <span class='kw'>n.locs</span>)</div><div class='output co'>#&gt; <span class='message'>  |Extracting Q probabilities for 3 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0s</span></div><div class='input'><span class='fu'>sim.cond.3d</span>(n.locs=<span class='kw'>n.locs</span>, start=<span class='kw'>start</span>, end=<span class='kw'>end</span>, a0=<span class='kw'>a0</span>, g0=<span class='kw'>g0</span>, densities = <span class='kw'>P</span>, qProbs = <span class='kw'>Q</span>)</div><div class='output co'>#&gt; <span class='message'>  |Simulate CERW with 3 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0s</span></div><div class='output co'>#&gt;         x       y        z         a        g            t           l
-#&gt; 1 2556476 1188336 1283.736 0.3914766 1.557032 -0.116475561  0.01097925
-#&gt; 2 2559551 1189639 1369.682 0.4007891 1.545061  0.009312502 -0.01197084
-#&gt; 3 2560477 1189861 1369.713        NA       NA           NA          NA
-#&gt;           d            p
-#&gt; 1        NA           NA
-#&gt; 2 3339.9531 2.869334e-17
-#&gt; 3  952.6439           NA</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>niclas</span> <span class='op'>&lt;-</span> <span class='fu'><a href='track.properties.3d.html'>track.properties.3d</a></span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>n.locs</span> <span class='op'>&lt;-</span> <span class='fl'>3</span></span>
+<span class='r-in'><span class='va'>P</span> <span class='op'>&lt;-</span> <span class='fu'><a href='get.track.densities.3d.html'>get.track.densities.3d</a></span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |TLD cube dimensions: 9 x 14 x 3</span>
+<span class='r-in'><span class='va'>f</span> <span class='op'>&lt;-</span> <span class='fl'>1500</span></span>
+<span class='r-in'><span class='va'>start</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span><span class='va'>c</span>, <span class='va'>niclas</span><span class='op'>[</span><span class='fl'>1</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>end</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/funprog.html'>Reduce</a></span><span class='op'>(</span><span class='va'>c</span>, <span class='va'>niclas</span><span class='op'>[</span><span class='va'>n.locs</span>, <span class='fl'>1</span><span class='op'>:</span><span class='fl'>3</span><span class='op'>]</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>a0</span> <span class='op'>&lt;-</span> <span class='va'>niclas</span><span class='op'>$</span><span class='va'>a</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>g0</span> <span class='op'>&lt;-</span> <span class='va'>niclas</span><span class='op'>$</span><span class='va'>g</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>uerw</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sim.uncond.3d.html'>sim.uncond.3d</a></span><span class='op'>(</span><span class='va'>n.locs</span><span class='op'>*</span><span class='va'>f</span>, start<span class='op'>=</span><span class='va'>start</span>, a0<span class='op'>=</span><span class='va'>a0</span>, g0<span class='op'>=</span><span class='va'>g0</span>, densities<span class='op'>=</span><span class='va'>P</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Simulate UERW with 4500 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |====                                                                  |   5%  |                                                                              |=======                                                               |  10%  |                                                                              |===========                                                           |  15%  |                                                                              |==============                                                        |  20%  |                                                                              |==================                                                    |  25%  |                                                                              |=====================                                                 |  30%  |                                                                              |=========================                                             |  35%  |                                                                              |============================                                          |  40%  |                                                                              |================================                                      |  45%  |                                                                              |===================================                                   |  50%  |                                                                              |=======================================                               |  55%  |                                                                              |==========================================                            |  60%  |                                                                              |==============================================                        |  65%  |                                                                              |=================================================                     |  70%  |                                                                              |=====================================================                 |  75%  |                                                                              |========================================================              |  80%  |                                                                              |============================================================          |  85%  |                                                                              |===============================================================       |  90%  |                                                                              |===================================================================   |  95%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0.3s</span>
+<span class='r-in'><span class='va'>Q</span> <span class='op'>&lt;-</span> <span class='fu'><a href='qProb.3d.html'>qProb.3d</a></span><span class='op'>(</span><span class='va'>uerw</span>, <span class='va'>n.locs</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Extracting Q probabilities for 3 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0s</span>
+<span class='r-in'><span class='fu'>sim.cond.3d</span><span class='op'>(</span>n.locs<span class='op'>=</span><span class='va'>n.locs</span>, start<span class='op'>=</span><span class='va'>start</span>, end<span class='op'>=</span><span class='va'>end</span>, a0<span class='op'>=</span><span class='va'>a0</span>, g0<span class='op'>=</span><span class='va'>g0</span>, densities <span class='op'>=</span> <span class='va'>P</span>, qProbs <span class='op'>=</span> <span class='va'>Q</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Simulate CERW with 3 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>         x       y        z         a        g          t           l        d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 2556476 1188336 1283.736 0.3914766 1.557032 0.01115445  0.02803773       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 2557512 1188777 1318.751 0.4026311 1.539716 0.01115445 -0.01731588 1126.787</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 2560477 1189861 1369.713        NA       NA         NA          NA 3156.668</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 9.724202e-18</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3           NA</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -272,11 +295,11 @@ geometrically similar to the initial trajectory
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -284,6 +307,8 @@ geometrically similar to the initial trajectory
 
   
 
+
+  
 
   </body>
 </html>

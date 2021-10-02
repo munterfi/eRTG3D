@@ -68,6 +68,8 @@ geometrically similar to the initial trajectory." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -79,9 +81,15 @@ geometrically similar to the initial trajectory." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -95,7 +103,7 @@ geometrically similar to the initial trajectory." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -155,7 +163,7 @@ geometrically similar to the initial trajectory." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -186,7 +194,7 @@ geometrically similar to the initial trajectory." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Unconditional Empirical Random Walk (UERW) in 3-D</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/core3D.R'><code>R/core3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/core3D.R'><code>R/core3D.R</code></a></small>
     <div class="hidden name"><code>sim.uncond.3d.Rd</code></div>
     </div>
 
@@ -209,7 +217,7 @@ Creates a unconditional empirical random walk, with a specific starting point,
 geometrically similar to the initial trajectory.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sim.uncond.3d</span>(<span class='kw'>n.locs</span>, start = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>a0</span>, <span class='kw'>g0</span>, <span class='kw'>densities</span>, error = <span class='fl'>TRUE</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>sim.uncond.3d</span><span class='op'>(</span><span class='va'>n.locs</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>, <span class='va'>a0</span>, <span class='va'>g0</span>, <span class='va'>densities</span>, error <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -220,7 +228,7 @@ geometrically similar to the initial trajectory.</p>
     </tr>
     <tr>
       <th>start</th>
-      <td><p>vector indicating the start point <code><a href='https://rdrr.io/r/base/c.html'>c(x,y,z)</a></code></p></td>
+      <td><p>vector indicating the start point <code>c(x,y,z)</code></p></td>
     </tr>
     <tr>
       <th>a0</th>
@@ -257,31 +265,38 @@ the empirical data (<code>factor = 1500</code>).</p>
     
 
 <p>For a random initial heading a0 use:
-  <code><a href='https://rdrr.io/r/base/sample.html'>sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)</a></code></p>
+  <code>sample(atan2(diff(coordinates(track)[,2]), diff(coordinates(track)[,1])),1)</code></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sim.uncond.3d</span>(<span class='fl'>10</span>, start=<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>), a0=<span class='kw'>pi</span><span class='op'>/</span><span class='fl'>2</span>, g0=<span class='kw'>pi</span><span class='op'>/</span><span class='fl'>2</span>, densities=<span class='fu'><a href='get.track.densities.3d.html'>get.track.densities.3d</a></span>(<span class='kw'>niclas</span>))</div><div class='output co'>#&gt; <span class='message'>  |Simulate UERW with 10 steps</span></div><div class='output co'>#&gt;   |                                                                              |                                                                      |   0%</div><div class='output co'>#&gt; <span class='message'>  |TLD cube dimensions: 9 x 14 x 3</span></div><div class='output co'>#&gt;   |                                                                              |==============                                                        |  20%  |                                                                              |=====================                                                 |  30%  |                                                                              |============================                                          |  40%  |                                                                              |===================================                                   |  50%  |                                                                              |==========================================                            |  60%  |                                                                              |=================================================                     |  70%  |                                                                              |========================================================              |  80%  |                                                                              |===============================================================       |  90%  |                                                                              |======================================================================| 100%</div><div class='output co'>#&gt; <span class='message'>  |Elapsed time: 0s</span></div><div class='output co'>#&gt;             x         y        z         a        g           t             l
-#&gt; 1      0.0000     0.000   0.0000 1.5707963 1.570796 -0.35368401 -0.0527862491
-#&gt; 2   -118.8554  5265.499 102.4197 1.5933650 1.551353  0.02256865 -0.0194436895
-#&gt; 3   1218.4225 10298.675 378.4173 1.3111035 1.517849 -0.28226144 -0.0335037485
-#&gt; 4   2281.2192 11677.376 572.8942 0.9140725 1.459540 -0.39703100 -0.0583088029
-#&gt; 5   4960.1547 16258.470 635.6869 1.0416426 1.558965  0.12757009  0.0994245047
-#&gt; 6   7829.5692 20520.894 777.1202 0.9782923 1.543278 -0.06335037 -0.0156868005
-#&gt; 7  11863.7058 24742.304 883.7585 0.8080789 1.552535 -0.17021339  0.0092576248
-#&gt; 8  16737.6491 27988.124 983.8568 0.5875088 1.553704 -0.22057008  0.0011687835
-#&gt; 9  20774.3179 30332.151 830.1077 0.5260951 1.603722 -0.06141371  0.0500178437
-#&gt; 10 22532.7504 31938.748 749.5331 0.7403071 1.604612  0.21421206  0.0008899157
-#&gt;           d            p
-#&gt; 1  5549.338           NA
-#&gt; 2  5267.836 2.572652e-04
-#&gt; 3  5215.108 2.642547e-05
-#&gt; 4  1751.620 2.415129e-05
-#&gt; 5  5307.265 6.093709e-05
-#&gt; 6  5140.214 1.918079e-04
-#&gt; 7  5840.029 3.858087e-04
-#&gt; 8  5856.679 4.315515e-04
-#&gt; 9  4670.417 2.453195e-04
-#&gt; 10 2383.219 8.761572e-05</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>sim.uncond.3d</span><span class='op'>(</span><span class='fl'>10</span>, start<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span><span class='op'>)</span>, a0<span class='op'>=</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>2</span>, g0<span class='op'>=</span><span class='va'>pi</span><span class='op'>/</span><span class='fl'>2</span>, densities<span class='op'>=</span><span class='fu'><a href='get.track.densities.3d.html'>get.track.densities.3d</a></span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Simulate UERW with 10 steps</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |                                                                      |   0%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |TLD cube dimensions: 9 x 14 x 3</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   |                                                                              |==============                                                        |  20%  |                                                                              |=====================                                                 |  30%  |                                                                              |============================                                          |  40%  |                                                                              |===================================                                   |  50%  |                                                                              |==========================================                            |  60%  |                                                                              |=================================================                     |  70%  |                                                                              |========================================================              |  80%  |                                                                              |===============================================================       |  90%  |                                                                              |======================================================================| 100%</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Elapsed time: 0s</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            x        y         z         a        g            t            l</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1     0.0000     0.00   0.00000 1.5707963 1.570796  0.170112206 -0.136125790</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  -173.2031  5107.77  97.52172 1.6046931 1.551717  0.033896739 -0.019079533</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  -339.4061 11525.86  73.03597 1.5966866 1.574610 -0.008006475  0.022893352</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   693.0413 16724.68  76.12981 1.3747545 1.570213 -0.221932132 -0.004397523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2319.4558 21819.17 148.72419 1.2617745 1.557223 -0.112979943 -0.012990051</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  1015.4919 27201.05 213.55764 1.8085038 1.559089  0.546729297  0.001866397</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2260.9373 29111.39 113.10208 0.9930523 1.614818 -0.815451507  0.055729282</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2940.6483 31069.60 331.53603 1.2367009 1.465804  0.243648565 -0.149014094</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2320.2131 34853.41 269.67852 1.7333212 1.586927  0.496620282  0.121123286</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 1626.8744 39782.87 203.35340 1.7105317 1.584119 -0.022789474 -0.002808207</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           d            p</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  1865.097           NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  5111.636 7.819369e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  6420.283 3.346173e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  5300.351 4.449118e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  5348.308 4.162813e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  5537.965 8.862155e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2282.681 2.875136e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2084.306 1.713119e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  3834.837 1.385609e-04</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 4978.424 1.753549e-04</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -293,11 +308,11 @@ the empirical data (<code>factor = 1500</code>).</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -305,6 +320,8 @@ the empirical data (<code>factor = 1500</code>).</p>
 
   
 
+
+  
 
   </body>
 </html>

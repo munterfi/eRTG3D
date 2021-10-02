@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -140,7 +148,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -171,7 +179,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Simulation of a three dimensional Correlated Random Walk</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/testing3D.R'><code>R/testing3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/testing3D.R'><code>R/testing3D.R</code></a></small>
     <div class="hidden name"><code>sim.crw.3d.Rd</code></div>
     </div>
 
@@ -179,7 +187,7 @@
     <p>Simulation of a three dimensional Correlated Random Walk</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sim.crw.3d</span>(<span class='kw'>nStep</span>, <span class='kw'>rTurn</span>, <span class='kw'>rLift</span>, <span class='kw'>meanStep</span>, start = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>))</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>sim.crw.3d</span><span class='op'>(</span><span class='va'>nStep</span>, <span class='va'>rTurn</span>, <span class='va'>rLift</span>, <span class='va'>meanStep</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,17 +219,19 @@
     <p>A trajectory in the form of data.frame</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>sim.crw.3d</span>(nStep=<span class='fl'>10</span>, rTurn=<span class='fl'>0.9</span>, rLift=<span class='fl'>0.9</span>, meanStep=<span class='fl'>1</span>, start = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span>))</div><div class='output co'>#&gt;              x          y          z
-#&gt; 1   0.00000000  0.0000000  0.0000000
-#&gt; 2  -0.05650367  0.4305335  0.5190703
-#&gt; 3   0.42629418  0.8287204  0.8702934
-#&gt; 4   1.39808989  0.2939502  1.2022308
-#&gt; 5   1.54059261 -0.2071802  0.8742792
-#&gt; 6   2.72722637 -0.5783630  0.1082097
-#&gt; 7   2.69229470 -1.1982296 -0.2400153
-#&gt; 8   2.71983855 -1.7754530 -0.3234729
-#&gt; 9   3.15522938 -3.0351297 -0.6237092
-#&gt; 10  3.40042068 -3.6059636 -0.8969183</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>sim.crw.3d</span><span class='op'>(</span>nStep<span class='op'>=</span><span class='fl'>10</span>, rTurn<span class='op'>=</span><span class='fl'>0.9</span>, rLift<span class='op'>=</span><span class='fl'>0.9</span>, meanStep<span class='op'>=</span><span class='fl'>1</span>, start <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>,<span class='fl'>0</span>,<span class='fl'>0</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              x         y          z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   0.00000000 0.0000000  0.0000000</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  -0.01509685 0.5625803 -0.4852141</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   0.08997904 1.1388799 -0.7341133</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   0.62447761 1.7171558 -0.8903450</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5   1.03201095 2.3622153 -0.9935911</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   1.32659452 2.9012725 -1.0034273</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   1.66051935 4.0483839 -1.5214755</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   2.37055906 5.2623809 -1.9332572</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   2.29682738 5.6088450 -2.1100742</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  1.33149879 6.2562685 -1.8327337</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -233,11 +243,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -245,6 +255,8 @@
 
   
 
+
+  
 
   </body>
 </html>

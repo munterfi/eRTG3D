@@ -57,6 +57,8 @@ in the third dimension." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -68,9 +70,15 @@ in the third dimension." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -84,7 +92,7 @@ in the third dimension." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -144,7 +152,7 @@ in the third dimension." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -175,19 +183,19 @@ in the third dimension." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Transform coordinates reference system (CRS) of a 3-D track</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/sfWrapper3D.R'><code>R/sfWrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/sfWrapper3D.R'><code>R/sfWrapper3D.R</code></a></small>
     <div class="hidden name"><code>transformCRS.3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
     <p>Attention: Please use this function for CRS transformations,
-since it is based on the <a href='https://rdrr.io/pkg/sf/man/st_transform.html'>st_transform</a> from the sf package and therefore
+since it is based on the <a href='https://r-spatial.github.io/sf/reference/st_transform.html'>st_transform</a> from the sf package and therefore
 supports CRS transformations in 3-D. Note: <code>spTransform</code> from the <code>sp</code> package
 only supports transformations in the 2D plane, which will cause distortions
 in the third dimension.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transformCRS.3d</span>(<span class='kw'>track</span>, <span class='kw'>fromCRS</span>, <span class='kw'>toCRS</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>transformCRS.3d</span><span class='op'>(</span><span class='va'>track</span>, <span class='va'>fromCRS</span>, <span class='va'>toCRS</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,70 +219,72 @@ in the third dimension.</p>
     <p>A data.frame containing x,y,z and variables.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>transformCRS.3d</span>(<span class='kw'>niclas</span>, fromCRS = <span class='fl'>2056</span>, toCRS = <span class='fl'>4326</span>)</div><div class='output co'>#&gt;           x        y        z           a            g           t
-#&gt; 1  6.868026 46.84473 1283.736  0.29022670 1.570781e+00          NA
-#&gt; 2  6.895325 46.85352 1359.580  0.31124324 3.780922e-04  0.02101655
-#&gt; 3  6.920342 46.85870 1369.713  0.20435409 2.521324e-03 -0.10688916
-#&gt; 4  6.945902 46.86607 1391.752  0.28087933 1.207054e-03  0.07652524
-#&gt; 5  6.963975 46.86605 1806.566 -0.00148285 4.356966e-05 -0.28236218
-#&gt; 6  7.017997 46.88671 1764.062  0.36526329 3.140232e+00  0.36674614
-#&gt; 7  7.082597 46.91257 1532.481  0.38074869 3.141292e+00  0.01548540
-#&gt; 8  7.137261 46.93549 1407.334  0.39705801 3.141119e+00  0.01630932
-#&gt; 9  7.180323 46.95527 1282.171  0.43072179 3.141214e+00  0.03366378
-#&gt; 10 7.198807 46.96761 1513.318  0.58839577 9.613236e-05  0.15767398
-#&gt; 11 7.230685 46.99044 1553.903  0.62150743 9.661100e-04  0.03311166
-#&gt; 12 7.268758 47.02529 1355.825  0.74131273 3.141332e+00  0.11980530
-#&gt; 13 7.306239 47.05830 1180.242  0.72196445 3.141308e+00 -0.01934828
-#&gt; 14 7.324075 47.06770 1249.781  0.48533251 2.899786e-04 -0.23663194
-#&gt; 15 7.337493 47.08205 1427.830  0.81887038 1.103280e-04  0.33353787
-#&gt; 16 7.349967 47.08237 1448.141  0.02549749 6.143516e-04 -0.79337289
-#&gt; 17 7.401676 47.10885 1565.054  0.47335616 4.969230e-04  0.44785866
-#&gt; 18 7.464232 47.12686 1486.655  0.28026606 3.140762e+00 -0.19309009
-#&gt; 19 7.525779 47.13273 1428.523  0.09502670 3.140529e+00 -0.18523937
-#&gt; 20 7.596006 47.14952 1245.329  0.23476598 3.141198e+00  0.13973928
-#&gt; 21 7.629472 47.15956 1374.984  0.29125803 2.694591e-04  0.05649205
-#&gt; 22 7.698594 47.17736 1299.593  0.25210505 3.140646e+00 -0.03915298
-#&gt; 23 7.742600 47.18721 1637.258  0.22007079 1.335443e-04 -0.03203426
-#&gt; 24 7.817804 47.21143 1449.789  0.31162099 3.141171e+00  0.09155020
-#&gt; 25 7.889830 47.22471 1380.690  0.18231683 3.140533e+00 -0.12930416
-#&gt; 26 7.971334 47.23750 1180.499  0.15567910 3.141181e+00 -0.02663773
-#&gt; 27 8.055092 47.22623 1280.248 -0.13377353 8.472659e-04 -0.28945263
-#&gt; 28 8.131064 47.20756 1369.771 -0.24090985 8.738572e-04 -0.10713632
-#&gt; 29 8.188827 47.21677 1330.951  0.15812836 3.140086e+00  0.39903821
-#&gt; 30 8.218898 47.21298 1388.270 -0.12565518 5.287908e-04 -0.28378354
-#&gt; 31 8.260129 47.22052 1088.630  0.18087906 3.141453e+00  0.30653424
-#&gt;                l         d
-#&gt; 1             NA        NA
-#&gt; 2  -1.570403e+00  75.84387
-#&gt; 3   2.143232e-03  10.13302
-#&gt; 4  -1.314270e-03  22.03912
-#&gt; 5  -1.163484e-03 414.81432
-#&gt; 6   3.140188e+00  42.50395
-#&gt; 7   1.060286e-03 231.58153
-#&gt; 8  -1.731698e-04 125.14655
-#&gt; 9   9.500965e-05 125.16370
-#&gt; 10 -3.141118e+00 231.14703
-#&gt; 11  8.699776e-04  40.58533
-#&gt; 12  3.140366e+00 198.07818
-#&gt; 13 -2.382819e-05 175.58304
-#&gt; 14 -3.141018e+00  69.53945
-#&gt; 15 -1.796505e-04 178.04861
-#&gt; 16  5.040236e-04  20.31140
-#&gt; 17 -1.174286e-04 116.91293
-#&gt; 18  3.140265e+00  78.39938
-#&gt; 19 -2.332197e-04  58.13135
-#&gt; 20  6.693796e-04 183.19465
-#&gt; 21 -3.140929e+00 129.65576
-#&gt; 22  3.140376e+00  75.39197
-#&gt; 23 -3.140512e+00 337.66526
-#&gt; 24  3.141038e+00 187.46846
-#&gt; 25 -6.384796e-04  69.09927
-#&gt; 26  6.478172e-04 200.19098
-#&gt; 27 -3.140333e+00  99.74901
-#&gt; 28  2.659127e-05  89.52327
-#&gt; 29  3.139212e+00  38.82061
-#&gt; 30 -3.139557e+00  57.31907
-#&gt; 31  3.140924e+00 299.64033</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>transformCRS.3d</span><span class='op'>(</span><span class='va'>niclas</span>, fromCRS <span class='op'>=</span> <span class='fl'>2056</span>, toCRS <span class='op'>=</span> <span class='fl'>4326</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>           x        y        z           a            g           t</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  6.868026 46.84473 1283.736  0.29022670 1.570781e+00          NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  6.895325 46.85352 1359.580  0.31124324 3.780922e-04  0.02101655</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  6.920342 46.85870 1369.713  0.20435409 2.521324e-03 -0.10688916</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  6.945902 46.86607 1391.752  0.28087933 1.207054e-03  0.07652524</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  6.963975 46.86605 1806.566 -0.00148285 4.356966e-05 -0.28236218</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  7.017997 46.88671 1764.062  0.36526329 3.140232e+00  0.36674614</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  7.082597 46.91257 1532.481  0.38074869 3.141292e+00  0.01548540</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  7.137261 46.93549 1407.334  0.39705801 3.141119e+00  0.01630932</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  7.180323 46.95527 1282.171  0.43072179 3.141214e+00  0.03366378</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 7.198807 46.96761 1513.318  0.58839577 9.613236e-05  0.15767398</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 7.230685 46.99044 1553.903  0.62150743 9.661100e-04  0.03311166</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 7.268758 47.02529 1355.825  0.74131273 3.141332e+00  0.11980530</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 7.306239 47.05830 1180.242  0.72196445 3.141308e+00 -0.01934828</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 7.324075 47.06770 1249.781  0.48533251 2.899786e-04 -0.23663194</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 7.337493 47.08205 1427.830  0.81887038 1.103280e-04  0.33353787</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16 7.349967 47.08237 1448.141  0.02549749 6.143516e-04 -0.79337289</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 7.401676 47.10885 1565.054  0.47335616 4.969230e-04  0.44785866</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18 7.464232 47.12686 1486.655  0.28026606 3.140762e+00 -0.19309009</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 7.525779 47.13273 1428.523  0.09502670 3.140529e+00 -0.18523937</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 7.596006 47.14952 1245.329  0.23476598 3.141198e+00  0.13973928</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 7.629472 47.15956 1374.984  0.29125803 2.694591e-04  0.05649205</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 7.698594 47.17736 1299.593  0.25210505 3.140646e+00 -0.03915298</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 7.742600 47.18721 1637.258  0.22007079 1.335443e-04 -0.03203426</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 7.817804 47.21143 1449.789  0.31162099 3.141171e+00  0.09155020</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 7.889830 47.22471 1380.690  0.18231683 3.140533e+00 -0.12930416</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 7.971334 47.23750 1180.499  0.15567910 3.141181e+00 -0.02663773</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 8.055092 47.22623 1280.248 -0.13377353 8.472659e-04 -0.28945263</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 8.131064 47.20756 1369.771 -0.24090985 8.738572e-04 -0.10713632</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 8.188827 47.21677 1330.951  0.15812836 3.140086e+00  0.39903821</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 8.218898 47.21298 1388.270 -0.12565518 5.287908e-04 -0.28378354</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 8.260129 47.22052 1088.630  0.18087906 3.141453e+00  0.30653424</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                l         d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1             NA        NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  -1.570403e+00  75.84387</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   2.143232e-03  10.13302</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  -1.314270e-03  22.03912</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  -1.163484e-03 414.81432</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   3.140188e+00  42.50395</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   1.060286e-03 231.58153</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  -1.731698e-04 125.14655</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   9.500965e-05 125.16370</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 -3.141118e+00 231.14703</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11  8.699776e-04  40.58533</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12  3.140366e+00 198.07818</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 -2.382819e-05 175.58304</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 -3.141018e+00  69.53945</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 -1.796505e-04 178.04861</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16  5.040236e-04  20.31140</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 -1.174286e-04 116.91293</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18  3.140265e+00  78.39938</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 -2.332197e-04  58.13135</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20  6.693796e-04 183.19465</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 -3.140929e+00 129.65576</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22  3.140376e+00  75.39197</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 -3.140512e+00 337.66526</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24  3.141038e+00 187.46846</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 -6.384796e-04  69.09927</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26  6.478172e-04 200.19098</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 -3.140333e+00  99.74901</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28  2.659127e-05  89.52327</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29  3.139212e+00  38.82061</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 -3.139557e+00  57.31907</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31  3.140924e+00 299.64033</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -286,11 +296,11 @@ in the third dimension.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -298,6 +308,8 @@ in the third dimension.</p>
 
   
 
+
+  
 
   </body>
 </html>

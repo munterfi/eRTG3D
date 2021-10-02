@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -90,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -98,19 +100,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,7 +133,7 @@
       <h1 data-toc-skip>Point cloud analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfinger/eRTG3D/blob/master/vignettes/v9.Rmd"><code>vignettes/v9.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v9.Rmd" class="external-link"><code>vignettes/v9.Rmd</code></a></small>
       <div class="hidden name"><code>v9.Rmd</code></div>
 
     </div>
@@ -144,46 +146,42 @@ text-align: justify}
 </style>
 <div id="example-trajectories" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-trajectories" class="anchor"></a>Example trajectories</h2>
+<a href="#example-trajectories" class="anchor" aria-hidden="true"></a>Example trajectories</h2>
 <p>First some example trajectories are created in form of Correlated Random Walks (CRWs):</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">crws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(X=<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">100</span>), FUN = <span class="fu">function</span>(<span class="kw">X</span>) {
-  <span class="fu"><a href="../reference/sim.crw.3d.html">sim.crw.3d</a></span>(nStep = <span class="fl">100</span>, rTurn = <span class="fl">0.99</span>, rLift = <span class="fl">0.99</span>, meanStep = <span class="fl">0.1</span>)
-  })
-<span class="fu"><a href="../reference/plot2d.html">plot2d</a></span>(<span class="kw">crws</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">crws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">{</span>
+  <span class="fu"><a href="../reference/sim.crw.3d.html">sim.crw.3d</a></span><span class="op">(</span>nStep <span class="op">=</span> <span class="fl">100</span>, rTurn <span class="op">=</span> <span class="fl">0.99</span>, rLift <span class="op">=</span> <span class="fl">0.99</span>, meanStep <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span>
+  <span class="op">}</span><span class="op">)</span>
+<span class="fu"><a href="../reference/plot2d.html">plot2d</a></span><span class="op">(</span><span class="va">crws</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="utilization-distribution" class="section level2">
 <h2 class="hasAnchor">
-<a href="#utilization-distribution" class="anchor"></a>Utilization distribution</h2>
+<a href="#utilization-distribution" class="anchor" aria-hidden="true"></a>Utilization distribution</h2>
 <p>Count points per voxel and plot counts as raster stack:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="st">"rbind"</span>, <span class="kw">crws</span>)
-<span class="kw">extent</span> <span class="op">&lt;-</span> <span class="fu">extent</span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>))
-<span class="kw">ud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/voxelCount.html">voxelCount</a></span>(<span class="kw">points</span>, <span class="kw">extent</span>, xyRes=<span class="fl">5</span>, zMin=<span class="op">-</span><span class="fl">10</span>, zMax=<span class="fl">10</span>)
-<span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span>(<span class="kw">ud</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">crws</span><span class="op">)</span>
+<span class="va">extent</span> <span class="op">&lt;-</span> <span class="fu">extent</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span>, <span class="op">-</span><span class="fl">10</span>, <span class="fl">10</span><span class="op">)</span><span class="op">)</span>
+<span class="va">ud</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/voxelCount.html">voxelCount</a></span><span class="op">(</span><span class="va">points</span>, <span class="va">extent</span>, xyRes<span class="op">=</span><span class="fl">5</span>, zMin<span class="op">=</span><span class="op">-</span><span class="fl">10</span>, zMax<span class="op">=</span><span class="fl">10</span><span class="op">)</span>
+<span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span><span class="op">(</span><span class="va">ud</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="chi-square-maps" class="section level2">
 <h2 class="hasAnchor">
-<a href="#chi-square-maps" class="anchor"></a>Chi square maps</h2>
+<a href="#chi-square-maps" class="anchor" aria-hidden="true"></a>Chi square maps</h2>
 <p>By calculating Chi maps, the over- and underrepresentation of points in the voxel space can be interpreted statistically:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chiMaps.html">chiMaps</a></span>(<span class="kw">ud</span>)
-<span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span>(<span class="kw">chi</span>, centerColorBar=<span class="fl">TRUE</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chiMaps.html">chiMaps</a></span><span class="op">(</span><span class="va">ud</span><span class="op">)</span>
+<span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span><span class="op">(</span><span class="va">chi</span>, centerColorBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
 <div id="export-voxel-data" class="section level2">
 <h2 class="hasAnchor">
-<a href="#export-voxel-data" class="anchor"></a>Export voxel data</h2>
+<a href="#export-voxel-data" class="anchor" aria-hidden="true"></a>Export voxel data</h2>
 <p>The voxel dataCube of type rasterStack can be exported as Tiff image sequence. Image sequences are a common structure to represent voxel data and most of the specific software to visualize voxel data is able to read it (e.g. blender)</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="fu"><a href="../reference/saveImageSlices.html">saveImageSlices</a></span>(<span class="kw">ud</span>, filename = <span class="st">"utilization-distribution"</span>, dir=<span class="st">"folder/path"</span>)
-<span class="fu"><a href="../reference/saveImageSlices.html">saveImageSlices</a></span>(<span class="kw">chi</span>, filename = <span class="st">"chi-map-cube"</span>, dir=<span class="st">"folder/path"</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="../reference/saveImageSlices.html">saveImageSlices</a></span><span class="op">(</span><span class="va">ud</span>, filename <span class="op">=</span> <span class="st">"utilization-distribution"</span>, dir<span class="op">=</span><span class="st">"folder/path"</span><span class="op">)</span>
+<span class="fu"><a href="../reference/saveImageSlices.html">saveImageSlices</a></span><span class="op">(</span><span class="va">chi</span>, filename <span class="op">=</span> <span class="st">"chi-map-cube"</span>, dir<span class="op">=</span><span class="st">"folder/path"</span><span class="op">)</span></code></pre></div>
 </div>
   </div>
 
@@ -198,11 +196,13 @@ text-align: justify}
 
 
       <footer><div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p></p>
+<p>Developed by Merlin Unterfinger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -210,6 +210,8 @@ text-align: justify}
 
   
 
+
+  
 
   </body>
 </html>

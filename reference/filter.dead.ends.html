@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -140,7 +148,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -171,7 +179,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Remove dead ends</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
     <div class="hidden name"><code>filter.dead.ends.Rd</code></div>
     </div>
 
@@ -179,7 +187,7 @@
     <p>Function to filter out tracks that have found a dead end</p>
     </div>
 
-    <pre class="usage"><span class='fu'>filter.dead.ends</span>(<span class='kw'>cerwList</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>filter.dead.ends</span><span class='op'>(</span><span class='va'>cerwList</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,74 +203,76 @@
     <p>A list that is only containing valid tracks.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>filter.dead.ends</span>(<span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>niclas</span>, <span class='kw'>niclas</span>))</div><div class='output co'>#&gt; [[1]]
-#&gt;          x       y        z
-#&gt; 1  2556476 1188336 1283.736
-#&gt; 2  2558565 1189297 1359.580
-#&gt; 3  2560477 1189861 1369.713
-#&gt; 4  2562431 1190668 1391.752
-#&gt; 5  2563809 1190657 1806.566
-#&gt; 6  2567940 1192930 1764.062
-#&gt; 7  2572877 1195780 1532.481
-#&gt; 8  2577051 1198311 1407.334
-#&gt; 9  2580338 1200499 1282.171
-#&gt; 10 2581749 1201865 1513.318
-#&gt; 11 2584181 1204396 1553.903
-#&gt; 12 2587086 1208264 1355.825
-#&gt; 13 2589942 1211928 1180.242
-#&gt; 14 2591298 1212971 1249.781
-#&gt; 15 2592320 1214565 1427.830
-#&gt; 16 2593267 1214599 1448.141
-#&gt; 17 2597195 1217541 1565.054
-#&gt; 18 2601943 1219542 1486.655
-#&gt; 19 2606612 1220197 1428.523
-#&gt; 20 2611936 1222073 1245.329
-#&gt; 21 2614472 1223194 1374.984
-#&gt; 22 2619707 1225189 1299.593
-#&gt; 23 2623038 1226295 1637.258
-#&gt; 24 2628725 1229013 1449.789
-#&gt; 25 2634173 1230518 1380.690
-#&gt; 26 2640336 1231979 1180.499
-#&gt; 27 2646688 1230772 1280.248
-#&gt; 28 2652460 1228745 1369.771
-#&gt; 29 2656826 1229809 1330.951
-#&gt; 30 2659108 1229409 1388.270
-#&gt; 31 2662223 1230279 1088.630
-#&gt; 
-#&gt; [[2]]
-#&gt;          x       y        z
-#&gt; 1  2556476 1188336 1283.736
-#&gt; 2  2558565 1189297 1359.580
-#&gt; 3  2560477 1189861 1369.713
-#&gt; 4  2562431 1190668 1391.752
-#&gt; 5  2563809 1190657 1806.566
-#&gt; 6  2567940 1192930 1764.062
-#&gt; 7  2572877 1195780 1532.481
-#&gt; 8  2577051 1198311 1407.334
-#&gt; 9  2580338 1200499 1282.171
-#&gt; 10 2581749 1201865 1513.318
-#&gt; 11 2584181 1204396 1553.903
-#&gt; 12 2587086 1208264 1355.825
-#&gt; 13 2589942 1211928 1180.242
-#&gt; 14 2591298 1212971 1249.781
-#&gt; 15 2592320 1214565 1427.830
-#&gt; 16 2593267 1214599 1448.141
-#&gt; 17 2597195 1217541 1565.054
-#&gt; 18 2601943 1219542 1486.655
-#&gt; 19 2606612 1220197 1428.523
-#&gt; 20 2611936 1222073 1245.329
-#&gt; 21 2614472 1223194 1374.984
-#&gt; 22 2619707 1225189 1299.593
-#&gt; 23 2623038 1226295 1637.258
-#&gt; 24 2628725 1229013 1449.789
-#&gt; 25 2634173 1230518 1380.690
-#&gt; 26 2640336 1231979 1180.499
-#&gt; 27 2646688 1230772 1280.248
-#&gt; 28 2652460 1228745 1369.771
-#&gt; 29 2656826 1229809 1330.951
-#&gt; 30 2659108 1229409 1388.270
-#&gt; 31 2662223 1230279 1088.630
-#&gt; </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>filter.dead.ends</span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span><span class='op'>(</span><span class='va'>niclas</span>, <span class='va'>niclas</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x       y        z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2556476 1188336 1283.736</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2558565 1189297 1359.580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2560477 1189861 1369.713</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2562431 1190668 1391.752</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2563809 1190657 1806.566</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2567940 1192930 1764.062</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2572877 1195780 1532.481</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2577051 1198311 1407.334</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2580338 1200499 1282.171</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2581749 1201865 1513.318</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 2584181 1204396 1553.903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 2587086 1208264 1355.825</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 2589942 1211928 1180.242</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 2591298 1212971 1249.781</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 2592320 1214565 1427.830</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16 2593267 1214599 1448.141</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 2597195 1217541 1565.054</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18 2601943 1219542 1486.655</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 2606612 1220197 1428.523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 2611936 1222073 1245.329</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 2614472 1223194 1374.984</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 2619707 1225189 1299.593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 2623038 1226295 1637.258</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 2628725 1229013 1449.789</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 2634173 1230518 1380.690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 2640336 1231979 1180.499</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 2646688 1230772 1280.248</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 2652460 1228745 1369.771</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 2656826 1229809 1330.951</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 2659108 1229409 1388.270</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 2662223 1230279 1088.630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x       y        z</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2556476 1188336 1283.736</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2558565 1189297 1359.580</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2560477 1189861 1369.713</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2562431 1190668 1391.752</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2563809 1190657 1806.566</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2567940 1192930 1764.062</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2572877 1195780 1532.481</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2577051 1198311 1407.334</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2580338 1200499 1282.171</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2581749 1201865 1513.318</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 2584181 1204396 1553.903</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 2587086 1208264 1355.825</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 2589942 1211928 1180.242</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 2591298 1212971 1249.781</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 2592320 1214565 1427.830</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16 2593267 1214599 1448.141</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 2597195 1217541 1565.054</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18 2601943 1219542 1486.655</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 2606612 1220197 1428.523</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 2611936 1222073 1245.329</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 2614472 1223194 1374.984</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 2619707 1225189 1299.593</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 2623038 1226295 1637.258</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 2628725 1229013 1449.789</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 2634173 1230518 1380.690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 2640336 1231979 1180.499</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 2646688 1230772 1280.248</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 2652460 1228745 1369.771</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 2656826 1229809 1330.951</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 2659108 1229409 1388.270</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 2662223 1230279 1088.630</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -274,11 +284,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -286,6 +296,8 @@
 
   
 
+
+  
 
   </body>
 </html>

@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -90,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -98,19 +100,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,7 +133,7 @@
       <h1 data-toc-skip>Coordinate reference system</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfinger/eRTG3D/blob/master/vignettes/v6.Rmd"><code>vignettes/v6.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v6.Rmd" class="external-link"><code>vignettes/v6.Rmd</code></a></small>
       <div class="hidden name"><code>v6.Rmd</code></div>
 
     </div>
@@ -144,28 +146,27 @@ text-align: justify}
 </style>
 <div id="definition" class="section level2">
 <h2 class="hasAnchor">
-<a href="#definition" class="anchor"></a>Definition</h2>
-<p><em>“A […] coordinate reference system (CRS) is a coordinate-based local, regional or global system used to locate geographical entities. A spatial reference system defines a specific map projection, as well as transformations between different spatial reference systems. […] spatial reference systems can be referred to using a SRID integer, including EPSG codes …”</em> (<a href="https://en.wikipedia.org/wiki/Spatial_reference_system">wikipedia.org</a>, 2019).</p>
-<p>The SRIDs and corresponding EPSG codes of all CRS can be found on <a href="https://spatialreference.org">spatialreference.org</a>. The most common global CRS in latitude and longitude is WGS84 (used by the GPS satellite navigation system) with the following CRS string <code>"+init=epsg:4326"</code> as identifier.</p>
+<a href="#definition" class="anchor" aria-hidden="true"></a>Definition</h2>
+<p><em>“A […] coordinate reference system (CRS) is a coordinate-based local, regional or global system used to locate geographical entities. A spatial reference system defines a specific map projection, as well as transformations between different spatial reference systems. […] spatial reference systems can be referred to using a SRID integer, including EPSG codes …”</em> (<a href="https://en.wikipedia.org/wiki/Spatial_reference_system" class="external-link">wikipedia.org</a>, 2019).</p>
+<p>The SRIDs and corresponding EPSG codes of all CRS can be found on <a href="https://spatialreference.org" class="external-link">spatialreference.org</a>. The most common global CRS in latitude and longitude is WGS84 (used by the GPS satellite navigation system) with the following CRS string <code>"+init=epsg:4326"</code> as identifier.</p>
 </div>
 <div id="transform-crs-in-3-d" class="section level2">
 <h2 class="hasAnchor">
-<a href="#transform-crs-in-3-d" class="anchor"></a>Transform CRS in 3-D</h2>
+<a href="#transform-crs-in-3-d" class="anchor" aria-hidden="true"></a>Transform CRS in 3-D</h2>
 <p>The eRTG3D only supports calculations in <em>Cartesian</em> coordinate systems. In case of latitude / longitude data (e.g.: WGS84), these must be converted into a <em>Cartesian</em> coordinate system, as for example the Universal Transverse Mercator (UTM).</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">track.wgs84</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">track.wgs84</span><span class="op">)</span>
 <span class="co">#&gt;          x        y        z</span>
 <span class="co">#&gt; 1 6.868026 46.84473 1283.736</span>
 <span class="co">#&gt; 2 6.895325 46.85352 1359.580</span>
 <span class="co">#&gt; 3 6.920342 46.85870 1369.713</span>
 <span class="co">#&gt; 4 6.945902 46.86607 1391.752</span>
 <span class="co">#&gt; 5 6.963975 46.86605 1806.566</span>
-<span class="co">#&gt; 6 7.017997 46.88671 1764.062</span>
-</pre></div>
+<span class="co">#&gt; 6 7.017997 46.88671 1764.062</span></code></pre></div>
 <p>To carry out a CRS transformation, please use <code><a href="../reference/transformCRS.3d.html">transformCRS.3d()</a></code>, which is based on the <code>st_transform()</code> from the <code>sf</code> package. Therefore is supports CRS transformations in 3-D.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">track</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transformCRS.3d.html">transformCRS.3d</a></span>(<span class="kw">track.wgs84</span>, fromCRS=<span class="fl">4326</span>, toCRS=<span class="fl">2056</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">track</span>)
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">track</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/transformCRS.3d.html">transformCRS.3d</a></span><span class="op">(</span><span class="va">track.wgs84</span>, fromCRS<span class="op">=</span><span class="fl">4326</span>, toCRS<span class="op">=</span><span class="fl">2056</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">track</span><span class="op">)</span>
 <span class="co">#&gt;         x       y        z            a        g           t            l</span>
 <span class="co">#&gt; 1 2556476 1188336 1283.736  0.391476625 1.557032          NA           NA</span>
 <span class="co">#&gt; 2 2558565 1189297 1359.580  0.431339520 1.537826  0.03986289 -0.019205136</span>
@@ -179,8 +180,7 @@ text-align: justify}
 <span class="co">#&gt; 3 1993.003</span>
 <span class="co">#&gt; 4 2114.493</span>
 <span class="co">#&gt; 5 1439.106</span>
-<span class="co">#&gt; 6 4715.520</span>
-</pre></div>
+<span class="co">#&gt; 6 4715.520</span></code></pre></div>
 <p><strong>Note:</strong> <code>spTransform()</code> from the <code>sp</code> package only supports transformations in the 2-D plane, which will cause distortions in the third dimension.</p>
 </div>
   </div>
@@ -196,11 +196,13 @@ text-align: justify}
 
 
       <footer><div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p></p>
+<p>Developed by Merlin Unterfinger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -208,6 +210,8 @@ text-align: justify}
 
   
 
+
+  
 
   </body>
 </html>

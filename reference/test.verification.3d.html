@@ -54,6 +54,8 @@ with the characteristics of the simulated track." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,15 @@ with the characteristics of the simulated track." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +89,7 @@ with the characteristics of the simulated track." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -141,7 +149,7 @@ with the characteristics of the simulated track." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -172,7 +180,7 @@ with the characteristics of the simulated track." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Statistical Verification of the simulated track</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/testing3D.R'><code>R/testing3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/testing3D.R'><code>R/testing3D.R</code></a></small>
     <div class="hidden name"><code>test.verification.3d.Rd</code></div>
     </div>
 
@@ -181,7 +189,7 @@ with the characteristics of the simulated track." />
 with the characteristics of the simulated track.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>test.verification.3d</span>(<span class='kw'>track1</span>, <span class='kw'>track2</span>, alpha = <span class='fl'>0.05</span>, plot = <span class='fl'>FALSE</span>, test = <span class='st'>"ks"</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>test.verification.3d</span><span class='op'>(</span><span class='va'>track1</span>, <span class='va'>track2</span>, alpha <span class='op'>=</span> <span class='fl'>0.05</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, test <span class='op'>=</span> <span class='st'>"ks"</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -222,60 +230,68 @@ difference is tested two-sided against <code>mu = 0</code> with a one-sample t-t
 lift angles and step lengths of the two tracks.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>test.verification.3d</span>(<span class='kw'>niclas</span>, <span class='kw'>niclas</span>)</div><div class='output co'>#&gt; <span class='message'>  |*** Two-sample Kolmogorov-Smirnov test ***</span></div><div class='output co'>#&gt; <span class='message'>  |H0: Probability distributions do not differ significantly</span></div><div class='output co'>#&gt; <span class='message'>  |H1: Probability distributions differ significantly</span></div><div class='output co'>#&gt; <span class='message'>  |Turn angle  - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span></div><div class='output co'>#&gt; <span class='message'>  |Lift angle  - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span></div><div class='output co'>#&gt; <span class='message'>  |Step length - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span></div><div class='output co'>#&gt; [[1]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  t1 and t2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; 
-#&gt; [[2]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  l1 and l2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; 
-#&gt; [[3]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  d1 and d2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; 
-#&gt; [[4]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  diffT1 and diffT2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; 
-#&gt; [[5]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  diffL1 and diffL2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; 
-#&gt; [[6]]
-#&gt; 
-#&gt; 	Two-sample Kolmogorov-Smirnov test
-#&gt; 
-#&gt; data:  diffD1 and diffD2
-#&gt; D = 0, p-value = 1
-#&gt; alternative hypothesis: two-sided
-#&gt; 
-#&gt; </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>test.verification.3d</span><span class='op'>(</span><span class='va'>niclas</span>, <span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |*** Two-sample Kolmogorov-Smirnov test ***</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |H0: Probability distributions do not differ significantly</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |H1: Probability distributions differ significantly</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Turn angle  - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Lift angle  - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>   |Step length - p-value: 1 &gt; 0.05, *H0*, autodifferences - p-value: 1 &gt; 0.05, *H0*</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[1]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  t1 and t2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[2]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  l1 and l2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[3]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  d1 and d2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[4]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  diffT1 and diffT2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[5]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  diffL1 and diffL2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [[6]]</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 	Two-sample Kolmogorov-Smirnov test</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> data:  diffD1 and diffD2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> D = 0, p-value = 1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> alternative hypothesis: two-sided</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -287,11 +303,11 @@ lift angles and step lengths of the two tracks.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -299,6 +315,8 @@ lift angles and step lengths of the two tracks.</p>
 
   
 
+
+  
 
   </body>
 </html>

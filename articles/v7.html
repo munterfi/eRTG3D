@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -90,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -98,19 +100,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,7 +133,7 @@
       <h1 data-toc-skip>Linkage to the sf package</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfinger/eRTG3D/blob/master/vignettes/v7.Rmd"><code>vignettes/v7.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v7.Rmd" class="external-link"><code>vignettes/v7.Rmd</code></a></small>
       <div class="hidden name"><code>v7.Rmd</code></div>
 
     </div>
@@ -145,19 +147,19 @@ text-align: justify}
 <p>The <code>sf</code> package delivers a standardized way to encode spatial vector data, the so called Simple Features (SF). It binds to GDAL for reading and writing data, to GEOS for geometrical operations, and to Proj.4 for projection conversions and datum transformations. Therefore the <code>eRTG3D</code> package comes with some wrapper functions to convert the generated tracks to simple features. The resulting <code>sf, data.frame</code> objects enable access to the functionality of the sf package, which also includes an easy way to access spatial databases (PostGIS).</p>
 <div id="convert-to-sf" class="section level2">
 <h2 class="hasAnchor">
-<a href="#convert-to-sf" class="anchor"></a>Convert to sf</h2>
+<a href="#convert-to-sf" class="anchor" aria-hidden="true"></a>Convert to sf</h2>
 <p>To convert tracks to a an object of type <code>sf, data.frame</code> use the <code><a href="../reference/track2sf.3d.html">track2sf.3d()</a></code> function, which can take data.frames, matrices and move objects (containing one track!) as input. In case of data.frames and matrices, it is important that the coordinates are stored in the first three rows.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track2sf.3d.html">track2sf.3d</a></span>(<span class="kw">niclas</span>, CRS = <span class="fl">2056</span>)
-<span class="fu"><a href="../reference/is.sf.3d.html">is.sf.3d</a></span>(<span class="kw">niclas</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/track2sf.3d.html">track2sf.3d</a></span><span class="op">(</span><span class="va">niclas</span>, CRS <span class="op">=</span> <span class="fl">2056</span><span class="op">)</span>
+<span class="fu"><a href="../reference/is.sf.3d.html">is.sf.3d</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">niclas</span>, <span class="fl">3</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">niclas</span>, <span class="fl">3</span><span class="op">)</span>
 <span class="co">#&gt; Simple feature collection with 3 features and 5 fields</span>
-<span class="co">#&gt; geometry type:  POINT</span>
-<span class="co">#&gt; dimension:      XYZ</span>
-<span class="co">#&gt; bbox:           xmin: 2556476 ymin: 1188336 xmax: 2560477 ymax: 1189861</span>
-<span class="co">#&gt; z_range:        zmin: 1283.736 zmax: 1369.713</span>
-<span class="co">#&gt; projected CRS:  CH1903+ / LV95</span>
+<span class="co">#&gt; Geometry type: POINT</span>
+<span class="co">#&gt; Dimension:     XYZ</span>
+<span class="co">#&gt; Bounding box:  xmin: 2556476 ymin: 1188336 xmax: 2560477 ymax: 1189861</span>
+<span class="co">#&gt; z_range:       zmin: 1283.736 zmax: 1369.713</span>
+<span class="co">#&gt; Projected CRS: CH1903+ / LV95</span>
 <span class="co">#&gt;           a        g           t           l        d</span>
 <span class="co">#&gt; 1 0.3914766 1.557032          NA          NA       NA</span>
 <span class="co">#&gt; 2 0.4313395 1.537826  0.03986289 -0.01920514 2300.818</span>
@@ -165,18 +167,16 @@ text-align: justify}
 <span class="co">#&gt;                         geometry</span>
 <span class="co">#&gt; 1 POINT Z (2556476 1188336 12...</span>
 <span class="co">#&gt; 2 POINT Z (2558565 1189297 13...</span>
-<span class="co">#&gt; 3 POINT Z (2560477 1189861 13...</span>
-</pre></div>
+<span class="co">#&gt; 3 POINT Z (2560477 1189861 13...</span></code></pre></div>
 </div>
 <div id="convert-from-sf" class="section level2">
 <h2 class="hasAnchor">
-<a href="#convert-from-sf" class="anchor"></a>Convert from sf</h2>
+<a href="#convert-from-sf" class="anchor" aria-hidden="true"></a>Convert from sf</h2>
 <p>To test if a track is of type <code>sf, data.frame</code> use the <code>is.sf()</code> function, and to convert a <code>sf, data.frame</code> back to a track data.frame use <code><a href="../reference/sf2df.3d.html">sf2df.3d()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sf2df.3d.html">sf2df.3d</a></span>(<span class="kw">niclas</span>)
-<span class="fu"><a href="../reference/is.sf.3d.html">is.sf.3d</a></span>(<span class="kw">niclas</span>)
-<span class="co">#&gt; [1] FALSE</span>
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">niclas</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sf2df.3d.html">sf2df.3d</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>
+<span class="fu"><a href="../reference/is.sf.3d.html">is.sf.3d</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>
+<span class="co">#&gt; [1] FALSE</span></code></pre></div>
 </div>
   </div>
 
@@ -191,11 +191,13 @@ text-align: justify}
 
 
       <footer><div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p></p>
+<p>Developed by Merlin Unterfinger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -203,6 +205,8 @@ text-align: justify}
 
   
 
+
+  
 
   </body>
 </html>

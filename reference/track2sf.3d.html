@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -140,7 +148,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -171,7 +179,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Converts a track to a <code>'sf, data.frame'</code></h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/sfWrapper3D.R'><code>R/sfWrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/sfWrapper3D.R'><code>R/sfWrapper3D.R</code></a></small>
     <div class="hidden name"><code>track2sf.3d.Rd</code></div>
     </div>
 
@@ -179,7 +187,7 @@
     <p>Converts a track to a <code>'sf, data.frame'</code></p>
     </div>
 
-    <pre class="usage"><span class='fu'>track2sf.3d</span>(<span class='kw'>track</span>, CRS = <span class='fl'>NA</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>track2sf.3d</span><span class='op'>(</span><span class='va'>track</span>, CRS <span class='op'>=</span> <span class='cn'>NA</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -199,34 +207,36 @@
     <p>A track of type <code>'sf, data.frame'</code>.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>track2sf.3d</span>(<span class='kw'>niclas</span>, <span class='fl'>4326</span>)</div><div class='output co'>#&gt; Simple feature collection with 31 features and 5 fields
-#&gt; geometry type:  POINT
-#&gt; dimension:      XYZ
-#&gt; bbox:           xmin: 2556476 ymin: 1188336 xmax: 2662223 ymax: 1231979
-#&gt; geographic CRS: WGS 84
-#&gt; First 10 features:
-#&gt;               a        g           t            l        d
-#&gt; 1   0.391476625 1.557032          NA           NA       NA
-#&gt; 2   0.431339520 1.537826  0.03986289 -0.019205136 2300.818
-#&gt; 3   0.286613422 1.565712 -0.14472610  0.027885542 1993.003
-#&gt; 4   0.391695363 1.560373  0.10508194 -0.005338766 2114.493
-#&gt; 5  -0.008350378 1.278403 -0.40004574 -0.281969986 1439.106
-#&gt; 6   0.503007060 1.579810  0.51135744  0.301406799 4715.520
-#&gt; 7   0.523597291 1.611399  0.02059023  0.031589285 5705.120
-#&gt; 8   0.545034096 1.596429  0.02143681 -0.014970808 4882.926
-#&gt; 9   0.587382929 1.602488  0.04234883  0.006059355 3950.092
-#&gt; 10  0.769339222 1.453669  0.18195629 -0.148818593 1977.993
-#&gt;                          geometry
-#&gt; 1  POINT Z (2556476 1188336 12...
-#&gt; 2  POINT Z (2558565 1189297 13...
-#&gt; 3  POINT Z (2560477 1189861 13...
-#&gt; 4  POINT Z (2562431 1190668 13...
-#&gt; 5  POINT Z (2563809 1190657 18...
-#&gt; 6  POINT Z (2567940 1192930 17...
-#&gt; 7  POINT Z (2572877 1195780 15...
-#&gt; 8  POINT Z (2577051 1198311 14...
-#&gt; 9  POINT Z (2580338 1200499 12...
-#&gt; 10 POINT Z (2581749 1201865 15...</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>track2sf.3d</span><span class='op'>(</span><span class='va'>niclas</span>, <span class='fl'>4326</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Simple feature collection with 31 features and 5 fields</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geometry type: POINT</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Dimension:     XYZ</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Bounding box:  xmin: 2556476 ymin: 1188336 xmax: 2662223 ymax: 1231979</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Geodetic CRS:  WGS 84</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> First 10 features:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               a        g           t            l        d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1   0.391476625 1.557032          NA           NA       NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2   0.431339520 1.537826  0.03986289 -0.019205136 2300.818</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3   0.286613422 1.565712 -0.14472610  0.027885542 1993.003</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4   0.391695363 1.560373  0.10508194 -0.005338766 2114.493</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  -0.008350378 1.278403 -0.40004574 -0.281969986 1439.106</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6   0.503007060 1.579810  0.51135744  0.301406799 4715.520</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7   0.523597291 1.611399  0.02059023  0.031589285 5705.120</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8   0.545034096 1.596429  0.02143681 -0.014970808 4882.926</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9   0.587382929 1.602488  0.04234883  0.006059355 3950.092</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10  0.769339222 1.453669  0.18195629 -0.148818593 1977.993</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                          geometry</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  POINT Z (2556476 1188336 12...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  POINT Z (2558565 1189297 13...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  POINT Z (2560477 1189861 13...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  POINT Z (2562431 1190668 13...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  POINT Z (2563809 1190657 18...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  POINT Z (2567940 1192930 17...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  POINT Z (2572877 1195780 15...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  POINT Z (2577051 1198311 14...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  POINT Z (2580338 1200499 12...</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 POINT Z (2581749 1201865 15...</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -238,11 +248,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -250,6 +260,8 @@
 
   
 
+
+  
 
   </body>
 </html>

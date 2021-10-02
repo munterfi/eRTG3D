@@ -55,6 +55,8 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -66,9 +68,15 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -82,7 +90,7 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -142,7 +150,7 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -173,7 +181,7 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Export a dataCube as image slice sequence</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/pointCloudAnalysis3D.R'><code>R/pointCloudAnalysis3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/pointCloudAnalysis3D.R'><code>R/pointCloudAnalysis3D.R</code></a></small>
     <div class="hidden name"><code>saveImageSlices.Rd</code></div>
     </div>
 
@@ -183,7 +191,7 @@ Image sequences are a common structure to represent voxel data and
 most of the specific software to visualize voxel data is able to read it (e.g. blender)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>saveImageSlices</span>(<span class='kw'>rStack</span>, <span class='kw'>filename</span>, <span class='kw'>dir</span>, NaVal = <span class='fl'>0</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>saveImageSlices</span><span class='op'>(</span><span class='va'>rStack</span>, <span class='va'>filename</span>, <span class='va'>dir</span>, NaVal <span class='op'>=</span> <span class='fl'>0</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -211,14 +219,15 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
     <p>Saves the Tiff image files.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>crws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(X=<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span>(<span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span>), FUN = <span class='fu'>function</span>(<span class='kw'>X</span>) {
-  <span class='fu'><a href='sim.crw.3d.html'>sim.crw.3d</a></span>(nStep = <span class='fl'>100</span>, rTurn = <span class='fl'>0.99</span>, rLift = <span class='fl'>0.99</span>, meanStep = <span class='fl'>0.1</span>)
-})
-<span class='kw'>points</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span>(<span class='st'>"rbind"</span>, <span class='kw'>crws</span>)
-<span class='kw'>extent</span> <span class='op'>&lt;-</span> <span class='kw'>raster</span>::<span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>))
-<span class='kw'>ud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='voxelCount.html'>voxelCount</a></span>(<span class='kw'>points</span>, <span class='kw'>extent</span>, xyRes=<span class='fl'>5</span>,
-                 zMin=<span class='op'>-</span><span class='fl'>10</span>, zMax=<span class='fl'>10</span>, standartize = <span class='fl'>TRUE</span>)
-<span class='fu'>saveImageSlices</span>(<span class='kw'>ud</span>, filename = <span class='st'>"saveImageSlices_test"</span>, dir = <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span>())</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='va'>crws</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span>X<span class='op'>=</span><span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>:</span><span class='fl'>100</span><span class='op'>)</span>, FUN <span class='op'>=</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>X</span><span class='op'>)</span> <span class='op'>{</span></span>
+<span class='r-in'>  <span class='fu'><a href='sim.crw.3d.html'>sim.crw.3d</a></span><span class='op'>(</span>nStep <span class='op'>=</span> <span class='fl'>100</span>, rTurn <span class='op'>=</span> <span class='fl'>0.99</span>, rLift <span class='op'>=</span> <span class='fl'>0.99</span>, meanStep <span class='op'>=</span> <span class='fl'>0.1</span><span class='op'>)</span></span>
+<span class='r-in'><span class='op'>}</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>points</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/do.call.html'>do.call</a></span><span class='op'>(</span><span class='st'>"rbind"</span>, <span class='va'>crws</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>extent</span> <span class='op'>&lt;-</span> <span class='fu'>raster</span><span class='fu'>::</span><span class='fu'><a href='https://rdrr.io/pkg/raster/man/extent.html'>extent</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span>, <span class='op'>-</span><span class='fl'>10</span>, <span class='fl'>10</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>ud</span> <span class='op'>&lt;-</span> <span class='fu'><a href='voxelCount.html'>voxelCount</a></span><span class='op'>(</span><span class='va'>points</span>, <span class='va'>extent</span>, xyRes<span class='op'>=</span><span class='fl'>5</span>,</span>
+<span class='r-in'>                 zMin<span class='op'>=</span><span class='op'>-</span><span class='fl'>10</span>, zMax<span class='op'>=</span><span class='fl'>10</span>, standartize <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>saveImageSlices</span><span class='op'>(</span><span class='va'>ud</span>, filename <span class='op'>=</span> <span class='st'>"saveImageSlices_test"</span>, dir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempdir</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span></span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -230,11 +239,11 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -242,6 +251,8 @@ most of the specific software to visualize voxel data is able to read it (e.g. b
 
   
 
+
+  
 
   </body>
 </html>

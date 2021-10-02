@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -140,7 +148,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -171,7 +179,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Distance to target</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
     <div class="hidden name"><code>dist2target.3d.Rd</code></div>
     </div>
 
@@ -179,7 +187,7 @@
     <p>Calculates the distance between every point in the track and the last point (target).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dist2target.3d</span>(<span class='kw'>track</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>dist2target.3d</span><span class='op'>(</span><span class='va'>track</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -195,12 +203,14 @@
     <p>A numeric vector with the distances to target</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dist2target.3d</span>(<span class='kw'>niclas</span>)</div><div class='output co'>#&gt;  [1] 113760.930 111464.912 109480.157 107366.045 106092.794 101412.913
-#&gt;  [7]  95775.880  90973.994  87132.578  85343.898  82222.633  78295.705
-#&gt; [13]  74574.198  73005.726  71648.284  70716.833  66265.189  61230.013
-#&gt; [19]  56518.210  50951.786  48274.536  42820.076  39390.140  33523.444
-#&gt; [25]  28052.162  21952.562  15543.602   9886.572   5422.300   3247.638
-#&gt; [31]      0.000</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>dist2target.3d</span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [1] 113760.930 111464.912 109480.157 107366.045 106092.794 101412.913</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  [7]  95775.880  90973.994  87132.578  85343.898  82222.633  78295.705</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [13]  74574.198  73005.726  71648.284  70716.833  66265.189  61230.013</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [19]  56518.210  50951.786  48274.536  42820.076  39390.140  33523.444</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [25]  28052.162  21952.562  15543.602   9886.572   5422.300   3247.638</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [31]      0.000</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -212,11 +222,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -224,6 +234,8 @@
 
   
 
+
+  
 
   </body>
 </html>

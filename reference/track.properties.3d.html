@@ -54,6 +54,8 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -65,9 +67,15 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -81,7 +89,7 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -141,7 +149,7 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -172,7 +180,7 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Track properties of a 3-D track</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
     <div class="hidden name"><code>track.properties.3d.Rd</code></div>
     </div>
 
@@ -181,7 +189,7 @@ turn angle &amp;amp; lift angle) of a track in three dimensions." />
 turn angle &amp; lift angle) of a track in three dimensions.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>track.properties.3d</span>(<span class='kw'>track</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>track.properties.3d</span><span class='op'>(</span><span class='va'>track</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -197,70 +205,72 @@ turn angle &amp; lift angle) of a track in three dimensions.</p>
     <p>The data.frame with track properties</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>track.properties.3d</span>(<span class='kw'>niclas</span>)</div><div class='output co'>#&gt;          x       y        z            a        g           t             l
-#&gt; 1  2556476 1188336 1283.736  0.391476625 1.557032          NA            NA
-#&gt; 2  2558565 1189297 1359.580  0.431339520 1.537826  0.03986289 -0.0192051360
-#&gt; 3  2560477 1189861 1369.713  0.286613422 1.565712 -0.14472610  0.0278855424
-#&gt; 4  2562431 1190668 1391.752  0.391695363 1.560373  0.10508194 -0.0053387656
-#&gt; 5  2563809 1190657 1806.566 -0.008350378 1.278403 -0.40004574 -0.2819699863
-#&gt; 6  2567940 1192930 1764.062  0.503007060 1.579810  0.51135744  0.3014067994
-#&gt; 7  2572877 1195780 1532.481  0.523597291 1.611399  0.02059023  0.0315892852
-#&gt; 8  2577051 1198311 1407.334  0.545034096 1.596429  0.02143681 -0.0149708077
-#&gt; 9  2580338 1200499 1282.171  0.587382929 1.602488  0.04234883  0.0060593552
-#&gt; 10 2581749 1201865 1513.318  0.769339222 1.453669  0.18195629 -0.1488185931
-#&gt; 11 2584181 1204396 1553.903  0.805217357 1.559236  0.03587814  0.1055669329
-#&gt; 12 2587086 1208264 1355.825  0.926686757 1.611722  0.12146940  0.0524861863
-#&gt; 13 2589942 1211928 1180.242  0.908715912 1.608579 -0.01797084 -0.0031436486
-#&gt; 14 2591298 1212971 1249.781  0.655736823 1.530191 -0.25297909 -0.0783878455
-#&gt; 15 2592320 1214565 1427.830  1.000874712 1.477005  0.34513789 -0.0531855619
-#&gt; 16 2593267 1214599 1448.141  0.036095109 1.549373 -0.96477960  0.0723677465
-#&gt; 17 2597195 1217541 1565.054  0.642704165 1.546976  0.60660906 -0.0023967093
-#&gt; 18 2601943 1219542 1486.655  0.398966897 1.586012 -0.24373727  0.0390353752
-#&gt; 19 2606612 1220197 1428.523  0.139471166 1.583125 -0.25949573 -0.0028870405
-#&gt; 20 2611936 1222073 1245.329  0.338700077 1.603237  0.19922891  0.0201124962
-#&gt; 21 2614472 1223194 1374.984  0.416273135 1.524061  0.07757306 -0.0791767018
-#&gt; 22 2619707 1225189 1299.593  0.364009039 1.584253 -0.05226410  0.0601927600
-#&gt; 23 2623038 1226295 1637.258  0.320616080 1.474904 -0.04339296 -0.1093494202
-#&gt; 24 2628725 1229013 1449.789  0.445843553 1.600531  0.12522747  0.1256272267
-#&gt; 25 2634173 1230518 1380.690  0.269552483 1.583021 -0.17629107 -0.0175098455
-#&gt; 26 2640336 1231979 1180.499  0.232727298 1.602392 -0.03682519  0.0193708122
-#&gt; 27 2646688 1230772 1280.248 -0.187747263 1.555370 -0.42047456 -0.0470224264
-#&gt; 28 2652460 1228745 1369.771 -0.337740561 1.556163 -0.14999330  0.0007936569
-#&gt; 29 2656826 1229809 1330.951  0.239069596 1.579434  0.57681016  0.0232708861
-#&gt; 30 2659108 1229409 1388.270 -0.173565497 1.546060 -0.41263509 -0.0333740844
-#&gt; 31 2662223 1230279 1088.630  0.272433402 1.663192  0.44599890  0.1171317092
-#&gt;            d
-#&gt; 1         NA
-#&gt; 2  2300.8178
-#&gt; 3  1993.0034
-#&gt; 4  2114.4927
-#&gt; 5  1439.1056
-#&gt; 6  4715.5204
-#&gt; 7  5705.1204
-#&gt; 8  4882.9261
-#&gt; 9  3950.0922
-#&gt; 10 1977.9927
-#&gt; 11 3510.8924
-#&gt; 12 4841.2498
-#&gt; 13 4648.3169
-#&gt; 14 1713.0376
-#&gt; 15 1901.1419
-#&gt; 16  948.1749
-#&gt; 17 4908.6641
-#&gt; 18 5152.8108
-#&gt; 19 4715.3491
-#&gt; 20 5648.0152
-#&gt; 21 2775.2387
-#&gt; 22 5602.6132
-#&gt; 23 3526.6938
-#&gt; 24 6305.6152
-#&gt; 25 5652.4606
-#&gt; 26 6337.0644
-#&gt; 27 6466.2599
-#&gt; 28 6118.1088
-#&gt; 29 4494.2887
-#&gt; 30 2317.4480
-#&gt; 31 3247.6379</div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>track.properties.3d</span><span class='op'>(</span><span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          x       y        z            a        g           t             l</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1  2556476 1188336 1283.736  0.391476625 1.557032          NA            NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2558565 1189297 1359.580  0.431339520 1.537826  0.03986289 -0.0192051360</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  2560477 1189861 1369.713  0.286613422 1.565712 -0.14472610  0.0278855424</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2562431 1190668 1391.752  0.391695363 1.560373  0.10508194 -0.0053387656</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  2563809 1190657 1806.566 -0.008350378 1.278403 -0.40004574 -0.2819699863</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  2567940 1192930 1764.062  0.503007060 1.579810  0.51135744  0.3014067994</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  2572877 1195780 1532.481  0.523597291 1.611399  0.02059023  0.0315892852</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  2577051 1198311 1407.334  0.545034096 1.596429  0.02143681 -0.0149708077</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  2580338 1200499 1282.171  0.587382929 1.602488  0.04234883  0.0060593552</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 2581749 1201865 1513.318  0.769339222 1.453669  0.18195629 -0.1488185931</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 2584181 1204396 1553.903  0.805217357 1.559236  0.03587814  0.1055669329</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 2587086 1208264 1355.825  0.926686757 1.611722  0.12146940  0.0524861863</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 2589942 1211928 1180.242  0.908715912 1.608579 -0.01797084 -0.0031436486</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 2591298 1212971 1249.781  0.655736823 1.530191 -0.25297909 -0.0783878455</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 2592320 1214565 1427.830  1.000874712 1.477005  0.34513789 -0.0531855619</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16 2593267 1214599 1448.141  0.036095109 1.549373 -0.96477960  0.0723677465</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 2597195 1217541 1565.054  0.642704165 1.546976  0.60660906 -0.0023967093</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18 2601943 1219542 1486.655  0.398966897 1.586012 -0.24373727  0.0390353752</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 2606612 1220197 1428.523  0.139471166 1.583125 -0.25949573 -0.0028870405</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 2611936 1222073 1245.329  0.338700077 1.603237  0.19922891  0.0201124962</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 2614472 1223194 1374.984  0.416273135 1.524061  0.07757306 -0.0791767018</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 2619707 1225189 1299.593  0.364009039 1.584253 -0.05226410  0.0601927600</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 2623038 1226295 1637.258  0.320616080 1.474904 -0.04339296 -0.1093494202</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 2628725 1229013 1449.789  0.445843553 1.600531  0.12522747  0.1256272267</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 2634173 1230518 1380.690  0.269552483 1.583021 -0.17629107 -0.0175098455</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 2640336 1231979 1180.499  0.232727298 1.602392 -0.03682519  0.0193708122</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 2646688 1230772 1280.248 -0.187747263 1.555370 -0.42047456 -0.0470224264</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 2652460 1228745 1369.771 -0.337740561 1.556163 -0.14999330  0.0007936569</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 2656826 1229809 1330.951  0.239069596 1.579434  0.57681016  0.0232708861</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 2659108 1229409 1388.270 -0.173565497 1.546060 -0.41263509 -0.0333740844</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 2662223 1230279 1088.630  0.272433402 1.663192  0.44599890  0.1171317092</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>            d</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1         NA</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2  2300.8178</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3  1993.0034</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4  2114.4927</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5  1439.1056</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6  4715.5204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 7  5705.1204</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 8  4882.9261</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 9  3950.0922</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 10 1977.9927</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 11 3510.8924</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 12 4841.2498</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 13 4648.3169</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 14 1713.0376</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 15 1901.1419</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 16  948.1749</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 17 4908.6641</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 18 5152.8108</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 19 4715.3491</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 20 5648.0152</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 21 2775.2387</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 22 5602.6132</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 23 3526.6938</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 24 6305.6152</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 25 5652.4606</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 26 6337.0644</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 27 6466.2599</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 28 6118.1088</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 29 4494.2887</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 30 2317.4480</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 31 3247.6379</span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -272,11 +282,11 @@ turn angle &amp; lift angle) of a track in three dimensions.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -284,6 +294,8 @@ turn angle &amp; lift angle) of a track in three dimensions.</p>
 
   
 
+
+  
 
   </body>
 </html>

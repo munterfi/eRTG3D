@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -90,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -98,19 +100,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,7 +133,7 @@
       <h1 data-toc-skip>Example data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfinger/eRTG3D/blob/master/vignettes/v1.Rmd"><code>vignettes/v1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v1.Rmd" class="external-link"><code>vignettes/v1.Rmd</code></a></small>
       <div class="hidden name"><code>v1.Rmd</code></div>
 
     </div>
@@ -144,26 +146,25 @@ text-align: justify}
 </style>
 <div id="bird-trajectory" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bird-trajectory" class="anchor"></a>Bird trajectory</h2>
-<p>An example GPS track of a stork <code>niclas</code> and an example Digital Elevation Model <code>dem</code> are included in the package. The DEM is a snippet from the <em>SRTM 90m Digital Elevation Database v4.1</em> from <a href="http://srtm.csi.cgiar.org/srtmdata/">CGIAR-CSI</a> and the stork track is a subset of the data in the study <em>LifeTrack White Stork SWGermany 2014-2017</em> (Movebank Study ID 21231406) from the <a href="https://www.datarepository.movebank.org">Movebank Data Repository</a>.</p>
+<a href="#bird-trajectory" class="anchor" aria-hidden="true"></a>Bird trajectory</h2>
+<p>An example GPS track of a stork <code>niclas</code> and an example Digital Elevation Model <code>dem</code> are included in the package. The DEM is a snippet from the <em>SRTM 90m Digital Elevation Database v4.1</em> from <a href="https://srtm.csi.cgiar.org/srtmdata/" class="external-link">CGIAR-CSI</a> and the stork track is a subset of the data in the study <em>LifeTrack White Stork SWGermany 2014-2017</em> (Movebank Study ID 21231406) from the <a href="https://www.datarepository.movebank.org" class="external-link">Movebank Data Repository</a>.</p>
 <p>The area covered by the test data is the Swiss midland. The example track is a data.frame with coordinates in x, y and z. The x and y coordinates are in the CH1903+ / LV95 (EPSG:2056) reference system.</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">niclas</span>)
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>
 <span class="co">#&gt;         x       y        z</span>
 <span class="co">#&gt; 1 2556476 1188336 1283.736</span>
 <span class="co">#&gt; 2 2558565 1189297 1359.580</span>
 <span class="co">#&gt; 3 2560477 1189861 1369.713</span>
 <span class="co">#&gt; 4 2562431 1190668 1391.752</span>
 <span class="co">#&gt; 5 2563809 1190657 1806.566</span>
-<span class="co">#&gt; 6 2567940 1192930 1764.062</span>
-</pre></div>
+<span class="co">#&gt; 6 2567940 1192930 1764.062</span></code></pre></div>
 </div>
 <div id="digital-elevation-model" class="section level2">
 <h2 class="hasAnchor">
-<a href="#digital-elevation-model" class="anchor"></a>Digital elevation model</h2>
+<a href="#digital-elevation-model" class="anchor" aria-hidden="true"></a>Digital elevation model</h2>
 <p>The DEM is a rasterLayer of the raster package, it’s Coordinate Reference System (CRS) is also CH1903+ / LV95. The stork flies from southwest to northeast, GPS fixes are collected every 15 minutes.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">dem</span>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">dem</span>
 <span class="co">#&gt; class      : RasterLayer </span>
 <span class="co">#&gt; dimensions : 175, 501, 87675  (nrow, ncol, ncell)</span>
 <span class="co">#&gt; resolution : 251.2, 370.8  (x, y)</span>
@@ -171,8 +172,7 @@ text-align: justify}
 <span class="co">#&gt; crs        : +init=epsg:2056 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs </span>
 <span class="co">#&gt; source     : memory</span>
 <span class="co">#&gt; names      : srtm_38_03 </span>
-<span class="co">#&gt; values     : 374.3316, 2602.137  (min, max)</span>
-</pre></div>
+<span class="co">#&gt; values     : 374.3316, 2602.137  (min, max)</span></code></pre></div>
 </div>
   </div>
 
@@ -187,11 +187,13 @@ text-align: justify}
 
 
       <footer><div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p></p>
+<p>Developed by Merlin Unterfinger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -199,6 +201,8 @@ text-align: justify}
 
   
 
+
+  
 
   </body>
 </html>

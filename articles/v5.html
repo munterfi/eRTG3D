@@ -26,6 +26,8 @@
 <![endif]-->
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-article">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -38,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -90,7 +92,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -98,19 +100,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,7 +133,7 @@
       <h1 data-toc-skip>Parallel computation</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfinger/eRTG3D/blob/master/vignettes/v5.Rmd"><code>vignettes/v5.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v5.Rmd" class="external-link"><code>vignettes/v5.Rmd</code></a></small>
       <div class="hidden name"><code>v5.Rmd</code></div>
 
     </div>
@@ -145,26 +147,22 @@ text-align: justify}
 <p>The computationally most intense functions <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code>, <code><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d()</a></code> and <code><a href="../reference/reproduce.track.3d.html">reproduce.track.3d()</a></code> of the package are also implemented in a parallel version. On Unix systems this is done using a fork cluster. On Windows systems PSOCK cluster is used.</p>
 <p>Definition of start conditions and parameters:</p>
 <p>Get movement characteristics (<code>P</code>) from the example trajectory and simulate a Unconditional Eprircal Random Walk (UERW) in order to extract the attraction term (<code>Q</code>):</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="kw">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get.track.densities.3d.html">get.track.densities.3d</a></span>(<span class="kw">niclas</span>, heightDistEllipsoid = <span class="fl">TRUE</span>, DEM = <span class="kw">dem</span>)
-<span class="kw">uerw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim.uncond.3d.html">sim.uncond.3d</a></span>(<span class="kw">sim.locs</span><span class="op">*</span><span class="kw">f</span>, start = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw">niclas</span><span class="op">$</span><span class="kw">x</span>[<span class="fl">1</span>], <span class="kw">niclas</span><span class="op">$</span><span class="kw">y</span>[<span class="fl">1</span>], <span class="kw">niclas</span><span class="op">$</span><span class="kw">z</span>[<span class="fl">1</span>]), 
-                      a0 = <span class="kw">a0</span>, g0 = <span class="kw">g0</span>, densities = <span class="kw">P</span>)
-</pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">P</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/get.track.densities.3d.html">get.track.densities.3d</a></span><span class="op">(</span><span class="va">niclas</span>, heightDistEllipsoid <span class="op">=</span> <span class="cn">TRUE</span>, DEM <span class="op">=</span> <span class="va">dem</span><span class="op">)</span>
+<span class="va">uerw</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim.uncond.3d.html">sim.uncond.3d</a></span><span class="op">(</span><span class="va">sim.locs</span><span class="op">*</span><span class="va">f</span>, start <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">$</span><span class="va">x</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">niclas</span><span class="op">$</span><span class="va">y</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">niclas</span><span class="op">$</span><span class="va">z</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span><span class="op">)</span>, 
+                      a0 <span class="op">=</span> <span class="va">a0</span>, g0 <span class="op">=</span> <span class="va">g0</span>, densities <span class="op">=</span> <span class="va">P</span><span class="op">)</span></code></pre></div>
 <p>The parallel version of the <code><a href="../reference/qProb.3d.html">qProb.3d()</a></code> function can be accessed by setting the parameter <code>parallel = TRUE</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit">
-<span class="kw">Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qProb.3d.html">qProb.3d</a></span>(<span class="kw">uerw</span>, <span class="kw">sim.locs</span>, parallel = <span class="fl">TRUE</span>)
-<span class="kw">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span>(n.sim = <span class="fl">100</span>, <span class="kw">niclas</span>, DEM = <span class="kw">dem</span>, parallel = <span class="fl">TRUE</span>)
-</pre></div>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">Q</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/qProb.3d.html">qProb.3d</a></span><span class="op">(</span><span class="va">uerw</span>, <span class="va">sim.locs</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="va">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span><span class="op">(</span>n.sim <span class="op">=</span> <span class="fl">100</span>, <span class="va">niclas</span>, DEM <span class="op">=</span> <span class="va">dem</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>And also for <code>n.sim.uncond.3d()</code>:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit">
-<span class="kw">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(n.sim = <span class="fl">100</span>, <span class="kw">sim.locs</span>, start=<span class="kw">start</span>, end=<span class="kw">end</span>,a0 = <span class="kw">a0</span>, g0 = <span class="kw">g0</span>,
-                      densities=<span class="kw">P</span>, qProbs=<span class="kw">Q</span>, DEM = <span class="kw">dem</span>, parallel = <span class="fl">TRUE</span>)
-</pre></div>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span><span class="op">(</span>n.sim <span class="op">=</span> <span class="fl">100</span>, <span class="va">sim.locs</span>, start<span class="op">=</span><span class="va">start</span>, end<span class="op">=</span><span class="va">end</span>,a0 <span class="op">=</span> <span class="va">a0</span>, g0 <span class="op">=</span> <span class="va">g0</span>,
+                      densities<span class="op">=</span><span class="va">P</span>, qProbs<span class="op">=</span><span class="va">Q</span>, DEM <span class="op">=</span> <span class="va">dem</span>, parallel <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p>Alternativly the number of nodes in the cluster can be specified by passing a number to the function: <code>parallel = 4</code>. In this case a fork or PSOCK cluster with 4 nodes will be used. The maximum number of nodes is not allowed to be larger than the number of available cores (Hyper Threading included).</p>
-<div class="sourceCode" id="cb4"><pre class="downlit">
-<span class="kw">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span>(n.sim = <span class="fl">100</span>, <span class="kw">sim.locs</span>, start=<span class="kw">start</span>, end=<span class="kw">end</span>,a0 = <span class="kw">a0</span>, g0 = <span class="kw">g0</span>,
-                      densities=<span class="kw">P</span>, qProbs=<span class="kw">Q</span>, DEM = <span class="kw">dem</span>, parallel = <span class="fl">4</span>)
-</pre></div>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="va">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/n.sim.cond.3d.html">n.sim.cond.3d</a></span><span class="op">(</span>n.sim <span class="op">=</span> <span class="fl">100</span>, <span class="va">sim.locs</span>, start<span class="op">=</span><span class="va">start</span>, end<span class="op">=</span><span class="va">end</span>,a0 <span class="op">=</span> <span class="va">a0</span>, g0 <span class="op">=</span> <span class="va">g0</span>,
+                      densities<span class="op">=</span><span class="va">P</span>, qProbs<span class="op">=</span><span class="va">Q</span>, DEM <span class="op">=</span> <span class="va">dem</span>, parallel <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></code></pre></div>
 <p><strong>Note:</strong> If only a few tracks are simulated and the track length is short <code>sim.locs &lt; 30</code>, then it is faster in many cases to stay with the single core version of the function, especially on Windows systems, where setting up clusters takes some time.</p>
   </div>
 
@@ -177,11 +175,13 @@ text-align: justify}
 
 
       <footer><div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p></p>
+<p>Developed by Merlin Unterfinger.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
 </div>
 
       </footer>
@@ -189,6 +189,8 @@ text-align: justify}
 
   
 
+
+  
 
   </body>
 </html>

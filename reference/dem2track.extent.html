@@ -53,6 +53,8 @@
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -64,9 +66,15 @@
 
 
 
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -80,7 +88,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.6.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
       </span>
     </div>
 
@@ -140,7 +148,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/munterfinger/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
@@ -171,7 +179,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Crops the DEM to the extent of the track with a buffer</h1>
-    <small class="dont-index">Source: <a href='https://github.com/munterfinger/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/munterfi/eRTG3D/blob/master/R/wrapper3D.R'><code>R/wrapper3D.R</code></a></small>
     <div class="hidden name"><code>dem2track.extent.Rd</code></div>
     </div>
 
@@ -179,7 +187,7 @@
     <p>Crops the DEM to the extent of the track with a buffer</p>
     </div>
 
-    <pre class="usage"><span class='fu'>dem2track.extent</span>(<span class='kw'>DEM</span>, <span class='kw'>track</span>, buffer = <span class='fl'>100</span>)</pre>
+    <div class="ref-usage sourceCode"><pre class='sourceCode r'><code><span class='fu'>dem2track.extent</span><span class='op'>(</span><span class='va'>DEM</span>, <span class='va'>track</span>, buffer <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span></code></pre></div>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,15 +211,17 @@
     <p>A the cropped digital elevation model as a raster layer.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>dem2track.extent</span>(<span class='kw'>dem</span>, <span class='kw'>niclas</span>)</div><div class='output co'>#&gt; class      : RasterLayer 
-#&gt; dimensions : 118, 422, 49796  (nrow, ncol, ncell)
-#&gt; resolution : 251.2, 370.8  (x, y)
-#&gt; extent     : 2556314, 2662321, 1188232, 1231986  (xmin, xmax, ymin, ymax)
-#&gt; crs        : +init=epsg:2056 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs 
-#&gt; source     : memory
-#&gt; names      : srtm_38_03 
-#&gt; values     : 412.7945, 1987.423  (min, max)
-#&gt; </div></pre>
+    <div class="ref-examples sourceCode"><pre class='sourceCode r'><code><span class='r-in'><span class='fu'>dem2track.extent</span><span class='op'>(</span><span class='va'>dem</span>, <span class='va'>niclas</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> class      : RasterLayer </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> dimensions : 118, 422, 49796  (nrow, ncol, ncell)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> resolution : 251.2, 370.8  (x, y)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> extent     : 2556314, 2662321, 1188232, 1231986  (xmin, xmax, ymin, ymax)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> crs        : +init=epsg:2056 +proj=somerc +lat_0=46.95240555555556 +lon_0=7.439583333333333 +k_0=1 +x_0=2600000 +y_0=1200000 +ellps=bessel +towgs84=674.374,15.056,405.346,0,0,0,0 +units=m +no_defs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> source     : memory</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> names      : srtm_38_03 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> values     : 412.7945, 1987.423  (min, max)</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+</code></pre></div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -223,11 +233,11 @@
 
       <footer>
       <div class="copyright">
-  <p>Developed by Merlin Unterfinger.</p>
+  <p><p>Developed by Merlin Unterfinger.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p></p>
 </div>
 
       </footer>
@@ -235,6 +245,8 @@
 
   
 
+
+  
 
   </body>
 </html>

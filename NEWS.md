@@ -1,3 +1,7 @@
+# version 0.6.4
+
+* Adjust URLs to GitHub account due to renaming @munterfinger to @munterfi.
+
 # version 0.6.3
 
 * Add ORCID to author field in DESCRIPTION.

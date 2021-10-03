@@ -21,7 +21,7 @@ set.seed(123)
 ```
 
 ## Bird trajectory
-An example GPS track of a stork `niclas` and an example Digital Elevation Model `dem` are included in the package. The DEM is a snippet from the *SRTM 90m Digital Elevation Database v4.1* from [CGIAR-CSI](http://srtm.csi.cgiar.org/srtmdata/) and the stork track is a subset of the data in the study *LifeTrack White Stork SWGermany 2014-2017* (Movebank Study ID 21231406) from the [Movebank Data Repository](https://www.datarepository.movebank.org). 
+An example GPS track of a stork `niclas` and an example Digital Elevation Model `dem` are included in the package. The DEM is a snippet from the *SRTM 90m Digital Elevation Database v4.1* from [CGIAR-CSI](https://srtm.csi.cgiar.org/srtmdata/) and the stork track is a subset of the data in the study *LifeTrack White Stork SWGermany 2014-2017* (Movebank Study ID 21231406) from the [Movebank Data Repository](https://www.datarepository.movebank.org). 
 
 The area covered by the test data is the Swiss midland. The example track is a data.frame with coordinates in x, y and z. The x and y coordinates are in the CH1903+ / LV95 (EPSG:2056) reference system.
 ```{r }

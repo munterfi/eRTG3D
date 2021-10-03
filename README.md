@@ -2,9 +2,9 @@
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/eRTG3D)](https://CRAN.R-project.org/package=eRTG3D)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/eRTG3D?color=brightgreen)](https://CRAN.R-project.org/package=eRTG3D)
-[![R build status](https://github.com/munterfinger/eRTG3D/workflows/R-CMD-check/badge.svg)](https://github.com/munterfinger/eRTG3D/actions)
-[![pkgdown](https://github.com/munterfinger/eRTG3D/workflows/pkgdown/badge.svg)](https://github.com/munterfinger/eRTG3D/actions)
-[![Codecov test coverage](https://codecov.io/gh/munterfinger/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfinger/eRTG3D?branch=master)
+[![R build status](https://github.com/munterfi/eRTG3D/workflows/R-CMD-check/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
+[![pkgdown](https://github.com/munterfi/eRTG3D/workflows/pkgdown/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
+[![Codecov test coverage](https://codecov.io/gh/munterfi/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfi/eRTG3D?branch=master)
 <!-- badges: end -->
 
 The **e**mpirically informed **R**andom **T**rajectory **G**enerator in three dimensions (eRTG3D)
@@ -13,16 +13,18 @@ between two given fix points, so-called Conditional Empirical Random Walks. The 
 
 The eRTG3D algorithm was developed and implemented as an R package within the scope of a Master's thesis (Unterfinger, [2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)) at the Department of Geography, University of Zurich. The development started from a 2-D version of the eRTG algorithm by Technitis et al. ([2016](https://doi.org/10.5167/uzh-130652)).
 
-## Get started
+## Getting started
+
 ``` r
 # Install release version from CRAN
 install.packages("eRTG3D")
 
 # Install development version from GitHub
-devtools::install_github("munterfinger/eRTG3D")
+devtools::install_github("munterfi/eRTG3D")
 ```
 
 ## Features
+
 The **eRTG3D** package contains functions to:
 
 * calculate **movement parameters of 3-D GPS tracking data**, turning angle, lift angle and step length
@@ -40,6 +42,7 @@ The **eRTG3D** package contains functions to:
 * manipulate **extent of raster layers**
 
 ## References
+
 Unterfinger M ([2018](https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf)). 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master's thesis, University of Zurich.
 
 Technitis G, Weibel R, Kranstauber B, Safi K ([2016](https://doi.org/10.5167/uzh-130652)). “An algorithm for empirically informed random trajectory generation between two endpoints.” GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. doi: [10.5167/uzh-130652](https://doi.org/10.5167/uzh-130652).

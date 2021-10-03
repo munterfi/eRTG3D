@@ -7,7 +7,7 @@
 #'
 #' @name dem
 #' @docType data
-#' @references \url{http://srtm.csi.cgiar.org/srtmdata/}
+#' @references \url{https://srtm.csi.cgiar.org/srtmdata/}
 #' @keywords data
 NULL
 

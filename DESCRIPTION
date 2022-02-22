@@ -1,6 +1,6 @@
 Package: eRTG3D
 Title: Empirically Informed Random Trajectory Generation in 3-D
-Version: 0.6.4
+Version: 0.7.0
 Authors@R: c(
     person("Merlin", "Unterfinger", email = "info@munterfinger.ch", role = c("aut", "cre"), comment = c(ORCID = "0000-0003-2020-2366")),
     person("Kamran", "Safi", email = "ksafi@orn.mpg.de", role = c("ctb", "ths")),

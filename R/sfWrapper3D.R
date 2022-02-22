@@ -15,8 +15,7 @@
 #'
 #' @examples
 #' transformCRS.3d(niclas, fromCRS = 2056, toCRS = 4326)
-transformCRS.3d <- function(track, fromCRS, toCRS)
-{
+transformCRS.3d <- function(track, fromCRS, toCRS) {
   track <- track2sf.3d(track = track, CRS = fromCRS)
   track <- sf::st_transform(track, toCRS)
   track <- sf2df.3d(track)
@@ -34,9 +33,8 @@ transformCRS.3d <- function(track, fromCRS, toCRS)
 #' @examples
 #' is.sf.3d(niclas)
 #' is.sf.3d(track2sf.3d(track = niclas, CRS = 2056))
-is.sf.3d <- function(track)
-{
-  if(class(track)[1]=="sf" && class(track)[2]=="data.frame") {
+is.sf.3d <- function(track) {
+  if (class(track)[1] == "sf" && class(track)[2] == "data.frame") {
     return(TRUE)
   } else {
     return(FALSE)
@@ -52,8 +50,7 @@ is.sf.3d <- function(track)
 #'
 #' @examples
 #' sf2df.3d(track2sf.3d(niclas, CRS = 4326))
-sf2df.3d <- function(track)
-{
+sf2df.3d <- function(track) {
   track <- cbind(sf::st_coordinates(track), as.data.frame(track))
   track$geometry <- NULL
   colnames(track)[1:3] <- c("x", "y", "z")
@@ -70,11 +67,16 @@ sf2df.3d <- function(track)
 #'
 #' @examples
 #' track2sf.3d(niclas, 4326)
-track2sf.3d <- function(track, CRS = NA)
-{
-  if(is.data.frame(track)) {return(.df2sf.3d(track, CRS = CRS))}
-  if(is.matrix(track)) {return(.matrix2sf.3d(track, CRS = CRS))}
-  if(class(track)=="Move") {return(.move2sf.3d(track))}
+track2sf.3d <- function(track, CRS = NA) {
+  if (is.data.frame(track)) {
+    return(.df2sf.3d(track, CRS = CRS))
+  }
+  if (is.matrix(track)) {
+    return(.matrix2sf.3d(track, CRS = CRS))
+  }
+  if (class(track) == "Move") {
+    return(.move2sf.3d(track))
+  }
 }
 
 #' Converts a track data.frame to a \code{'sf, data.frame'}
@@ -88,11 +90,10 @@ track2sf.3d <- function(track, CRS = NA)
 #' @examples
 #' .df2sf.3d(track, CRS = NA)
 #' @noRd
-.df2sf.3d <- function(track, CRS = NA)
-{
-  if(any(is.na(track[,1:3]))) stop("Track 'data.frame' contains NA values.")
+.df2sf.3d <- function(track, CRS = NA) {
+  if (any(is.na(track[, 1:3]))) stop("Track 'data.frame' contains NA values.")
   track <- track.properties.3d(track)
-  return(sf::st_as_sf(track, coords = c(1,2,3), crs = CRS))
+  return(sf::st_as_sf(track, coords = c(1, 2, 3), crs = CRS))
 }
 
 #' Converts a track matrix to a sf data.frame
@@ -106,11 +107,10 @@ track2sf.3d <- function(track, CRS = NA)
 #' @examples
 #' .matrix2sf.3d(track, CRS = NA)
 #' @noRd
-.matrix2sf.3d <- function(track, CRS = NA)
-{
-  if(any(is.na(track[,1:3]))) stop("Track 'matrix' contains NA values.")
+.matrix2sf.3d <- function(track, CRS = NA) {
+  if (any(is.na(track[, 1:3]))) stop("Track 'matrix' contains NA values.")
   track <- track.properties.3d(as.data.frame(track))
-  return(sf::st_as_sf(track, coords = c(1,2,3), crs = CRS))
+  return(sf::st_as_sf(track, coords = c(1, 2, 3), crs = CRS))
 }
 
 #' Converts a move object to a sf data.frame
@@ -123,17 +123,18 @@ track2sf.3d <- function(track, CRS = NA)
 #' @examples
 #' .move2sf.3d(track)
 #' @noRd
-.move2sf.3d <- function(track)
-{
+.move2sf.3d <- function(track) {
   CRS <- as.character(track@proj4string)
   track <- data.frame(
     x = track$location_long,
     y = track$location_lat,
-    z = track$height_above_ellipsoid)
+    z = track$height_above_ellipsoid
+  )
   na.ind <- which(is.na(track$z))
-  if(any(na.ind)) {
+  if (any(na.ind)) {
     warning("NA values in z: Filled by linear interpolation")
-    track$z[na.ind] <- (track$z[na.ind+1] + track$z[na.ind-1] )/2}
+    track$z[na.ind] <- (track$z[na.ind + 1] + track$z[na.ind - 1]) / 2
+  }
   track <- track.properties.3d(track)
-  return(sf::st_as_sf(track, coords = c(1,2,3), crs = CRS))
+  return(sf::st_as_sf(track, coords = c(1, 2, 3), crs = CRS))
 }

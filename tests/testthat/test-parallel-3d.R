@@ -6,7 +6,6 @@ test_that("parpbapply functions work", {
     x = seq(1, n, 1),
     y = -seq(1, n, 1)
   )
-  #square <- function(x){x*x}
   # Run parallel
   invisible(capture.output(
     s <- parpbsapply(X = df$x, FUN = sum, nNodes = nNodes)

@@ -20,7 +20,7 @@ The eRTG3D algorithm was developed and implemented as an R package within the sc
 install.packages("eRTG3D")
 
 # Install development version from GitHub
-devtools::install_github("munterfi/eRTG3D")
+remotes::install_github("munterfi/eRTG3D")
 ```
 
 ## Features
@@ -40,6 +40,11 @@ The **eRTG3D** package contains functions to:
 * project 3-D tracking data into different **Coordinate Reference Systems (CRSs)**
 * export data to **sf package objects**; 'sf, data.frames'
 * manipulate **extent of raster layers**
+
+## Contributing
+
+* Contributions to this package are very welcome, issues and pull requests are the preferred ways to share them. Please see the [Contribution Guidelines](https://github.com/munterfi/eRTG3D/blob/master/.github/CONTRIBUTING.md).
+* This project is released with a [Contributor Code of Conduct](https://github.com/munterfi/eRTG3D/blob/master/.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## References
 

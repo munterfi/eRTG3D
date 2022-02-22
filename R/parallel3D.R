@@ -4,8 +4,7 @@
     parallel::clusterExport(cl, c("packages"), envir = environment())
     invisible(utils::capture.output(
       parallel::clusterEvalQ(cl, sapply(packages, require, character.only = TRUE))
-      )
-    )
+    ))
   }
   if (!is.null(export)) {
     parallel::clusterExport(cl, export, envir = envir)
@@ -15,7 +14,11 @@
 
 .nNodes <- function(nNodes) {
   if (is.logical(nNodes)) {
-    if (nNodes) {return(parallel::detectCores() - 1)} else {return(1)}
+    if (nNodes) {
+      return(parallel::detectCores() - 1)
+    } else {
+      return(1)
+    }
   }
   if (is.numeric(nNodes)) {
     return(min(parallel::detectCores(), round(nNodes), na.rm = TRUE))
@@ -24,8 +27,7 @@
   }
 }
 
-.clpbapply <- function(applyFun, X, FUN, packages, export, MARGIN, nNodes, envir)
-{
+.clpbapply <- function(applyFun, X, FUN, packages, export, MARGIN, nNodes, envir) {
   start.time <- Sys.time()
   os <- .Platform$OS.type
   pbapply::pboptions(type = "txt", style = 3, char = "=", txt.width = getOption("width") - 10)
@@ -76,14 +78,17 @@
 #' @export
 #'
 #' @examples
-#' square <- function(x){x*x}
+#' square <- function(x) {
+#'   x * x
+#' }
 #' l <- parpblapply(X = 1:1000, FUN = square, export = c("square"), nNodes = 2)
 parpblapply <- function(X, FUN, packages = NULL, export = NULL, envir = environment(),
-                        nNodes = parallel::detectCores() - 1)
-{
-  .clpbapply(applyFun = pbapply::pblapply,
-            X = X, FUN = FUN, packages = packages, export = export,
-            MARGIN = NULL, nNodes = nNodes, envir = envir)
+                        nNodes = parallel::detectCores() - 1) {
+  .clpbapply(
+    applyFun = pbapply::pblapply,
+    X = X, FUN = FUN, packages = packages, export = export,
+    MARGIN = NULL, nNodes = nNodes, envir = envir
+  )
 }
 
 #' Parallel sapply with progressbar
@@ -103,14 +108,17 @@ parpblapply <- function(X, FUN, packages = NULL, export = NULL, envir = environm
 #' @export
 #'
 #' @examples
-#' square <- function(x){x*x}
+#' square <- function(x) {
+#'   x * x
+#' }
 #' s <- parpbsapply(X = 1:1000, FUN = square, export = c("square"), nNodes = 2)
 parpbsapply <- function(X, FUN, packages = NULL, export = NULL, envir = environment(),
-                        nNodes = parallel::detectCores() - 1)
-{
-  .clpbapply(applyFun = pbapply::pbsapply,
-            X = X, FUN = FUN, packages = packages, export = export,
-            MARGIN = NULL, nNodes = nNodes, envir = envir)
+                        nNodes = parallel::detectCores() - 1) {
+  .clpbapply(
+    applyFun = pbapply::pbsapply,
+    X = X, FUN = FUN, packages = packages, export = export,
+    MARGIN = NULL, nNodes = nNodes, envir = envir
+  )
 }
 
 #' Parallel apply with progressbar
@@ -134,14 +142,15 @@ parpbsapply <- function(X, FUN, packages = NULL, export = NULL, envir = environm
 #' @examples
 #' n <- 1000
 #' df <- data.frame(
-#' x = seq(1, n, 1),
-#' y = -seq(1, n, 1)
+#'   x = seq(1, n, 1),
+#'   y = -seq(1, n, 1)
 #' )
 #' a <- parpbapply(X = df, FUN = sum, MARGIN = 1, nNodes = 2)
 parpbapply <- function(X, FUN, MARGIN, packages = NULL, export = NULL, envir = environment(),
-                       nNodes = parallel::detectCores() - 1)
-{
-  .clpbapply(applyFun = pbapply::pbapply,
-            X = X, FUN = FUN, packages = packages, export = export,
-            MARGIN = MARGIN, nNodes = nNodes, envir = envir)
+                       nNodes = parallel::detectCores() - 1) {
+  .clpbapply(
+    applyFun = pbapply::pbapply,
+    X = X, FUN = FUN, packages = packages, export = export,
+    MARGIN = MARGIN, nNodes = nNodes, envir = envir
+  )
 }

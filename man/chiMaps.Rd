@@ -18,7 +18,7 @@ A \code{rasterStack} containing the chi maps.
 }
 \description{
 Calculates the chi maps for one \code{rasterStack} or all raster all the raster pairs stored in two \code{rasterStack}s.
-As observed values, the first stack is used. The expected value is either set to the mean of the first stack, or if given 
+As observed values, the first stack is used. The expected value is either set to the mean of the first stack, or if given
 to be the values of the second stack.
 }
 \examples{

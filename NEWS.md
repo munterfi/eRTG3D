@@ -1,3 +1,11 @@
+# version 0.7.0
+
+* Resubmission of the package to CRAN as it was removed due to a change in testing regime regarding the `@donttest` statement in the examples.
+* Removed `@donttest` in `sim.glidingSoaring.3d` function documentation.
+* Add contributing guidelines and code of conduct.
+* Changed workflow from git flow to trunc-based development. Removed develop branch. New features are merged directly into `master` and releases are tagged after CRAN has accepted the package submission, which triggers the documentation build.
+* Format package using `styler` and `lintr`.
+
 # version 0.6.4
 
 * Adjust URLs to GitHub account due to renaming @munterfinger to @munterfi.

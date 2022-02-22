@@ -60,7 +60,14 @@ start <- Reduce(c, niclas[1, 1:3])
 end <- Reduce(c, niclas[n.locs, 1:3])
 a0 <- niclas$a[1]
 g0 <- niclas$g[1]
-uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+uerw <- sim.uncond.3d(
+  n.locs * f, start = start, a0 = a0, g0 = g0, densities = P
+)
 Q <- qProb.3d(uerw, n.locs)
-n.sim.cond.3d(n.sim=2, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
+n.sim.cond.3d(
+  n.sim = 2, n.locs = n.locs,
+  start = start, end = end,
+  a0 = a0, g0 = g0,
+  densities = P, qProbs = Q
+)
 }

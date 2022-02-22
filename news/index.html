@@ -107,7 +107,7 @@
 <ul><li>Resubmission of the package to CRAN as it was removed due to a change in testing regime regarding the <code>@donttest</code> statement in the examples.</li>
 <li>Removed <code>@donttest</code> in <code>sim.glidingSoaring.3d</code> function documentation.</li>
 <li>Add contributing guidelines and code of conduct.</li>
-<li>Changed workflow from git flow to trunc-based development. Removed develop branch. New features are merged directly into <code>master</code> and releases are tagged after CRAN has accepted the package submission, which triggers the documentation build.</li>
+<li>Changed workflow from git flow to trunc-based development. Removed <code>develop</code> branch. New features are merged directly into <code>master</code> and releases are tagged after CRAN has accepted the package submission, which triggers the documentation build.</li>
 <li>Format package using <code>styler</code> and <code>lintr</code>.</li>
 </ul></div>
     <div class="section level2">
@@ -119,8 +119,9 @@
 <ul><li>Add ORCID to author field in DESCRIPTION.</li>
 <li>Switch from travis to GitHub Actions.</li>
 <li>Remove <code>sp</code>, <code>gridExtra</code> and <code>plyr</code> from imports and add to suggestions.</li>
-</ul><p><strong>New features</strong> * Tracks longer than 1500 steps are now allowed as input for <code><a href="../reference/reproduce.track.3d.html">reproduce.track.3d()</a></code>: Replaced stop statement with a message.</p>
-</div>
+</ul><p><strong>New features</strong></p>
+<ul><li>Tracks longer than 1500 steps are now allowed as input for <code><a href="../reference/reproduce.track.3d.html">reproduce.track.3d()</a></code>: Replaced stop statement with a message.</li>
+</ul></div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.6.2" id="version-062">version 0.6.2<small>2019-09-19</small><a class="anchor" aria-label="anchor" href="#version-062"></a></h2>
 <p>Fourth submission to CRAN. Formal changes in the package description and enhanced testing.</p>
@@ -148,7 +149,7 @@
 <li>Unit testing with <code>testthat</code>.</li>
 <li>Test coverage assessment using <code>codecovr</code>.</li>
 <li>New eRTG3D logo.</li>
-<li>New index/home area with interactive 3-D plots.</li>
+<li>New index/home area with interactive 3*D plots.</li>
 <li>Shiny app - Online eRTG3D simulator: <a href="https://mufi.shinyapps.io/ertg3d-simulator/" class="external-link uri">https://mufi.shinyapps.io/ertg3d-simulator/</a>.</li>
 </ul></div>
     <div class="section level2">

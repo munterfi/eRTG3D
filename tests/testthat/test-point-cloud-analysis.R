@@ -27,4 +27,3 @@ test_that("point-cloud-analysis works", {
   chi_two <- chiMaps(ud, ud)
   expect_is(chi_two, "RasterStack")
 })
-

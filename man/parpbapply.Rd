@@ -39,8 +39,8 @@ Windows: PSOCKCluster, Unix: Forking.
 \examples{
 n <- 1000
 df <- data.frame(
-x = seq(1, n, 1),
-y = -seq(1, n, 1)
+  x = seq(1, n, 1),
+  y = -seq(1, n, 1)
 )
 a <- parpbapply(X = df, FUN = sum, MARGIN = 1, nNodes = 2)
 }

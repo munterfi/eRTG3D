@@ -34,6 +34,8 @@ Function detects the operating system and chooses the approximate kind of proces
 Windows: PSOCKCluster, Unix: Forking.
 }
 \examples{
-square <- function(x){x*x}
+square <- function(x) {
+  x * x
+}
 l <- parpblapply(X = 1:1000, FUN = square, export = c("square"), nNodes = 2)
 }

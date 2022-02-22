@@ -23,12 +23,13 @@
 #' @export
 #'
 #' @examples
-#' niclas <- track.properties.3d(niclas)[2:nrow(niclas),]
-#' P <- get.densities.3d(turnAngle=niclas$t, liftAngle=niclas$l, stepLength=niclas$d,
-#' deltaLift=diff(niclas$t), deltaTurn=diff(niclas$l), deltaStep=diff(niclas$d),
-#' gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
-get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
-{
+#' niclas <- track.properties.3d(niclas)[2:nrow(niclas), ]
+#' P <- get.densities.3d(
+#'   turnAngle = niclas$t, liftAngle = niclas$l, stepLength = niclas$d,
+#'   deltaLift = diff(niclas$t), deltaTurn = diff(niclas$l), deltaStep = diff(niclas$d),
+#'   gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25
+#' )
+get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaTurn, deltaStep, gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25) {
   # probability distribution cube for turning angle, lift angle and step length
   cubeTLD <- turnLiftStepHist(turn = turnAngle, lift = liftAngle, step = stepLength, maxBin = maxBin)
   # approximate the distribution of the difference in turning angle with lag 1
@@ -37,10 +38,28 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
   autoL <- stats::approxfun(stats::density.default(deltaLift))
   # approximate the distribution of the difference in step length with lag 1
   autoD <- stats::approxfun(stats::density.default(deltaStep))
-  if (!is.null(gradientAngle)) {gDens <- stats::approxfun(stats::density.default(gradientAngle[gradientAngle > 0 & gradientAngle < pi]))} else {gDens <- function(x){return(as.numeric(x > 0 & x < pi))}}
-  if (!is.null(heightEllipsoid)) {hDistEllipsoid <- stats::approxfun(stats::density.default(heightEllipsoid))} else {hDistEllipsoid <- function(x){1}}
-  if (!is.null(heightTopo)) {hDistTopo <- stats::approxfun(stats::density.default(heightTopo))} else {hDistTopo <- function(x){1}}
-  return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, gDens = gDens, hDistEllipsoid = hDistEllipsoid, hDistTopo=hDistTopo))
+  if (!is.null(gradientAngle)) {
+    gDens <- stats::approxfun(stats::density.default(gradientAngle[gradientAngle > 0 & gradientAngle < pi]))
+  } else {
+    gDens <- function(x) {
+      return(as.numeric(x > 0 & x < pi))
+    }
+  }
+  if (!is.null(heightEllipsoid)) {
+    hDistEllipsoid <- stats::approxfun(stats::density.default(heightEllipsoid))
+  } else {
+    hDistEllipsoid <- function(x) {
+      1
+    }
+  }
+  if (!is.null(heightTopo)) {
+    hDistTopo <- stats::approxfun(stats::density.default(heightTopo))
+  } else {
+    hDistTopo <- function(x) {
+      1
+    }
+  }
+  return(list(tldCube = cubeTLD, autoT = autoT, autoL = autoL, autoD = autoD, gDens = gDens, hDistEllipsoid = hDistEllipsoid, hDistTopo = hDistTopo))
 }
 
 #' Three dimensional histogram
@@ -62,30 +81,41 @@ get.densities.3d <- function(turnAngle, liftAngle, stepLength, deltaLift, deltaT
 #' @examples
 #' niclas <- track.properties.3d(niclas)[2:nrow(niclas), ]
 #' turnLiftStepHist(niclas$t, niclas$l, niclas$d)
-turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25)
-{
+turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE, maxBin = 25) {
   # define number of bins based on Freedman-Diaconis
   nx <- min(grDevices::nclass.FD(turn), maxBin)
   ny <- min(grDevices::nclass.FD(lift), maxBin)
   nz <- min(grDevices::nclass.FD(step), maxBin)
-  if(printDims){message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)}
+  if (printDims) {
+    message("  |TLD cube dimensions: ", nx, " x ", ny, " x ", nz)
+  }
   # create histogram
-  tCuts <- .cutMidpoints(turn, nx); lCuts <- .cutMidpoints(lift, ny); dCuts <- .cutMidpoints(step, nz)
-  h <- list(turn = tCuts[[1]],
-            lift = lCuts[[1]],
-            step = dCuts[[1]])
+  tCuts <- .cutMidpoints(turn, nx)
+  lCuts <- .cutMidpoints(lift, ny)
+  dCuts <- .cutMidpoints(step, nz)
+  h <- list(
+    turn = tCuts[[1]],
+    lift = lCuts[[1]],
+    step = dCuts[[1]]
+  )
   h <- do.call(data.frame, h)
   h <- as.data.frame(table(h))
   # resolutions
-  tRes <- tCuts[[2]]; lRes <- lCuts[[2]]; dRes <- dCuts[[2]];
+  tRes <- tCuts[[2]]
+  lRes <- lCuts[[2]]
+  dRes <- dCuts[[2]]
   # probabilities
   colnames(h)[4] <- "prob"
   # Remove zeros if desired
-  if (rm.zeros) {h <- h[!h$prob == 0, ]}
+  if (rm.zeros) {
+    h <- h[!h$prob == 0, ]
+  }
   # normalize frequency to get probabilities
-  h$prob <- h$prob/sum(h$prob)
+  h$prob <- h$prob / sum(h$prob)
   # convert factors to numeric
-  h[1:3] <- lapply(h[1:3], function(x) {as.numeric(levels(x))[x]})
+  h[1:3] <- lapply(h[1:3], function(x) {
+    as.numeric(levels(x))[x]
+  })
   return(list(values = h, tRes = tRes, lRes = lRes, dRes = dRes))
 }
 
@@ -106,18 +136,26 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' .cutMidpoints(x, breaks)
 #' @noRd
 .cutMidpoints <- function(x, breaks, rm.empty = TRUE) {
-  if (breaks <= 1) {return(list(cuts = factor(rep(mean(x), length(x))), res = 0))}
+  if (breaks <= 1) {
+    return(list(cuts = factor(rep(mean(x), length(x))), res = 0))
+  }
   nb <- as.integer(breaks + 1)
   dx <- diff(rx <- range(x, na.rm = TRUE))
   breaks <- seq.int(rx[1L], rx[2L], length.out = nb)
   res <- stats::median(diff(breaks))
-  breaks[c(1L, nb)] <- c(rx[1L] - dx/1000, rx[2L] +
-                           dx/1000)
+  breaks[c(1L, nb)] <- c(rx[1L] - dx / 1000, rx[2L] +
+    dx / 1000)
   code <- .bincode(x, breaks, right = TRUE, include.lowest = FALSE)
-  width <- diff(breaks); minBreak <- min(breaks)
-  midpoints <- sapply(1:(length(breaks)-1), function(ii) {minBreak + sum(width[1:ii-1]) + width[ii]/2})
-  if(rm.empty) {list(cuts = factor(midpoints[code]), res = res)}
-  else {list(cuts = factor(midpoints[code], midpoints), res = res)}
+  width <- diff(breaks)
+  minBreak <- min(breaks)
+  midpoints <- sapply(1:(length(breaks) - 1), function(ii) {
+    minBreak + sum(width[1:ii - 1]) + width[ii] / 2
+  })
+  if (rm.empty) {
+    list(cuts = factor(midpoints[code]), res = res)
+  } else {
+    list(cuts = factor(midpoints[code], midpoints), res = res)
+  }
 }
 
 #' Unconditional Empirical Random Walk (UERW) in 3-D
@@ -161,25 +199,27 @@ turnLiftStepHist <- function(turn, lift, step, printDims = TRUE, rm.zeros = TRUE
 #' @export
 #'
 #' @examples
-#' sim.uncond.3d(10, start=c(0,0,0), a0=pi/2, g0=pi/2, densities=get.track.densities.3d(niclas))
-sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRUE)
-{
+#' sim.uncond.3d(
+#'   10, start = c(0, 0, 0), a0 = pi / 2, g0 = pi / 2,
+#'   densities = get.track.densities.3d(niclas)
+#' )
+sim.uncond.3d <- function(n.locs, start = c(0, 0, 0), a0, g0, densities, error = TRUE) {
   # progress bar and time
   message(paste("  |Simulate UERW with ", n.locs, " steps", sep = ""))
   start.time <- Sys.time()
   pb <- utils::txtProgressBar(min = 0, max = n.locs, style = 3)
-  ui <- floor(n.locs/20)+1
+  ui <- floor(n.locs / 20) + 1
   # get coordinates of the tldCube
   ts <- densities$tldCube$values$turn
   ls <- densities$tldCube$values$lift
   ds <- densities$tldCube$values$step
   # get probs for each turn-lift-distance combination
   tldProbs <- densities$tldCube$values$prob
-  sCond <- sample(1:nrow(densities$tldCube$values), 1, prob=tldProbs)
+  sCond <- sample(seq_len(nrow(densities$tldCube$values)), 1, prob = tldProbs)
   # "x" "y" "z" "a" "g" "t" "l" "d" "p"
   # "1" "2" "3" "4" "5" "6" "7" "8" "9"
   RTG <- matrix(0, n.locs, 9)
-  RTG[1,] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
+  RTG[1, ] <- c(start[1], start[2], start[3], a0, g0, ts[sCond], ls[sCond], ds[sCond], NA)
   # Create random noise if error is TRUE (uniform distributed)
   if (error) {
     tShift <- stats::runif(n.locs, -densities$tldCube$tRes / 2, densities$tldCube$tRes / 2)
@@ -188,12 +228,11 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
   } else {
     tShift <- lShift <- dShift <- numeric(n.locs)
   }
-  for (i in 2:n.locs)
-  {
+  for (i in 2:n.locs) {
     # get influence of current autodifferences
-    atProbs <- densities$autoT(RTG[i-1, 6] - ts + tShift[i])
-    alProbs <- densities$autoL(RTG[i-1, 7] - ls + lShift[i])
-    adProbs <- densities$autoD(RTG[i-1, 8] - ds + dShift[i])
+    atProbs <- densities$autoT(RTG[i - 1, 6] - ts + tShift[i])
+    alProbs <- densities$autoL(RTG[i - 1, 7] - ls + lShift[i])
+    adProbs <- densities$autoD(RTG[i - 1, 8] - ds + dShift[i])
     atProbs[is.na(atProbs)] <- 0
     alProbs[is.na(alProbs)] <- 0
     adProbs[is.na(adProbs)] <- 0
@@ -201,30 +240,32 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
     alProbs <- alProbs / sum(alProbs)
     adProbs <- adProbs / sum(adProbs)
     # multiply and take the third squareroot
-    pProbs <- tldProbs * (atProbs * alProbs * adProbs)^(1/3)
+    pProbs <- tldProbs * (atProbs * alProbs * adProbs)^(1 / 3)
     # Apply gradient distribution or if gradientDensity is set to FALSE in get.densities.3d(), limit gradient to 0-pi.
-    gAll <- (RTG[i-1, 5] + ls + lShift[i])
+    gAll <- (RTG[i - 1, 5] + ls + lShift[i])
     gProbs <- densities$gDens(gAll)
     gProbs[is.na(gProbs)] <- 0
     gProbs <- gProbs / sum(gProbs)
     pProbs <- pProbs * gProbs
     # sample on turnLiftStepHist = tldCube and add shifts
-    rP <- sample(1:nrow(densities$tldCube$values), size = 1, prob = pProbs)
+    rP <- sample(seq_len(nrow(densities$tldCube$values)), size = 1, prob = pProbs)
     t <- ts[rP] + tShift[i]
     l <- ls[rP] + lShift[i]
     d <- ds[rP] + dShift[i]
     p <- pProbs[rP]
     # absolute spherical orientation, wrap angles around -pi-0 & 0-pi
-    a <- .wrap(RTG[i-1, 4] + t)
-    g <- .wrap(RTG[i-1, 5] + l)
+    a <- .wrap(RTG[i - 1, 4] + t)
+    g <- .wrap(RTG[i - 1, 5] + l)
     # new coordinates of the next step
-    x <- round((d * sin(g) * cos(a)) + RTG[i-1, 1], 12)
-    y <- round((d * sin(g) * sin(a)) + RTG[i-1, 2], 12)
-    z <- round((d * cos(g)) + RTG[i-1, 3], 12)
+    x <- round((d * sin(g) * cos(a)) + RTG[i - 1, 1], 12)
+    y <- round((d * sin(g) * sin(a)) + RTG[i - 1, 2], 12)
+    z <- round((d * cos(g)) + RTG[i - 1, 3], 12)
     # "x" "y" "z" "a" "g" "t" "l" "d" "p"
-    RTG[i,] <- c(x, y, z, a, g, t, l, d, p)
+    RTG[i, ] <- c(x, y, z, a, g, t, l, d, p)
     # update progress bar
-    if ((i %% ui) == 0) {utils::setTxtProgressBar(pb, i)}
+    if ((i %% ui) == 0) {
+      utils::setTxtProgressBar(pb, i)
+    }
   }
   rownames(RTG) <- c()
   colnames(RTG) <- c("x", "y", "z", "a", "g", "t", "l", "d", "p")
@@ -254,8 +295,7 @@ sim.uncond.3d <- function(n.locs, start=c(0,0,0), a0, g0, densities, error = TRU
 #'
 #' @examples
 #' qProb.3d(niclas, 3)
-qProb.3d <- function(sim, n.locs, parallel = FALSE, maxBin = 25)
-{
+qProb.3d <- function(sim, n.locs, parallel = FALSE, maxBin = 25) {
   nNodes <- .nNodes(parallel)
   message(paste("  |Extracting Q probabilities for ", n.locs, " steps", sep = ""))
   sim <- track.properties.3d(sim)
@@ -264,21 +304,25 @@ qProb.3d <- function(sim, n.locs, parallel = FALSE, maxBin = 25)
   cubeList <- parpblapply(1:nSteps, function(x) {
     # turn angle, lift angles and distance to target as a function of number of steps
     t <- .wrap(atan2(diff(sim$y, lag = x), diff(sim$x, lag = x)) - sim$a[1:(length(sim$a) - x)])
-    l <- .wrap(atan2(sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2),
-                     diff(sim$z, lag = x)) - sim$g[1:(length(sim$g) - x)])
-    d <- sqrt(diff(sim$x, lag = x) ^ 2 + diff(sim$y, lag = x) ^ 2 + diff(sim$z, lag = x) ^ 2)
+    l <- .wrap(atan2(
+      sqrt(diff(sim$x, lag = x)^2 + diff(sim$y, lag = x)^2),
+      diff(sim$z, lag = x)
+    ) - sim$g[1:(length(sim$g) - x)])
+    d <- sqrt(diff(sim$x, lag = x)^2 + diff(sim$y, lag = x)^2 + diff(sim$z, lag = x)^2)
     # the Qprob is thinned to the lag that suggests breaking off of the autocorrelation
     # of the turning angle to target, the lift angle to target and the distance to target
     # for the relevant number of steps. This is mainly to reduce redundancy mainly
     # introduced by the sliding window approach adopted in estimating the relationships
-    k <- max(utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1,
-             utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05),1)-1)
+    k <- max(
+      utils::head(which(stats::acf(t, lag.max = nSteps, plot = FALSE)$acf < 0.05), 1) - 1,
+      utils::head(which(stats::acf(l, lag.max = nSteps, plot = FALSE)$acf < 0.05), 1) - 1,
+      utils::head(which(stats::acf(d, lag.max = nSteps, plot = FALSE)$acf < 0.05), 1) - 1
+    )
     t <- t[seq(1, length(t), by = k)]
     l <- l[seq(1, length(l), by = k)]
     d <- d[seq(1, length(d), by = k)]
     # get stepTurnLiftHistograms
-    return(turnLiftStepHist(turn=t, lift=l, step=d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
+    return(turnLiftStepHist(turn = t, lift = l, step = d, printDims = FALSE, rm.zeros = TRUE, maxBin = maxBin))
   }, export = c("sim", "nSteps", "maxBin"), packages = c("eRTG3D"), envir = environment(), nNodes = nNodes)
   return(rev(cubeList))
 }
@@ -312,28 +356,34 @@ qProb.3d <- function(sim, n.locs, parallel = FALSE, maxBin = 25)
 #' end <- Reduce(c, niclas[n.locs, 1:3])
 #' a0 <- niclas$a[1]
 #' g0 <- niclas$g[1]
-#' uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+#' uerw <- sim.uncond.3d(
+#'   n.locs * f, start = start, a0 = a0, g0 = g0, densities = P
+#' )
 #' Q <- qProb.3d(uerw, n.locs)
-#' sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
-sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, DEM = NULL, BG = NULL)
-{
+#' sim.cond.3d(
+#'   n.locs = n.locs, start = start, end = end,
+#'   a0 = a0, g0 = g0, densities = P, qProbs = Q
+#' )
+sim.cond.3d <- function(n.locs, start = c(0, 0, 0), end = start, a0, g0, densities, qProbs, error = FALSE, DEM = NULL, BG = NULL) {
   start.time <- Sys.time()
-  if(!is.null(DEM)) {
+  if (!is.null(DEM)) {
     .check.extent(DEM = DEM, track = data.frame(rbind(start, end)))
   }
-  if(!is.null(BG)) {
+  if (!is.null(BG)) {
     .check.extent(DEM = BG, track = data.frame(rbind(start, end)))
   }
   # progress bar and time
   message(paste("  |Simulate CERW with ", n.locs, " steps", sep = ""))
-  pb <- utils::txtProgressBar(min = 0, max = n.locs-2, style = 3)
-  ui <- floor(n.locs/20)+1
+  pb <- utils::txtProgressBar(min = 0, max = n.locs - 2, style = 3)
+  ui <- floor(n.locs / 20) + 1
   # replace the probability distribution for step length 1 by the one from
   # the qProbs since that one relies on more samples derived from sim
-  densities[[1]] <- utils::tail(qProbs,1)[[1]]
+  densities[[1]] <- utils::tail(qProbs, 1)[[1]]
   # get the coordinates of the step length and turning angle bin centres
-  start <- Reduce(c, start); names(start) <- c("x", "y", "z")
-  end <- Reduce(c, end); names(end) <- c("x", "y", "z")
+  start <- Reduce(c, start)
+  names(start) <- c("x", "y", "z")
+  end <- Reduce(c, end)
+  names(end) <- c("x", "y", "z")
   # get coordinates of the tldCube
   ts <- densities$tldCube$values$turn
   ls <- densities$tldCube$values$lift
@@ -344,7 +394,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
   # for the previous to first turn and previous to first step
   # for the start point, as this is needed to inform the auto-difference
   # likelihood
-  sCond <- sample(1:nrow(densities$tldCube$values), 1, prob=tldProbs)
+  sCond <- sample(seq_len(nrow(densities$tldCube$values)), 1, prob = tldProbs)
   # "x" "y" "z" "a" "g" "t" "l" "d" "p"
   # "1" "2" "3" "4" "5" "6" "7" "8" "9"
   RTG <- matrix(0, n.locs, 9)
@@ -358,8 +408,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     tShift <- lShift <- dShift <- numeric(n.locs - 2)
   }
   # start creating the track step for step
-  for (i in 1:(n.locs - 2))
-  {
+  for (i in 1:(n.locs - 2)) {
     # get the auto-difference probability for turning angle
     atProbs <- densities$autoT(RTG[i, 6] - ts + tShift[i])
     # get the auto-difference probability for lift angle
@@ -377,7 +426,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     # calculate the probability to make a step forward. The auto-difference probabilities are
     # calculated as one jointly contributing probability and therefore square rooted befor
     # multiplication with the two dimensional probability distribution
-    P <- (tldProbs) * (atProbs * alProbs * adProbs)^(1/3)
+    P <- (tldProbs) * (atProbs * alProbs * adProbs)^(1 / 3)
     # calculate the azimuth
     a <- .wrap(RTG[i, 4] + ts + tShift[i])
     # calculate the gradient
@@ -388,13 +437,13 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     z1 <- round(((ds + dShift[i]) * cos(g)) + RTG[i, 3], 12)
     # calculate the distances of the cell centers in the spatial domain
     # to the target (last location of the empirical track)
-    endD <- as.numeric(sqrt((end[1] - x1) ^ 2 + (end[2] - y1) ^ 2 + (end[3] - z1) ^ 2))
+    endD <- as.numeric(sqrt((end[1] - x1)^2 + (end[2] - y1)^2 + (end[3] - z1)^2))
     # calculate the azimuth of the cell centres to the target and substract from it the direction of arrival
     # resulting in turning angle towards target
     endT <- as.numeric(.wrap(atan2(as.numeric(end[2] - y1), as.numeric(end[1] - x1)) - a))
     # calculate the gradient of the possibilite steps to the target and substract from it the angle of arrival
     # resulting in turning angle towards target
-    endL <- as.numeric(.wrap(atan2(as.numeric(sqrt((end[1] - x1) ^ 2 + (end[2] - y1) ^ 2)), as.numeric(end[3] - z1))) - g)
+    endL <- as.numeric(.wrap(atan2(as.numeric(sqrt((end[1] - x1)^2 + (end[2] - y1)^2)), as.numeric(end[3] - z1))) - g)
     # get the probabilities of making it distance and turning angle wise
     # which is derived from the two dimensional probability distribution for the
     # appropriate step being modelled
@@ -404,13 +453,17 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     lVal <- unique(qCube$values$lift)
     dVal <- unique(qCube$values$step)
     # find closest coordinates
-    tCoords <- unlist(lapply(endT, function(x) tVal[which.min(abs(tVal-x))]))
-    lCoords <- unlist(lapply(endL, function(x) lVal[which.min(abs(lVal-x))]))
-    dCoords <- unlist(lapply(endD, function(x) dVal[which.min(abs(dVal-x))]))
+    tCoords <- unlist(lapply(endT, function(x) tVal[which.min(abs(tVal - x))]))
+    lCoords <- unlist(lapply(endL, function(x) lVal[which.min(abs(lVal - x))]))
+    dCoords <- unlist(lapply(endD, function(x) dVal[which.min(abs(dVal - x))]))
     # extract Q
-    Q <- unlist(lapply(1:length(tCoords), function(x){
-      test <- (qCube$values$turn == tCoords[x] & qCube$values$lift == lCoords[x] & qCube$values$step == dCoords[x]);
-      if(any(test==TRUE)) {return(qCube$values$prob[test])} else {return(0)}
+    Q <- unlist(lapply(seq_len(length(tCoords)), function(x) {
+      test <- (qCube$values$turn == tCoords[x] & qCube$values$lift == lCoords[x] & qCube$values$step == dCoords[x])
+      if (any(test == TRUE)) {
+        return(qCube$values$prob[test])
+      } else {
+        return(0)
+      }
     }))
     # the overall probability is the product of the probability
     # of making a step forward and the probability of making it to the
@@ -426,10 +479,9 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     Probs <- Probs * gProbs
     # Account for probable flight height, if a DEM is provided the relative flight height is taken
     # Otherwise only the absolute ellipsoid height.
-    if(!is.null(DEM))
-    {
+    if (!is.null(DEM)) {
       surface <- raster::extract(DEM, cbind(x1, y1))
-      demP <-  densities$hDistTopo(z1 - surface) * as.numeric(z1 >= surface)
+      demP <- densities$hDistTopo(z1 - surface) * as.numeric(z1 >= surface)
       demP[is.na(demP)] <- 0
       demP <- demP / sum(demP)
       hProb <- densities$hDistEllipsoid(z1)
@@ -444,8 +496,7 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     }
     # use the coordinates of the spatial grid for which the probabilities are calculated
     # and use it to overlay a background raster for example to avoid walks in certain areas
-    if(!is.null(BG))
-    {
+    if (!is.null(BG)) {
       bgP <- raster::extract(BG, cbind(x1, y1))
       Probs <- Probs * bgP
     }
@@ -454,30 +505,32 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
     Probs[Probs <= 0] <- 0
     # check whether the run might have ended up in a dead-end,
     # which will set the zero probability status to TRUE
-    if(all(Probs==0)){
+    if (all(Probs == 0)) {
       RTG <- NULL
       close(pb)
       message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
       warning("Dead end encountered.")
       return(RTG)
-    }else{
+    } else {
       # draw a point randomly based on the probability
       rP <- sample.int(nrow(densities$tldCube$values), size = 1, prob = Probs)
       # "x" "y" "z" "a" "g" "t" "l" "d" "p"
       # "1" "2" "3" "4" "5" "6" "7" "8" "9"
       RTG[i + 1, ] <- c(x1[rP], y1[rP], z1[rP], a[rP], g[rP], ts[rP], ls[rP], ds[rP], Probs[rP])
       # update progress bar
-      if ((i %% ui) == 0) {utils::setTxtProgressBar(pb, i)}
+      if ((i %% ui) == 0) {
+        utils::setTxtProgressBar(pb, i)
+      }
     }
   }
   # the track is forced to target location and the appropriate distance is added
   RTG[1, 8] <- NA
-  RTG[n.locs,] <- c(end[1], end[2], end[3], NA, NA, NA, NA, NA, NA)
-  RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs-1, 1])^2 +
-                         (RTG[n.locs, 2] - RTG[n.locs-1, 2])^2 +
-                         (RTG[n.locs, 3] - RTG[n.locs-1, 3])^2)
+  RTG[n.locs, ] <- c(end[1], end[2], end[3], NA, NA, NA, NA, NA, NA)
+  RTG[n.locs, 8] <- sqrt((RTG[n.locs, 1] - RTG[n.locs - 1, 1])^2 +
+    (RTG[n.locs, 2] - RTG[n.locs - 1, 2])^2 +
+    (RTG[n.locs, 3] - RTG[n.locs - 1, 3])^2)
   # Stop if the step length of the last step is larger than the largest possible step
-  if(RTG[n.locs, 8] > max(densities$tldCube$values$step, na.rm = TRUE)*sqrt(2)) {
+  if (RTG[n.locs, 8] > max(densities$tldCube$values$step, na.rm = TRUE) * sqrt(2)) {
     RTG <- NULL
     close(pb)
     message(sprintf("  |Elapsed time: %ss", round(as.numeric(Sys.time()) - as.numeric(start.time), 1)))
@@ -524,17 +577,29 @@ sim.cond.3d <- function(n.locs, start=c(0,0,0), end=start, a0, g0, densities, qP
 #' end <- Reduce(c, niclas[n.locs, 1:3])
 #' a0 <- niclas$a[1]
 #' g0 <- niclas$g[1]
-#' uerw <- sim.uncond.3d(n.locs*f, start=start, a0=a0, g0=g0, densities=P)
+#' uerw <- sim.uncond.3d(
+#'   n.locs * f, start = start, a0 = a0, g0 = g0, densities = P
+#' )
 #' Q <- qProb.3d(uerw, n.locs)
-#' n.sim.cond.3d(n.sim=2, n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities = P, qProbs = Q)
-n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, densities, qProbs, error = FALSE, parallel = FALSE, DEM = NULL, BG = NULL)
-{
+#' n.sim.cond.3d(
+#'   n.sim = 2, n.locs = n.locs,
+#'   start = start, end = end,
+#'   a0 = a0, g0 = g0,
+#'   densities = P, qProbs = Q
+#' )
+n.sim.cond.3d <- function(n.sim, n.locs, start = c(0, 0, 0), end = start, a0, g0, densities, qProbs, error = FALSE, parallel = FALSE, DEM = NULL, BG = NULL) {
   n.sim <- round(n.sim)
-  if (n.sim <= 1) {return(sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG))}
+  if (n.sim <= 1) {
+    return(sim.cond.3d(n.locs = n.locs, start = start, end = end, a0 = a0, g0 = g0, densities = densities, qProbs = qProbs, error = error, DEM = DEM, BG = BG))
+  }
   nNodes <- .nNodes(parallel)
-  message(paste("  |Simulate ", n.sim ," CERWs with ", n.locs, " steps", sep = ""))
-  cerwList <- parpblapply(X = 1:n.sim, FUN = function(x){sim.cond.3d(n.locs=n.locs, start=start, end=end, a0=a0, g0=g0, densities=densities, qProbs=qProbs, error=error, DEM=DEM, BG=BG)},
-                export = c("n.locs", "start", "end", "a0", "g0", "densities", "qProbs", "error", "DEM", "BG"), packages = c("eRTG3D"), nNodes = nNodes, envir = environment())
+  message(paste("  |Simulate ", n.sim, " CERWs with ", n.locs, " steps", sep = ""))
+  cerwList <- parpblapply(
+    X = 1:n.sim, FUN = function(x) {
+      sim.cond.3d(n.locs = n.locs, start = start, end = end, a0 = a0, g0 = g0, densities = densities, qProbs = qProbs, error = error, DEM = DEM, BG = BG)
+    },
+    export = c("n.locs", "start", "end", "a0", "g0", "densities", "qProbs", "error", "DEM", "BG"), packages = c("eRTG3D"), nNodes = nNodes, envir = environment()
+  )
   return(cerwList)
 }
 
@@ -548,7 +613,6 @@ n.sim.cond.3d <- function(n.sim, n.locs, start = c(0,0,0), end=start, a0, g0, de
 #' @examples
 #' .wrap(x)
 #' @noRd
-.wrap <- function(x)
-{
+.wrap <- function(x) {
   (x + pi) %% (2 * pi) - pi
 }

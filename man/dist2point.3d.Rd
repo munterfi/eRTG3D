@@ -20,5 +20,5 @@ Returns the distance of each track point to the point.
 Distance of each track point to a given point
 }
 \examples{
-dist2point.3d(niclas, c(0,0,0))
+dist2point.3d(niclas, c(0, 0, 0))
 }

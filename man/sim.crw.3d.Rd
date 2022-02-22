@@ -24,5 +24,5 @@ A trajectory in the form of data.frame
 Simulation of a three dimensional Correlated Random Walk
 }
 \examples{
-sim.crw.3d(nStep=10, rTurn=0.9, rLift=0.9, meanStep=1, start = c(0,0,0))
+sim.crw.3d(nStep = 10, rTurn = 0.9, rLift = 0.9, meanStep = 1, start = c(0, 0, 0))
 }

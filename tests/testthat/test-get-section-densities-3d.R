@@ -1,6 +1,6 @@
 test_that("get.section.densities.3d works", {
   # Split track and delete short sections (nrow = 1)
-  timeLag <- movingMedian(rnorm(nrow(niclas)-1), window = 3)
+  timeLag <- movingMedian(rnorm(nrow(niclas) - 1), window = 3)
   trackList <- track.split.3d(niclas, timeLag = timeLag)
   trackList <- trackList[sapply(trackList, nrow) > 1]
   # Section densities
@@ -18,7 +18,7 @@ test_that("get.section.densities.3d works", {
   # Gradient needs to be between x > 0 & x < pi
   expect_equal(P$gDens(pi), 0)
   expect_equal(P$gDens(0), 0)
-  expect_equal(P$gDens(pi/2), 1)
+  expect_equal(P$gDens(pi / 2), 1)
   # If no input DEM output should ALWAYS be 1.
   expect_equal(P$hDistEllipsoid(rnorm(1)), 1)
   expect_equal(P$hDistTopo(rnorm(1)), 1)

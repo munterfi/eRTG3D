@@ -65,7 +65,5 @@ and pass them to the function.
 The MODE raster layer must be in the following structure: Gliding pixels have the value 1 and soaring pixel the values 2. \code{NA}'s are not allowed in the raster.
 }
 \examples{
-\donttest{
-sim.glidingSoaring.3d(locsVec, start = c(0,0,0), end=start, a0, g0, dList, qList, MODE)
-}
+print("tbd.")
 }

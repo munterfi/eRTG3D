@@ -51,8 +51,10 @@ Additionally also the distribution of the flight height over the ellipsoid (abso
 and the distribution of flight height over the topography (relative) can be included.
 }
 \examples{
-niclas <- track.properties.3d(niclas)[2:nrow(niclas),]
-P <- get.densities.3d(turnAngle=niclas$t, liftAngle=niclas$l, stepLength=niclas$d,
-deltaLift=diff(niclas$t), deltaTurn=diff(niclas$l), deltaStep=diff(niclas$d),
-gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25)
+niclas <- track.properties.3d(niclas)[2:nrow(niclas), ]
+P <- get.densities.3d(
+  turnAngle = niclas$t, liftAngle = niclas$l, stepLength = niclas$d,
+  deltaLift = diff(niclas$t), deltaTurn = diff(niclas$l), deltaStep = diff(niclas$d),
+  gradientAngle = NULL, heightEllipsoid = NULL, heightTopo = NULL, maxBin = 25
+)
 }

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
       <h1 data-toc-skip>Point cloud analysis</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v9.Rmd" class="external-link"><code>vignettes/v9.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/HEAD/vignettes/v9.Rmd" class="external-link"><code>vignettes/v9.Rmd</code></a></small>
       <div class="hidden name"><code>v9.Rmd</code></div>
 
     </div>
@@ -144,9 +144,9 @@
 body {
 text-align: justify}
 </style>
-<div id="example-trajectories" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-trajectories" class="anchor" aria-hidden="true"></a>Example trajectories</h2>
+<div class="section level2">
+<h2 id="example-trajectories">Example trajectories<a class="anchor" aria-label="anchor" href="#example-trajectories"></a>
+</h2>
 <p>First some example trajectories are created in form of Correlated Random Walks (CRWs):</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">crws</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html" class="external-link">lapply</a></span><span class="op">(</span>X<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">100</span><span class="op">)</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">X</span><span class="op">)</span> <span class="op">{</span>
@@ -155,9 +155,9 @@ text-align: justify}
 <span class="fu"><a href="../reference/plot2d.html">plot2d</a></span><span class="op">(</span><span class="va">crws</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-2-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
-<div id="utilization-distribution" class="section level2">
-<h2 class="hasAnchor">
-<a href="#utilization-distribution" class="anchor" aria-hidden="true"></a>Utilization distribution</h2>
+<div class="section level2">
+<h2 id="utilization-distribution">Utilization distribution<a class="anchor" aria-label="anchor" href="#utilization-distribution"></a>
+</h2>
 <p>Count points per voxel and plot counts as raster stack:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">points</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/do.call.html" class="external-link">do.call</a></span><span class="op">(</span><span class="st">"rbind"</span>, <span class="va">crws</span><span class="op">)</span>
@@ -166,18 +166,18 @@ text-align: justify}
 <span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span><span class="op">(</span><span class="va">ud</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
-<div id="chi-square-maps" class="section level2">
-<h2 class="hasAnchor">
-<a href="#chi-square-maps" class="anchor" aria-hidden="true"></a>Chi square maps</h2>
+<div class="section level2">
+<h2 id="chi-square-maps">Chi square maps<a class="anchor" aria-label="anchor" href="#chi-square-maps"></a>
+</h2>
 <p>By calculating Chi maps, the over- and underrepresentation of points in the voxel space can be interpreted statistically:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">chi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/chiMaps.html">chiMaps</a></span><span class="op">(</span><span class="va">ud</span><span class="op">)</span>
 <span class="fu"><a href="../reference/plotRaster.html">plotRaster</a></span><span class="op">(</span><span class="va">chi</span>, centerColorBar<span class="op">=</span><span class="cn">TRUE</span><span class="op">)</span></code></pre></div>
 <p><img src="v9_files/figure-html/unnamed-chunk-4-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
-<div id="export-voxel-data" class="section level2">
-<h2 class="hasAnchor">
-<a href="#export-voxel-data" class="anchor" aria-hidden="true"></a>Export voxel data</h2>
+<div class="section level2">
+<h2 id="export-voxel-data">Export voxel data<a class="anchor" aria-label="anchor" href="#export-voxel-data"></a>
+</h2>
 <p>The voxel dataCube of type rasterStack can be exported as Tiff image sequence. Image sequences are a common structure to represent voxel data and most of the specific software to visualize voxel data is able to read it (e.g. blender)</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/saveImageSlices.html">saveImageSlices</a></span><span class="op">(</span><span class="va">ud</span>, filename <span class="op">=</span> <span class="st">"utilization-distribution"</span>, dir<span class="op">=</span><span class="st">"folder/path"</span><span class="op">)</span>
@@ -202,7 +202,7 @@ text-align: justify}
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>

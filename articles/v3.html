@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
       <h1 data-toc-skip>Visualization of trajectories</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v3.Rmd" class="external-link"><code>vignettes/v3.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/HEAD/vignettes/v3.Rmd" class="external-link"><code>vignettes/v3.Rmd</code></a></small>
       <div class="hidden name"><code>v3.Rmd</code></div>
 
     </div>
@@ -147,26 +147,26 @@ text-align: justify}
 <p>The trajectories can be plotted either in 2-D or in 3-D, using the <code>ggplot2</code> and <code>plotly</code> libraries. Additionally the densities of the track properties can be visualized.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cerwList</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reproduce.track.3d.html">reproduce.track.3d</a></span><span class="op">(</span>n.sim <span class="op">=</span> <span class="fl">5</span>, <span class="va">niclas</span>, DEM <span class="op">=</span> <span class="va">dem</span><span class="op">)</span></code></pre></div>
-<div id="d-plot" class="section level2">
-<h2 class="hasAnchor">
-<a href="#d-plot" class="anchor" aria-hidden="true"></a>2-D Plot</h2>
+<div class="section level2">
+<h2 id="d-plot">2-D Plot<a class="anchor" aria-label="anchor" href="#d-plot"></a>
+</h2>
 <p>The <code><a href="../reference/plot2d.html">plot2d()</a></code> function takes either one or two arguments. The second argument can be a single track data.frame or list of track data.frames as for example the output of <code>n.sim.cons.3d()</code>. Also a DEM rasterLayer can be passed to the function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot2d.html">plot2d</a></span><span class="op">(</span><span class="va">niclas</span>, <span class="va">cerwList</span>, DEM<span class="op">=</span><span class="va">dem</span>,
        titleText<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Steps: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>, <span class="st">", Niclas"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <p><img src="v3_files/figure-html/unnamed-chunk-3-1.png" width="700" style="display: block; margin: auto;"></p>
 </div>
-<div id="d-plot-1" class="section level2">
-<h2 class="hasAnchor">
-<a href="#d-plot-1" class="anchor" aria-hidden="true"></a>3-D Plot</h2>
+<div class="section level2">
+<h2 id="d-plot-1">3-D Plot<a class="anchor" aria-label="anchor" href="#d-plot-1"></a>
+</h2>
 <p>The <code><a href="../reference/plot3d.html">plot3d()</a></code> function takes either one or two arguments. The second argument can be a single track data.frame or list of track data.frames as for example the output of <code>n.sim.cons.3d()</code>. Also a DEM rasterLayer, which is plotted as a surface can be passed to the function.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot3d.html">plot3d</a></span><span class="op">(</span><span class="va">niclas</span>, <span class="va">cerwList</span>, DEM<span class="op">=</span><span class="va">dem</span>,
        titleText<span class="op">=</span><span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste</a></span><span class="op">(</span><span class="st">"Steps: "</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">niclas</span><span class="op">)</span>, <span class="st">", Niclas"</span>, sep<span class="op">=</span><span class="st">""</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="densities-of-turn-angle-lift-angle-and-step-length-of-tracks" class="section level2">
-<h2 class="hasAnchor">
-<a href="#densities-of-turn-angle-lift-angle-and-step-length-of-tracks" class="anchor" aria-hidden="true"></a>Densities of turn angle, lift angle and step length of tracks</h2>
+<div class="section level2">
+<h2 id="densities-of-turn-angle-lift-angle-and-step-length-of-tracks">Densities of turn angle, lift angle and step length of tracks<a class="anchor" aria-label="anchor" href="#densities-of-turn-angle-lift-angle-and-step-length-of-tracks"></a>
+</h2>
 <p>The function takes either one or two tracks. The second track can be a list of tracks as for example the output of <code>n.sim.cons.3d()</code>. In this case the densities of turn angle, lift angle and step length of all the simulations is taken. Additionally the <code>autodifferences</code> parameter can be set to <code>TRUE</code>, then the densities of the auto differences in turn angle, lift angle and step length are visualized.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/plot3d.densities.html">plot3d.densities</a></span><span class="op">(</span><span class="va">niclas</span>, <span class="va">cerwList</span><span class="op">)</span></code></pre></div>
@@ -191,7 +191,7 @@ text-align: justify}
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>

@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
       <h1 data-toc-skip>Trajectory simulations in 2-D</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v8.Rmd" class="external-link"><code>vignettes/v8.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/HEAD/vignettes/v8.Rmd" class="external-link"><code>vignettes/v8.Rmd</code></a></small>
       <div class="hidden name"><code>v8.Rmd</code></div>
 
     </div>
@@ -144,20 +144,20 @@
 body {
 text-align: justify}
 </style>
-<div id="d-simulations-as-special-case-of-3-d" class="section level2">
-<h2 class="hasAnchor">
-<a href="#d-simulations-as-special-case-of-3-d" class="anchor" aria-hidden="true"></a>2-D simulations as special case of 3-D</h2>
+<div class="section level2">
+<h2 id="d-simulations-as-special-case-of-3-d">2-D simulations as special case of 3-D<a class="anchor" aria-label="anchor" href="#d-simulations-as-special-case-of-3-d"></a>
+</h2>
 <p>Since movement in 2-D is a special case of movement in 3-D, the <code>eRTG3D</code> algorithm also supports two-dimensional simulations. The underlying data structure of the algorithm remains in three-dimensional, with the third dimension (z) being constant, as for example zero. This approach guarantees a seamless transition between 2-D and 3-D simulations. Therefore, two P and Q probabilities are be extracted from 2D and 3D trajectories, then a combined simulation can take place.</p>
 </div>
-<div id="example-trajectory" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-trajectory" class="anchor" aria-hidden="true"></a>Example trajectory</h2>
+<div class="section level2">
+<h2 id="example-trajectory">Example trajectory<a class="anchor" aria-label="anchor" href="#example-trajectory"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trajectory.3D</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sim.crw.3d.html">sim.crw.3d</a></span><span class="op">(</span>nStep <span class="op">=</span> <span class="fl">100</span>, rTurn <span class="op">=</span> <span class="fl">0.99</span>, rLift <span class="op">=</span> <span class="fl">0.99</span>, meanStep <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="constant-z-dimension" class="section level2">
-<h2 class="hasAnchor">
-<a href="#constant-z-dimension" class="anchor" aria-hidden="true"></a>Constant z-dimension</h2>
+<div class="section level2">
+<h2 id="constant-z-dimension">Constant z-dimension<a class="anchor" aria-label="anchor" href="#constant-z-dimension"></a>
+</h2>
 <p>To simulate in 2-D the third dimension of the trajectory is set to zero:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">trajectory.2D</span> <span class="op">&lt;-</span> <span class="va">trajectory.3D</span>
@@ -172,9 +172,9 @@ text-align: justify}
 <span class="co">#&gt; 6 -0.19171655 0.13107099 0</span></code></pre></div>
 <p>If the original trajectory is already two-dimensional, a third column <code>z</code> has to be added: <code>trajectory.2D$z &lt;- 0</code>.</p>
 </div>
-<div id="simulations-in-2-d" class="section level2">
-<h2 class="hasAnchor">
-<a href="#simulations-in-2-d" class="anchor" aria-hidden="true"></a>Simulations in 2-D</h2>
+<div class="section level2">
+<h2 id="simulations-in-2-d">Simulations in 2-D<a class="anchor" aria-label="anchor" href="#simulations-in-2-d"></a>
+</h2>
 <p>Now the workflow is the same as in 3-D, described in the standard workflow vignette:</p>
 <p><strong>Note:</strong> Since it is not feasible to use a DEM (<code>DEM = demRaster</code>) in 2-D simualtions, the adding of a DEM in the somulations will result in dead ends. A BG layer (<code>BG = bgRaster</code>) with a binary mask or continous probabilities for the simulation area can be passed (e.g. water bodies, nutrition sources, …).</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -203,7 +203,7 @@ text-align: justify}
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>

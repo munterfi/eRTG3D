@@ -42,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -94,7 +94,7 @@
   </ul>
 </li>
 <li>
-  <a href="https://mufi.shinyapps.io/ertg3d-simulator">Simulator</a>
+  <a href="https://mufi.shinyapps.io/ertg3d-simulator" class="external-link">Simulator</a>
 </li>
 <li>
   <a href="news/index.html">Changelog</a>
@@ -102,19 +102,19 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/munterfi/eRTG3D">
+  <a href="https://github.com/munterfi/eRTG3D" class="external-link">
     <span class="fa fa-github fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://twitter.com/munterfi1">
+  <a href="https://twitter.com/munterfi1" class="external-link">
     <span class="fa fa-twitter fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="https://munterfinger.ch">
+  <a href="https://munterfinger.ch" class="external-link">
     <span class="fa fa-globe fa-lg"></span>
      
   </a>
@@ -131,27 +131,26 @@
 
       </header><div class="row">
   <div class="contents col-md-9">
-<div id="ertg3d-" class="section level1">
-<div class="page-header"><h1 class="hasAnchor">
-<a href="#ertg3d-" class="anchor" aria-hidden="true"></a>eRTG3D <img src="reference/figures/logo.png" align="right" alt="" width="120">
+<div class="section level1">
+<div class="page-header"><h1 id="ertg3d-">eRTG3D <img src="reference/figures/logo.png" align="right" alt="" width="120"><a class="anchor" aria-label="anchor" href="#ertg3d-"></a>
 </h1></div>
 <!-- badges: start -->
 
 <p>The <strong>e</strong>mpirically informed <strong>R</strong>andom <strong>T</strong>rajectory <strong>G</strong>enerator in three dimensions (eRTG3D) is an algorithm to generate realistic random trajectories in a 3-D space between two given fix points, so-called Conditional Empirical Random Walks. The trajectory generation is based on empirical distribution functions extracted from observed trajectories (training data) and thus reflects the geometrical movement characteristics of the mover. A digital elevation model (DEM), representing the Earth’s surface, and a background layer of probabilities (e.g. food sources, uplift potential, waterbodies, etc.) can be used to influence the trajectories.</p>
 <p>The eRTG3D algorithm was developed and implemented as an R package within the scope of a Master’s thesis (Unterfinger, <a href="https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf" class="external-link">2018</a>) at the Department of Geography, University of Zurich. The development started from a 2-D version of the eRTG algorithm by Technitis et al. (<a href="https://doi.org/10.5167/uzh-130652" class="external-link">2016</a>).</p>
-<div id="getting-started" class="section level2">
-<h2 class="hasAnchor">
-<a href="#getting-started" class="anchor" aria-hidden="true"></a>Getting started</h2>
+<div class="section level2">
+<h2 id="getting-started">Getting started<a class="anchor" aria-label="anchor" href="#getting-started"></a>
+</h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># Install release version from CRAN</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"eRTG3D"</span><span class="op">)</span>
 
 <span class="co"># Install development version from GitHub</span>
-<span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"munterfi/eRTG3D"</span><span class="op">)</span></code></pre></div>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"munterfi/eRTG3D"</span><span class="op">)</span></code></pre></div>
 </div>
-<div id="features" class="section level2">
-<h2 class="hasAnchor">
-<a href="#features" class="anchor" aria-hidden="true"></a>Features</h2>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
 <p>The <strong>eRTG3D</strong> package contains functions to:</p>
 <ul>
 <li>calculate <strong>movement parameters of 3-D GPS tracking data</strong>, turning angle, lift angle and step length</li>
@@ -181,9 +180,17 @@
 </li>
 </ul>
 </div>
-<div id="references" class="section level2">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor" aria-hidden="true"></a>References</h2>
+<div class="section level2">
+<h2 id="contributing">Contributing<a class="anchor" aria-label="anchor" href="#contributing"></a>
+</h2>
+<ul>
+<li>Contributions to this package are very welcome, issues and pull requests are the preferred ways to share them. Please see the <a href="https://github.com/munterfi/eRTG3D/blob/master/.github/CONTRIBUTING.md" class="external-link">Contribution Guidelines</a>.</li>
+<li>This project is released with a <a href="https://github.com/munterfi/eRTG3D/blob/master/.github/CODE_OF_CONDUCT.md" class="external-link">Contributor Code of Conduct</a>. By participating in this project you agree to abide by its terms.</li>
+</ul>
+</div>
+<div class="section level2">
+<h2 id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
+</h2>
 <p>Unterfinger M (<a href="https://www.geo.uzh.ch/dam/jcr:6194e41e-055c-4635-9807-53c5a54a3be7/MasterThesis_Unterfinger_2018.pdf" class="external-link">2018</a>). 3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk. Master’s thesis, University of Zurich.</p>
 <p>Technitis G, Weibel R, Kranstauber B, Safi K (<a href="https://doi.org/10.5167/uzh-130652" class="external-link">2016</a>). “An algorithm for empirically informed random trajectory generation between two endpoints.” GIScience 2016: Ninth International Conference on Geographic Information Science, 9, online. doi: <a href="https://doi.org/10.5167/uzh-130652" class="external-link">10.5167/uzh-130652</a>.</p>
 </div>
@@ -194,12 +201,9 @@
     <div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=eRTG3D">https://​cloud.r-project.org/​package=eRTG3D</a>
-</li>
-<li>Browse source code at <br><a href="https://github.com/munterfi/eRTG3D/">https://​github.com/​munterfi/​eRTG3D/​</a>
-</li>
-<li>Report a bug at <br><a href="https://github.com/munterfi/eRTG3D/issues/">https://​github.com/​munterfi/​eRTG3D/​issues/​</a>
-</li>
+<li><a href="https://cloud.r-project.org/package=eRTG3D" class="external-link">View on CRAN</a></li>
+<li><a href="https://github.com/munterfi/eRTG3D/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/munterfi/eRTG3D/issues/" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -207,23 +211,30 @@
 <h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
-<li><small><a href="https://www.r-project.org/Licenses/GPL-3">GPL-3</a></small></li>
+<li><small><a href="https://www.r-project.org/Licenses/GPL-3" class="external-link">GPL-3</a></small></li>
 </ul>
 </div>
 
+<div class="community">
+<h2 data-toc-skip>Community</h2>
+<ul class="list-unstyled">
+<li><a href="CONTRIBUTING.html">Contributing guide</a></li>
+<li><a href="CODE_OF_CONDUCT.html">Code of conduct</a></li>
+</ul>
+</div>
 
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html">Citing eRTG3D</a></li>
+<li><a href="authors.html#citation">Citing eRTG3D</a></li>
 </ul>
 </div>
 
 <div class="developers">
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
-<li>Merlin Unterfinger <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2020-2366" target="orcid.widget" aria-label="ORCID"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
-<li><a href="authors.html">More on authors...</a></li>
+<li>Merlin Unterfinger <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0003-2020-2366" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -249,7 +260,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>

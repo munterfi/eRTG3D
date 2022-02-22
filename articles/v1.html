@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">eRTG3D</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.6.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.7.0</span>
       </span>
     </div>
 
@@ -133,7 +133,7 @@
       <h1 data-toc-skip>Example data</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/master/vignettes/v1.Rmd" class="external-link"><code>vignettes/v1.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/munterfi/eRTG3D/blob/HEAD/vignettes/v1.Rmd" class="external-link"><code>vignettes/v1.Rmd</code></a></small>
       <div class="hidden name"><code>v1.Rmd</code></div>
 
     </div>
@@ -144,9 +144,9 @@
 body {
 text-align: justify}
 </style>
-<div id="bird-trajectory" class="section level2">
-<h2 class="hasAnchor">
-<a href="#bird-trajectory" class="anchor" aria-hidden="true"></a>Bird trajectory</h2>
+<div class="section level2">
+<h2 id="bird-trajectory">Bird trajectory<a class="anchor" aria-label="anchor" href="#bird-trajectory"></a>
+</h2>
 <p>An example GPS track of a stork <code>niclas</code> and an example Digital Elevation Model <code>dem</code> are included in the package. The DEM is a snippet from the <em>SRTM 90m Digital Elevation Database v4.1</em> from <a href="https://srtm.csi.cgiar.org/srtmdata/" class="external-link">CGIAR-CSI</a> and the stork track is a subset of the data in the study <em>LifeTrack White Stork SWGermany 2014-2017</em> (Movebank Study ID 21231406) from the <a href="https://www.datarepository.movebank.org" class="external-link">Movebank Data Repository</a>.</p>
 <p>The area covered by the test data is the Swiss midland. The example track is a data.frame with coordinates in x, y and z. The x and y coordinates are in the CH1903+ / LV95 (EPSG:2056) reference system.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
@@ -159,9 +159,9 @@ text-align: justify}
 <span class="co">#&gt; 5 2563809 1190657 1806.566</span>
 <span class="co">#&gt; 6 2567940 1192930 1764.062</span></code></pre></div>
 </div>
-<div id="digital-elevation-model" class="section level2">
-<h2 class="hasAnchor">
-<a href="#digital-elevation-model" class="anchor" aria-hidden="true"></a>Digital elevation model</h2>
+<div class="section level2">
+<h2 id="digital-elevation-model">Digital elevation model<a class="anchor" aria-label="anchor" href="#digital-elevation-model"></a>
+</h2>
 <p>The DEM is a rasterLayer of the raster package, it’s Coordinate Reference System (CRS) is also CH1903+ / LV95. The stork flies from southwest to northeast, GPS fixes are collected every 15 minutes.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dem</span>
@@ -193,7 +193,7 @@ text-align: justify}
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link external-link">pkgdown</a> 1.9000.9000.9000.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.9000.</p>
 </div>
 
       </footer>

@@ -46,8 +46,9 @@ The **eRTG3D** package contains functions to:
 
 ## Contributing
 
-* Contributions to this package are very welcome, issues and pull requests are the preferred ways to share them. Please see the [Contribution Guidelines](https://github.com/munterfi/eRTG3D/blob/master/.github/CONTRIBUTING.md).
-* This project is released with a [Contributor Code of Conduct](https://github.com/munterfi/eRTG3D/blob/master/.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
+Contributions to this package are very welcome, issues and pull requests are the preferred ways to share them. Please see the [Contribution Guidelines](https://github.com/munterfi/eRTG3D/blob/master/.github/CONTRIBUTING.md).
+
+This project is released with a [Contributor Code of Conduct](https://github.com/munterfi/eRTG3D/blob/master/.github/CODE_OF_CONDUCT.md). By participating in this project you agree to abide by its terms.
 
 ## References
 

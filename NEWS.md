@@ -3,7 +3,7 @@
 * Resubmission of the package to CRAN as it was removed due to a change in testing regime regarding the `@donttest` statement in the examples.
 * Removed `@donttest` in `sim.glidingSoaring.3d` function documentation.
 * Add contributing guidelines and code of conduct.
-* Changed workflow from git flow to trunc-based development. Removed develop branch. New features are merged directly into `master` and releases are tagged after CRAN has accepted the package submission, which triggers the documentation build.
+* Changed workflow from git flow to trunc-based development. Removed `develop` branch. New features are merged directly into `master` and releases are tagged after CRAN has accepted the package submission, which triggers the documentation build.
 * Format package using `styler` and `lintr`.
 
 # version 0.6.4
@@ -17,9 +17,11 @@
 * Remove `sp`, `gridExtra` and `plyr` from imports and add to suggestions.
 
 **New features**
+
 * Tracks longer than 1500 steps are now allowed as input for `reproduce.track.3d()`: Replaced stop statement with a message.
 
 # version 0.6.2
+
 Fourth submission to CRAN. Formal changes in the package description and enhanced testing.
 
 **New features**
@@ -28,6 +30,7 @@ Fourth submission to CRAN. Formal changes in the package description and enhance
 * Added tests and examples for the point cloud analysis.
 
 # version 0.6.1
+
 Third submission to CRAN. Replaced the parallel version of the functions with one unifying parallel implementation for Unix (fork cluster) and Windows (PSOCK cluster) systems. The number of nodes in the cluster can be set manually, if no value is provided the number of detected cores minus one is used to set up the cluster.
 
 **New features**
@@ -39,8 +42,9 @@ Third submission to CRAN. Replaced the parallel version of the functions with on
 * The functions `sim.glidingSoaring.3d()`, `voxelCount()` and `chiMaps()` are now silent, to unmute set `verbose = TRUE`.
 
 # version 0.6.0
+
 Initial submission to CRAN. New github page created with `pkgdown`.
-Added continuous integration by Travis CI, unit testing with `testthat` and `codecovr` for test coverage assessment. Restructured and updated package documentation. 
+Added continuous integration by Travis CI, unit testing with `testthat` and `codecovr` for test coverage assessment. Restructured and updated package documentation.
 
 **New features**
 
@@ -50,10 +54,11 @@ Added continuous integration by Travis CI, unit testing with `testthat` and `cod
 * Unit testing with `testthat`.
 * Test coverage assessment using `codecovr`.
 * New eRTG3D logo.
-* New index/home area with interactive 3-D plots.
+* New index/home area with interactive 3*D plots.
 * Shiny app - Online eRTG3D simulator: https://mufi.shinyapps.io/ertg3d-simulator/.
 
 # version 0.5.9
+
 The 2-D case should also be handled by a 3-D algorithm, therefore the handling of 2-D trajectories is now enabled. To use simulations in 2-D, just pass in a data.frame where the z dimension is zero or has a constant value. The algorithm handles 2-D input correctly and the resulting simulations are valid. Since the third dimension is still part of the 2-D trajectory (either 0 or a constant value), the combination of 3-D and 2-D simulations is straight forward. Furthermore, the wrapper, plotting and testing functions are now also capable of handling 2-D input.
 
 **New features**
@@ -62,6 +67,7 @@ The 2-D case should also be handled by a 3-D algorithm, therefore the handling o
 * Wrapper, plotting and testing functions also adjusted to 2-D.
 
 # version 0.5.8
+
 Replacement of `.fd.bw` with the R base function `grDevices::nclass.FD`, closes `#29`.
 Update required packages, documentation and vignettes.
 
@@ -70,6 +76,7 @@ Update required packages, documentation and vignettes.
 * `.fd.bw` with the R base function `grDevices::nclass.FD`.
 
 # version 0.5.6
+
 Updated `roxygen2` function documentations with examples that run properly. Declared all import statements properly. `R CMD check --as-cran eRTG3D_0.5.6.tar.gz` runs properly, no errors and warnings only 3 notes.
 
 **New features**
@@ -77,6 +84,7 @@ Updated `roxygen2` function documentations with examples that run properly. Decl
 * Running examples in roxygen function documentations
 
 # version 0.5.5
+
 Parallel calculations are now also enabled for Windows, just set `multicore=TRUE` to use it. The 3-D plots are now adjusted to `plotly 4.8.0`, since the coloring is handled differently for markers and lines.
 
 The package now is based on `R 3.5.1` and all packages have been updated.
@@ -87,6 +95,7 @@ The package now is based on `R 3.5.1` and all packages have been updated.
 * Better coloring in 3-D plots.
 
 # version 0.5.4
+
 Dependencies updated, documentation updated and variable names in plots adjusted.
 
 **New features**
@@ -94,6 +103,7 @@ Dependencies updated, documentation updated and variable names in plots adjusted
 * Consistent variable names in plots.
 
 # version 0.5.3
+
 Public release of the R package as it was at the submission of the master's thesis:
 Unterfinger, M (2018). “3-D Trajectory Simulation in Movement Ecology: Conditional Empirical Random Walk”. Master’s thesis. University of Zurich.
 

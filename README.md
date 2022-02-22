@@ -1,10 +1,13 @@
 # eRTG3D <img src="man/figures/logo.png" align="right" alt="" width="120" />
+
 <!-- badges: start -->
+
 [![CRAN status](https://www.r-pkg.org/badges/version/eRTG3D)](https://CRAN.R-project.org/package=eRTG3D)
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/eRTG3D?color=brightgreen)](https://CRAN.R-project.org/package=eRTG3D)
 [![R build status](https://github.com/munterfi/eRTG3D/workflows/R-CMD-check/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
 [![pkgdown](https://github.com/munterfi/eRTG3D/workflows/pkgdown/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
 [![Codecov test coverage](https://codecov.io/gh/munterfi/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfi/eRTG3D?branch=master)
+
 <!-- badges: end -->
 
 The **e**mpirically informed **R**andom **T**rajectory **G**enerator in three dimensions (eRTG3D)
@@ -15,7 +18,7 @@ The eRTG3D algorithm was developed and implemented as an R package within the sc
 
 ## Getting started
 
-``` r
+```r
 # Install release version from CRAN
 install.packages("eRTG3D")
 
@@ -29,8 +32,8 @@ The **eRTG3D** package contains functions to:
 
 * calculate **movement parameters of 3-D GPS tracking data**, turning angle, lift angle and step length
 * **extract distributions** from movement parameters;
-    1. **P probability** - The mover's behavior from its perspective
-    2. **Q probability** - The pull towards the target
+  1. **P probability** - The mover's behavior from its perspective
+  2. **Q probability** - The pull towards the target
 * simulate **Unconditional Empirical Random Walks (UERW)**
 * simulate **Conditional Empirical Random Walks (CERW)**
 * simulate conditional **gliding and soaring behavior** of birds between two given points

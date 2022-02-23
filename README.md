@@ -6,7 +6,7 @@
 [![CRAN downloads](https://cranlogs.r-pkg.org/badges/last-month/eRTG3D?color=brightgreen)](https://CRAN.R-project.org/package=eRTG3D)
 [![R build status](https://github.com/munterfi/eRTG3D/workflows/R-CMD-check/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
 [![pkgdown](https://github.com/munterfi/eRTG3D/workflows/pkgdown/badge.svg)](https://github.com/munterfi/eRTG3D/actions)
-[![Codecov test coverage](https://codecov.io/gh/munterfi/eRTG3D/branch/master/graph/badge.svg)](https://codecov.io/gh/munterfi/eRTG3D?branch=master)
+[![Codecov test coverage](https://codecov.io/gh/munterfi/eRTG3D/branch/master/graph/badge.svg)](https://app.codecov.io/gh/munterfi/eRTG3D?branch=master)
 
 <!-- badges: end -->
 

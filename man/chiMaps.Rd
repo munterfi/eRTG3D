@@ -22,5 +22,5 @@ As observed values, the first stack is used. The expected value is either set to
 to be the values of the second stack.
 }
 \examples{
-chiMaps(raster::stack(dem))
+print("tbd.")
 }

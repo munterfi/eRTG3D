@@ -34,7 +34,7 @@ transformCRS.3d <- function(track, fromCRS, toCRS) {
 #' is.sf.3d(niclas)
 #' is.sf.3d(track2sf.3d(track = niclas, CRS = 2056))
 is.sf.3d <- function(track) {
-  if (class(track)[1] == "sf" && class(track)[2] == "data.frame") {
+  if (inherits(track, "sf")) {
     return(TRUE)
   } else {
     return(FALSE)
@@ -74,7 +74,7 @@ track2sf.3d <- function(track, CRS = NA) {
   if (is.matrix(track)) {
     return(.matrix2sf.3d(track, CRS = CRS))
   }
-  if (class(track) == "Move") {
+  if (inherits(track, "Move")) {
     return(.move2sf.3d(track))
   }
 }
